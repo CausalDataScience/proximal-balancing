@@ -17,6 +17,7 @@ At $n=1000$, the mean absolute errors of proposed/$X$-adjustment/full-$(X,W)$/or
 \caption{Honest approximate SCMs. Curves show mean absolute ATE error across twenty independently generated data sets; bands are approximate $95\%$ Monte Carlo intervals for the mean. Prefixes are nested within a data set, so uncertainty is computed separately at each $n$ and is not pooled across sample sizes. The proposed cross-mask learner uses one proxy coordinate for held-out auditing and averages across masks.}
 \label{fig:approximate-scms}
 \end{figure}
+\FloatBarrier
 
 \subsection{Exact-Assumption Tracks A and B}
 
@@ -30,6 +31,7 @@ Track B uses a continuous exact balancing score and a linear representation clas
 \caption{Exact-assumption experiments. The first two panels report mean absolute ATE error with approximate $95\%$ Monte Carlo intervals over twenty replications. The third panel reports paired win rates at $n=10{,}000$, where a win means that the learned representation has smaller absolute error than the indicated comparator. Track A satisfies the primary comparison with $X$ but not the prespecified secondary superiority criterion against full observed adjustment. Track B records rank-recovery Spearman correlation $0.915$ and held-out finite-RFF conditional-dependence surrogate $0.00691$.}
 \label{fig:exact-tracks}
 \end{figure}
+\FloatBarrier
 
 \subsection{Finite-State Verification of the Certificate}
 
