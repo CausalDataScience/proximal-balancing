@@ -1,0 +1,97 @@
+{
+  "provenance": {
+    "script": "code/finite_state_bridge_experiment.py",
+    "plan": "memo/2026-08-18-finite-state-experiment-plan.md",
+    "theory": "THEORY.md",
+    "date": "2026-08-18",
+    "seed": 20260818,
+    "S": 10,
+    "M": 3,
+    "eta": 0.1,
+    "p_min": 0.05,
+    "n_phi": 59049
+  },
+  "R1_exact": {
+    "n_admissible": 55980,
+    "n_exact": 6,
+    "expected_n_exact": 6,
+    "max_abs_bias_at_exact": 1.1102230246251565e-16,
+    "attainability_ok": true
+  },
+  "R2_approximate": {
+    "n_admissible": 55980,
+    "violations_common_full": 0,
+    "violations_stratum_spotcheck": 0,
+    "violations_witness_spotcheck": 0,
+    "spot_checked_maps": 60,
+    "inf_D": 0.37338959258071525,
+    "argmin_labels": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2
+    ],
+    "bias_at_argmin": -0.027661245890611585,
+    "certificate_at_argmin": 0.6353400384977074,
+    "gamma_true": 1.7015472608823894,
+    "max_bias_over_D": 0.22448605361039886
+  },
+  "R4_illposedness": {
+    "sweep": [
+      {
+        "c1": 0.8,
+        "min_D": 0.37338959258071525,
+        "bias_at_argmin": 0.5106069193419467,
+        "max_gamma_star_at_argmin": 1.6388464401630807,
+        "gamma_star_infinite_at_argmin": false
+      },
+      {
+        "c1": 0.65,
+        "min_D": 0.20859933062913744,
+        "bias_at_argmin": 0.5106069193419467,
+        "max_gamma_star_at_argmin": 3.2668806108604977,
+        "gamma_star_infinite_at_argmin": false
+      },
+      {
+        "c1": 0.55,
+        "min_D": 0.12156303303346747,
+        "bias_at_argmin": 0.5106069193419467,
+        "max_gamma_star_at_argmin": 9.791010289284802,
+        "gamma_star_infinite_at_argmin": false
+      },
+      {
+        "c1": 0.51,
+        "min_D": 0.10586977006566957,
+        "bias_at_argmin": 0.5106069193419467,
+        "max_gamma_star_at_argmin": 48.94926933655302,
+        "gamma_star_infinite_at_argmin": false
+      },
+      {
+        "c1": 0.5,
+        "min_D": 0.10515428398557329,
+        "bias_at_argmin": 0.5106069193419467,
+        "max_gamma_star_at_argmin": null,
+        "gamma_star_infinite_at_argmin": true
+      }
+    ]
+  },
+  "finite_sample": {
+    "n": 20000,
+    "reps": 30,
+    "n_subset": 390,
+    "r_n_theoretical": 2.2723963729197343,
+    "sup_dev_subset_max": 0.024333126988204223,
+    "sup_dev_full_enum_rep0": 0.02081084294675367,
+    "full_enum_rep0_skipped_lowcount": 0,
+    "r_n_event_holds_subset_all_reps": true,
+    "r_n_event_holds_full_rep0": true,
+    "combined_interval_coverage": 1.0,
+    "mean_certificate_at_selection": 4.530400931717802
+  }
+}

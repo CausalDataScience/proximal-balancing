@@ -1,0 +1,260 @@
+{
+  "manifest_version": 1,
+  "accessed_on": "2026-08-23",
+  "datasets": {
+    "WSCdata": {
+      "upstream": "https://github.com/jzangela/WSCdata",
+      "version": "0.1.1.9000",
+      "revision": "6360a5247567c0ff632cd12aa2f6b3cfff92b2b6",
+      "license": "MIT; see wscdata/LICENSE.md",
+      "citation": "Keller et al. (2025), A New Four-Arm Within-Study Comparison: Design, Implementation, and Data, Observational Studies 11(2):153-188."
+    },
+    "LaLonde": {
+      "upstream": "https://github.com/xuyiqing/lalonde",
+      "version": "repository snapshot",
+      "revision": "c179a80e397178185983c272e1c1105d7ca53bf3",
+      "license": "MIT; see lalonde/LICENSE",
+      "citation": "Imbens and Xu (2024), LaLonde (1986) After Nearly Four Decades: Lessons Learned, arXiv:2406.00827."
+    },
+    "RHC": {
+      "upstream": "https://hbiostat.org/data/repo/rhc.html",
+      "version": "mutable public snapshot; content fixed by file SHA-256",
+      "revision": null,
+      "license": "No standard license stated. HBiostat grants permission to use the datasets with original-paper citation and requested attribution; see rhc/hbiostat-data.html.",
+      "citation": "Connors et al. (1996), The effectiveness of right heart catheterization in the initial care of critically ill patients, JAMA 276:889-897."
+    }
+  },
+  "files": [
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/AMAS_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/AMAS_WSC.Rd",
+      "sha256": "cbe5d30eb5b0aa9d2243b906a39a551c354469c9123b692f0e1d81f83c73e654",
+      "bytes": 880
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/BDI_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/BDI_WSC.Rd",
+      "sha256": "f0282133ea9395d07cb0b0706ddf9e616cb94b3b0ac438625e5859d31a8ea4e1",
+      "bytes": 792
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/Big5_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/Big5_WSC.Rd",
+      "sha256": "0da7628e538e4f984a97ae9ea257667635a33218dcb3913ff43e8c53c690393b",
+      "bytes": 1243
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/DESCRIPTION",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/DESCRIPTION",
+      "sha256": "177014d48ea86c21d5044e61cefaaaab04b4bd81527e56b0d98d377b70357688",
+      "bytes": 1077
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/GSES_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/GSES_WSC.Rd",
+      "sha256": "f6ea76080859b655e578d08b1df3825a7e44ca05a0bce58adc8a15069cd7ee90",
+      "bytes": 845
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/LICENSE",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/LICENSE",
+      "sha256": "406deda4b7db81114de952f0ef256e75e458defaf635eee87ae30bcc9235384c",
+      "bytes": 45
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/LICENSE.md",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/LICENSE.md",
+      "sha256": "7f74d341afe8d45b381e2bce074d92af6ebdfa20cff70d699275c677a04733b7",
+      "bytes": 1074
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/MCS_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/MCS_WSC.Rd",
+      "sha256": "dd2b387dc9ddfe5391bb4111f60548c783484c964c6ec8afc43cb8d338d0d5ac",
+      "bytes": 1590
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/Math_Pre_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/Math_Pre_WSC.Rd",
+      "sha256": "b3d68305132e15c95717d7643a3e63b9616cd1d31ea23fab41648df896ad2bda",
+      "bytes": 990
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/README.md",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/README.md",
+      "sha256": "0a3e2ea1e7f2d7a66ac0533ce428f854bc11c5084be86adb5be7704d64b952ac",
+      "bytes": 9117
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/Vocab_Pre_WSC.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/Vocab_Pre_WSC.Rd",
+      "sha256": "30ef9082aa7cf1e205baf4d8bf56b430b6e1bd0a888f3cc751f54d789a92fe13",
+      "bytes": 606
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/WSCdata.Rd",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/man/WSCdata.Rd",
+      "sha256": "3b2a192afdb8d127c6b40cca0640f0a9b7d90c580db92a86df34d1873be75bdb",
+      "bytes": 16484
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/WSCdata_prep.R",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/WSCdata_prep.R",
+      "sha256": "7eb5ecf27623d67db1c3336658af538e23d1b8594aa60295152041cb42944f65",
+      "bytes": 1170
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/df2200_cleaned.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/df2200_cleaned.csv",
+      "sha256": "cc67f453da430840a2262538ca8ba14cf2fc49bc10050225d570d649dca8cdaf",
+      "bytes": 237574
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_amas.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_amas.csv",
+      "sha256": "157543d50eee02824bc8569a1f46ab7ec8adf7b9bd18af657f0ebbe2cc682e3c",
+      "bytes": 39663
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_bdi.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_bdi.csv",
+      "sha256": "2b9f057fa4b185a684170604504ff67ee6e1569320e65d7f31606277f749a990",
+      "bytes": 57295
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_big5.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_big5.csv",
+      "sha256": "469bf96ed17cbca855735e0831d807f84e1d48b7c8940331af6b9212c2a62a67",
+      "bytes": 193733
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_gses.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_gses.csv",
+      "sha256": "6483bb241dad80cde9147275e2d55ae0a76ff5e12fd971af2d2617c2a31fb787",
+      "bytes": 28641
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_math_pre.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_math_pre.csv",
+      "sha256": "d6fcba6d7b9665f587f0ab692e0797ae58328d9397a376f057b8eb9f09bf39c1",
+      "bytes": 55086
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_mcs.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_mcs.csv",
+      "sha256": "79042e21edb078c8ed1cda955cdcd2974826036efc4cfdafdd90ff71c8d3d087",
+      "bytes": 72647
+    },
+    {
+      "dataset": "WSCdata",
+      "local_path": "wscdata/fin_vocab_pre.csv",
+      "source_url": "https://raw.githubusercontent.com/jzangela/WSCdata/6360a5247567c0ff632cd12aa2f6b3cfff92b2b6/data-raw/fin_vocab_pre.csv",
+      "sha256": "6cc4dcc154f40fd48aa4d092006e21ca16e98d2cb4140fe40bd753585934ba27",
+      "bytes": 107982
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/LICENSE",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/LICENSE",
+      "sha256": "5a329e855bdb819c48132b127000d9736d4831e3e9b380f761c8ded647679fb7",
+      "bytes": 1083
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/ReadMe.md",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/ReadMe.md",
+      "sha256": "9f3ca82dc928a0487ad31b80ed69367f55494569cff6f020792992c050226b9a",
+      "bytes": 5589
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/cps_controls.dta",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/cps_controls.dta",
+      "sha256": "80f0123eaf723870bd060ba9f8569617a7cb519a462dc20badbfb3443cd8374b",
+      "bytes": 705546
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/dataframes.csv",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/dataframes.csv",
+      "sha256": "466502d3c21cce39ffe558354ae37d0a7e3af9b76b7dfca2319f1af7ed4149fe",
+      "bytes": 1957
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/datasets.csv",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/datasets.csv",
+      "sha256": "6d0a97087d0f8824339a808332ab8645c9fb109fe30c7753f69ea377dee219be",
+      "bytes": 789
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/nsw.dta",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/nsw.dta",
+      "sha256": "3ee014cb0010e2e7fb990ac497f4217968733e2c9abfa4de84e83f524898c24e",
+      "bytes": 22674
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/nsw_dw.dta",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/nsw_dw.dta",
+      "sha256": "d1bd2680a1c6f799f1c6d2455bf29633fdf19be01cb19490621c20a560b4e072",
+      "bytes": 28598
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/psid_controls.dta",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/psid_controls.dta",
+      "sha256": "7beebae8928035d6abf662b994ce77a4fbea7ae6575037ff94e92fe099b43e14",
+      "bytes": 111458
+    },
+    {
+      "dataset": "LaLonde",
+      "local_path": "lalonde/source.txt",
+      "source_url": "https://raw.githubusercontent.com/xuyiqing/lalonde/c179a80e397178185983c272e1c1105d7ca53bf3/data/lalonde/source.txt",
+      "sha256": "68bfa976168d0bb3b1606a6a6d4fbd55acd32284f948ac3db7d8e5ea8abe0a9c",
+      "bytes": 329
+    },
+    {
+      "dataset": "RHC",
+      "local_path": "rhc/hbiostat-data.html",
+      "source_url": "https://hbiostat.org/data/",
+      "sha256": "b8129d3fea4df3e9383216fe83df41069750f19a1b00af0794d7d0b0402e4360",
+      "bytes": 1578386
+    },
+    {
+      "dataset": "RHC",
+      "local_path": "rhc/rhc.csv",
+      "source_url": "https://hbiostat.org/data/repo/rhc.csv",
+      "sha256": "9ef4ab578be4b40ad5d97d3a7e08ffdc1f9f76aeeefee51b4996e4221556f8e8",
+      "bytes": 2320412
+    },
+    {
+      "dataset": "RHC",
+      "local_path": "rhc/rhc.html",
+      "source_url": "https://hbiostat.org/data/repo/rhc.html",
+      "sha256": "f255926741a2fae4b9ee0df8855e9b93f3607a1139bf569872dadd67ccb4d354",
+      "bytes": 14744
+    }
+  ]
+}

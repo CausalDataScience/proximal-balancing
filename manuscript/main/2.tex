@@ -1,0 +1,49 @@
+\section{Problem Setting}
+\label{sec:setup}
+
+\subsection{Preliminaries}
+\label{sec:preliminaries}
+
+\paragraph{Structural causal models.}
+A structural causal model (SCM) consists of endogenous variables, exogenous disturbances, and structural assignments. Writing the endogenous variables as $V_1,\ldots,V_d$, an acyclic SCM has equations
+\begin{align}
+V_j=f_j(\operatorname{pa}_j,E_j),
+\qquad j=1,\ldots,d,
+\end{align}
+where $\operatorname{pa}_j$ contains the direct causes of $V_j$ and $E_j$ is an exogenous disturbance. The intervention $\operatorname{do}(A=a)$ replaces the structural equation for $A$ by the constant $a$ while leaving the other equations unchanged. The resulting outcome is the potential outcome $Y(a)$. An average causal effect is \emph{identified} when its value is uniquely determined by the observed-data distribution for every SCM in the stated model class \citep{pearl2009causality}.
+
+\paragraph{Proximal causal inference.}
+Ordinary adjustment seeks observed covariates that block all noncausal paths from treatment to outcome. Proximal causal inference instead allows an unobserved confounder and uses proxy measurements of it. Standard proximal formulations assign two different proxy roles and posit a bridge equation whose solution translates an observable conditional moment into the target causal functional \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. Completeness or injectivity prevents distinct latent laws from producing the same observable proxy law. These conditions do not follow from the mere existence of a correlated proxy. Our method retains this distinction: injectivity is used for exact interpretation, while quantitative stability is used when balance is only approximate.
+
+\subsection{Problem Setting}
+\label{sec:problem-setting}
+
+We observe independent copies
+\begin{align}
+O_i=(X_i,W_i,A_i,Y_i),
+\qquad i=1,\ldots,n,
+\end{align}
+where $X$ is a vector of observed pretreatment covariates, $W$ is one observed pretreatment proxy, $A\in\{0,1\}$ is treatment, and $Y$ is the observed outcome. The variable $U$ denotes an unobserved pretreatment cause that may affect both $A$ and $Y$. The target is the population average treatment effect
+\begin{align}
+\tau\triangleq\mathbb E\{Y(1)-Y(0)\}.
+\end{align}
+We do not assume that $A\perp\!\!\!\perp U\mid X$.
+
+The canonical method fixes an integer $M\ge1$, writes $[M]\triangleq\{1,\ldots,M\}$, and prespecifies a class $\Phi$ of measurable maps from the support of $X$ to $[M]$. For $\phi\in\Phi$, the adjustment representation is
+\begin{align}
+Z\triangleq\phi(X).
+\end{align}
+This is a construction, not an assumption. The proxy $W$ supervises the choice of $\phi$ through an outcome-free balance criterion, but $W$ is not included in the canonical adjustment variable $Z$.
+
+For a fixed $\phi$, define the population contrast obtained by adjusting for $Z$ as
+\begin{align}
+\tau_\phi
+\triangleq
+\sum_{z=1}^M P(Z=z)
+\left[
+\mathbb E(Y\mid A=1,Z=z)
+-
+\mathbb E(Y\mid A=0,Z=z)
+\right].
+\end{align}
+The central questions are whether observable balance can imply $\tau_\phi=\tau$, how the difference $\tau_\phi-\tau$ can be bounded when balance is imperfect, and whether a representation minimizing an empirical balance criterion inherits a finite-sample causal guarantee. All additional notation is introduced only when the corresponding result requires it.

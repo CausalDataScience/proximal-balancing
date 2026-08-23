@@ -1,0 +1,122 @@
+\section{Identification Theory}
+\label{sec:identification}
+
+\subsection{Causal and Proxy Assumptions}
+
+The canonical results use the following assumptions, separated by their logical roles. Consistency states $Y=Y(A)$, and latent conditional exchangeability states
+\begin{align}
+Y(a)\perp\!\!\!\perp A\mid(X,U),
+\qquad a\in\{0,1\}.
+\end{align}
+The pretreatment proxy channel is treatment-invariant:
+\begin{align}
+W(a)=W,
+\qquad
+W\perp\!\!\!\perp A\mid(X,U).
+\end{align}
+For each $x$, let $K_x(\cdot\mid u)$ denote the conditional law of $W$ given $X=x$ and $U=u$. Conditional mixture injectivity means that equality of two mixtures $\int K_x(\cdot\mid u)dQ(u)$ implies equality of their admissible mixing laws $Q$. This condition is used only to interpret exact balance as full latent balance.
+
+Every retained stratum must have positive mass and both treatment arms. Specifically, for constants $p_{\min}>0$ and $\eta\in(0,1/2)$,
+\begin{align}
+P(Z=z)\ge p_{\min},
+\qquad
+\eta\le P(A=1\mid Z=z)\le1-\eta.
+\end{align}
+The balance metric uses a bounded characteristic kernel $k$ on the joint space of $(X,W)$. Approximate results additionally require the outcome-relevant stability condition introduced below. This stability condition is not implied by injectivity and is not generally identified from one proxy.
+
+\subsection{Observable Joint Balance}
+
+For a fixed representation and retained stratum $z$, let
+\begin{align}
+R_{a,z}\triangleq\mathcal L(X,W\mid A=a,Z=z),
+\qquad
+p_z\triangleq P(Z=z).
+\end{align}
+The stratum discrepancy and its aggregate are
+\begin{align}
+\Delta_z(\phi)
+&\triangleq
+\operatorname{MMD}_k(R_{1,z},R_{0,z}),\\
+D(\phi)
+&\triangleq
+\sum_{z:p_z>0}p_z\Delta_z(\phi).
+\end{align}
+Because $k$ is characteristic,
+\begin{align}
+D(\phi)=0
+\quad\Longleftrightarrow\quad
+(X,W)\perp\!\!\!\perp A\mid Z.
+\end{align}
+Exact balance is therefore an observable population property of a constructed representation. It is not assumed to be attainable.
+
+\subsection{Exact Bias Decomposition}
+
+Let $Q_{a,z}\triangleq\mathcal L(X,U\mid A=a,Z=z)$, let $\nu_{\phi,z}\triangleq Q_{1,z}-Q_{0,z}$, and define the latent outcome regression $\mu_a(x,u)\triangleq\mathbb E\{Y(a)\mid X=x,U=u\}$. If $\pi_z\triangleq P(A=1\mid Z=z)$, then the population bias has the exact decomposition
+\begin{align}
+\tau_\phi-\tau
+=
+\sum_{z=1}^M p_z
+\int
+\left\{(1-\pi_z)\mu_1(x,u)+\pi_z\mu_0(x,u)\right\}
+d\nu_{\phi,z}(x,u).
+\label{eq:bias-decomposition}
+\end{align}
+Equation~\eqref{eq:bias-decomposition} identifies the object that proxy balance must control: outcome-relevant functionals of the latent treatment-arm contrast, rather than every latent direction.
+
+\subsection{Approximate Balance and the Stability Certificate}
+
+The proxy channel sends a latent signed contrast $\nu$ to an observable kernel embedding. Denote this embedding operator in stratum $z$ by $J_{\phi,z}\nu$. For treatment level $a$, denote the corresponding outcome functional by
+\begin{align}
+\ell_{a,\phi,z}(\nu)
+\triangleq
+\int\mu_a(x,u)d\nu(x,u).
+\end{align}
+Outcome-relevant stability requires a common finite constant $\Gamma$ such that, over the prespecified representation class and admissible latent contrasts,
+\begin{align}
+|\ell_{a,\phi,z}(\nu)|
+\le
+\Gamma\|J_{\phi,z}\nu\|_{\mathcal H_k}.
+\label{eq:uniform-stability}
+\end{align}
+Combining \eqref{eq:bias-decomposition} with \eqref{eq:uniform-stability} yields the established population certificate
+\begin{align}
+\boxed{|\tau_\phi-\tau|\le\Gamma D(\phi).}
+\label{eq:population-certificate}
+\end{align}
+The constant $\Gamma$ is a sensitivity parameter unless outside information calibrates it. A global RKHS outcome bridge with norm at most $\Gamma$ is a sufficient structural witness for uniform stability, but the canonical method does not estimate that bridge.
+
+\subsection{Exact Identification and Attainability}
+
+If stability holds and $D(\phi)=0$, then \eqref{eq:population-certificate} gives $\tau_\phi=\tau$. Under proxy-channel invariance and conditional mixture injectivity, exact joint balance also implies $U\perp\!\!\!\perp A\mid X$; together with $X\perp\!\!\!\perp A\mid Z$, latent exchangeability, consistency, and overlap, this yields
+\begin{align}
+Y(a)\perp\!\!\!\perp A\mid Z
+\end{align}
+and identifies the ATE by adjustment for $Z$.
+
+Identification at an attained endpoint must be separated from existence of that endpoint. For the class of all maps from $X$ to at most $M$ strata, primitive strict overlap implies the established equivalence
+\begin{align}
+\exists\phi:D(\phi)=0
+\quad\Longleftrightarrow\quad
+W\perp\!\!\!\perp A\mid X
+\quad\text{and}\quad
+e(X)\ \text{takes at most $M$ values},
+\end{align}
+where $e(X)\triangleq P(A=1\mid X)$. Thus exact balance is a strong certification result, while the practically interesting confounded regime is generally approximate.
+
+\subsection{When Discrepancy Orders Realized Bias}
+
+The bound in \eqref{eq:population-certificate} does not generally imply that a smaller discrepancy produces a smaller realized bias. Under the established restricted alignment result with binary severity, an $x$-homogeneous informative proxy channel, an additive homogeneous outcome, within-stratum $X$ balance, and a common direction of latent selection, the proxy-marginal discrepancy satisfies
+\begin{align}
+|\tau_\phi-\tau|=\kappa D_W(\phi)
+\end{align}
+for a representation-independent $\kappa>0$. This identity gives order preservation inside that restricted model class. Outside it, the paper claims minimization of a certified worst-case bias, not automatic minimization of realized bias.
+
+\subsection{Independent Audit-View Extension}
+
+A proxy-augmented extension splits a high-dimensional measurement into a representation view and an untouched audit view, writes
+\begin{align}
+W=(W^{\mathrm{rep}},W^{\mathrm{audit}}),
+\qquad
+R=\rho(X,W^{\mathrm{rep}}),
+\end{align}
+and evaluates $(X,W^{\mathrm{audit}})\perp\!\!\!\perp A\mid R$. This prevents the representation from making audit balance tautological by copying the audited coordinate. Exact point identification is available only under additional multi-view conditional independence and an outcome-relevant null-space or injectivity condition for the audit channel. This extension is currently a conditional theorem direction, not part of the canonical established theory. Its approximate stability bound is also open and will not be presented as a proved result.

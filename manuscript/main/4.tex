@@ -1,0 +1,100 @@
+\section{Estimating Causal Effects}
+\label{sec:estimation}
+
+\subsection{Outcome-Free Representation Learning}
+
+For a candidate map $\phi$, let $\widehat\mu_{a,z}$ be the empirical kernel mean embedding of $(X,W)$ among observations with $A=a$ and $\phi(X)=z$. Define
+\begin{align}
+\widehat\Delta_z(\phi)
+&\triangleq
+\|\widehat\mu_{1,z}-\widehat\mu_{0,z}\|_{\mathcal H_k},\\
+\widehat D(\phi)
+&\triangleq
+\sum_z\widehat p_z(\phi)\widehat\Delta_z(\phi).
+\end{align}
+The ideal empirical learner returns $\widehat\phi$ satisfying
+\begin{align}
+\widehat D(\widehat\phi)
+\le
+\inf_{\phi\in\Phi}\widehat D(\phi)
++\varepsilon_{\mathrm{opt}},
+\label{eq:empirical-learner}
+\end{align}
+where $\varepsilon_{\mathrm{opt}}$ records optimization error. Neither $Y$ nor $U$ enters this training objective. Minimum stratum mass and representation-level overlap are enforced as admissibility conditions rather than inferred from a small penalty alone.
+
+\subsection{Cross-Fitted Algorithm}
+
+The operational algorithm has four stages. First, split the sample into representation-training and effect-estimation folds. Second, learn $\widehat\phi$ on the training fold by minimizing an outcome-free balance objective with Adam or a finite-class search. Third, evaluate overlap and the balance discrepancy on data not used to choose the representation. Fourth, set $Z=\widehat\phi(X)$ on the effect-estimation fold and estimate the adjusted contrast. Rotating the folds and averaging estimates uses every observation while preserving the conditional fixed-representation argument.
+
+Current neural implementations optimize differentiable soft assignments and may deploy a hard map. If $\widehat D_{\mathrm{soft}}$ is used in place of the analyzed hard-stratum objective, a valid theorem needs an explicit soft-to-hard error $\varepsilon_{\mathrm{soft}}$. The existence of such a uniform bound for the current networks is open; the manuscript will report the training surrogate and held-out hard discrepancy separately.
+
+\subsection{AIPW Estimation for a Fixed Representation}
+
+For fixed finite $Z$, define the nuisance functions only now:
+\begin{align}
+e_Z(z)&\triangleq P(A=1\mid Z=z),\\
+m_a(z)&\triangleq\mathbb E(Y\mid A=a,Z=z).
+\end{align}
+Given cross-fitted estimates $\widehat e_Z$ and $\widehat m_a$, the augmented inverse-probability weighted estimator is
+\begin{align}
+\widehat\tau_{\mathrm{AIPW}}
+=\frac{1}{n}\sum_{i=1}^n
+\Bigg[
+&\widehat m_1(Z_i)-\widehat m_0(Z_i)
++\frac{A_i\{Y_i-\widehat m_1(Z_i)\}}{\widehat e_Z(Z_i)}\\
+&-\frac{(1-A_i)\{Y_i-\widehat m_0(Z_i)\}}{1-\widehat e_Z(Z_i)}
+\Bigg].
+\label{eq:aipw}
+\end{align}
+For a fixed finite representation, the corresponding influence function is
+\begin{align}
+\psi_\phi(O)
+=
+\frac{A\{Y-m_1(Z)\}}{e_Z(Z)}
+-
+\frac{(1-A)\{Y-m_0(Z)\}}{1-e_Z(Z)}
++m_1(Z)-m_0(Z)-\tau_\phi.
+\end{align}
+The stratified plug-in estimator equals \eqref{eq:aipw} when empirical cell means are used, and it is asymptotically efficient for $\tau_\phi$ in the nonparametric model for $(Z,A,Y)$. This statement is established for fixed $\phi$; a complete joint limit theory for a neural, data-selected $\widehat\phi$ remains open.
+
+\subsection{Finite-Sample Error Decomposition}
+
+Suppose the representation class is finite and, with probability at least $1-\delta$,
+\begin{align}
+\sup_{\phi\in\Phi}|\widehat D(\phi)-D(\phi)|
+\le r_n(\delta).
+\end{align}
+For a bounded kernel and the overlap and mass constants in Section~\ref{sec:identification}, the established finite-class analysis gives
+\begin{align}
+r_n(\delta)
+=
+O\!\left(
+\sqrt{\frac{\log|\Phi|+\log(1/\delta)}{n p_{\min}\eta}}
++
+\sqrt{\frac{M+\log|\Phi|+\log(1/\delta)}{n}}
+\right),
+\label{eq:rn-rate}
+\end{align}
+with explicit constants available from the count, kernel-embedding, and multinomial-weight concentration steps. Combining \eqref{eq:empirical-learner} with the population certificate yields
+\begin{align}
+|\tau_{\widehat\phi}-\tau|
+&\le
+\Gamma\{\widehat D(\widehat\phi)+r_n(\delta)\},\\
+|\tau_{\widehat\phi}-\tau|
+&\le
+\Gamma\left\{\inf_{\phi\in\Phi}D(\phi)
++2r_n(\delta)+\varepsilon_{\mathrm{opt}}\right\}.
+\label{eq:oracle-bound}
+\end{align}
+
+If the effect estimator also satisfies $|\widehat\tau-\tau_{\widehat\phi}|\le\varepsilon_{\mathrm{est}}$, then
+\begin{align}
+\boxed{
+|\widehat\tau-\tau|
+\le
+\varepsilon_{\mathrm{est}}
++\Gamma\{\widehat D(\widehat\phi)+r_n(\delta)\}.
+}
+\label{eq:finite-certificate}
+\end{align}
+For bounded outcomes and a fixed finite representation, $\varepsilon_{\mathrm{est}}$ has an explicit Hoeffding and multinomial bound. Equation~\eqref{eq:finite-certificate} is therefore established for enumerable classes and fixed-fold evaluation. A neural-class complexity bound, a proved $\varepsilon_{\mathrm{soft}}$, and joint inference after adaptive representation selection are explicitly open. If these pieces are supplied, the right side of \eqref{eq:oracle-bound} gains the corresponding optimization, discretization, and nuisance-estimation terms rather than changing the population target.
