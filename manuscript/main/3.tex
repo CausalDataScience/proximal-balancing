@@ -1,57 +1,58 @@
 \section{Identification Theory}
 \label{sec:identification}
 
-\subsection{Causal and Proxy Assumptions}
+This section develops one population argument.  We first express the bias of adjustment for $Z=\phi(X)$ as a functional of the latent treated-versus-control contrast.  We then show how the observable imbalance of $(X,W)$ controls that functional under a declared stability budget.  Exact balance is treated as an endpoint to be certified, not as a property that every representation class can attain.
 
-The canonical results use the following assumptions, separated by their logical roles. Consistency states $Y=Y(A)$, and latent conditional exchangeability states
+\begin{assumption}[Causal and proxy structure]
+\label{ass:causal-proxy}
+For each $a\in\{0,1\}$, consistency and integrability hold,
 \begin{align}
-Y(a)\perp\!\!\!\perp A\mid(X,U),
-\qquad a\in\{0,1\}.
+Y=Y(A),
+\qquad
+\mathbb E|Y(a)|<\infty,
 \end{align}
-The pretreatment proxy channel is treatment-invariant:
+and treatment is conditionally exchangeable given the observed covariates and latent confounder,
+\begin{align}
+Y(a)\perp\!\!\!\perp A\mid(X,U).
+\end{align}
+The proxy is pretreatment and its measurement law is invariant across treatment arms:
 \begin{align}
 W(a)=W,
 \qquad
 W\perp\!\!\!\perp A\mid(X,U).
 \end{align}
-For each $x$, let $K_x(\cdot\mid u)$ denote the conditional law of $W$ given $X=x$ and $U=u$. Conditional mixture injectivity means that equality of two mixtures $\int K_x(\cdot\mid u)dQ(u)$ implies equality of their admissible mixing laws $Q$. This condition is used only to interpret exact balance as full latent balance.
+\end{assumption}
 
-Every retained stratum must have positive mass and both treatment arms. Specifically, for constants $p_{\min}>0$ and $\eta\in(0,1/2)$,
+The next assumption makes both the adjustment contrast and the observable balance criterion well defined for every retained stratum.
+
+\begin{assumption}[Stratum and kernel regularity]
+\label{ass:stratum-kernel}
+There are constants $p_{\min}>0$ and $\eta\in(0,1/2)$ such that, for every retained $\phi\in\Phi$ and stratum $z$,
 \begin{align}
-P(Z=z)\ge p_{\min},
+p_z\triangleq P(Z=z)\ge p_{\min},
 \qquad
-\eta\le P(A=1\mid Z=z)\le1-\eta.
+\eta\le \pi_z\triangleq P(A=1\mid Z=z)\le1-\eta.
 \end{align}
-The balance metric uses a bounded characteristic kernel $k$ on the joint space of $(X,W)$. Approximate results additionally require the outcome-relevant stability condition introduced below. This stability condition is not implied by injectivity and is not generally identified from one proxy.
+The kernel $k$ on the joint space of $(X,W)$ is bounded and characteristic, and all kernel mean embeddings used below exist.
+\end{assumption}
 
-\subsection{Observable Joint Balance}
-
-For a fixed representation and retained stratum $z$, let
+\begin{definition}[Latent arm contrast]
+\label{def:latent-arm-contrast}
+For a fixed representation and stratum $z$, let
 \begin{align}
-R_{a,z}\triangleq\mathcal L(X,W\mid A=a,Z=z),
+Q_{a,z}\triangleq\mathcal L(X,U\mid A=a,Z=z),
 \qquad
-p_z\triangleq P(Z=z).
+\nu_{\phi,z}\triangleq Q_{1,z}-Q_{0,z}.
 \end{align}
-The stratum discrepancy and its aggregate are
+When it is first needed, define the latent outcome regression by
 \begin{align}
-\Delta_z(\phi)
-&\triangleq
-\operatorname{MMD}_k(R_{1,z},R_{0,z}),\\
-D(\phi)
-&\triangleq
-\sum_{z:p_z>0}p_z\Delta_z(\phi).
+\mu_a(x,u)\triangleq\mathbb E\{Y(a)\mid X=x,U=u\}.
 \end{align}
-Because $k$ is characteristic,
-\begin{align}
-D(\phi)=0
-\quad\Longleftrightarrow\quad
-(X,W)\perp\!\!\!\perp A\mid Z.
-\end{align}
-Exact balance is therefore an observable population property of a constructed representation. It is not assumed to be attainable.
+\end{definition}
 
-\subsection{Exact Bias Decomposition}
-
-Let $Q_{a,z}\triangleq\mathcal L(X,U\mid A=a,Z=z)$, let $\nu_{\phi,z}\triangleq Q_{1,z}-Q_{0,z}$, and define the latent outcome regression $\mu_a(x,u)\triangleq\mathbb E\{Y(a)\mid X=x,U=u\}$. If $\pi_z\triangleq P(A=1\mid Z=z)$, then the population bias has the exact decomposition
+\begin{theorem}[Exact bias decomposition]
+\label{thm:bias-decomposition}
+Under the consistency, integrability, and latent-exchangeability parts of Assumption~\ref{ass:causal-proxy}, together with the mass and overlap conditions in Assumption~\ref{ass:stratum-kernel}, every fixed $\phi\in\Phi$ satisfies
 \begin{align}
 \tau_\phi-\tau
 =
@@ -61,62 +62,270 @@ Let $Q_{a,z}\triangleq\mathcal L(X,U\mid A=a,Z=z)$, let $\nu_{\phi,z}\triangleq 
 d\nu_{\phi,z}(x,u).
 \label{eq:bias-decomposition}
 \end{align}
-Equation~\eqref{eq:bias-decomposition} identifies the object that proxy balance must control: outcome-relevant functionals of the latent treatment-arm contrast, rather than every latent direction.
+\end{theorem}
 
-\subsection{Approximate Balance and the Stability Certificate}
+Theorem~\ref{thm:bias-decomposition} isolates the quantity that a proxy must control.  Recovering every feature of the latent distribution is sufficient, but the bias depends only on the displayed outcome-relevant functionals.
 
-The proxy channel sends a latent signed contrast $\nu$ to an observable kernel embedding. Denote this embedding operator in stratum $z$ by $J_{\phi,z}\nu$. For treatment level $a$, denote the corresponding outcome functional by
+\begin{definition}[Observable joint discrepancy]
+\label{def:observable-discrepancy}
+Let $\mathcal H_k$ denote the RKHS induced by $k$.  For a probability law $P$ on $(X,W)$, define its kernel mean by
 \begin{align}
-\ell_{a,\phi,z}(\nu)
-\triangleq
-\int\mu_a(x,u)d\nu(x,u).
+m_k(P)\triangleq\int k(v,\cdot)\,dP(v),
 \end{align}
-Outcome-relevant stability requires a common finite constant $\Gamma$ such that, over the prespecified representation class and admissible latent contrasts,
+and define
+\begin{align}
+\operatorname{MMD}_k(P,Q)
+\triangleq
+\|m_k(P)-m_k(Q)\|_{\mathcal H_k}.
+\end{align}
+For each treatment arm and stratum, let
+\begin{align}
+R_{a,z}\triangleq\mathcal L(X,W\mid A=a,Z=z).
+\end{align}
+The discrepancy in stratum $z$ and its population aggregate are
+\begin{align}
+\Delta_z(\phi)
+&\triangleq
+\operatorname{MMD}_k(R_{1,z},R_{0,z}),\\
+D(\phi)
+&\triangleq
+\sum_{z:p_z>0}p_z\Delta_z(\phi).
+\end{align}
+\end{definition}
+
+\begin{proposition}[Observable meaning of zero discrepancy]
+\label{prop:zero-discrepancy}
+Under Assumption~\ref{ass:stratum-kernel},
+\begin{align}
+D(\phi)=0
+\quad\Longleftrightarrow\quad
+(X,W)\perp\!\!\!\perp A\mid Z.
+\end{align}
+\end{proposition}
+
+Proposition~\ref{prop:zero-discrepancy} is an equality of observed conditional laws.  By itself, it does not eliminate hidden confounding.  The next definitions state the additional link used by the approximate theory.
+
+\begin{definition}[Proxy transport and outcome functionals]
+\label{def:proxy-transport}
+Assumption~\ref{ass:causal-proxy} gives the treatment-invariant proxy channel
+\begin{align}
+K_x(B\mid u)\triangleq P(W\in B\mid X=x,U=u).
+\end{align}
+For a finite signed measure $\nu$ on $\mathcal X\times\mathcal U$, define its image on $\mathcal X\times\mathcal W$ by
+\begin{align}
+(\mathcal K\nu)(C)
+\triangleq
+\int\!\int
+\mathbf 1\{(x,w)\in C\}K_x(dw\mid u)\,\nu(dx,du).
+\end{align}
+Before observing the data, fix a linear space $\mathcal C_{\phi,z}$ of integrable, total-mass-zero contrasts that contains every $Q_{1,z}-Q_{0,z}$ allowed by the scientific model.  For $\nu\in\mathcal C_{\phi,z}$, define
+\begin{align}
+J_{\phi,z}\nu
+&\triangleq
+\int k(v,\cdot)\,d(\mathcal K\nu)(v)
+\in\mathcal H_k,\\
+\ell_{a,\phi,z}(\nu)
+&\triangleq
+\int\mu_a(x,u)\,d\nu(x,u).
+\end{align}
+\end{definition}
+
+\begin{assumption}[Uniform outcome-relevant stability]
+\label{ass:uniform-stability}
+For each $a$, $\phi$, and retained $z$, there is a finite $\Gamma_{a,\phi,z}$ such that
 \begin{align}
 |\ell_{a,\phi,z}(\nu)|
 \le
-\Gamma\|J_{\phi,z}\nu\|_{\mathcal H_k}.
+\Gamma_{a,\phi,z}\|J_{\phi,z}\nu\|_{\mathcal H_k},
+\qquad
+\nu\in\mathcal C_{\phi,z}.
 \label{eq:uniform-stability}
 \end{align}
-Combining \eqref{eq:bias-decomposition} with \eqref{eq:uniform-stability} yields the established population certificate
+For representation selection with the unweighted criterion $D(\phi)$, these constants share a prespecified finite budget,
+\begin{align}
+\sup_{\phi\in\Phi}\max_{z:p_z>0}\max_{a\in\{0,1\}}
+\Gamma_{a,\phi,z}
+\le\Gamma<\infty.
+\end{align}
+The budget $\Gamma$ is a sensitivity parameter unless external information calibrates it.  Injectivity alone does not supply a quantitative common budget, and $\Gamma$ is not generally identified from one proxy.
+\end{assumption}
+
+\begin{lemma}[Channel identity]
+\label{lem:channel-identity}
+Under the proxy-invariance part of Assumption~\ref{ass:causal-proxy},
+\begin{align}
+R_{a,z}=\mathcal KQ_{a,z},
+\qquad
+\|J_{\phi,z}\nu_{\phi,z}\|_{\mathcal H_k}=\Delta_z(\phi).
+\end{align}
+\end{lemma}
+
+The channel identity puts the latent contrast in Theorem~\ref{thm:bias-decomposition} and the observed discrepancy in Definition~\ref{def:observable-discrepancy} on the same scale.  Stability then converts this equality into the main population guarantee.
+
+\begin{theorem}[Population proxy-balancing certificate]
+\label{thm:population-certificate}
+Under Assumptions~\ref{ass:causal-proxy}, \ref{ass:stratum-kernel}, and \ref{ass:uniform-stability}, every fixed $\phi\in\Phi$ obeys
+\begin{align}
+|\tau_\phi-\tau|
+\le
+\sum_{z=1}^M p_z
+\left\{(1-\pi_z)\Gamma_{1,\phi,z}
++\pi_z\Gamma_{0,\phi,z}\right\}
+\Delta_z(\phi).
+\end{align}
+Under the common budget $\Gamma$, this becomes
 \begin{align}
 \boxed{|\tau_\phi-\tau|\le\Gamma D(\phi).}
 \label{eq:population-certificate}
 \end{align}
-The constant $\Gamma$ is a sensitivity parameter unless outside information calibrates it. A global RKHS outcome bridge with norm at most $\Gamma$ is a sufficient structural witness for uniform stability, but the canonical method does not estimate that bridge.
+\end{theorem}
 
-\subsection{Exact Identification and Attainability}
+\begin{proof}
+Apply Theorem~\ref{thm:bias-decomposition}, the triangle inequality, Assumption~\ref{ass:uniform-stability}, and Lemma~\ref{lem:channel-identity}.  The weights on the two treatment-specific constants sum to one within each stratum, which gives the common-budget form.
+\end{proof}
 
-If stability holds and $D(\phi)=0$, then \eqref{eq:population-certificate} gives $\tau_\phi=\tau$. Under proxy-channel invariance and conditional mixture injectivity, exact joint balance also implies $U\perp\!\!\!\perp A\mid X$; together with $X\perp\!\!\!\perp A\mid Z$, latent exchangeability, consistency, and overlap, this yields
+The central theorem controls the certified worst-case bias within the declared model class.  It does not claim that decreasing $D(\phi)$ must decrease the unknown realized bias for every data-generating process.
+
+\begin{proposition}[Minimal stability and bounded factorization]
+\label{prop:minimal-stability}
+For fixed $(a,\phi,z)$, define
 \begin{align}
-Y(a)\perp\!\!\!\perp A\mid Z
+\Gamma_{a,\phi,z}^{\star}
+\triangleq
+\sup_{\substack{\nu\in\mathcal C_{\phi,z}\\
+\|J_{\phi,z}\nu\|_{\mathcal H_k}>0}}
+\frac{|\ell_{a,\phi,z}(\nu)|}
+{\|J_{\phi,z}\nu\|_{\mathcal H_k}}.
 \end{align}
-and identifies the ATE by adjustment for $Z$.
-
-Identification at an attained endpoint must be separated from existence of that endpoint. For the class of all maps from $X$ to at most $M$ strata, primitive strict overlap implies the established equivalence
+Set $\Gamma_{a,\phi,z}^{\star}=\infty$ if $J_{\phi,z}\nu=0$ but $\ell_{a,\phi,z}(\nu)\ne0$ for an admissible $\nu$, and set an empty supremum to zero when $\ell_{a,\phi,z}$ vanishes on the kernel.  Then $\Gamma_{a,\phi,z}^{\star}<\infty$ if and only if there is a bounded linear functional $\widetilde\ell_{a,\phi,z}$ on $J_{\phi,z}(\mathcal C_{\phi,z})$ such that
 \begin{align}
-\exists\phi:D(\phi)=0
-\quad\Longleftrightarrow\quad
+\ell_{a,\phi,z}=\widetilde\ell_{a,\phi,z}\circ J_{\phi,z}.
+\end{align}
+This functional extends uniquely to the closure of the range and has a minimum-norm Riesz representer
+\begin{align}
+g_{a,\phi,z}^{\star}
+\in
+\overline{J_{\phi,z}(\mathcal C_{\phi,z})}
+\subseteq\mathcal H_k
+\end{align}
+satisfying
+\begin{align}
+\ell_{a,\phi,z}(\nu)
+=\langle g_{a,\phi,z}^{\star},J_{\phi,z}\nu\rangle_{\mathcal H_k},
+\qquad
+\|g_{a,\phi,z}^{\star}\|_{\mathcal H_k}
+=\Gamma_{a,\phi,z}^{\star}.
+\end{align}
+\end{proposition}
+
+This factorization states the precise price of the certificate.  Only outcome-relevant latent contrasts must pass continuously through the observable proxy channel.
+
+\begin{proposition}[Global RKHS bridge witness]
+\label{prop:global-bridge}
+For $g\in\mathcal H_k$, define
+\begin{align}
+(Tg)(x,u)\triangleq\int g(x,w)K_x(dw\mid u).
+\end{align}
+If, for each $a\in\{0,1\}$, a single $g_a\in\mathcal H_k$ satisfies $Tg_a=\mu_a$ throughout the model class and $\|g_a\|_{\mathcal H_k}\le\Gamma$, then Assumption~\ref{ass:uniform-stability} holds uniformly over all $\phi\in\Phi$ and retained strata.
+\end{proposition}
+
+The bridge in Proposition~\ref{prop:global-bridge} is a structural witness, not an estimated object in the proposed method.  It provides a common valid budget, but it need not provide the tight constant for any particular representation.
+
+\begin{corollary}[Exact identification through stability]
+\label{cor:exact-stability}
+Under the assumptions of Theorem~\ref{thm:population-certificate}, if $D(\phi)=0$, then $\tau_\phi=\tau$.  Hence the ATE is point identified by the observed $Z$-adjustment functional defined in Section~\ref{sec:problem-setting}.
+\end{corollary}
+
+Exact identification can also be interpreted through full latent balance.  That interpretation uses the following stronger qualitative condition, which is deliberately introduced only here.
+
+\begin{assumption}[Conditional mixture injectivity]
+\label{ass:mixture-injectivity}
+For almost every $x$, the map
+\begin{align}
+\lambda\longmapsto\int K_x(\cdot\mid u)\,\lambda(du)
+\end{align}
+is injective over the admissible conditional laws of $U$ given $X=x$.  The admissible class contains both $\mathcal L(U\mid X=x,A=0)$ and $\mathcal L(U\mid X=x,A=1)$ wherever the argument is applied.
+\end{assumption}
+
+\begin{theorem}[Latent interpretation of exact balance]
+\label{thm:latent-exact-balance}
+Under Assumptions~\ref{ass:causal-proxy}, \ref{ass:stratum-kernel}, and \ref{ass:mixture-injectivity}, if $D(\phi)=0$, then
+\begin{align}
+(X,U)\perp\!\!\!\perp A\mid Z,
+\qquad
+Y(a)\perp\!\!\!\perp A\mid Z.
+\end{align}
+Consequently, $\tau_\phi=\tau$.
+\end{theorem}
+
+\begin{proof}
+Zero discrepancy gives $(X,W)\perp\!\!\!\perp A\mid Z$.  Because $Z=\phi(X)$, this implies both $X\perp\!\!\!\perp A\mid Z$ and $W\perp\!\!\!\perp A\mid X$.  Proxy-channel invariance and Assumption~\ref{ass:mixture-injectivity} then give $U\perp\!\!\!\perp A\mid X$.  Combining the last two independences yields $(X,U)\perp\!\!\!\perp A\mid Z$, after which latent exchangeability and consistency give the result.
+\end{proof}
+
+Corollary~\ref{cor:exact-stability} and Theorem~\ref{thm:latent-exact-balance} are two valid routes from an attained exact endpoint.  Exact observed balance alone supplies neither route unless the corresponding stability or injectivity condition is imposed.
+
+\begin{theorem}[Finite-$M$ attainability]
+\label{thm:finite-m-attainability}
+Let
+\begin{align}
+\Phi_M
+\triangleq
+\{\phi:\mathcal X\to[M]:\phi\text{ is measurable}\},
+\end{align}
+let $e(X)\triangleq P(A=1\mid X)$, and assume primitive strict overlap $0<e(X)<1$ almost surely.  Maps with empty or light strata are allowed, and $D(\phi)$ sums only over positive-probability strata.  Assume that $k$ is bounded and characteristic and that the required kernel mean embeddings exist.  Then there exists $\phi\in\Phi_M$ with $D(\phi)=0$ if and only if
+\begin{align}
 W\perp\!\!\!\perp A\mid X
 \quad\text{and}\quad
-e(X)\ \text{takes at most $M$ values},
+e(X)\text{ takes at most $M$ values almost surely}.
 \end{align}
-where $e(X)\triangleq P(A=1\mid X)$. Thus exact balance is a strong certification result, while the practically interesting confounded regime is generally approximate.
+\end{theorem}
 
-\subsection{When Discrepancy Orders Realized Bias}
+Theorem~\ref{thm:finite-m-attainability} separates certification from existence.  Exact balance is a strong endpoint, while finite-stratum exact attainment is confined to a narrow boundary.
 
-The bound in \eqref{eq:population-certificate} does not generally imply that a smaller discrepancy produces a smaller realized bias. Under the established restricted alignment result with binary severity, an $x$-homogeneous informative proxy channel, an additive homogeneous outcome, within-stratum $X$ balance, and a common direction of latent selection, the proxy-marginal discrepancy satisfies
+\begin{proposition}[Restricted order preservation]
+\label{prop:order-preservation}
+Fix a bounded characteristic kernel $k_W$ on $\mathcal W$ and a bounded kernel $k_X$ on $\mathcal X$, write $\mathcal H_{k_W}$ and $\mathcal H_{k_X}$ for their induced RKHSs, and define
 \begin{align}
-|\tau_\phi-\tau|=\kappa D_W(\phi)
+D_W(\phi)
+\triangleq
+\sum_{z=1}^M p_z\operatorname{MMD}_{k_W}
+\left\{\mathcal L(W\mid A=1,Z=z),
+\mathcal L(W\mid A=0,Z=z)\right\}.
 \end{align}
-for a representation-independent $\kappa>0$. This identity gives order preservation inside that restricted model class. Outside it, the paper claims minimization of a certified worst-case bias, not automatic minimization of realized bias.
+Assume all five conditions below.
+\begin{enumerate}[label=(P\arabic*)]
+\item $U\in\{0,1\}$.
+\item The proxy channel is $x$-homogeneous, $K_x(\cdot\mid u)=K(\cdot\mid u)$, and
+\begin{align}
+u_W\triangleq\int k_W(w,\cdot)\,d\{K(\cdot\mid1)-K(\cdot\mid0)\}(w)
+\end{align}
+satisfies $\|u_W\|_{\mathcal H_{k_W}}>0$.
+\item The outcome regression has the additive homogeneous form $\mu_a(x,u)=f(x)+\tau a+\beta u$, where $f\in\mathcal H_{k_X}$.
+\item Every compared representation has within-stratum $X$ balance: $\mathcal L(X\mid A=1,Z=z)=\mathcal L(X\mid A=0,Z=z)$.
+\item Every compared representation has a common direction of latent selection:
+\begin{align}
+\mathbb E(U\mid A=1,Z=z)-\mathbb E(U\mid A=0,Z=z)\ge0.
+\end{align}
+\end{enumerate}
+Under Assumption~\ref{ass:causal-proxy} and the overlap part of Assumption~\ref{ass:stratum-kernel},
+\begin{align}
+|\tau_\phi-\tau|
+=\kappa D_W(\phi),
+\qquad
+\kappa\triangleq\frac{|\beta|}{\|u_W\|_{\mathcal H_{k_W}}}.
+\end{align}
+When $\beta\ne0$, $D_W$ and realized absolute bias therefore give the same strict ordering among representations satisfying P1--P5.
+\end{proposition}
 
-\subsection{Independent Audit-View Extension}
+Proposition~\ref{prop:order-preservation} is a restricted alignment result.  Without its five conditions, Theorem~\ref{thm:population-certificate} remains a worst-case certificate and does not generally order realized biases.
 
-A proxy-augmented extension splits a high-dimensional measurement into a representation view and an untouched audit view, writes
+\begin{remark}[Independent audit-view extension]
+\label{rem:audit-view-open}
+For a high-dimensional proxy, one may write
 \begin{align}
 W=(W^{\mathrm{rep}},W^{\mathrm{audit}}),
 \qquad
 R=\rho(X,W^{\mathrm{rep}}),
 \end{align}
-and evaluates $(X,W^{\mathrm{audit}})\perp\!\!\!\perp A\mid R$. This prevents the representation from making audit balance tautological by copying the audited coordinate. Exact point identification is available only under additional multi-view conditional independence and an outcome-relevant null-space or injectivity condition for the audit channel. This extension is currently a conditional theorem direction, not part of the canonical established theory. Its approximate stability bound is also open and will not be presented as a proved result.
+and audit $(X,W^{\mathrm{audit}})\perp\!\!\!\perp A\mid R$.  This construction prevents literal copying of the audited coordinate.  Exact point identification still requires additional multi-view conditional independence and an outcome-relevant null-space or injectivity condition for the audit channel.  Its exact theorem and approximate stability certificate remain conditional, open extensions and are not claims of the canonical $Z=\phi(X)$ theory above.
+\end{remark}

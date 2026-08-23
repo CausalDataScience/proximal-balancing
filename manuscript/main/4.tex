@@ -1,100 +1,199 @@
 \section{Estimating Causal Effects}
 \label{sec:estimation}
 
-\subsection{Outcome-Free Representation Learning}
+The population certificate becomes operational in three steps.  An outcome-free learner chooses a representation, independent data evaluate its observed discrepancy, and a finite-stratum adjustment estimator targets $\tau_\phi$.  This section first analyzes finite representation classes, then states the fixed-representation semiparametric result, and finally combines the pieces in an honest finite-sample certificate.
 
-For a candidate map $\phi$, let $\widehat\mu_{a,z}$ be the empirical kernel mean embedding of $(X,W)$ among observations with $A=a$ and $\phi(X)=z$. Define
+\begin{definition}[Empirical discrepancy and approximate ERM]
+\label{def:empirical-erm}
+For a candidate $\phi$ and cell $(a,z)$, let $n_{a,z}(\phi)$ be the cell count, let $\widehat p_z(\phi)$ be the empirical stratum proportion, and let $\widehat\mu^{\,k}_{a,z}(\phi)$ be the empirical kernel mean embedding of $(X,W)$ in that cell.  Define
 \begin{align}
 \widehat\Delta_z(\phi)
 &\triangleq
-\|\widehat\mu_{1,z}-\widehat\mu_{0,z}\|_{\mathcal H_k},\\
+\|\widehat\mu^{\,k}_{1,z}(\phi)-\widehat\mu^{\,k}_{0,z}(\phi)\|_{\mathcal H_k},\\
 \widehat D(\phi)
 &\triangleq
-\sum_z\widehat p_z(\phi)\widehat\Delta_z(\phi).
+\sum_{z=1}^M\widehat p_z(\phi)\widehat\Delta_z(\phi).
 \end{align}
-The ideal empirical learner returns $\widehat\phi$ satisfying
+An approximate empirical risk minimizer $\widehat\phi$ satisfies
 \begin{align}
 \widehat D(\widehat\phi)
 \le
 \inf_{\phi\in\Phi}\widehat D(\phi)
 +\varepsilon_{\mathrm{opt}},
+\qquad
+\varepsilon_{\mathrm{opt}}\ge0.
 \label{eq:empirical-learner}
 \end{align}
-where $\varepsilon_{\mathrm{opt}}$ records optimization error. Neither $Y$ nor $U$ enters this training objective. Minimum stratum mass and representation-level overlap are enforced as admissibility conditions rather than inferred from a small penalty alone.
+Neither $Y$ nor $U$ enters this objective.  Minimum stratum mass and representation-level overlap are enforced as admissibility requirements.
+\end{definition}
 
-\subsection{Cross-Fitted Algorithm}
+\begin{theorem}[Finite-class uniform deviation]
+\label{thm:finite-class-deviation}
+Suppose $\Phi$ is finite, Assumption~\ref{ass:stratum-kernel} holds uniformly over $\Phi$, and
+\begin{align}
+\sup_v k(v,v)\le\kappa^2.
+\end{align}
+For $\delta\in(0,1)$, suppose
+\begin{align}
+n\ge
+\frac{8}{p_{\min}\eta}
+\log\frac{8M|\Phi|}{\delta}.
+\label{eq:finite-class-threshold}
+\end{align}
+Define
+\begin{align}
+e_n(\delta)
+&\triangleq
+\left(2\kappa+\kappa\sqrt{2\log\frac{4M|\Phi|}{\delta}}\right)
+\sqrt{\frac{2}{n p_{\min}\eta}},\\
+r_n(\delta)
+&\triangleq
+2e_n(\delta)
++2\kappa
+\sqrt{\frac{2\{M\log2+\log(4|\Phi|/\delta)\}}{n}}.
+\label{eq:rn-rate}
+\end{align}
+Then, with probability at least $1-\delta$,
+\begin{align}
+\sup_{\phi\in\Phi}
+|\widehat D(\phi)-D(\phi)|
+\le r_n(\delta).
+\end{align}
+\end{theorem}
 
-The operational algorithm has four stages. First, split the sample into representation-training and effect-estimation folds. Second, learn $\widehat\phi$ on the training fold by minimizing an outcome-free balance objective with Adam or a finite-class search. Third, evaluate overlap and the balance discrepancy on data not used to choose the representation. Fourth, set $Z=\widehat\phi(X)$ on the effect-estimation fold and estimate the adjusted contrast. Rotating the folds and averaging estimates uses every observation while preserving the conditional fixed-representation argument.
+Theorem~\ref{thm:finite-class-deviation} combines a cell-count event, bounded-kernel mean-embedding concentration, and a multinomial bound for the stratum weights.  Its constants apply to an enumerable class and do not constitute a neural-network complexity bound.
 
-Current neural implementations optimize differentiable soft assignments and may deploy a hard map. If $\widehat D_{\mathrm{soft}}$ is used in place of the analyzed hard-stratum objective, a valid theorem needs an explicit soft-to-hard error $\varepsilon_{\mathrm{soft}}$. The existence of such a uniform bound for the current networks is open; the manuscript will report the training surrogate and held-out hard discrepancy separately.
+\begin{corollary}[Representation-selection oracle inequality]
+\label{cor:selection-oracle}
+Under Theorem~\ref{thm:finite-class-deviation}, Definition~\ref{def:empirical-erm}, and the common stability budget in Assumption~\ref{ass:uniform-stability}, with probability at least $1-\delta$,
+\begin{align}
+D(\widehat\phi)
+&\le
+\inf_{\phi\in\Phi}D(\phi)
++2r_n(\delta)+\varepsilon_{\mathrm{opt}},\\
+|\tau_{\widehat\phi}-\tau|
+&\le
+\Gamma\{\widehat D(\widehat\phi)+r_n(\delta)\},\\
+|\tau_{\widehat\phi}-\tau|
+&\le
+\Gamma\left\{
+\inf_{\phi\in\Phi}D(\phi)
++2r_n(\delta)+\varepsilon_{\mathrm{opt}}
+\right\}.
+\label{eq:oracle-bound}
+\end{align}
+\end{corollary}
 
-\subsection{AIPW Estimation for a Fixed Representation}
+\begin{remark}[Neural optimization is not the finite-class theorem]
+\label{rem:neural-erm-gap}
+The current neural implementation uses Adam and differentiable soft assignments before deploying or evaluating a hard representation.  Optimization error may be recorded as $\varepsilon_{\mathrm{opt}}$, but the present theory does not supply a neural-class analogue of $r_n(\delta)$ or a uniform soft-to-hard error bound.  The training surrogate and the held-out hard discrepancy must therefore be reported separately.
+\end{remark}
 
-For fixed finite $Z$, define the nuisance functions only now:
+The next construction separates representation choice from causal estimation.  This separation lets the evaluation analysis condition on the learned map and treat it as fixed.
+
+\begin{definition}[Honest sample-splitting procedure]
+\label{def:honest-splitting}
+Partition the observations into an independent representation-training sample and an evaluation sample.  Learn $\widehat\phi$ using only the training sample.  On the evaluation sample, set $Z=\widehat\phi(X)$, check empirical retained-cell mass and overlap diagnostics, compute a hard-stratum discrepancy $\widehat D_{\mathrm{ev}}(\widehat\phi)$, and estimate the adjusted contrast.  Repeating this construction across outer folds may use every observation, but each fold is analyzed conditionally on the data used to learn its representation.
+\end{definition}
+
+\begin{definition}[Fixed-$Z$ AIPW estimator]
+\label{def:fixed-z-aipw}
+For a fixed finite representation, define
 \begin{align}
 e_Z(z)&\triangleq P(A=1\mid Z=z),\\
 m_a(z)&\triangleq\mathbb E(Y\mid A=a,Z=z).
 \end{align}
-Given cross-fitted estimates $\widehat e_Z$ and $\widehat m_a$, the augmented inverse-probability weighted estimator is
+Given estimates $\widehat e_Z$ and $\widehat m_a$, the augmented inverse-probability weighted estimator is
 \begin{align}
 \widehat\tau_{\mathrm{AIPW}}
 =\frac{1}{n}\sum_{i=1}^n
 \Bigg[
 &\widehat m_1(Z_i)-\widehat m_0(Z_i)
 +\frac{A_i\{Y_i-\widehat m_1(Z_i)\}}{\widehat e_Z(Z_i)}\\
-&-\frac{(1-A_i)\{Y_i-\widehat m_0(Z_i)\}}{1-\widehat e_Z(Z_i)}
+&-\frac{(1-A_i)\{Y_i-\widehat m_0(Z_i)\}}
+{1-\widehat e_Z(Z_i)}
 \Bigg].
 \label{eq:aipw}
 \end{align}
-For a fixed finite representation, the corresponding influence function is
+\end{definition}
+
+\begin{proposition}[Empirical-cell plug-in equals AIPW]
+\label{prop:plugin-aipw}
+Suppose every retained empirical cell $(a,z)$ is nonempty.  Let $\widehat p_z$ be the empirical stratum proportion and $\overline Y_{a,z}$ the empirical outcome mean in cell $(a,z)$.  If $\widehat e_Z$ is the empirical cell treatment proportion and $\widehat m_a(z)=\overline Y_{a,z}$, then
+\begin{align}
+\widehat\tau_{\mathrm{AIPW}}
+=
+\sum_{z=1}^M\widehat p_z
+\{\overline Y_{1,z}-\overline Y_{0,z}\}.
+\end{align}
+\end{proposition}
+
+The equality follows because each inverse-probability residual term sums to zero within its empirical treatment-by-stratum cell.  It is an algebraic fact for finite cells, not a claim about arbitrary machine-learned nuisances.
+
+\begin{theorem}[Fixed finite-representation efficiency]
+\label{thm:fixed-representation-efficiency}
+Fix $\phi$ before observing the estimation sample, suppose $Z=\phi(X)$ is finite, representation-level overlap holds, and $\mathbb E(Y^2)<\infty$.  The efficient influence function of $\tau_\phi$ in the nonparametric model for $(Z,A,Y)$ is
 \begin{align}
 \psi_\phi(O)
 =
 \frac{A\{Y-m_1(Z)\}}{e_Z(Z)}
--
-\frac{(1-A)\{Y-m_0(Z)\}}{1-e_Z(Z)}
+-\frac{(1-A)\{Y-m_0(Z)\}}{1-e_Z(Z)}
 +m_1(Z)-m_0(Z)-\tau_\phi.
 \end{align}
-The stratified plug-in estimator equals \eqref{eq:aipw} when empirical cell means are used, and it is asymptotically efficient for $\tau_\phi$ in the nonparametric model for $(Z,A,Y)$. This statement is established for fixed $\phi$; a complete joint limit theory for a neural, data-selected $\widehat\phi$ remains open.
-
-\subsection{Finite-Sample Error Decomposition}
-
-Suppose the representation class is finite and, with probability at least $1-\delta$,
+The empirical-cell plug-in estimator in Proposition~\ref{prop:plugin-aipw} satisfies
 \begin{align}
-\sup_{\phi\in\Phi}|\widehat D(\phi)-D(\phi)|
-\le r_n(\delta).
+\sqrt n(\widehat\tau_\phi-\tau_\phi)
+\rightsquigarrow
+\mathcal N\!\left(0,\mathbb E[\psi_\phi(O)^2]\right)
 \end{align}
-For a bounded kernel and the overlap and mass constants in Section~\ref{sec:identification}, the established finite-class analysis gives
-\begin{align}
-r_n(\delta)
-=
-O\!\left(
-\sqrt{\frac{\log|\Phi|+\log(1/\delta)}{n p_{\min}\eta}}
-+
-\sqrt{\frac{M+\log|\Phi|+\log(1/\delta)}{n}}
-\right),
-\label{eq:rn-rate}
-\end{align}
-with explicit constants available from the count, kernel-embedding, and multinomial-weight concentration steps. Combining \eqref{eq:empirical-learner} with the population certificate yields
-\begin{align}
-|\tau_{\widehat\phi}-\tau|
-&\le
-\Gamma\{\widehat D(\widehat\phi)+r_n(\delta)\},\\
-|\tau_{\widehat\phi}-\tau|
-&\le
-\Gamma\left\{\inf_{\phi\in\Phi}D(\phi)
-+2r_n(\delta)+\varepsilon_{\mathrm{opt}}\right\}.
-\label{eq:oracle-bound}
-\end{align}
+and is asymptotically efficient for this fixed-$\phi$ coarsened-data model.
+\end{theorem}
 
-If the effect estimator also satisfies $|\widehat\tau-\tau_{\widehat\phi}|\le\varepsilon_{\mathrm{est}}$, then
+The preceding theorem does not establish same-sample inference after adaptive representation selection.  Honest splitting instead permits a conditional fixed-representation finite-sample statement.
+
+\begin{theorem}[End-to-end finite-sample sensitivity certificate]
+\label{thm:end-to-end-certificate}
+Follow Definition~\ref{def:honest-splitting}.  Assume that, for almost every realization of the training sample, the selected $\widehat\phi$ satisfies the population mass and overlap conditions in Assumption~\ref{ass:stratum-kernel} and its stability constants are bounded by $\Gamma$.  Condition on such a training-sample realization so that $\widehat\phi$ is fixed.  Let the evaluation sample have size $n_{\mathrm{ev}}$, assume $|Y|\le B$, and let $\delta,\delta'\in(0,1)$.  Require
+\begin{align}
+n_{\mathrm{ev}}
+\ge
+\max\left\{
+\frac{8}{p_{\min}\eta}\log\frac{8M}{\delta},
+\frac{8}{p_{\min}\eta}\log\frac{16M}{\delta'}
+\right\}.
+\end{align}
+Let $r_{n_{\mathrm{ev}}}^{(1)}(\delta)$ be the radius in Theorem~\ref{thm:finite-class-deviation} with $|\Phi|=1$, and define
+\begin{align}
+\varepsilon_{\mathrm{est}}(\delta')
+\triangleq
+2B\sqrt{\frac{4\log(8M/\delta')}{n_{\mathrm{ev}}p_{\min}\eta}}
++2B\sqrt{\frac{2\{M\log2+\log(4/\delta')\}}{n_{\mathrm{ev}}}}.
+\end{align}
+If $\widehat\tau_{\widehat\phi}$ is the evaluation-sample empirical-cell estimator in Proposition~\ref{prop:plugin-aipw}, then, with conditional probability at least $1-\delta-\delta'$ and hence with the same unconditional probability,
 \begin{align}
 \boxed{
-|\widehat\tau-\tau|
+|\widehat\tau_{\widehat\phi}-\tau|
 \le
-\varepsilon_{\mathrm{est}}
-+\Gamma\{\widehat D(\widehat\phi)+r_n(\delta)\}.
+\varepsilon_{\mathrm{est}}(\delta')
++\Gamma\left\{
+\widehat D_{\mathrm{ev}}(\widehat\phi)
++r_{n_{\mathrm{ev}}}^{(1)}(\delta)
+\right\}.
 }
 \label{eq:finite-certificate}
 \end{align}
-For bounded outcomes and a fixed finite representation, $\varepsilon_{\mathrm{est}}$ has an explicit Hoeffding and multinomial bound. Equation~\eqref{eq:finite-certificate} is therefore established for enumerable classes and fixed-fold evaluation. A neural-class complexity bound, a proved $\varepsilon_{\mathrm{soft}}$, and joint inference after adaptive representation selection are explicitly open. If these pieces are supplied, the right side of \eqref{eq:oracle-bound} gains the corresponding optimization, discretization, and nuisance-estimation terms rather than changing the population target.
+\end{theorem}
+
+\begin{proof}
+Conditionally on the training sample, the single-map version of Theorem~\ref{thm:finite-class-deviation} bounds $D(\widehat\phi)$ by $\widehat D_{\mathrm{ev}}(\widehat\phi)+r_{n_{\mathrm{ev}}}^{(1)}(\delta)$.  The bounded-outcome cell-mean and multinomial argument gives $|\widehat\tau_{\widehat\phi}-\tau_{\widehat\phi}|\le\varepsilon_{\mathrm{est}}(\delta')$.  Theorem~\ref{thm:population-certificate} and a union bound complete the result.
+\end{proof}
+
+\begin{remark}[Fully finite-sample enumerable regime]
+\label{rem:finite-enumerable}
+For a finite representation class, the training-sample event in Theorem~\ref{thm:finite-class-deviation}, Corollary~\ref{cor:selection-oracle}, and the independent evaluation result in Theorem~\ref{thm:end-to-end-certificate} together provide explicit representation-selection, estimation, and sensitivity errors.  Their joint probability is obtained by allocating and summing the declared failure probabilities across the independent stages.
+\end{remark}
+
+\begin{remark}[Open learning and inference components]
+\label{rem:open-learning-inference}
+Three extensions remain open for the current neural implementation: an explicit neural-class deviation rate, a proved soft-to-hard approximation bound, and a joint limit theory after adaptive representation selection without honest splitting.  The fixed-$\phi$ efficiency theorem and the enumerable-class certificate do not establish any of these extensions.
+\end{remark}
