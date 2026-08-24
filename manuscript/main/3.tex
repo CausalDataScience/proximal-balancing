@@ -39,15 +39,20 @@ W\perp\!\!\!\perp A\mid(X,U).
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
   latentedge/.style={edge,draw=collatent}
 ]
-\node[latent] (u) at (0,2.4) {$U$};
-\node[observed] (x) at (-0.8,1.2) {$X$};
-\node[observed] (w) at (0.8,1.2) {$W$};
-\node[treatment] (a) at (-0.8,0) {$A$};
-\node[outcome] (y) at (0.8,0) {$Y$};
+\pgfmathsetmacro{\side}{1.60}
+\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
+\pgfmathsetmacro{\uheight}{\triheight+1.10}
+\pgfmathsetmacro{\wright}{1.30}
+\path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
+\node[latent] (u) at (0,\uheight) {$U$};
+\node[observed] (x) at (0,\triheight) {$X$};
+\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[treatment] (a) at (-\side/2,0) {$A$};
+\node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=205,in=100] (a);
-\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[latentedge] (u) to[out=210,in=105] (a);
+\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
@@ -68,19 +73,24 @@ W\perp\!\!\!\perp A\mid(X,U).
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
   latentedge/.style={edge,draw=collatent}
 ]
-\node[latent] (u) at (0,2.4) {$U$};
-\node[observed] (x) at (-0.8,1.2) {$X$};
-\node[observed] (w) at (0.8,1.2) {$W$};
-\node[treatment] (a) at (-0.8,0) {$A$};
-\node[outcome] (y) at (0.8,0) {$Y$};
+\pgfmathsetmacro{\side}{1.60}
+\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
+\pgfmathsetmacro{\uheight}{\triheight+1.10}
+\pgfmathsetmacro{\wright}{1.30}
+\path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
+\node[latent] (u) at (0,\uheight) {$U$};
+\node[observed] (x) at (0,\triheight) {$X$};
+\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[treatment] (a) at (-\side/2,0) {$A$};
+\node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=205,in=100] (a);
-\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[latentedge] (u) to[out=210,in=105] (a);
+\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
-\draw[edge] (x) -- (w);
+\draw[edge] (x) to[out=35,in=215] (w);
 \end{tikzpicture}
 \end{minipage}}
 \hfill
@@ -98,20 +108,25 @@ W\perp\!\!\!\perp A\mid(X,U).
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
   latentedge/.style={edge,draw=collatent}
 ]
-\node[latent] (u) at (0,2.4) {$U$};
-\node[observed] (x) at (-0.8,1.2) {$X$};
-\node[observed] (w) at (0.8,1.2) {$W$};
-\node[treatment] (a) at (-0.8,0) {$A$};
-\node[outcome] (y) at (0.8,0) {$Y$};
+\pgfmathsetmacro{\side}{1.60}
+\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
+\pgfmathsetmacro{\uheight}{\triheight+1.10}
+\pgfmathsetmacro{\wright}{1.30}
+\path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
+\node[latent] (u) at (0,\uheight) {$U$};
+\node[observed] (x) at (0,\triheight) {$X$};
+\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[treatment] (a) at (-\side/2,0) {$A$};
+\node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=205,in=100] (a);
-\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[latentedge] (u) to[out=210,in=105] (a);
+\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
-\draw[edge] (x) -- (w);
-\draw[edge] (w) -- (y);
+\draw[edge] (x) to[out=35,in=215] (w);
+\draw[edge] (w) to[out=-70,in=20] (y);
 \end{tikzpicture}
 \end{minipage}}
 \caption{Three directed acyclic graphs compatible with Assumption~\ref{ass:causal-proxy}.  The panels are compatible examples under a Markovian structural causal model with mutually independent exogenous disturbances and no unshown common causes.  Panel (b) allows $X$ to affect the proxy.  Panel (c) shows that Assumption~\ref{ass:causal-proxy} permits a pretreatment proxy to directly affect $Y$ and does not impose an outcome exclusion restriction.  The graphs do not encode the consistency or integrability clauses of Assumption~\ref{ass:causal-proxy}, and they do not characterize all models allowed by the assumption.}
