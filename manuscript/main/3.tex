@@ -46,13 +46,13 @@ W\perp\!\!\!\perp A\mid(X,U).
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
 \node[latent] (u) at (0,\uheight) {$U$};
 \node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[observed] (w) at (\wright,\triheight) {$W$};
 \node[treatment] (a) at (-\side/2,0) {$A$};
 \node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=210,in=105] (a);
-\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
+\draw[latentedge] (u) to[bend right=18] (a);
+\draw[latentedge] (u) to[bend left=60] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
@@ -80,17 +80,17 @@ W\perp\!\!\!\perp A\mid(X,U).
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
 \node[latent] (u) at (0,\uheight) {$U$};
 \node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[observed] (w) at (\wright,\triheight) {$W$};
 \node[treatment] (a) at (-\side/2,0) {$A$};
 \node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=210,in=105] (a);
-\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
+\draw[latentedge] (u) to[bend right=18] (a);
+\draw[latentedge] (u) to[bend left=60] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
-\draw[edge] (x) to[out=35,in=215] (w);
+\draw[edge] (x) -- (w);
 \end{tikzpicture}
 \end{minipage}}
 \hfill
@@ -115,18 +115,18 @@ W\perp\!\!\!\perp A\mid(X,U).
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
 \node[latent] (u) at (0,\uheight) {$U$};
 \node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\uheight) {$W$};
+\node[observed] (w) at (\wright,\triheight) {$W$};
 \node[treatment] (a) at (-\side/2,0) {$A$};
 \node[outcome] (y) at (\side/2,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
-\draw[latentedge] (u) to[out=210,in=105] (a);
-\draw[latentedge] (u) to[out=85,in=5,looseness=1.35] (y);
+\draw[latentedge] (u) to[bend right=18] (a);
+\draw[latentedge] (u) to[bend left=60] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
-\draw[edge] (x) to[out=35,in=215] (w);
-\draw[edge] (w) to[out=-70,in=20] (y);
+\draw[edge] (x) -- (w);
+\draw[edge] (w) -- (y);
 \end{tikzpicture}
 \end{minipage}}
 \caption{Three directed acyclic graphs compatible with Assumption~\ref{ass:causal-proxy}.  The panels are compatible examples under a Markovian structural causal model with mutually independent exogenous disturbances and no unshown common causes.  Panel (b) allows $X$ to affect the proxy.  Panel (c) shows that Assumption~\ref{ass:causal-proxy} permits a pretreatment proxy to directly affect $Y$ and does not impose an outcome exclusion restriction.  The graphs do not encode the consistency or integrability clauses of Assumption~\ref{ass:causal-proxy}, and they do not characterize all models allowed by the assumption.}
