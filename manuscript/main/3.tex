@@ -23,6 +23,102 @@ W\perp\!\!\!\perp A\mid(X,U).
 \end{align}
 \end{assumption}
 
+\begin{figure}[t]
+\centering
+\subfloat[Baseline proxy graph]{%
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[
+  x=1cm,
+  y=1cm,
+  every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
+  observed/.style={draw=black,text=black},
+  treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout},
+  latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
+  latentedge/.style={edge,draw=collatent}
+]
+\node[latent] (u) at (0,2.4) {$U$};
+\node[observed] (x) at (-0.8,1.2) {$X$};
+\node[observed] (w) at (0.8,1.2) {$W$};
+\node[treatment] (a) at (-0.8,0) {$A$};
+\node[outcome] (y) at (0.8,0) {$Y$};
+\draw[latentedge] (u) -- (x);
+\draw[latentedge] (u) -- (w);
+\draw[latentedge] (u) to[out=205,in=100] (a);
+\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[edge] (x) -- (a);
+\draw[edge] (x) -- (y);
+\draw[edge] (a) -- (y);
+\end{tikzpicture}
+\end{minipage}}
+\hfill
+\subfloat[Covariate-dependent proxy]{%
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[
+  x=1cm,
+  y=1cm,
+  every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
+  observed/.style={draw=black,text=black},
+  treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout},
+  latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
+  latentedge/.style={edge,draw=collatent}
+]
+\node[latent] (u) at (0,2.4) {$U$};
+\node[observed] (x) at (-0.8,1.2) {$X$};
+\node[observed] (w) at (0.8,1.2) {$W$};
+\node[treatment] (a) at (-0.8,0) {$A$};
+\node[outcome] (y) at (0.8,0) {$Y$};
+\draw[latentedge] (u) -- (x);
+\draw[latentedge] (u) -- (w);
+\draw[latentedge] (u) to[out=205,in=100] (a);
+\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[edge] (x) -- (a);
+\draw[edge] (x) -- (y);
+\draw[edge] (a) -- (y);
+\draw[edge] (x) -- (w);
+\end{tikzpicture}
+\end{minipage}}
+\hfill
+\subfloat[Proxy with a direct outcome effect]{%
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[
+  x=1cm,
+  y=1cm,
+  every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
+  observed/.style={draw=black,text=black},
+  treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout},
+  latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
+  latentedge/.style={edge,draw=collatent}
+]
+\node[latent] (u) at (0,2.4) {$U$};
+\node[observed] (x) at (-0.8,1.2) {$X$};
+\node[observed] (w) at (0.8,1.2) {$W$};
+\node[treatment] (a) at (-0.8,0) {$A$};
+\node[outcome] (y) at (0.8,0) {$Y$};
+\draw[latentedge] (u) -- (x);
+\draw[latentedge] (u) -- (w);
+\draw[latentedge] (u) to[out=205,in=100] (a);
+\draw[latentedge] (u) to[out=-25,in=80] (y);
+\draw[edge] (x) -- (a);
+\draw[edge] (x) -- (y);
+\draw[edge] (a) -- (y);
+\draw[edge] (x) -- (w);
+\draw[edge] (w) -- (y);
+\end{tikzpicture}
+\end{minipage}}
+\caption{Three directed acyclic graphs compatible with Assumption~\ref{ass:causal-proxy}.  The panels are compatible examples under a Markovian structural causal model with mutually independent exogenous disturbances and no unshown common causes.  Panel (b) allows $X$ to affect the proxy.  Panel (c) shows that Assumption~\ref{ass:causal-proxy} permits a pretreatment proxy to directly affect $Y$ and does not impose an outcome exclusion restriction.  The graphs do not encode the consistency or integrability clauses of Assumption~\ref{ass:causal-proxy}, and they do not characterize all models allowed by the assumption.}
+\label{fig:compatible-proxy-dags}
+\end{figure}
+\FloatBarrier
+
 The next assumption makes both the adjustment contrast and the observable balance criterion well defined for every retained stratum.
 
 \begin{assumption}[Stratum and kernel regularity]
