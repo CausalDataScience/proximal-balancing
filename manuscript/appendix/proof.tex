@@ -1,8 +1,12 @@
 \section{Proof Obligations}
 \label{app:proofs}
 
-The first proof obligation is a transfer result from an observable joint balance condition to a latent balance condition. Its assumptions must state the proxy measurement relation and the injectivity or completeness property used in the transfer.
+The first proof obligation is the conditioning-safety argument for $Z_j=\phi_j(X,W_{-j})$. It must show how joint latent exchangeability and separation of the held-out block remain valid after conditioning on the learned representation.
 
-The second proof obligation is identification of $\tau$ from the observed data distribution after latent balance has been established. The proof must list every causal assumption and show where each assumption enters the identifying functional.
+The second proof obligation is the exact bias decomposition and cross-view factorization. These results must connect the observed adjustment functional, the two treatment-arm latent laws, and the held-out distribution through one common proxy channel.
 
-The third proof obligation is a boundary construction. It must exhibit two latent data-generating processes that agree on the relevant observed information but disagree on the target whenever a required transfer assumption is removed.
+The third proof obligation is exact identification under outcome-relevant completeness. It must show that exact observed balance makes the two outcome-relevant latent averages equal without asserting equality of the full latent distributions.
+
+The fourth proof obligation is the approximate sensitivity bound. It must show how the stability constant converts each held-out discrepancy into an outcome-relevant latent bound and how the stratum weights aggregate to $\Gamma_jD_j(\phi_j)$.
+
+The fifth proof obligation is the finite-sample chain from uniform discrepancy concentration through empirical representation selection to honest AIPW estimation. Its final inequality must display the representation, stability, nuisance, and evaluation-sample terms separately.

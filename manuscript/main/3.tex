@@ -1,27 +1,30 @@
-\section{Identification Theory}
+\section{Identification}
 \label{sec:identification}
 
-This section develops one population argument.  We first express the bias of adjustment for $Z=\phi(X)$ as a functional of the latent treated-versus-control contrast.  We then show how the observable imbalance of $(X,W)$ controls that functional under a declared stability budget.  Exact balance is treated as an endpoint to be certified, not as a property that every representation class can attain.
+We now introduce the cross-view representation. Fix one block index $j\in\{1,\ldots,J\}$ before analyzing the data. Let
+\begin{align}
+W_{-j}
+\triangleq
+(W_1,\ldots,W_{j-1},W_{j+1},\ldots,W_J)
+\end{align}
+contain every proxy block except $W_j$. The excluded block $W_j$ is the held-out proxy block.
 
-\begin{assumption}[Causal and proxy structure]
-\label{ass:causal-proxy}
-For each $a\in\{0,1\}$, consistency and integrability hold,
+Fix a positive integer $M_j$, write $[M_j]\triangleq\{1,\ldots,M_j\}$, and prespecify a class
 \begin{align}
-Y=Y(A),
-\qquad
-\mathbb E|Y(a)|<\infty,
+\Phi_j
+\triangleq
+\left\{
+\phi:\mathcal X\times\mathcal W_{-j}\longrightarrow[M_j]
+\right\}.
 \end{align}
-and treatment is conditionally exchangeable given the observed covariates and latent confounder,
+For a fixed map $\phi_j\in\Phi_j$, define
 \begin{align}
-Y(a)\perp\!\!\!\perp A\mid(X,U).
+Z_j\triangleq\phi_j(X,W_{-j}).
+\label{eq:fixed-view-representation}
 \end{align}
-The proxy is pretreatment and its measurement law is invariant across treatment arms:
-\begin{align}
-W(a)=W,
-\qquad
-W\perp\!\!\!\perp A\mid(X,U).
-\end{align}
-\end{assumption}
+The representation is finite-valued so that balance, overlap, and adjustment can be stated within explicit strata. This choice does not require the hidden variable $U$ to be discrete. A value $z\in[M_j]$ is retained when $P(Z_j=z)>0$.
+
+Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible with the broad pretreatment ordering. The graphs alone do not imply the cross-view conditional independences imposed below.
 
 \begin{figure}[t]
 \centering
@@ -29,30 +32,21 @@ W\perp\!\!\!\perp A\mid(X,U).
 \begin{minipage}[t]{0.32\textwidth}
 \centering
 \begin{tikzpicture}[
-  x=1cm,
-  y=1cm,
+  x=1cm,y=1cm,
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
-  observed/.style={draw=black,text=black},
-  treatment/.style={draw=coltreat,text=coltreat},
-  outcome/.style={draw=colout,text=colout},
-  latent/.style={draw=collatent,text=collatent},
-  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent}
-]
-\pgfmathsetmacro{\side}{1.60}
-\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
-\pgfmathsetmacro{\uheight}{\triheight+1.10}
-\pgfmathsetmacro{\wright}{1.30}
+  observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt}, latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
-\node[latent] (u) at (0,\uheight) {$U$};
-\node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\triheight) {$W$};
-\node[treatment] (a) at (-\side/2,0) {$A$};
-\node[outcome] (y) at (\side/2,0) {$Y$};
+\node[latent] (u) at (0,2.49) {$U$};
+\node[observed] (x) at (0,1.39) {$X$};
+\node[observed] (w) at (1.30,1.39) {$W_j$};
+\node[treatment] (a) at (-0.80,0) {$A$};
+\node[outcome] (y) at (0.80,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
 \draw[latentedge] (u) to[bend right=18] (a);
-\draw[latentedge] (u) to[bend left=60] (y);
+\draw[latentedge] (u) to[bend left=18] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
@@ -63,30 +57,21 @@ W\perp\!\!\!\perp A\mid(X,U).
 \begin{minipage}[t]{0.32\textwidth}
 \centering
 \begin{tikzpicture}[
-  x=1cm,
-  y=1cm,
+  x=1cm,y=1cm,
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
-  observed/.style={draw=black,text=black},
-  treatment/.style={draw=coltreat,text=coltreat},
-  outcome/.style={draw=colout,text=colout},
-  latent/.style={draw=collatent,text=collatent},
-  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent}
-]
-\pgfmathsetmacro{\side}{1.60}
-\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
-\pgfmathsetmacro{\uheight}{\triheight+1.10}
-\pgfmathsetmacro{\wright}{1.30}
+  observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt}, latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
-\node[latent] (u) at (0,\uheight) {$U$};
-\node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\triheight) {$W$};
-\node[treatment] (a) at (-\side/2,0) {$A$};
-\node[outcome] (y) at (\side/2,0) {$Y$};
+\node[latent] (u) at (0,2.49) {$U$};
+\node[observed] (x) at (0,1.39) {$X$};
+\node[observed] (w) at (1.30,1.39) {$W_j$};
+\node[treatment] (a) at (-0.80,0) {$A$};
+\node[outcome] (y) at (0.80,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
 \draw[latentedge] (u) to[bend right=18] (a);
-\draw[latentedge] (u) to[bend left=60] (y);
+\draw[latentedge] (u) to[bend left=18] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
@@ -98,30 +83,21 @@ W\perp\!\!\!\perp A\mid(X,U).
 \begin{minipage}[t]{0.32\textwidth}
 \centering
 \begin{tikzpicture}[
-  x=1cm,
-  y=1cm,
+  x=1cm,y=1cm,
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
-  observed/.style={draw=black,text=black},
-  treatment/.style={draw=coltreat,text=coltreat},
-  outcome/.style={draw=colout,text=colout},
-  latent/.style={draw=collatent,text=collatent},
-  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent}
-]
-\pgfmathsetmacro{\side}{1.60}
-\pgfmathsetmacro{\triheight}{sqrt(3)*\side/2}
-\pgfmathsetmacro{\uheight}{\triheight+1.10}
-\pgfmathsetmacro{\wright}{1.30}
+  observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
+  outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
+  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt}, latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.35,-0.35) rectangle (1.75,3.45);
-\node[latent] (u) at (0,\uheight) {$U$};
-\node[observed] (x) at (0,\triheight) {$X$};
-\node[observed] (w) at (\wright,\triheight) {$W$};
-\node[treatment] (a) at (-\side/2,0) {$A$};
-\node[outcome] (y) at (\side/2,0) {$Y$};
+\node[latent] (u) at (0,2.49) {$U$};
+\node[observed] (x) at (0,1.39) {$X$};
+\node[observed] (w) at (1.30,1.39) {$W_j$};
+\node[treatment] (a) at (-0.80,0) {$A$};
+\node[outcome] (y) at (0.80,0) {$Y$};
 \draw[latentedge] (u) -- (x);
 \draw[latentedge] (u) -- (w);
 \draw[latentedge] (u) to[bend right=18] (a);
-\draw[latentedge] (u) to[bend left=60] (y);
+\draw[latentedge] (u) to[bend left=18] (y);
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
@@ -129,314 +105,475 @@ W\perp\!\!\!\perp A\mid(X,U).
 \draw[edge] (w) -- (y);
 \end{tikzpicture}
 \end{minipage}}
-\caption{Three directed acyclic graphs compatible with Assumption~\ref{ass:causal-proxy}.  The panels are compatible examples under a Markovian structural causal model with mutually independent exogenous disturbances and no unshown common causes.  Panel (b) allows $X$ to affect the proxy.  Panel (c) shows that Assumption~\ref{ass:causal-proxy} permits a pretreatment proxy to directly affect $Y$ and does not impose an outcome exclusion restriction.  The graphs do not encode the consistency or integrability clauses of Assumption~\ref{ass:causal-proxy}, and they do not characterize all models allowed by the assumption.}
+\caption{Causal graphs compatible with the broad problem setting. The graphs permit $U\to X$, $X\to W_j$, and $W_j\to Y$. The cross-view independence assumptions used for identification are additional restrictions on the full-data law.}
 \label{fig:compatible-proxy-dags}
 \end{figure}
 \FloatBarrier
 
-The next assumption makes both the adjustment contrast and the observable balance criterion well defined for every retained stratum.
-
-\begin{assumption}[Stratum and kernel regularity]
-\label{ass:stratum-kernel}
-There are constants $p_{\min}>0$ and $\eta\in(0,1/2)$ such that, for every retained $\phi\in\Phi$ and stratum $z$,
+The identification argument compares the hidden states of treated and untreated units within one retained stratum. For $a\in\{0,1\}$ and any retained $z$ satisfying $P(A=a,Z_j=z)>0$, define
 \begin{align}
-p_z\triangleq P(Z=z)\ge p_{\min},
-\qquad
-\eta\le \pi_z\triangleq P(A=1\mid Z=z)\le1-\eta.
+Q_{a,j,z}
+\triangleq
+\mathcal L(X,U\mid A=a,Z_j=z).
+\label{eq:latent-arm-law}
 \end{align}
-The kernel $k$ on the joint space of $(X,W)$ is bounded and characteristic, and all kernel mean embeddings used below exist.
+For every measurable set $C\subseteq\mathcal W_j$, define the conditional measurement law
+\begin{align}
+K_j(C\mid x,u)
+\triangleq
+P(W_j\in C\mid X=x,U=u).
+\label{eq:held-out-channel}
+\end{align}
+The law $K_j$ describes how the hidden state $(x,u)$ generates the held-out proxy block.
+
+For any probability distribution $Q$ on $(X,U)$ and measurable set $B\subseteq\mathcal X\times\mathcal W_j$, define
+\begin{align}
+(\mathcal K_jQ)(B)
+\triangleq
+\int
+\left[
+\int
+\mathbf 1\{(x,w_j)\in B\}
+K_j(dw_j\mid x,u)
+\right]
+Q(dx,du).
+\label{eq:held-out-operator}
+\end{align}
+Thus, $\mathcal K_jQ$ is the distribution of $(X,W_j)$ obtained by first drawing $(X,U)$ from $Q$ and then drawing $W_j$ from its conditional measurement law.
+
+For each treatment level and retained stratum, define
+\begin{align}
+\mu_{a,j,z}(x,u)
+\triangleq
+\mathbb E\{Y(a)\mid X=x,U=u,Z_j=z\}.
+\label{eq:conditional-potential-mean}
+\end{align}
+Let
+\begin{align}
+S_{j,z}
+\triangleq
+\operatorname{supp}\{\mathcal L(X,U\mid Z_j=z)\}
+\end{align}
+be the support of $(X,U)$ within stratum $z$. Define $\mathcal Q_{j,z}$ as the set of all probability distributions $Q$ supported on $S_{j,z}$ for which
+\begin{align}
+\int|\mu_{a,j,z}(x,u)|\,Q(dx,du)<\infty,
+\qquad a\in\{0,1\}.
+\end{align}
+The two realized arm laws satisfy $Q_{0,j,z},Q_{1,j,z}\in\mathcal Q_{j,z}$. For $Q\in\mathcal Q_{j,z}$, write
+\begin{align}
+\mathbb E_Q\{\mu_{a,j,z}(X,U)\}
+\triangleq
+\int\mu_{a,j,z}(x,u)\,Q(dx,du).
+\label{eq:latent-mean-shorthand}
+\end{align}
+
+\subsection{Assumptions}
+\label{sec:identification-assumptions}
+
+\begin{assumption}[Consistency and integrability]
+\label{ass:consistency}
+For each $a\in\{0,1\}$,
+\begin{align}
+Y=Y(A),
+\qquad
+\mathbb E|Y(a)|<\infty.
+\label{eq:consistency}
+\end{align}
 \end{assumption}
 
-\begin{definition}[Latent arm contrast]
-\label{def:latent-arm-contrast}
-For a fixed representation and stratum $z$, let
+\begin{assumption}[Joint latent exchangeability for representation inputs]
+\label{ass:joint-latent-exchangeability}
+For each $a\in\{0,1\}$,
 \begin{align}
-Q_{a,z}\triangleq\mathcal L(X,U\mid A=a,Z=z),
-\qquad
-\nu_{\phi,z}\triangleq Q_{1,z}-Q_{0,z}.
+A\perp\!\!\!\perp\bigl(Y(a),W_{-j}\bigr)\mid(X,U).
+\label{eq:joint-latent-exchangeability}
 \end{align}
-When it is first needed, define the latent outcome regression by
+Once $(X,U)$ is fixed, treatment contains no additional information about either the potential outcome or the variables used to construct $Z_j$.
+\end{assumption}
+
+\begin{assumption}[Separation of the held-out proxy block]
+\label{ass:held-out-separation}
 \begin{align}
-\mu_a(x,u)\triangleq\mathbb E\{Y(a)\mid X=x,U=u\}.
+W_j\perp\!\!\!\perp(A,W_{-j})\mid(X,U).
+\label{eq:held-out-separation}
 \end{align}
+Once $(X,U)$ is fixed, the measurement law of $W_j$ is the same across treatment arms and does not depend on the representation-side proxy blocks.
+\end{assumption}
+
+\begin{assumption}[Representation overlap]
+\label{ass:representation-overlap}
+For every retained representation value $z$,
+\begin{align}
+0<P(A=1\mid Z_j=z)<1.
+\label{eq:representation-overlap}
+\end{align}
+Both treatment arms therefore occur with positive probability in every retained stratum.
+\end{assumption}
+
+\begin{assumption}[Exact outcome-relevant completeness]
+\label{ass:outcome-relevant-completeness}
+For every retained $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and every $a\in\{0,1\}$,
+\begin{align}
+\mathcal K_jQ=\mathcal K_jQ'
+\quad\Longrightarrow\quad
+\mathbb E_Q\{\mu_{a,j,z}(X,U)\}
+=
+\mathbb E_{Q'}\{\mu_{a,j,z}(X,U)\}.
+\label{eq:outcome-relevant-completeness}
+\end{align}
+Two latent distributions that are indistinguishable through $(X,W_j)$ must agree on the mean of each potential outcome. The assumption does not require the two latent distributions themselves to be equal.
+\end{assumption}
+
+\subsection{Exact Cross-View Identification}
+\label{sec:exact-cross-view-identification}
+
+\begin{lemma}[Conditioning safety]
+\label{lem:conditioning-safety}
+Under Assumption~\ref{ass:joint-latent-exchangeability}, for each $a\in\{0,1\}$,
+\begin{align}
+Y(a)\perp\!\!\!\perp A\mid(X,U,Z_j).
+\label{eq:conditioning-safe-outcome}
+\end{align}
+Under Assumption~\ref{ass:held-out-separation},
+\begin{align}
+W_j\perp\!\!\!\perp(A,Z_j)\mid(X,U),
+\label{eq:conditioning-safe-proxy}
+\end{align}
+and hence
+\begin{align}
+P(W_j\in C\mid X,U,A,Z_j)
+=K_j(C\mid X,U)
+\label{eq:common-channel-after-z}
+\end{align}
+for every measurable set $C$.
+\end{lemma}
+
+\begin{proof}
+The representation $Z_j$ is a measurable function of $(X,W_{-j})$. Assumption~\ref{ass:joint-latent-exchangeability} therefore implies
+\begin{align}
+A\perp\!\!\!\perp\bigl(Y(a),Z_j\bigr)\mid(X,U).
+\end{align}
+Weak union gives equation~\eqref{eq:conditioning-safe-outcome}. Similarly, Assumption~\ref{ass:held-out-separation} and measurability of $Z_j$ imply equation~\eqref{eq:conditioning-safe-proxy}. The conditional law in equation~\eqref{eq:common-channel-after-z} then equals the law in equation~\eqref{eq:held-out-channel}.
+\end{proof}
+
+\begin{definition}[Adjustment functional]
+\label{def:adjustment-functional}
+For the fixed representation $Z_j$, define
+\begin{align}
+\tau_{Z_j}
+\triangleq
+\sum_{z:P(Z_j=z)>0}
+P(Z_j=z)
+\left[
+\mathbb E(Y\mid A=1,Z_j=z)
+-
+\mathbb E(Y\mid A=0,Z_j=z)
+\right].
+\label{eq:adjustment-functional}
+\end{align}
+This is an observed-data functional. Its equality with $\tau$ has not yet been asserted.
 \end{definition}
 
-\begin{theorem}[Exact bias decomposition]
-\label{thm:bias-decomposition}
-Under the consistency, integrability, and latent-exchangeability parts of Assumption~\ref{ass:causal-proxy}, together with the mass and overlap conditions in Assumption~\ref{ass:stratum-kernel}, every fixed $\phi\in\Phi$ satisfies
+For each retained stratum, write
 \begin{align}
-\tau_\phi-\tau
+p_{j,z}\triangleq P(Z_j=z),
+\qquad
+\pi_{j,z}\triangleq P(A=1\mid Z_j=z).
+\label{eq:stratum-mass-propensity}
+\end{align}
+
+\begin{theorem}[Exact bias decomposition]
+\label{thm:exact-bias-decomposition}
+Under Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:representation-overlap},
+\begin{align}
+\tau_{Z_j}-\tau
 =
-\sum_{z=1}^M p_z
-\int
-\left\{(1-\pi_z)\mu_1(x,u)+\pi_z\mu_0(x,u)\right\}
-d\nu_{\phi,z}(x,u).
-\label{eq:bias-decomposition}
+\sum_zp_{j,z}
+\Big[&
+(1-\pi_{j,z})
+\left[
+\mathbb E_{Q_{1,j,z}}\{\mu_{1,j,z}\}
+-
+\mathbb E_{Q_{0,j,z}}\{\mu_{1,j,z}\}
+\right]
+\nonumber\\
+&+
+\pi_{j,z}
+\left[
+\mathbb E_{Q_{1,j,z}}\{\mu_{0,j,z}\}
+-
+\mathbb E_{Q_{0,j,z}}\{\mu_{0,j,z}\}
+\right]
+\Big].
+\label{eq:exact-bias-decomposition}
 \end{align}
 \end{theorem}
 
-Theorem~\ref{thm:bias-decomposition} isolates the quantity that a proxy must control.  Recovering every feature of the latent distribution is sufficient, but the bias depends only on the displayed outcome-relevant functionals.
+\begin{proof}
+Consistency and Lemma~\ref{lem:conditioning-safety} give, for $a\in\{0,1\}$,
+\begin{align}
+\mathbb E(Y\mid A=a,Z_j=z)
+=
+\mathbb E_{Q_{a,j,z}}\{\mu_{a,j,z}(X,U)\}.
+\label{eq:observed-arm-mean}
+\end{align}
+The law of total expectation over treatment gives
+\begin{align}
+\mathbb E\{Y(a)\mid Z_j=z\}
+={}&
+\pi_{j,z}
+\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(X,U)\}
+\nonumber\\
+&+
+(1-\pi_{j,z})
+\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(X,U)\}.
+\label{eq:potential-arm-mixture}
+\end{align}
+Insert equation~\eqref{eq:observed-arm-mean} into Definition~\ref{def:adjustment-functional}. Insert equation~\eqref{eq:potential-arm-mixture} into the stratum decomposition of $\tau$. Subtracting the two expressions and collecting the coefficients of each latent arm law gives equation~\eqref{eq:exact-bias-decomposition}.
+\end{proof}
 
-\begin{definition}[Observable joint discrepancy]
-\label{def:observable-discrepancy}
-Let $\mathcal H_k$ denote the RKHS induced by $k$.  For a probability law $P$ on $(X,W)$, define its kernel mean by
-\begin{align}
-m_k(P)\triangleq\int k(v,\cdot)\,dP(v),
-\end{align}
-and define
-\begin{align}
-\operatorname{MMD}_k(P,Q)
-\triangleq
-\|m_k(P)-m_k(Q)\|_{\mathcal H_k}.
-\end{align}
-For each treatment arm and stratum, let
-\begin{align}
-R_{a,z}\triangleq\mathcal L(X,W\mid A=a,Z=z).
-\end{align}
-The discrepancy in stratum $z$ and its population aggregate are
-\begin{align}
-\Delta_z(\phi)
-&\triangleq
-\operatorname{MMD}_k(R_{1,z},R_{0,z}),\\
-D(\phi)
-&\triangleq
-\sum_{z:p_z>0}p_z\Delta_z(\phi).
-\end{align}
-\end{definition}
+Theorem~\ref{thm:exact-bias-decomposition} isolates the obstacle to adjustment by $Z_j$. Unbiased adjustment requires equality of two outcome-relevant latent averages within each stratum. Equality of the full latent distributions is sufficient but is not necessary.
 
-\begin{proposition}[Observable meaning of zero discrepancy]
-\label{prop:zero-discrepancy}
-Under Assumption~\ref{ass:stratum-kernel},
+\begin{lemma}[Cross-view factorization]
+\label{lem:cross-view-factorization}
+Under Assumption~\ref{ass:held-out-separation}, for every treatment arm and retained stratum,
 \begin{align}
-D(\phi)=0
-\quad\Longleftrightarrow\quad
-(X,W)\perp\!\!\!\perp A\mid Z.
-\end{align}
-\end{proposition}
-
-Proposition~\ref{prop:zero-discrepancy} is an equality of observed conditional laws.  By itself, it does not eliminate hidden confounding.  The next definitions state the additional link used by the approximate theory.
-
-\begin{definition}[Proxy transport and outcome functionals]
-\label{def:proxy-transport}
-Assumption~\ref{ass:causal-proxy} gives the treatment-invariant proxy channel
-\begin{align}
-K_x(B\mid u)\triangleq P(W\in B\mid X=x,U=u).
-\end{align}
-For a finite signed measure $\nu$ on $\mathcal X\times\mathcal U$, define its image on $\mathcal X\times\mathcal W$ by
-\begin{align}
-(\mathcal K\nu)(C)
-\triangleq
-\int\!\int
-\mathbf 1\{(x,w)\in C\}K_x(dw\mid u)\,\nu(dx,du).
-\end{align}
-Before observing the data, fix a linear space $\mathcal C_{\phi,z}$ of integrable, total-mass-zero contrasts that contains every $Q_{1,z}-Q_{0,z}$ allowed by the scientific model.  For $\nu\in\mathcal C_{\phi,z}$, define
-\begin{align}
-J_{\phi,z}\nu
-&\triangleq
-\int k(v,\cdot)\,d(\mathcal K\nu)(v)
-\in\mathcal H_k,\\
-\ell_{a,\phi,z}(\nu)
-&\triangleq
-\int\mu_a(x,u)\,d\nu(x,u).
-\end{align}
-\end{definition}
-
-\begin{assumption}[Uniform outcome-relevant stability]
-\label{ass:uniform-stability}
-For each $a$, $\phi$, and retained $z$, there is a finite $\Gamma_{a,\phi,z}$ such that
-\begin{align}
-|\ell_{a,\phi,z}(\nu)|
-\le
-\Gamma_{a,\phi,z}\|J_{\phi,z}\nu\|_{\mathcal H_k},
-\qquad
-\nu\in\mathcal C_{\phi,z}.
-\label{eq:uniform-stability}
-\end{align}
-For representation selection with the unweighted criterion $D(\phi)$, these constants share a prespecified finite budget,
-\begin{align}
-\sup_{\phi\in\Phi}\max_{z:p_z>0}\max_{a\in\{0,1\}}
-\Gamma_{a,\phi,z}
-\le\Gamma<\infty.
-\end{align}
-The budget $\Gamma$ is a sensitivity parameter unless external information calibrates it.  Injectivity alone does not supply a quantitative common budget, and $\Gamma$ is not generally identified from one proxy.
-\end{assumption}
-
-\begin{lemma}[Channel identity]
-\label{lem:channel-identity}
-Under the proxy-invariance part of Assumption~\ref{ass:causal-proxy},
-\begin{align}
-R_{a,z}=\mathcal KQ_{a,z},
-\qquad
-\|J_{\phi,z}\nu_{\phi,z}\|_{\mathcal H_k}=\Delta_z(\phi).
+\mathcal L(X,W_j\mid A=a,Z_j=z)
+=
+\mathcal K_jQ_{a,j,z}.
+\label{eq:cross-view-factorization}
 \end{align}
 \end{lemma}
 
-The channel identity puts the latent contrast in Theorem~\ref{thm:bias-decomposition} and the observed discrepancy in Definition~\ref{def:observable-discrepancy} on the same scale.  Stability then converts this equality into the main population guarantee.
+\begin{proof}
+Let $B$ be a measurable subset of the joint space of $(X,W_j)$. Iterated expectation gives
+\begin{align}
+&P\{(X,W_j)\in B\mid A=a,Z_j=z\}
+\nonumber\\
+&\quad=
+\int
+P\{(X,W_j)\in B\mid X=x,U=u,A=a,Z_j=z\}
+Q_{a,j,z}(dx,du).
+\end{align}
+Lemma~\ref{lem:conditioning-safety} replaces the inner conditional law of $W_j$ by $K_j(\cdot\mid x,u)$. The resulting integral is $(\mathcal K_jQ_{a,j,z})(B)$ by equation~\eqref{eq:held-out-operator}. Equality for every measurable $B$ proves the result.
+\end{proof}
 
-\begin{theorem}[Population proxy-balancing certificate]
-\label{thm:population-certificate}
-Under Assumptions~\ref{ass:causal-proxy}, \ref{ass:stratum-kernel}, and \ref{ass:uniform-stability}, every fixed $\phi\in\Phi$ obeys
+\begin{definition}[Exact cross-view balance]
+\label{def:exact-cross-view-balance}
+The fixed representation satisfies exact cross-view balance when
 \begin{align}
-|\tau_\phi-\tau|
-\le
-\sum_{z=1}^M p_z
-\left\{(1-\pi_z)\Gamma_{1,\phi,z}
-+\pi_z\Gamma_{0,\phi,z}\right\}
-\Delta_z(\phi).
+(X,W_j)\perp\!\!\!\perp A\mid Z_j.
+\label{eq:exact-cross-view-balance}
 \end{align}
-Under the common budget $\Gamma$, this becomes
+Under Assumption~\ref{ass:representation-overlap}, this condition is equivalent to equality of the two conditional laws of $(X,W_j)$ in every retained stratum.
+\end{definition}
+
+Exact cross-view balance is a population condition on observed variables for a fixed representation. Lemma~\ref{lem:cross-view-factorization} converts it into
 \begin{align}
-\boxed{|\tau_\phi-\tau|\le\Gamma D(\phi).}
-\label{eq:population-certificate}
+\mathcal K_jQ_{1,j,z}
+=
+\mathcal K_jQ_{0,j,z}
+\label{eq:balanced-channel-images}
 \end{align}
+for every retained stratum.
+
+\begin{theorem}[Exact identification under cross-view balance]
+\label{thm:exact-cross-view-identification}
+Suppose Assumptions~\ref{ass:consistency} through \ref{ass:outcome-relevant-completeness} hold for the fixed block $j$ and fixed representation $Z_j=\phi_j(X,W_{-j})$. If $Z_j$ satisfies exact cross-view balance, then
+\begin{align}
+\boxed{\tau_{Z_j}=\tau.}
+\label{eq:exact-identification}
+\end{align}
+Consequently, the population ATE is point identified by the observed functional in equation~\eqref{eq:adjustment-functional}.
 \end{theorem}
 
 \begin{proof}
-Apply Theorem~\ref{thm:bias-decomposition}, the triangle inequality, Assumption~\ref{ass:uniform-stability}, and Lemma~\ref{lem:channel-identity}.  The weights on the two treatment-specific constants sum to one within each stratum, which gives the common-budget form.
+Fix a retained stratum. Exact cross-view balance and Lemma~\ref{lem:cross-view-factorization} give equation~\eqref{eq:balanced-channel-images}. Both latent arm laws belong to $\mathcal Q_{j,z}$. Assumption~\ref{ass:outcome-relevant-completeness} therefore gives, for each $a\in\{0,1\}$,
+\begin{align}
+\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(X,U)\}
+=
+\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(X,U)\}.
+\end{align}
+Both treatment-arm differences in Theorem~\ref{thm:exact-bias-decomposition} are zero. Hence $\tau_{Z_j}-\tau=0$.
 \end{proof}
 
-The central theorem controls the certified worst-case bias within the declared model class.  It does not claim that decreasing $D(\phi)$ must decrease the unknown realized bias for every data-generating process.
+\begin{remark}[Identification without full latent balance]
+\label{rem:no-full-latent-balance}
+Theorem~\ref{thm:exact-cross-view-identification} equates the outcome-relevant latent averages. It does not require $Q_{1,j,z}=Q_{0,j,z}$ and does not assert $(X,U)\perp\!\!\!\perp A\mid Z_j$. This distinction is the reason Assumption~\ref{ass:outcome-relevant-completeness} is weaker than full mixture injectivity.
+\end{remark}
 
-\begin{proposition}[Minimal stability and bounded factorization]
-\label{prop:minimal-stability}
-For fixed $(a,\phi,z)$, define
+\begin{remark}[Attainability]
+\label{rem:exact-attainability}
+Theorem~\ref{thm:exact-cross-view-identification} applies when the chosen representation attains exact cross-view balance. It does not guarantee that such a map exists in $\Phi_j$. A restricted class may leave positive residual imbalance, which motivates the next subsection.
+\end{remark}
+
+\subsection{Approximate Cross-View Bias Bound}
+\label{sec:approximate-cross-view-bound}
+
+Define the held-out observed vector
 \begin{align}
-\Gamma_{a,\phi,z}^{\star}
+V_j\triangleq(X,W_j).
+\end{align}
+Let $\kappa_j$ be a bounded, measurable, positive-semidefinite kernel on the support of $V_j$, and let $\mathcal H_j$ be its reproducing kernel Hilbert space. For a distribution $P$ of $V_j$, define its kernel mean embedding
+\begin{align}
+m_j(P)
 \triangleq
-\sup_{\substack{\nu\in\mathcal C_{\phi,z}\\
-\|J_{\phi,z}\nu\|_{\mathcal H_k}>0}}
-\frac{|\ell_{a,\phi,z}(\nu)|}
-{\|J_{\phi,z}\nu\|_{\mathcal H_k}}.
+\int\kappa_j(v,\cdot)\,P(dv)
+\in\mathcal H_j.
 \end{align}
-Set $\Gamma_{a,\phi,z}^{\star}=\infty$ if $J_{\phi,z}\nu=0$ but $\ell_{a,\phi,z}(\nu)\ne0$ for an admissible $\nu$, and set an empty supremum to zero when $\ell_{a,\phi,z}$ vanishes on the kernel.  Then $\Gamma_{a,\phi,z}^{\star}<\infty$ if and only if there is a bounded linear functional $\widetilde\ell_{a,\phi,z}$ on $J_{\phi,z}(\mathcal C_{\phi,z})$ such that
+For two distributions $P$ and $P'$, define
 \begin{align}
-\ell_{a,\phi,z}=\widetilde\ell_{a,\phi,z}\circ J_{\phi,z}.
+\operatorname{MMD}_{\kappa_j}(P,P')
+\triangleq
+\|m_j(P)-m_j(P')\|_{\mathcal H_j}.
 \end{align}
-This functional extends uniquely to the closure of the range and has a minimum-norm Riesz representer
+Assume that $\kappa_j$ is characteristic, meaning that this discrepancy is zero exactly when $P=P'$.
+
+\begin{definition}[Cross-view discrepancy]
+\label{def:cross-view-discrepancy}
+For each retained stratum, define
 \begin{align}
-g_{a,\phi,z}^{\star}
-\in
-\overline{J_{\phi,z}(\mathcal C_{\phi,z})}
-\subseteq\mathcal H_k
+\Delta_{j,z}(\phi_j)
+\triangleq
+\operatorname{MMD}_{\kappa_j}
+\left\{
+\mathcal L(V_j\mid A=1,Z_j=z),
+\mathcal L(V_j\mid A=0,Z_j=z)
+\right\}.
+\label{eq:stratum-cross-view-discrepancy}
 \end{align}
-satisfying
+The aggregate discrepancy is
 \begin{align}
-\ell_{a,\phi,z}(\nu)
-=\langle g_{a,\phi,z}^{\star},J_{\phi,z}\nu\rangle_{\mathcal H_k},
-\qquad
-\|g_{a,\phi,z}^{\star}\|_{\mathcal H_k}
-=\Gamma_{a,\phi,z}^{\star}.
+D_j(\phi_j)
+\triangleq
+\sum_zp_{j,z}\Delta_{j,z}(\phi_j),
+\label{eq:aggregate-cross-view-discrepancy}
+\end{align}
+where the sum is over retained strata. Both quantities are population functionals of observed variables.
+\end{definition}
+
+\begin{proposition}[Zero discrepancy and exact balance]
+\label{prop:zero-discrepancy}
+Under Assumption~\ref{ass:representation-overlap} and the characteristic-kernel condition,
+\begin{align}
+\boxed{
+D_j(\phi_j)=0
+\quad\Longleftrightarrow\quad
+(X,W_j)\perp\!\!\!\perp A\mid Z_j.
+}
+\label{eq:zero-discrepancy-equivalence}
 \end{align}
 \end{proposition}
 
-This factorization states the precise price of the certificate.  Only outcome-relevant latent contrasts must pass continuously through the observable proxy channel.
+\begin{proof}
+Every summand in equation~\eqref{eq:aggregate-cross-view-discrepancy} is nonnegative and every retained stratum has positive mass. Thus, the aggregate is zero exactly when every stratum-specific MMD is zero. Characteristicness converts each zero MMD into equality of the two conditional laws of $(X,W_j)$. Under overlap, these equalities over all retained strata are equivalent to conditional independence.
+\end{proof}
 
-\begin{proposition}[Global RKHS bridge witness]
-\label{prop:global-bridge}
-For $g\in\mathcal H_k$, define
+Lemma~\ref{lem:cross-view-factorization} also gives
 \begin{align}
-(Tg)(x,u)\triangleq\int g(x,w)K_x(dw\mid u).
+\Delta_{j,z}(\phi_j)
+=
+\operatorname{MMD}_{\kappa_j}
+\left(
+\mathcal K_jQ_{1,j,z},
+\mathcal K_jQ_{0,j,z}
+\right).
+\label{eq:observed-latent-discrepancy-link}
 \end{align}
-If, for each $a\in\{0,1\}$, a single $g_a\in\mathcal H_k$ satisfies $Tg_a=\mu_a$ throughout the model class and $\|g_a\|_{\mathcal H_k}\le\Gamma$, then Assumption~\ref{ass:uniform-stability} holds uniformly over all $\phi\in\Phi$ and retained strata.
-\end{proposition}
 
-The bridge in Proposition~\ref{prop:global-bridge} is a structural witness, not an estimated object in the proposed method.  It provides a common valid budget, but it need not provide the tight constant for any particular representation.
-
-\begin{corollary}[Exact identification through stability]
-\label{cor:exact-stability}
-Under the assumptions of Theorem~\ref{thm:population-certificate}, if $D(\phi)=0$, then $\tau_\phi=\tau$.  Hence the ATE is point identified by the observed $Z$-adjustment functional defined in Section~\ref{sec:problem-setting}.
-\end{corollary}
-
-Exact identification can also be interpreted through full latent balance.  That interpretation uses the following stronger qualitative condition, which is deliberately introduced only here.
-
-\begin{assumption}[Conditional mixture injectivity]
-\label{ass:mixture-injectivity}
-For almost every $x$, the map
+\begin{assumption}[Uniform outcome-relevant stability]
+\label{ass:uniform-stability}
+There is a finite constant $\Gamma_j$ such that, for every retained $z$, every $a\in\{0,1\}$, and every $Q,Q'\in\mathcal Q_{j,z}$,
 \begin{align}
-\lambda\longmapsto\int K_x(\cdot\mid u)\,\lambda(du)
+&\left|
+\mathbb E_Q\{\mu_{a,j,z}(X,U)\}
+-
+\mathbb E_{Q'}\{\mu_{a,j,z}(X,U)\}
+\right|
+\nonumber\\
+&\qquad\le
+\Gamma_j
+\operatorname{MMD}_{\kappa_j}
+\left(
+\mathcal K_jQ,
+\mathcal K_jQ'
+\right).
+\label{eq:uniform-stability}
 \end{align}
-is injective over the admissible conditional laws of $U$ given $X=x$.  The admissible class contains both $\mathcal L(U\mid X=x,A=0)$ and $\mathcal L(U\mid X=x,A=1)$ wherever the argument is applied.
 \end{assumption}
 
-\begin{theorem}[Latent interpretation of exact balance]
-\label{thm:latent-exact-balance}
-Under Assumptions~\ref{ass:causal-proxy}, \ref{ass:stratum-kernel}, and \ref{ass:mixture-injectivity}, if $D(\phi)=0$, then
+The constant $\Gamma_j$ converts an observed cross-view discrepancy into an upper bound on an outcome-relevant latent difference. It is a structural sensitivity parameter and is not generally identified from the observed distribution.
+
+\begin{theorem}[Approximate cross-view bias bound]
+\label{thm:approximate-cross-view-bound}
+Suppose Assumptions~\ref{ass:consistency} through \ref{ass:representation-overlap} and Assumption~\ref{ass:uniform-stability} hold for the fixed representation. Then
 \begin{align}
-(X,U)\perp\!\!\!\perp A\mid Z,
-\qquad
-Y(a)\perp\!\!\!\perp A\mid Z.
+\boxed{
+|\tau_{Z_j}-\tau|
+\le
+\Gamma_jD_j(\phi_j).
+}
+\label{eq:approximate-cross-view-bound}
 \end{align}
-Consequently, $\tau_\phi=\tau$.
 \end{theorem}
 
 \begin{proof}
-Zero discrepancy gives $(X,W)\perp\!\!\!\perp A\mid Z$.  Because $Z=\phi(X)$, this implies both $X\perp\!\!\!\perp A\mid Z$ and $W\perp\!\!\!\perp A\mid X$.  Proxy-channel invariance and Assumption~\ref{ass:mixture-injectivity} then give $U\perp\!\!\!\perp A\mid X$.  Combining the last two independences yields $(X,U)\perp\!\!\!\perp A\mid Z$, after which latent exchangeability and consistency give the result.
+For each treatment level and retained stratum, define
+\begin{align}
+\delta_{a,j,z}
+\triangleq
+\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(X,U)\}
+-
+\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(X,U)\}.
+\end{align}
+Theorem~\ref{thm:exact-bias-decomposition} and the triangle inequality give
+\begin{align}
+|\tau_{Z_j}-\tau|
+\le
+\sum_zp_{j,z}
+\left[
+(1-\pi_{j,z})|\delta_{1,j,z}|
++
+\pi_{j,z}|\delta_{0,j,z}|
+\right].
+\end{align}
+Assumption~\ref{ass:uniform-stability} and equation~\eqref{eq:observed-latent-discrepancy-link} imply
+\begin{align}
+|\delta_{a,j,z}|
+\le
+\Gamma_j\Delta_{j,z}(\phi_j).
+\end{align}
+Substitution, the identity $(1-\pi_{j,z})+\pi_{j,z}=1$, and Definition~\ref{def:cross-view-discrepancy} give equation~\eqref{eq:approximate-cross-view-bound}.
 \end{proof}
 
-Corollary~\ref{cor:exact-stability} and Theorem~\ref{thm:latent-exact-balance} are two valid routes from an attained exact endpoint.  Exact observed balance alone supplies neither route unless the corresponding stability or injectivity condition is imposed.
+\begin{remark}[Exact completeness and quantitative stability]
+\label{rem:exact-vs-stability}
+Assumption~\ref{ass:outcome-relevant-completeness} preserves equality at zero discrepancy. Assumption~\ref{ass:uniform-stability} controls nonzero discrepancies and therefore implies exact outcome-relevant completeness. The converse need not hold because exact equality can be preserved even when no finite Lipschitz constant $\Gamma_j$ exists.
+\end{remark}
 
-\begin{theorem}[Finite-$M$ attainability]
-\label{thm:finite-m-attainability}
-Let
+\begin{remark}[Sensitivity interpretation]
+\label{rem:sensitivity-interpretation}
+For a scientifically specified $\Gamma_j$, Theorem~\ref{thm:approximate-cross-view-bound} gives the population sensitivity interval
 \begin{align}
-\Phi_M
-\triangleq
-\{\phi:\mathcal X\to[M]:\phi\text{ is measurable}\},
+\tau
+\in
+\left[
+\tau_{Z_j}-\Gamma_jD_j(\phi_j),
+\tau_{Z_j}+\Gamma_jD_j(\phi_j)
+\right].
 \end{align}
-let $e(X)\triangleq P(A=1\mid X)$, and assume primitive strict overlap $0<e(X)<1$ almost surely.  Maps with empty or light strata are allowed, and $D(\phi)$ sums only over positive-probability strata.  Assume that $k$ is bounded and characteristic and that the required kernel mean embeddings exist.  Then there exists $\phi\in\Phi_M$ with $D(\phi)=0$ if and only if
-\begin{align}
-W\perp\!\!\!\perp A\mid X
-\quad\text{and}\quad
-e(X)\text{ takes at most $M$ values almost surely}.
-\end{align}
-\end{theorem}
+A small $D_j(\phi_j)$ alone does not guarantee small causal bias. The causal quantity is the product $\Gamma_jD_j(\phi_j)$.
+\end{remark}
 
-Theorem~\ref{thm:finite-m-attainability} separates certification from existence.  Exact balance is a strong endpoint, while finite-stratum exact attainment is confined to a narrow boundary.
-
-\begin{proposition}[Restricted order preservation]
-\label{prop:order-preservation}
-Fix a bounded characteristic kernel $k_W$ on $\mathcal W$ and a bounded kernel $k_X$ on $\mathcal X$, write $\mathcal H_{k_W}$ and $\mathcal H_{k_X}$ for their induced RKHSs, and define
+\begin{remark}[Uniformity across candidate representations]
+\label{rem:uniform-across-representations}
+For representation learning, let $\Gamma_j(\phi)$ be a stability budget for candidate $\phi$. A common finite budget
 \begin{align}
-D_W(\phi)
-\triangleq
-\sum_{z=1}^M p_z\operatorname{MMD}_{k_W}
-\left\{\mathcal L(W\mid A=1,Z=z),
-\mathcal L(W\mid A=0,Z=z)\right\}.
+\sup_{\phi\in\Phi_j}\Gamma_j(\phi)
+\le
+\overline\Gamma_j
+<\infty
+\label{eq:uniform-candidate-stability}
 \end{align}
-Assume all five conditions below.
-\begin{enumerate}[label=(P\arabic*)]
-\item $U\in\{0,1\}$.
-\item The proxy channel is $x$-homogeneous, $K_x(\cdot\mid u)=K(\cdot\mid u)$, and
-\begin{align}
-u_W\triangleq\int k_W(w,\cdot)\,d\{K(\cdot\mid1)-K(\cdot\mid0)\}(w)
-\end{align}
-satisfies $\|u_W\|_{\mathcal H_{k_W}}>0$.
-\item The outcome regression has the additive homogeneous form $\mu_a(x,u)=f(x)+\tau a+\beta u$, where $f\in\mathcal H_{k_X}$.
-\item Every compared representation has within-stratum $X$ balance: $\mathcal L(X\mid A=1,Z=z)=\mathcal L(X\mid A=0,Z=z)$.
-\item Every compared representation has a common direction of latent selection:
-\begin{align}
-\mathbb E(U\mid A=1,Z=z)-\mathbb E(U\mid A=0,Z=z)\ge0.
-\end{align}
-\end{enumerate}
-Under Assumption~\ref{ass:causal-proxy} and the overlap part of Assumption~\ref{ass:stratum-kernel},
-\begin{align}
-|\tau_\phi-\tau|
-=\kappa D_W(\phi),
-\qquad
-\kappa\triangleq\frac{|\beta|}{\|u_W\|_{\mathcal H_{k_W}}}.
-\end{align}
-When $\beta\ne0$, $D_W$ and realized absolute bias therefore give the same strict ordering among representations satisfying P1--P5.
-\end{proposition}
-
-Proposition~\ref{prop:order-preservation} is a restricted alignment result.  Without its five conditions, Theorem~\ref{thm:population-certificate} remains a worst-case certificate and does not generally order realized biases.
-
-\begin{remark}[Independent audit-view extension]
-\label{rem:audit-view-open}
-For a high-dimensional proxy, one may write
-\begin{align}
-W=(W^{\mathrm{rep}},W^{\mathrm{audit}}),
-\qquad
-R=\rho(X,W^{\mathrm{rep}}),
-\end{align}
-and audit $(X,W^{\mathrm{audit}})\perp\!\!\!\perp A\mid R$.  This construction prevents literal copying of the audited coordinate.  Exact point identification still requires additional multi-view conditional independence and an outcome-relevant null-space or injectivity condition for the audit channel.  Its exact theorem and approximate stability certificate remain conditional, open extensions and are not claims of the canonical $Z=\phi(X)$ theory above.
+is required to compare candidates by discrepancy alone. Without this condition, a representation can have a small observed discrepancy and an arbitrarily large stability constant.
 \end{remark}

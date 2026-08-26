@@ -3,7 +3,7 @@
 
 \subsection{Questions, Comparators, and Reporting Rules}
 
-The experiments answer four separate questions. First, does proxy-supervised representation adjustment reduce ATE error relative to adjustment using $X$ alone? Second, do the exact-assumption designs recover the known balancing structure? Third, does the finite-state experiment verify the established certificate and its failure as the proxy channel becomes ill-posed? Fourth, does the method show a useful descriptive signal in an observational benchmark with a noisy randomized reference? We report mean absolute error, root mean squared error, paired wins, held-out discrepancy, overlap diagnostics, and Monte Carlo uncertainty. Oracle procedures that observe $U$ or the true balancing score are simulation references, not implementable competitors.
+The experiments answer three separate questions. First, does proxy-supervised representation adjustment reduce ATE error relative to adjustment using $X$ alone? Second, do the exact-assumption designs recover the known balancing structure? Third, does the method show a useful descriptive signal in an observational benchmark with a noisy randomized reference? We report mean absolute error, root mean squared error, paired wins, held-out discrepancy, overlap diagnostics, and Monte Carlo uncertainty. Oracle procedures that observe $U$ or the true balancing score are simulation references, not implementable competitors. The theory in Sections~\ref{sec:identification} and \ref{sec:estimation} applies to one prespecified held-out block at a time. Experimental aggregation across several orientations is reported as an empirical extension and is not presented as a separate identification theorem.
 
 \subsection{Honest Approximate SCMs}
 
@@ -33,19 +33,15 @@ Track B uses a continuous exact balancing score and a linear representation clas
 \end{figure}
 \FloatBarrier
 
-\subsection{Finite-State Verification of the Certificate}
-
-The population verification enumerates all $3^{10}$ candidate maps, of which $55{,}980$ satisfy the admissibility conditions. Exactly $3!=6$ maps attain exact balance, and their biases are zero to machine precision. The common certificate has zero violations over all admissible maps. As the proxy channel approaches non-injectivity, the relevant stability constant grows from $1.64$ to $48.9$ and then diverges, even while the observable discrepancy can shrink. This is the intended sensitivity behavior: a small discrepancy is informative only together with a credible stability budget. The explicit finite-sample radius is valid but conservative in this design.
-
 \subsection{WSC Observational Benchmark}
 
-The WSC study forms an observational subset of $1{,}105$ participants whose randomized mathematics assignment agrees with pretreatment preference, and targets the population ATE in the original $2{,}200$ randomized participants. The full randomized difference in means is $0.760$ with standard error $0.151$ and serves only as a noisy benchmark. Across ten algorithmic split repetitions on this one fixed data set, the unconstrained cross-mask estimate averaged $1.302$ with split standard deviation $0.065$ and absolute benchmark gap $0.541$, compared with gaps $2.690$ for the naive observational contrast, $1.704$ for direct $X$ adjustment, and $0.672$ for direct $(X,W)$ adjustment. The unconstrained cross-mask method is the proposed WSC method shown in Figure~\ref{fig:certificate-wsc}. Its practical-overlap gate passed $0/10$ repetitions. The benchmark therefore supplies descriptive evidence only, not a validated causal-performance claim, causal ground truth, or a test of proxy validity.
+The WSC study forms an observational subset of $1{,}105$ participants whose randomized mathematics assignment agrees with pretreatment preference, and targets the population ATE in the original $2{,}200$ randomized participants. The full randomized difference in means is $0.760$ with standard error $0.151$ and serves only as a noisy benchmark. Across ten algorithmic split repetitions on this one fixed data set, the unconstrained cross-mask estimate averaged $1.302$ with split standard deviation $0.065$ and absolute benchmark gap $0.541$, compared with gaps $2.690$ for the naive observational contrast, $1.704$ for direct $X$ adjustment, and $0.672$ for direct $(X,W)$ adjustment. The unconstrained cross-mask method is the proposed WSC method shown in Figure~\ref{fig:wsc-benchmark}. Its practical-overlap gate passed $0/10$ repetitions. The benchmark therefore supplies descriptive evidence only, not a validated causal-performance claim, causal ground truth, or a test of proxy validity.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../figures/final/figure_certificate_wsc.pdf}
-\caption{Certificate and observational diagnostics. Left: as the finite-state proxy channel approaches non-injectivity, the observable discrepancy decreases while realized bias remains fixed and the required stability constant diverges. Right: WSC estimates relative to the noisy randomized reference. Error bars for fitted WSC methods are standard deviations across ten algorithmic splits of one fixed data set, not Monte Carlo uncertainty. The WSC panel has no causal ground truth and reports only the unconstrained cross-mask learner as the proposed method.}
-\label{fig:certificate-wsc}
+\includegraphics[width=\linewidth]{../figures/final/wsc_benchmark.pdf}
+\caption{WSC observational benchmark. Estimates are shown relative to the noisy randomized reference. Error bars for fitted methods are standard deviations across ten algorithmic splits of one fixed data set, not Monte Carlo uncertainty. The benchmark has no causal ground truth and reports only the unconstrained cross-mask learner as the proposed method.}
+\label{fig:wsc-benchmark}
 \end{figure}
 
 \clearpage
