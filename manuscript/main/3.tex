@@ -24,7 +24,7 @@ Z_j\triangleq\phi_j(X,W_{-j}).
 \end{align}
 The representation is finite-valued so that balance, overlap, and adjustment can be stated within explicit strata. This choice does not require the hidden variable $U$ to be discrete. A value $z\in[M_j]$ is retained when $P(Z_j=z)>0$.
 
-Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible with the broad pretreatment ordering. In every panel, $W_{-j}$ is the representation-side proxy view, $W_j$ is the held-out proxy view, and $Z_j$ is the deterministic function defined in equation~\eqref{eq:fixed-view-representation}. Solid arrows denote causal relations. Dashed arrows into the rectangular $Z_j$ node denote deterministic construction and are not causal arrows. The graphs alone do not imply the cross-view conditional independences imposed below.
+Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible with the broad pretreatment ordering. In every panel, $W_{-j}$ is the representation-side proxy view and $W_j$ is the held-out proxy view. The representation defined in equation~\eqref{eq:fixed-view-representation} is omitted because it is a deterministic construction rather than another variable in the causal graph. The graphs alone do not imply the cross-view conditional independences imposed below.
 
 \begin{figure}[t]
 \centering
@@ -36,16 +36,13 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
   observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
   outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
-  rep/.style={draw=black,dashed,rectangle,rounded corners=1pt,minimum width=7mm,minimum height=4.5mm,inner sep=1pt,font=\sffamily\scriptsize},
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent},
-  construct/.style={-{Latex[length=1.2mm,width=1.5mm]},draw=black,dashed,line width=0.45pt}]
+  latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.75,-0.85) rectangle (1.75,3.15);
 \node[latent] (u) at (0,2.70) {$U$};
 \node[observed] (wm) at (-1.30,1.55) {$W_{-j}$};
 \node[observed] (x) at (0,1.55) {$X$};
 \node[observed] (wj) at (1.30,1.55) {$W_j$};
-\node[rep] (z) at (0,0.55) {$Z_j$};
 \node[treatment] (a) at (-0.85,-0.35) {$A$};
 \node[outcome] (y) at (0.85,-0.35) {$Y$};
 \draw[latentedge] (u) -- (wm);
@@ -56,8 +53,6 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
 \draw[edge] (x) -- (a);
 \draw[edge] (x) -- (y);
 \draw[edge] (a) -- (y);
-\draw[construct] (x) -- (z);
-\draw[construct] (wm) to[bend left=28] (z);
 \end{tikzpicture}
 \end{minipage}}
 \hfill
@@ -69,16 +64,13 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
   observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
   outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
-  rep/.style={draw=black,dashed,rectangle,rounded corners=1pt,minimum width=7mm,minimum height=4.5mm,inner sep=1pt,font=\sffamily\scriptsize},
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent},
-  construct/.style={-{Latex[length=1.2mm,width=1.5mm]},draw=black,dashed,line width=0.45pt}]
+  latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.75,-0.85) rectangle (1.75,3.15);
 \node[latent] (u) at (0,2.70) {$U$};
 \node[observed] (wm) at (-1.30,1.55) {$W_{-j}$};
 \node[observed] (x) at (0,1.55) {$X$};
 \node[observed] (wj) at (1.30,1.55) {$W_j$};
-\node[rep] (z) at (0,0.55) {$Z_j$};
 \node[treatment] (a) at (-0.85,-0.35) {$A$};
 \node[outcome] (y) at (0.85,-0.35) {$Y$};
 \draw[latentedge] (u) -- (wm);
@@ -91,8 +83,6 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
 \draw[edge] (a) -- (y);
 \draw[edge] (x) -- (wm);
 \draw[edge] (x) -- (wj);
-\draw[construct] (x) -- (z);
-\draw[construct] (wm) to[bend left=28] (z);
 \end{tikzpicture}
 \end{minipage}}
 \hfill
@@ -104,16 +94,13 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
   every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
   observed/.style={draw=black,text=black}, treatment/.style={draw=coltreat,text=coltreat},
   outcome/.style={draw=colout,text=colout}, latent/.style={draw=collatent,text=collatent},
-  rep/.style={draw=black,dashed,rectangle,rounded corners=1pt,minimum width=7mm,minimum height=4.5mm,inner sep=1pt,font=\sffamily\scriptsize},
   edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent},
-  construct/.style={-{Latex[length=1.2mm,width=1.5mm]},draw=black,dashed,line width=0.45pt}]
+  latentedge/.style={edge,draw=collatent}]
 \path[use as bounding box] (-1.75,-0.85) rectangle (1.75,3.15);
 \node[latent] (u) at (0,2.70) {$U$};
 \node[observed] (wm) at (-1.30,1.55) {$W_{-j}$};
 \node[observed] (x) at (0,1.55) {$X$};
 \node[observed] (wj) at (1.30,1.55) {$W_j$};
-\node[rep] (z) at (0,0.55) {$Z_j$};
 \node[treatment] (a) at (-0.85,-0.35) {$A$};
 \node[outcome] (y) at (0.85,-0.35) {$Y$};
 \draw[latentedge] (u) -- (wm);
@@ -127,11 +114,9 @@ Figure~\ref{fig:compatible-proxy-dags} displays three causal graphs compatible w
 \draw[edge] (x) -- (wm);
 \draw[edge] (x) -- (wj);
 \draw[edge] (wj) -- (y);
-\draw[construct] (x) -- (z);
-\draw[construct] (wm) to[bend left=28] (z);
 \end{tikzpicture}
 \end{minipage}}
-\caption{Causal graphs compatible with the cross-view setup. In every panel, $W_{-j}$ is used with $X$ to construct $Z_j$, while $W_j$ is held out. Solid arrows are causal. Dashed arrows into the rectangular $Z_j$ node show the deterministic construction $Z_j=\phi_j(X,W_{-j})$ and are not causal arrows. Panel (a) lets both proxy views depend on $U$. Panel (b) additionally lets both views depend on $X$. Panel (c) shows $W_j\to Y$; a direct effect $W_{-j}\to Y$ is also allowed by the stated assumptions but is omitted for legibility. The graphs do not by themselves imply Assumptions~\ref{ass:joint-latent-exchangeability} and \ref{ass:held-out-separation}.}
+\caption{Causal graphs compatible with the cross-view setup. In every panel, $W_{-j}$ is the representation-side proxy block and $W_j$ is held out. The representation $Z_j=\phi_j(X,W_{-j})$ is defined in the text and omitted from the causal graph. Panel (a) lets both proxy views depend on $U$. Panel (b) additionally lets both views depend on $X$. Panel (c) shows $W_j\to Y$; a direct effect $W_{-j}\to Y$ is also allowed by the stated assumptions but is omitted for legibility. The graphs do not by themselves imply Assumptions~\ref{ass:joint-latent-exchangeability} and \ref{ass:held-out-separation}.}
 \label{fig:compatible-proxy-dags}
 \end{figure}
 \FloatBarrier
