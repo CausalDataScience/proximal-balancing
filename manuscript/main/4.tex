@@ -2,6 +2,7 @@
 \label{sec:estimation}
 
 The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The analysis uses one prespecified held-out block $j$ throughout.
+For finite-sample analysis, this section restricts equation~\eqref{eq:fixed-view-representation} to the deterministic subclass. We identify each deterministic map with $v\mapsto\phi(v,0)$ and write it simply as $\phi(v)$.
 
 \subsection{Representation Learning}
 \label{sec:representation-learning}
@@ -46,9 +47,7 @@ The primitive cross-view Assumptions~\ref{ass:joint-latent-exchangeability} and 
 \label{def:empirical-cross-view-discrepancy}
 For observation $i\in\mathcal I_{\mathrm D}$ and candidate $\phi\in\mathcal F_j$, write
 \begin{align}
-Z_{j,i}^{\phi}\triangleq\phi(X_i,W_{-j,i}),
-\qquad
-V_{j,i}\triangleq(X_i,W_{j,i}).
+Z_{j,i}^{\phi}\triangleq\phi(X_i,W_{-j,i}).
 \end{align}
 For treatment arm $a$ and stratum $z$, define
 \begin{align}
@@ -70,7 +69,7 @@ When $N_{a,z}^{\phi}>0$, define the empirical kernel mean
 \frac{1}{N_{a,z}^{\phi}}
 \sum_{i\in\mathcal I_{\mathrm D}}
 \mathbf 1\{A_i=a,Z_{j,i}^{\phi}=z\}
-\kappa_j(V_{j,i},\cdot).
+\kappa_j\{(X_i,W_{j,i}),\cdot\}.
 \end{align}
 When both treatment-arm cells are nonempty, define
 \begin{align}
