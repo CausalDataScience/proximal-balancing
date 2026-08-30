@@ -3,45 +3,54 @@
 
 \subsection{Proofs for Section~\ref{sec:identification}}
 
-\paragraph{Conditioning safety.}
-\begin{proof}[Proof of Lemma~\ref{lem:conditioning-safety}]
-Conditional on $V_j$, $Z_j$ depends only on $\epsilon_j$. The displayed independence of $\epsilon_j$ makes adding $Z_j$ safe in each of the two separate clauses of Assumption~\ref{ass:joint-latent-exchangeability}.
-\end{proof}
-
-\paragraph{Cross-view factorization.}
-\begin{proof}[Proof of Lemma~\ref{lem:cross-view-factorization}]
-Integrate the common conditional law in equation~\eqref{eq:common-channel-after-z} over $Q_{a,j,z}$. By the generative definition of $\mathcal K_j$ in Definition~\ref{def:latent-proxy-objects}, the resulting law of $(X,W_j)$ is $\mathcal K_jQ_{a,j,z}$.
-\end{proof}
-
 \paragraph{Exact identification.}
 \begin{proof}[Proof of Theorem~\ref{thm:exact-cross-view-identification}]
-Exact PROBE balance and Lemma~\ref{lem:cross-view-factorization} imply
+Because $Z_j$ is constructed from $V_j$ and the independent variable $\epsilon_j$, the two clauses of Assumption~\ref{ass:joint-latent-exchangeability} remain valid after additionally conditioning on $Z_j$. Thus, for each $a\in\{0,1\}$,
+\begin{align}
+\mathbb E\{Y(a)\mid A,V_j,U,Z_j\}
+&=
+\mathbb E\{Y(a)\mid V_j,U,Z_j\},
+\label{eq:conditioning-safe-outcome-app}\\
+\mathcal L(W_j\mid A,V_j,U,Z_j)
+&=
+K_j(\cdot\mid V_j,U).
+\label{eq:common-channel-after-z-app}
+\end{align}
+Integrating the second identity over $Q_{b,j,z}$ and using the definition of $\mathcal K_j$ gives
+\begin{align}
+\mathcal L(X,W_j\mid A=b,Z_j=z)
+=
+\mathcal K_jQ_{b,j,z}.
+\label{eq:cross-view-factorization-app}
+\end{align}
+Exact balance in equation~\eqref{eq:exact-cross-view-balance} therefore implies
 \begin{align}
 \mathcal K_jQ_{1,j,z}=\mathcal K_jQ_{0,j,z}
+\label{eq:balanced-channel-images-app}
 \end{align}
-for $P_{Z_j}$-almost every $z$. Assumption~\ref{ass:outcome-relevant-completeness} therefore gives, for each $a\in\{0,1\}$,
+for $P_{Z_j}$-almost every $z$. Representation overlap gives $Q_{b,j,z}\ll\mathcal L(V_j,U\mid Z_j=z)$ for $b\in\{0,1\}$. Assumption~\ref{ass:consistency}, equation~\eqref{eq:conditioning-safe-outcome-app}, and Jensen's inequality give the required integrability, so $Q_{b,j,z}\in\mathcal Q_{j,z}$ almost everywhere. Assumption~\ref{ass:outcome-relevant-completeness} therefore gives, for each $a\in\{0,1\}$,
 \begin{align}
 \mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
 =
 \mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
 \label{eq:orc-equal-latent-means}
 \end{align}
-By Lemma~\ref{lem:conditioning-safety} and iterated expectation, for each $b\in\{0,1\}$,
+By equation~\eqref{eq:conditioning-safe-outcome-app} and iterated expectation, for each $b\in\{0,1\}$,
 \begin{align}
 \mathbb E\{Y(a)\mid A=b,Z_j=z\}
 =
 \mathbb E_{Q_{b,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
 \end{align}
-Equation~\eqref{eq:orc-equal-latent-means} proves equation~\eqref{eq:conditional-mean-exchangeability}. Consistency then gives
+Equation~\eqref{eq:orc-equal-latent-means} shows that the conditional mean of $Y(a)$ given $(A,Z_j)$ does not depend on $A$. Consistency then gives
 \begin{align}
-m_{a,j}(z)
+\mathbb E(Y\mid A=a,Z_j=z)
 &=
 \mathbb E\{Y(a)\mid A=a,Z_j=z\}
 \nonumber\\
 &=
 \mathbb E\{Y(a)\mid Z_j=z\}.
 \end{align}
-Integrating the difference between the two treatment levels with respect to $P_{Z_j}$ yields $\tau_{Z_j}=\tau$.
+Integrating the difference between the two treatment levels with respect to $P_{Z_j}$ yields equation~\eqref{eq:exact-identification}.
 \end{proof}
 
 \paragraph{Zero discrepancy and exact balance.}
@@ -50,7 +59,7 @@ The nonnegative random variable $\Delta_j(Z_j;\phi_j)$ has expectation zero exac
 \end{proof}
 
 \paragraph{Supporting bias decomposition.}
-For this supporting lemma, define $\pi_j(z)\triangleq P(A=1\mid Z_j=z)$.
+For this supporting calculation, define $\pi_j(z)\triangleq P(A=1\mid Z_j=z)$.
 For each $a\in\{0,1\}$ and $P_{Z_j}$-almost every $z$, define
 \begin{align}
 \delta_{a,j}(z)
@@ -60,26 +69,9 @@ For each $a\in\{0,1\}$ and $P_{Z_j}$-almost every $z$, define
 \mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
 \label{eq:stratum-mass-propensity}
 \end{align}
-
-\begin{lemma}[Exact bias decomposition]
-\label{lem:exact-bias-decomposition}
-Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and equation~\eqref{eq:adjustment-integrability},
+Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap}, consistency and equation~\eqref{eq:conditioning-safe-outcome-app} give, for $P_{Z_j}$-almost every $z$,
 \begin{align}
-\tau_{Z_j}-\tau
-=
-\mathbb E\left[
-\{1-\pi_j(Z_j)\}\delta_{1,j}(Z_j)
-+
-\pi_j(Z_j)\delta_{0,j}(Z_j)
-\right].
-\label{eq:exact-bias-decomposition}
-\end{align}
-\end{lemma}
-
-\begin{proof}
-Consistency and Lemma~\ref{lem:conditioning-safety} give, for $P_{Z_j}$-almost every $z$,
-\begin{align}
-m_{a,j}(z)
+\mathbb E(Y\mid A=a,Z_j=z)
 =
 \mathbb E_{Q_{a,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
 \label{eq:observed-arm-mean}
@@ -93,14 +85,47 @@ Conditional expectation over $A$ gives
 &+\{1-\pi_j(z)\}\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}\}.
 \label{eq:potential-arm-mixture}
 \end{align}
-Subtract the two conditional expressions, collect terms, and integrate with respect to $P_{Z_j}$.
-\end{proof}
+Subtracting the two conditional expressions and collecting terms gives, for $P_{Z_j}$-almost every $z$,
+\begin{align}
+&\mathbb E(Y\mid A=1,Z_j=z)
+-
+\mathbb E(Y\mid A=0,Z_j=z)
+\nonumber\\
+&\quad-
+\left[
+\mathbb E\{Y(1)\mid Z_j=z\}
+-
+\mathbb E\{Y(0)\mid Z_j=z\}
+\right]
+\nonumber\\
+&\qquad=
+\{1-\pi_j(z)\}\delta_{1,j}(z)
++
+\pi_j(z)\delta_{0,j}(z).
+\label{eq:pointwise-bias-decomposition}
+\end{align}
 
 \paragraph{Approximate cross-view bias bound.}
 \begin{proof}[Proof of Theorem~\ref{thm:approximate-cross-view-bound}]
-Lemma~\ref{lem:exact-bias-decomposition}, the triangle inequality, stability, and equation~\eqref{eq:observed-latent-discrepancy-link} give
+Representation overlap gives $Q_{b,j,z}\ll\mathcal L(V_j,U\mid Z_j=z)$ for $b\in\{0,1\}$. Assumption~\ref{ass:consistency}, equation~\eqref{eq:conditioning-safe-outcome-app}, and Jensen's inequality give the required integrability, so $Q_{b,j,z}\in\mathcal Q_{j,z}$ almost everywhere.
+Assumption~\ref{ass:uniform-stability} and equation~\eqref{eq:observed-latent-discrepancy-link} therefore give, for each $a\in\{0,1\}$ and almost every $z$,
 \begin{align}
-|\tau_{Z_j}-\tau|
+|\delta_{a,j}(z)|
+\le
+\Gamma_j\Delta_j(z;\phi_j).
+\label{eq:stratum-bias-stability-bound}
+\end{align}
+The bounded kernel and finite $\Gamma_j$ imply $D_j(\phi_j)<\infty$, so the right-hand side of equation~\eqref{eq:pointwise-bias-decomposition} is integrable. Assumption~\ref{ass:consistency} makes the conditional potential-outcome contrast integrable. Equation~\eqref{eq:pointwise-bias-decomposition} therefore also makes the observed conditional contrast integrable. We may now integrate that identity and use the triangle inequality and equation~\eqref{eq:stratum-bias-stability-bound} to obtain
+\begin{align}
+&\left|
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,Z_j)
+-
+\mathbb E(Y\mid A=0,Z_j)
+\right]
+-\tau
+\right|
+\nonumber\\
 &\le\mathbb E[\{1-\pi_j(Z_j)\}|\delta_{1,j}(Z_j)|+\pi_j(Z_j)|\delta_{0,j}(Z_j)|]\\
 &\le\Gamma_j\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
 \end{align}

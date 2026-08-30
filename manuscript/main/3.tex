@@ -61,7 +61,20 @@ K_j(\cdot\mid v,u)
 \triangleq
 \mathcal L(W_j\mid V_j=v,U=u).
 \end{align}
-For any probability law $Q$ on $(V_j,U)$, let $\mathcal K_jQ$ denote the probability law on $(X,W_j)$ generated in three steps. First draw $(V_j,U)=(X,W_{-j},U)\sim Q$. Next draw $W_j\sim K_j(\cdot\mid V_j,U)$. Finally retain $(X,W_j)$ and integrate out $(W_{-j},U)$.
+For any probability law $Q$ on $(V_j,U)$ and measurable $B\subseteq\mathcal X\times\mathcal W_j$, define
+\begin{align*}
+(\mathcal K_jQ)(B)
+\triangleq
+\int
+\left[
+\int_{\mathcal W_j}
+\mathbf 1\{(x,w_j)\in B\}
+K_j(dw_j\mid v,u)
+\right]
+Q(dv,du),
+\qquad v=(x,w_{-j}).
+\end{align*}
+Equivalently, first draw $(V_j,U)=(X,W_{-j},U)\sim Q$, then draw $W_j\sim K_j(\cdot\mid V_j,U)$, and finally retain $(X,W_j)$ while integrating out $(W_{-j},U)$. Thus, $\mathcal K_jQ$ is a probability law on $(X,W_j)$.
 
 For each $a\in\{0,1\}$, define
 \begin{align}
@@ -80,6 +93,7 @@ Q\ll\mathcal L(V_j,U\mid Z_j=z), \notag\\
 \text{ for }a\in\{0,1\}
 \biggr\}.
 \end{align}
+The relation $Q\ll\mathcal L(V_j,U\mid Z_j=z)$ means that $Q$ assigns zero probability to every event having zero probability under the pooled stratum law. The condition $\mathbb E_Q|\mu_{a,j,z}(V_j,U)|<\infty$ means that the average absolute conditional potential-outcome mean under $Q$ is finite.
 For $Q\in\mathcal Q_{j,z}$, write
 \begin{align}
 \mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
@@ -87,8 +101,6 @@ For $Q\in\mathcal Q_{j,z}$, write
 \int\mu_{a,j,z}(v,u)Q(dv,du).
 \end{align}
 \end{definition}
-
-The notation $Q\ll\mathcal L(V_j,U\mid Z_j=z)$ means that every event impossible under the stratum law of $(V_j,U)$ is also impossible under $Q$. This domination makes the conditional-law versions well defined under $Q$. Under representation overlap and integrability, the actual arm laws $Q_{0,j,z}$ and $Q_{1,j,z}$ belong to $\mathcal Q_{j,z}$.
 
 \begin{assumption}[Exact outcome-relevant completeness]
 \label{ass:outcome-relevant-completeness}
@@ -103,105 +115,50 @@ For $P_{Z_j}$-almost every $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and each $a\in\
 \end{align}
 \end{assumption}
 
-This condition is imposed on the entire class $\mathcal Q_{j,z}$. It need not imply $Q=Q'$ and therefore does not imply latent balance. On a common domain it is weaker than full mixture injectivity, but it is not uniformly comparable with standard proximal completeness because the operators differ.
-
 \subsection{Exact Cross-View Identification}
 \label{sec:exact-cross-view-identification}
 
-Because $Z_j$ is constructed from $V_j$ and the independent variable $\epsilon_j$, the next lemma shows that the two conditional independences in Assumption~\ref{ass:joint-latent-exchangeability} remain valid after additionally conditioning on $Z_j$.
-
-\begin{lemma}[Conditioning safety]
-\label{lem:conditioning-safety}
-Under Assumption~\ref{ass:joint-latent-exchangeability}, for each $a\in\{0,1\}$,
+\begin{theorem}[Causal effect identification using a proxy]
+\label{thm:exact-cross-view-identification}
+Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold. If the representation $Z_j=\phi_j(V_j,\epsilon_j)$ satisfies
 \begin{align}
-\mathbb E\{Y(a)\mid A,V_j,U,Z_j\}
-=
-\mathbb E\{Y(a)\mid V_j,U,Z_j\},
-\label{eq:conditioning-safe-outcome}
-\end{align}
-and, for every measurable $C$,
-\begin{align}
-P(W_j\in C\mid A,V_j,U,Z_j)=K_j(C\mid V_j,U).
-\label{eq:common-channel-after-z}
-\end{align}
-\end{lemma}
-
-The lemma is used both to connect observed treatment-arm outcomes to the latent laws and to factorize the held-out proxy distribution.
-
-\begin{definition}[Adjustment functional]
-\label{def:adjustment-functional}
-Let
-\begin{align}
-m_{a,j}(z)\triangleq\mathbb E(Y\mid A=a,Z_j=z)
-\end{align}
-denote a version of the observed conditional outcome mean. Define
-\begin{align}
-\mathbb E\{|m_{1,j}(Z_j)|+|m_{0,j}(Z_j)|\}<\infty.
-\label{eq:adjustment-integrability}
-\end{align}
-Under this integrability condition, define
-\begin{align}
-\tau_{Z_j}
-\triangleq
-\mathbb E\{m_{1,j}(Z_j)-m_{0,j}(Z_j)\}.
-\label{eq:adjustment-functional}
-\end{align}
-\end{definition}
-
-\begin{lemma}[Cross-view factorization]
-\label{lem:cross-view-factorization}
-For each treatment arm and $P_{Z_j}$-almost every $z$,
-\begin{align}
-\mathcal L(X,W_j\mid A=a,Z_j=z)=\mathcal K_jQ_{a,j,z}.
-\label{eq:cross-view-factorization}
-\end{align}
-\end{lemma}
-
-\begin{definition}[Exact PROBE balance]
-\label{def:exact-cross-view-balance}
-The fixed representation satisfies exact PROBE balance when
-\begin{align}
-(X,W_j)\perp\!\!\!\perp A\mid Z_j.
+(X,W_j)\perp\!\!\!\perp A\mid Z_j,
 \label{eq:exact-cross-view-balance}
 \end{align}
-\end{definition}
-
-Exact balance and Lemma~\ref{lem:cross-view-factorization} imply, for $P_{Z_j}$-almost every $z$,
+then
 \begin{align}
-\mathcal K_jQ_{1,j,z}=\mathcal K_jQ_{0,j,z}.
-\label{eq:balanced-channel-images}
-\end{align}
-
-\begin{theorem}[Exact identification under PROBE balance]
-\label{thm:exact-cross-view-identification}
-Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} and equation~\eqref{eq:adjustment-integrability} hold. If $Z_j$ satisfies exact PROBE balance, then, for each $a\in\{0,1\}$,
-\begin{align}
-\mathbb E\{Y(a)\mid A=1,Z_j\}
+\tau
 =
-\mathbb E\{Y(a)\mid A=0,Z_j\}
-\quad\text{almost surely},
-\label{eq:conditional-mean-exchangeability}
-\end{align}
-and
-\begin{align}
-\boxed{\tau_{Z_j}=\tau.}
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,Z_j)
+-
+\mathbb E(Y\mid A=0,Z_j)
+\right].
 \label{eq:exact-identification}
 \end{align}
 \end{theorem}
 
-\begin{remark}[Why copying the representation input is not automatic]
-For the non-compressive benchmark $Z_j=V_j$, balance of $X$ is automatic, but held-out balance still requires $W_j\perp\!\!\!\perp A\mid V_j$. Thus copying does not automatically satisfy the observed endpoint.
-\end{remark}
+In plain terms, treated and untreated units have the same conditional distribution of the observed covariates $X$ and the held-out proxy block $W_j$ within each value of $Z_j$. Assumption~\ref{ass:outcome-relevant-completeness} then ensures that any remaining latent difference cannot change the relevant potential-outcome means, so adjustment by $Z_j$ recovers the average treatment effect. The theorem does not claim that a representation satisfying exact balance always exists or can always be learned from a finite sample.
 
-\begin{remark}[What is, and is not, identified]
-The theorem establishes conditional mean exchangeability, not full conditional independence or equality of the latent arm laws.
-\label{rem:no-full-latent-balance}
-\end{remark}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
+\caption{Nested causal graphs compatible with Assumption~\ref{ass:joint-latent-exchangeability} under a Markovian structural causal model with independent errors. Panel (a) is contained in panel (b), which is contained in panel (c). The directed acyclic graphs alone do not imply consistency, representation overlap, outcome-relevant completeness, exact balance, or the existence of a representation attaining exact balance.}
+\label{fig:nested-cross-view-graphs}
+\end{figure}
+\FloatBarrier
 
-\begin{remark}[Attainability]
-The theorem is conditional on exact balance and does not guarantee that a map attaining it exists in $\Phi_j$.
-\label{rem:exact-attainability}
-\end{remark}
+\subsubsection{Difference from Standard Proximal Graph Structures}
+
+Standard proximal causal inference assigns distinct treatment-inducing and outcome-inducing proxy roles and identifies causal effects through bridge equations and completeness \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. In Figure~\ref{fig:standard-proximal-graph}, the conventional treatment-inducing proxy is denoted by $Z^{\mathrm{tr}}$ to distinguish it from our learned adjustment representation $Z_j$. Our setup instead starts from a high-dimensional candidate proxy, holds out $W_j$, constructs $Z_j$ from the remaining input $V_j$, and links observed conditional balance to causal identification through outcome-relevant completeness.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.62\textwidth]{../figures/2026-08-27-standard-proximal-causal-graph.pdf}
+\caption{A representative standard two-proxy proximal graph. The treatment-inducing proxy $Z^{\mathrm{tr}}$ is a measured proxy variable, not the learned representation $Z_j$ used in our method.}
+\label{fig:standard-proximal-graph}
+\end{figure}
+\FloatBarrier
 
 \subsection{Approximate Cross-View Bias Bound}
 \label{sec:approximate-cross-view-bound}
@@ -245,7 +202,7 @@ Under representation overlap,
 \end{align}
 \end{proposition}
 
-The factorization lemma gives, almost everywhere,
+The factorization used in the proof of Theorem~\ref{thm:exact-cross-view-identification} gives, almost everywhere,
 \begin{align}
 \Delta_j(z;\phi_j)
 =
@@ -268,9 +225,19 @@ Uniform stability converts a difference between held-out proxy distributions int
 
 \begin{theorem}[Approximate cross-view bias bound]
 \label{thm:approximate-cross-view-bound}
-Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap}, Assumption~\ref{ass:uniform-stability}, and equation~\eqref{eq:adjustment-integrability},
+Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and Assumption~\ref{ass:uniform-stability},
 \begin{align}
-\boxed{|\tau_{Z_j}-\tau|\le\Gamma_jD_j(\phi_j).}
+\boxed{
+\left|
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,Z_j)
+-
+\mathbb E(Y\mid A=0,Z_j)
+\right]
+-\tau
+\right|
+\le\Gamma_jD_j(\phi_j).
+}
 \label{eq:approximate-cross-view-bound}
 \end{align}
 \end{theorem}
@@ -283,7 +250,15 @@ Stability implies exact outcome-relevant completeness, but the converse need not
 \begin{remark}[Sensitivity interpretation]
 For a scientifically specified $\Gamma_j$,
 \begin{align}
-\tau\in[\tau_{Z_j}-\Gamma_jD_j(\phi_j),\tau_{Z_j}+\Gamma_jD_j(\phi_j)].
+\tau\in
+\Bigl[{}&
+\mathbb E\!\left\{\mathbb E(Y\mid A=1,Z_j)-\mathbb E(Y\mid A=0,Z_j)\right\}
+-\Gamma_jD_j(\phi_j),
+\nonumber\\
+&
+\mathbb E\!\left\{\mathbb E(Y\mid A=1,Z_j)-\mathbb E(Y\mid A=0,Z_j)\right\}
++\Gamma_jD_j(\phi_j)
+\Bigr].
 \end{align}
 \label{rem:sensitivity-interpretation}
 \end{remark}
@@ -296,18 +271,3 @@ Learning by discrepancy requires a common budget
 \end{align}
 \label{rem:uniform-across-representations}
 \end{remark}
-
-\subsection{Comparison with Existing Proximal Frameworks}
-\label{sec:comparison-proximal-frameworks}
-
-Standard proximal causal inference assigns treatment-inducing and outcome-inducing proxy roles and uses bridge equations and completeness \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. PROBE instead holds out $W_j$, constructs $Z_j$ from $V_j$, and links observed balance to causal conclusions through outcome-relevant completeness or stability.
-
-\begin{figure}[t]
-\centering
-\subfloat[Standard proximal]{\includegraphics[width=0.46\textwidth]{../figures/2026-08-27-standard-proximal-causal-graph.pdf}}
-\hfill
-\subfloat[PROBE-compatible]{\includegraphics[width=0.46\textwidth]{../figures/2026-08-27-proximal-balancing-maximal-dependence.pdf}}
-\caption{Illustrative graphs for standard proximal causal inference and PROBE. The graphs do not by themselves imply the conditional-independence, completeness, or stability assumptions.}
-\label{fig:proximal-probe-graphs}
-\end{figure}
-\FloatBarrier
