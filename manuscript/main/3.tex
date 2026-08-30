@@ -140,7 +140,7 @@ then
 
 In plain terms, treated and untreated units have the same conditional distribution of the observed covariates $X$ and the held-out proxy block $W_j$ within each value of $Z_j$. Assumption~\ref{ass:outcome-relevant-completeness} then ensures that any remaining latent difference cannot change the relevant potential-outcome means, so adjustment by $Z_j$ recovers the average treatment effect. The theorem does not claim that a representation satisfying exact balance always exists or can always be learned from a finite sample.
 
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.99\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
 \caption{Nested causal graphs compatible with Assumption~\ref{ass:joint-latent-exchangeability} under a Markovian structural causal model with independent errors. Panel (a) is contained in panel (b), which is contained in panel (c). The directed acyclic graphs alone do not imply consistency, representation overlap, outcome-relevant completeness, exact balance, or the existence of a representation attaining exact balance.}
