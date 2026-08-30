@@ -11,11 +11,11 @@ Held-out joint balance, empirical overlap, and minimum stratum mass are observab
 
 \subsection{Attainability and Realized Bias}
 
-The exact identification theorem is conditional on the existence of a finite representation $Z_j=\phi_j(X,W_{-j})$ that attains exact cross-view balance. The theorem does not guarantee such attainability in a restricted representation class. In the approximate regime, reducing $D_j(\phi_j)$ reduces the certified worst-case bias under a common stability budget, but it need not reduce the realized bias when candidate representations have different stability constants or when the structural stability condition fails.
+The exact identification theorem is conditional on the existence of a representation $Z_j=\phi_j(V_j,\epsilon_j)$ that attains exact cross-view balance. The theorem does not guarantee such attainability in a restricted representation class. In the approximate regime, reducing $D_j(\phi_j)$ reduces the certified worst-case bias under a common stability budget, but it need not reduce the realized bias when candidate representations have different stability constants or when the structural stability condition fails.
 
 \subsection{Learning and Inference Gaps}
 
-The current finite-sample theorem covers enumerable representation classes and fixed-fold evaluation. The neural experiments use soft assignments and covariance-weighted surrogate objectives that are not algebraically identical to the canonical MMD aggregation. A neural-class generalization bound, a soft-to-hard guarantee, and valid joint inference after adaptive representation selection remain open. These gaps prevent the manuscript from describing every neural result as a direct verification of the theory, even when its empirical error is lower.
+The current explicit finite-sample theorem covers finite candidate libraries with hard finite strata and fixed-fold evaluation. The neural experiments use soft assignments and covariance-weighted surrogate objectives that are not algebraically identical to the canonical MMD aggregation. A neural-class generalization bound, a soft-to-hard guarantee, and valid joint inference after adaptive representation selection remain open. These gaps prevent the manuscript from describing every neural result as a direct verification of the theory, even when its empirical error is lower.
 
 \subsection{Audit Views and Practical Scope}
 

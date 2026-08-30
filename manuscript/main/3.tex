@@ -1,19 +1,13 @@
 \section{Identification}
 \label{sec:identification}
 
-We now construct the adjustment representation. Let $\mathcal X$, $\mathcal W_j$, and $\mathcal V_j$ denote the value spaces of $X$, $W_j$, and $V_j$, respectively. Fix a positive integer $M_j$, write $[M_j]\triangleq\{1,\ldots,M_j\}$, and prespecify a class $\Phi_j$ of measurable maps from $\mathcal V_j\times[0,1]$ to $[M_j]$. Let
+Let $d_{V_j}$ denote the coordinate dimension of $V_j$. Fix a user-specified output dimension $d_{Z_j}\le d_{V_j}$. Let $\epsilon_j\sim\operatorname{Unif}(0,1)$ be independent of $(U,V_j,W_j,A,Y(0),Y(1))$. For a measurable representation function, define
 \begin{align}
-\epsilon_j&\sim\operatorname{Unif}(0,1),
-\nonumber\\
-\epsilon_j&\perp\!\!\!\perp
-\{U,V_j,W_j,A,Y(0),Y(1)\}
-\end{align}
-and, for a fixed $\phi_j\in\Phi_j$, define
-\begin{align}
+\phi_j:\mathcal V_j\times[0,1]\longrightarrow\mathbb R^{d_{Z_j}},
+\qquad
 Z_j\triangleq\phi_j(V_j,\epsilon_j).
-\label{eq:fixed-view-representation}
 \end{align}
-The auxiliary variable $\epsilon_j$ permits a stochastic representation. A deterministic representation is the special case in which $\phi_j$ ignores its second argument. The finite range makes balance, overlap, and adjustment explicit within strata, but does not require the hidden variable $U$ to be discrete. A value $z\in[M_j]$ is retained when $P(Z_j=z)>0$.
+The deterministic case is included when $\phi_j$ ignores its second input. Let $\Phi_j$ denote a prespecified class of such representation functions.
 
 \subsection{Assumptions}
 \label{sec:identification-assumptions}
@@ -29,85 +23,76 @@ Y=Y(A),
 \end{align}
 \end{assumption}
 
+Consistency connects the observed outcome $Y$ to the potential outcome corresponding to the treatment actually received. Integrability ensures that the causal means used below are finite.
+
 \begin{assumption}[Latent exchangeability and a common held-out channel]
 \label{ass:joint-latent-exchangeability}
 \label{ass:held-out-separation}
-For each $a\in\{0,1\}$, the following two clauses hold separately:
+For each $a\in\{0,1\}$,
 \begin{align}
 Y(a)&\perp\!\!\!\perp A\mid(U,V_j),
 \label{eq:joint-latent-exchangeability}\\
 W_j&\perp\!\!\!\perp A\mid(U,V_j).
 \label{eq:held-out-separation}
 \end{align}
-The first clause says that the hidden state $U$ and the full representation input $V_j=(X,W_{-j})$ suffice to remove confounding of treatment and each potential outcome. The second says that, after the same variables are fixed, the conditional measurement law of the held-out block is common to both treatment arms. These clauses allow $W_{-j}$ to affect treatment and outcome. They do not assert the stronger joint independence $A\perp\!\!\!\perp\{Y(a),W_j\}\mid(U,V_j)$, which is not needed below.
 \end{assumption}
 
 \begin{assumption}[Representation overlap]
 \label{ass:representation-overlap}
-For every retained representation value $z$,
 \begin{align}
-0<P(A=1\mid Z_j=z)<1.
+0<P(A=1\mid Z_j)<1
+\qquad\text{almost surely}.
 \label{eq:representation-overlap}
 \end{align}
-Both treatment arms therefore occur with positive probability in every retained stratum.
 \end{assumption}
 
-We next define the objects required to state the last identification assumption. For $a\in\{0,1\}$ and any retained $z$, let
-\begin{align}
-Q_{a,j,z}
-\triangleq
-\mathcal L(V_j,U\mid A=a,Z_j=z).
-\label{eq:latent-arm-law}
-\end{align}
-This law records both the remaining variation in the representation input and the hidden state within one treatment arm and one representation stratum.
+We then introduce the latent and proxy objects within each representation stratum.
 
-For every measurable $C\subseteq\mathcal W_j$, define the held-out conditional law
+\begin{definition}[Latent and proxy objects within a representation stratum]
+\label{def:latent-proxy-objects}
+Let $P_{Z_j}$ denote the distribution of $Z_j$. The conditional laws below refer to fixed versions that exist under the maintained probability model. For $P_{Z_j}$-almost every $z$, define
 \begin{align}
-K_j(C\mid v,u)
-\triangleq
-P(W_j\in C\mid V_j=v,U=u).
-\label{eq:held-out-channel}
+Q_{a,j,z}&\triangleq\mathcal L(V_j,U\mid A=a,Z_j=z),
+\qquad a\in\{0,1\}.
 \end{align}
-For a probability distribution $Q$ on $(V_j,U)$ and a measurable $B\subseteq\mathcal X\times\mathcal W_j$, define
+Define the held-out proxy channel by
 \begin{align}
-(\mathcal K_jQ)(B)
+K_j(\cdot\mid v,u)
 \triangleq
-\int
-\left[
-\int
-\mathbf 1\{(x,w_j)\in B\}
-K_j\{dw_j\mid(x,w_{-j}),u\}
-\right]
-Q(dx,dw_{-j},du).
-\label{eq:held-out-operator}
+\mathcal L(W_j\mid V_j=v,U=u).
 \end{align}
-Thus, $\mathcal K_jQ$ is the induced distribution of $(X,W_j)$: draw $(V_j,U)=(X,W_{-j},U)$ from $Q$, generate $W_j$ through $K_j$, and retain only $(X,W_j)$.
+For any probability law $Q$ on $(V_j,U)$, let $\mathcal K_jQ$ denote the probability law on $(X,W_j)$ generated in three steps. First draw $(V_j,U)=(X,W_{-j},U)\sim Q$. Next draw $W_j\sim K_j(\cdot\mid V_j,U)$. Finally retain $(X,W_j)$ and integrate out $(W_{-j},U)$.
 
-For each treatment level and retained stratum, define
+For each $a\in\{0,1\}$, define
 \begin{align}
 \mu_{a,j,z}(v,u)
 \triangleq
 \mathbb E\{Y(a)\mid V_j=v,U=u,Z_j=z\}.
-\label{eq:conditional-potential-mean}
 \end{align}
-Let
+The admissible law class is
 \begin{align}
-S_{j,z}
+\mathcal Q_{j,z}
 \triangleq
-\operatorname{supp}\{\mathcal L(V_j,U\mid Z_j=z)\}
+\biggl\{
+Q:\;&Q\text{ is a probability law on }(V_j,U),\
+Q\ll\mathcal L(V_j,U\mid Z_j=z), \notag\\
+&\mathbb E_Q|\mu_{a,j,z}(V_j,U)|<\infty
+\text{ for }a\in\{0,1\}
+\biggr\}.
 \end{align}
-and let $\mathcal Q_{j,z}$ contain all probability distributions $Q$ supported on $S_{j,z}$ for which the two means below are finite. For $Q\in\mathcal Q_{j,z}$, write
+For $Q\in\mathcal Q_{j,z}$, write
 \begin{align}
 \mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
 \triangleq
-\int\mu_{a,j,z}(v,u)\,Q(dv,du).
-\label{eq:latent-mean-shorthand}
+\int\mu_{a,j,z}(v,u)Q(dv,du).
 \end{align}
-The realized arm laws $Q_{0,j,z}$ and $Q_{1,j,z}$ are required to belong to $\mathcal Q_{j,z}$.
+\end{definition}
+
+The notation $Q\ll\mathcal L(V_j,U\mid Z_j=z)$ means that every event impossible under the stratum law of $(V_j,U)$ is also impossible under $Q$. This domination makes the conditional-law versions well defined under $Q$. Under representation overlap and integrability, the actual arm laws $Q_{0,j,z}$ and $Q_{1,j,z}$ belong to $\mathcal Q_{j,z}$.
 
 \begin{assumption}[Exact outcome-relevant completeness]
 \label{ass:outcome-relevant-completeness}
-For every retained $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and every $a\in\{0,1\}$,
+For $P_{Z_j}$-almost every $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and each $a\in\{0,1\}$,
 \begin{align}
 \mathcal K_jQ=\mathcal K_jQ'
 \quad\Longrightarrow\quad
@@ -116,11 +101,14 @@ For every retained $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and every $a\in\{0,1\}$
 \mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}.
 \label{eq:outcome-relevant-completeness}
 \end{align}
-Two admissible laws that are indistinguishable through the induced distribution of $(X,W_j)$ must agree on each outcome-relevant mean. This condition is imposed over the entire class $\mathcal Q_{j,z}$ defined above, not only on the two realized arm laws. It does not require $Q=Q'$ and therefore does not imply latent balance. On the same admissible class it is weaker than full mixture injectivity, which would require $\mathcal K_jQ=\mathcal K_jQ'$ to imply $Q=Q'$. It is not uniformly comparable to standard proximal completeness because the two conditions act on different operators and domains.
 \end{assumption}
+
+This condition is imposed on the entire class $\mathcal Q_{j,z}$. It need not imply $Q=Q'$ and therefore does not imply latent balance. On a common domain it is weaker than full mixture injectivity, but it is not uniformly comparable with standard proximal completeness because the operators differ.
 
 \subsection{Exact Cross-View Identification}
 \label{sec:exact-cross-view-identification}
+
+Because $Z_j$ is constructed from $V_j$ and the independent variable $\epsilon_j$, the next lemma shows that the two conditional independences in Assumption~\ref{ass:joint-latent-exchangeability} remain valid after additionally conditioning on $Z_j$.
 
 \begin{lemma}[Conditioning safety]
 \label{lem:conditioning-safety}
@@ -128,122 +116,46 @@ Under Assumption~\ref{ass:joint-latent-exchangeability}, for each $a\in\{0,1\}$,
 \begin{align}
 \mathbb E\{Y(a)\mid A,V_j,U,Z_j\}
 =
-\mathbb E\{Y(a)\mid V_j,U,Z_j\}.
+\mathbb E\{Y(a)\mid V_j,U,Z_j\},
 \label{eq:conditioning-safe-outcome}
 \end{align}
-Under the common-channel clause of the same assumption, for every measurable $C$,
+and, for every measurable $C$,
 \begin{align}
-P(W_j\in C\mid A,V_j,U,Z_j)
-=K_j(C\mid V_j,U).
+P(W_j\in C\mid A,V_j,U,Z_j)=K_j(C\mid V_j,U).
 \label{eq:common-channel-after-z}
 \end{align}
 \end{lemma}
 
-\begin{proof}
-Conditional on $V_j$, the representation $Z_j$ depends only on the auxiliary random variable $\epsilon_j$. By the explicit independence condition imposed on $\epsilon_j$ above, adding $Z_j$ to the conditioning set does not introduce information about $A$, $Y(a)$, or $W_j$ beyond $(V_j,U)$. Applying the two separate clauses of Assumption~\ref{ass:joint-latent-exchangeability} therefore gives the two displayed conditional-law equalities. Equation~\eqref{eq:held-out-channel} identifies the common conditional law in the second equality.
-\end{proof}
+The lemma is used both to connect observed treatment-arm outcomes to the latent laws and to factorize the held-out proxy distribution.
 
 \begin{definition}[Adjustment functional]
 \label{def:adjustment-functional}
-For the fixed representation $Z_j$, define
+Let
+\begin{align}
+m_{a,j}(z)\triangleq\mathbb E(Y\mid A=a,Z_j=z)
+\end{align}
+denote a version of the observed conditional outcome mean. Define
+\begin{align}
+\mathbb E\{|m_{1,j}(Z_j)|+|m_{0,j}(Z_j)|\}<\infty.
+\label{eq:adjustment-integrability}
+\end{align}
+Under this integrability condition, define
 \begin{align}
 \tau_{Z_j}
 \triangleq
-\sum_{z:P(Z_j=z)>0}
-P(Z_j=z)
-\left[
-\mathbb E(Y\mid A=1,Z_j=z)
--
-\mathbb E(Y\mid A=0,Z_j=z)
-\right].
+\mathbb E\{m_{1,j}(Z_j)-m_{0,j}(Z_j)\}.
 \label{eq:adjustment-functional}
 \end{align}
-This is an observed-data functional. Its equality with $\tau$ has not yet been asserted.
 \end{definition}
-
-For each retained stratum, write
-\begin{align}
-p_{j,z}\triangleq P(Z_j=z),
-\qquad
-\pi_{j,z}\triangleq P(A=1\mid Z_j=z).
-\label{eq:stratum-mass-propensity}
-\end{align}
-
-\begin{theorem}[Exact bias decomposition]
-\label{thm:exact-bias-decomposition}
-Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap},
-\begin{align}
-\tau_{Z_j}-\tau
-=
-\sum_zp_{j,z}
-\Big[&
-(1-\pi_{j,z})
-\left[
-\mathbb E_{Q_{1,j,z}}\{\mu_{1,j,z}\}
--
-\mathbb E_{Q_{0,j,z}}\{\mu_{1,j,z}\}
-\right]
-\nonumber\\
-&+
-\pi_{j,z}
-\left[
-\mathbb E_{Q_{1,j,z}}\{\mu_{0,j,z}\}
--
-\mathbb E_{Q_{0,j,z}}\{\mu_{0,j,z}\}
-\right]
-\Big].
-\label{eq:exact-bias-decomposition}
-\end{align}
-\end{theorem}
-
-\begin{proof}
-Consistency and Lemma~\ref{lem:conditioning-safety} give
-\begin{align}
-\mathbb E(Y\mid A=a,Z_j=z)
-=
-\mathbb E_{Q_{a,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
-\label{eq:observed-arm-mean}
-\end{align}
-The law of total expectation over treatment gives
-\begin{align}
-\mathbb E\{Y(a)\mid Z_j=z\}
-={}&
-\pi_{j,z}\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
-\nonumber\\
-&+(1-\pi_{j,z})\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
-\label{eq:potential-arm-mixture}
-\end{align}
-Substitute these identities into $\tau_{Z_j}$ and $\tau$, subtract, and collect the coefficients of the two arm laws. This yields equation~\eqref{eq:exact-bias-decomposition}.
-\end{proof}
 
 \begin{lemma}[Cross-view factorization]
 \label{lem:cross-view-factorization}
-Under the common-channel clause of Assumption~\ref{ass:joint-latent-exchangeability},
+For each treatment arm and $P_{Z_j}$-almost every $z$,
 \begin{align}
-\mathcal L(X,W_j\mid A=a,Z_j=z)
-=
-\mathcal K_jQ_{a,j,z}
+\mathcal L(X,W_j\mid A=a,Z_j=z)=\mathcal K_jQ_{a,j,z}.
 \label{eq:cross-view-factorization}
 \end{align}
-for every treatment arm and retained stratum.
 \end{lemma}
-
-\begin{proof}
-For any measurable $B\subseteq\mathcal X\times\mathcal W_j$, iterated expectation over $(V_j,U)$ gives
-\begin{align}
-&P\{(X,W_j)\in B\mid A=a,Z_j=z\}
-\nonumber\\
-&\quad=
-\int
-\left[
-\int
-\mathbf 1\{(x,w_j)\in B\}
-P\{dw_j\mid A=a,V_j=(x,w_{-j}),U=u,Z_j=z\}
-\right]
-Q_{a,j,z}(dx,dw_{-j},du).
-\end{align}
-Lemma~\ref{lem:conditioning-safety} replaces the inner conditional law by $K_j\{dw_j\mid(x,w_{-j}),u\}$. Equation~\eqref{eq:held-out-operator} then gives the stated factorization.
-\end{proof}
 
 \begin{definition}[Exact PROBE balance]
 \label{def:exact-cross-view-balance}
@@ -252,226 +164,150 @@ The fixed representation satisfies exact PROBE balance when
 (X,W_j)\perp\!\!\!\perp A\mid Z_j.
 \label{eq:exact-cross-view-balance}
 \end{align}
-Under representation overlap, this condition is equivalent to equality of the two conditional laws of $(X,W_j)$ in every retained stratum.
 \end{definition}
 
-\begin{remark}[Why copying the representation input is not an automatic solution]
-Outside the finite-range representation class, consider the non-compressive benchmark $Z_j=V_j$. Then balance of $X$ is automatic because $X$ is contained in $V_j$. Balance of the held-out block is not automatic. Exact PROBE balance reduces to
+Exact balance and Lemma~\ref{lem:cross-view-factorization} imply, for $P_{Z_j}$-almost every $z$,
 \begin{align}
-W_j\perp\!\!\!\perp A\mid V_j.
-\end{align}
-Thus, self-copying is permitted by the identification theory but does not automatically pass the observable balance endpoint. Representation learning instead seeks a lower-dimensional tradeoff between held-out balance and representation overlap.
-\end{remark}
-
-Exact PROBE balance and Lemma~\ref{lem:cross-view-factorization} imply
-\begin{align}
-\mathcal K_jQ_{1,j,z}
-=
-\mathcal K_jQ_{0,j,z}
+\mathcal K_jQ_{1,j,z}=\mathcal K_jQ_{0,j,z}.
 \label{eq:balanced-channel-images}
 \end{align}
-for every retained stratum.
 
 \begin{theorem}[Exact identification under PROBE balance]
 \label{thm:exact-cross-view-identification}
-Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold for the fixed block and representation. If $Z_j$ satisfies exact PROBE balance, then, for each $a\in\{0,1\}$ and retained $z$,
+Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} and equation~\eqref{eq:adjustment-integrability} hold. If $Z_j$ satisfies exact PROBE balance, then, for each $a\in\{0,1\}$,
 \begin{align}
-\mathbb E\{Y(a)\mid A=1,Z_j=z\}
+\mathbb E\{Y(a)\mid A=1,Z_j\}
 =
-\mathbb E\{Y(a)\mid A=0,Z_j=z\}.
+\mathbb E\{Y(a)\mid A=0,Z_j\}
+\quad\text{almost surely},
 \label{eq:conditional-mean-exchangeability}
 \end{align}
-Consequently,
+and
 \begin{align}
-\boxed{\tau_{Z_j}=\tau,}
+\boxed{\tau_{Z_j}=\tau.}
 \label{eq:exact-identification}
 \end{align}
-and the population ATE is point identified by equation~\eqref{eq:adjustment-functional}.
 \end{theorem}
 
-\begin{proof}
-Fix a retained stratum. Exact PROBE balance and Lemma~\ref{lem:cross-view-factorization} give equation~\eqref{eq:balanced-channel-images}. Both arm laws belong to $\mathcal Q_{j,z}$, so outcome-relevant completeness gives
-\begin{align}
-\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
-=
-\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}
-\end{align}
-for each treatment level $a$. Lemma~\ref{lem:conditioning-safety} identifies these two quantities as the corresponding arm-specific conditional means of $Y(a)$, proving equation~\eqref{eq:conditional-mean-exchangeability}. Both differences in the exact bias decomposition are therefore zero, which proves $\tau_{Z_j}=\tau$.
-\end{proof}
+\begin{remark}[Why copying the representation input is not automatic]
+For the non-compressive benchmark $Z_j=V_j$, balance of $X$ is automatic, but held-out balance still requires $W_j\perp\!\!\!\perp A\mid V_j$. Thus copying does not automatically satisfy the observed endpoint.
+\end{remark}
 
 \begin{remark}[What is, and is not, identified]
+The theorem establishes conditional mean exchangeability, not full conditional independence or equality of the latent arm laws.
 \label{rem:no-full-latent-balance}
-The theorem establishes conditional mean exchangeability, which is sufficient for ATE adjustment. It does not assert the stronger conditional independence $Y(a)\perp\!\!\!\perp A\mid Z_j$, equality of the arm laws $Q_{1,j,z}=Q_{0,j,z}$, or latent balance.
 \end{remark}
 
 \begin{remark}[Attainability]
+The theorem is conditional on exact balance and does not guarantee that a map attaining it exists in $\Phi_j$.
 \label{rem:exact-attainability}
-The theorem is conditional on a representation attaining exact PROBE balance. It does not guarantee that such a representation exists in $\Phi_j$. A restricted class may leave positive residual imbalance, which motivates the next subsection.
 \end{remark}
 
 \subsection{Approximate Cross-View Bias Bound}
 \label{sec:approximate-cross-view-bound}
 
-Let $\kappa_j$ be a bounded, measurable, positive-semidefinite kernel on the support of $(X,W_j)$, and let $\mathcal H_j$ be its reproducing kernel Hilbert space. For a distribution $P$ of $(X,W_j)$, define its kernel mean embedding
-\begin{align}
-m_j(P)
-\triangleq
-\int\kappa_j(r,\cdot)\,P(dr)
-\in\mathcal H_j.
-\end{align}
-For two such distributions $P$ and $P'$, define
+Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whose reproducing kernel Hilbert space $\mathcal H_j$ is separable. For probability laws $P,P'$ on $(X,W_j)$, write
 \begin{align}
 \operatorname{MMD}_{\kappa_j}(P,P')
 \triangleq
-\|m_j(P)-m_j(P')\|_{\mathcal H_j}.
+\|m_j(P)-m_j(P')\|_{\mathcal H_j},
 \end{align}
-Assume that $\kappa_j$ is characteristic, meaning that this discrepancy is zero exactly when $P=P'$.
+where $m_j(P)=\int\kappa_j(r,\cdot)P(dr)$.
 
 \begin{definition}[Cross-view discrepancy]
 \label{def:cross-view-discrepancy}
-For each retained stratum, define
+For $P_{Z_j}$-almost every $z$, define
 \begin{align}
-\Delta_{j,z}(\phi_j)
+\Delta_j(z;\phi_j)
 \triangleq
 \operatorname{MMD}_{\kappa_j}
 \left\{
 \mathcal L(X,W_j\mid A=1,Z_j=z),
 \mathcal L(X,W_j\mid A=0,Z_j=z)
-\right\}.
+\right\},
 \label{eq:stratum-cross-view-discrepancy}
 \end{align}
-The aggregate discrepancy is
+and define
 \begin{align}
-D_j(\phi_j)
-\triangleq
-\sum_zp_{j,z}\Delta_{j,z}(\phi_j),
+D_j(\phi_j)\triangleq\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
 \label{eq:aggregate-cross-view-discrepancy}
 \end{align}
-where the sum is over retained strata.
 \end{definition}
 
 \begin{proposition}[Zero discrepancy and exact balance]
 \label{prop:zero-discrepancy}
-Under representation overlap and the characteristic-kernel condition,
+Under representation overlap,
 \begin{align}
-\boxed{
-D_j(\phi_j)=0
+\boxed{D_j(\phi_j)=0
 \quad\Longleftrightarrow\quad
-(X,W_j)\perp\!\!\!\perp A\mid Z_j.
-}
+(X,W_j)\perp\!\!\!\perp A\mid Z_j.}
 \label{eq:zero-discrepancy-equivalence}
 \end{align}
 \end{proposition}
 
-\begin{proof}
-Every summand is nonnegative and every retained stratum has positive mass. Thus, $D_j(\phi_j)=0$ exactly when every stratum-specific MMD is zero. Characteristicness converts each zero MMD into equality of the two conditional laws, and overlap makes those equalities equivalent to conditional independence.
-\end{proof}
-
-The factorization lemma also gives
+The factorization lemma gives, almost everywhere,
 \begin{align}
-\Delta_{j,z}(\phi_j)
+\Delta_j(z;\phi_j)
 =
-\operatorname{MMD}_{\kappa_j}
-\left(
-\mathcal K_jQ_{1,j,z},
-\mathcal K_jQ_{0,j,z}
-\right).
+\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ_{1,j,z},\mathcal K_jQ_{0,j,z}).
 \label{eq:observed-latent-discrepancy-link}
 \end{align}
 
 \begin{assumption}[Uniform outcome-relevant stability]
 \label{ass:uniform-stability}
-There is a finite constant $\Gamma_j$ such that, for every retained $z$, every $a\in\{0,1\}$, and every $Q,Q'\in\mathcal Q_{j,z}$,
+There is a finite $\Gamma_j$ such that, for $P_{Z_j}$-almost every $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}$,
 \begin{align}
-&\left|
-\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
--
-\mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}
-\right|
-\nonumber\\
-&\qquad\le
-\Gamma_j
-\operatorname{MMD}_{\kappa_j}
-\left(
-\mathcal K_jQ,
-\mathcal K_jQ'
-\right).
+\left|\mathbb E_Q\{\mu_{a,j,z}\}-\mathbb E_{Q'}\{\mu_{a,j,z}\}\right|
+\le
+\Gamma_j\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ,\mathcal K_jQ').
 \label{eq:uniform-stability}
 \end{align}
 \end{assumption}
 
-The constant $\Gamma_j$ converts an observed discrepancy into a bound on an outcome-relevant latent difference. It is a structural sensitivity parameter and is not generally identified from the observed distribution.
+Uniform stability converts a difference between held-out proxy distributions into a common upper bound on the corresponding difference in potential-outcome means.
 
 \begin{theorem}[Approximate cross-view bias bound]
 \label{thm:approximate-cross-view-bound}
-Suppose Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and Assumption~\ref{ass:uniform-stability} hold for the fixed representation. Then
+Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap}, Assumption~\ref{ass:uniform-stability}, and equation~\eqref{eq:adjustment-integrability},
 \begin{align}
-\boxed{
-|\tau_{Z_j}-\tau|
-\le
-\Gamma_jD_j(\phi_j).
-}
+\boxed{|\tau_{Z_j}-\tau|\le\Gamma_jD_j(\phi_j).}
 \label{eq:approximate-cross-view-bound}
 \end{align}
 \end{theorem}
 
-\begin{proof}
-For each treatment level and retained stratum, define
-\begin{align}
-\delta_{a,j,z}
-\triangleq
-\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
--
-\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
-\end{align}
-The exact bias decomposition and the triangle inequality give
-\begin{align}
-|\tau_{Z_j}-\tau|
-\le
-\sum_zp_{j,z}
-\left[
-(1-\pi_{j,z})|\delta_{1,j,z}|
-+
-\pi_{j,z}|\delta_{0,j,z}|
-\right].
-\end{align}
-Uniform stability and equation~\eqref{eq:observed-latent-discrepancy-link} imply
-\begin{align}
-|\delta_{a,j,z}|
-\le
-\Gamma_j\Delta_{j,z}(\phi_j).
-\end{align}
-Substitution and $(1-\pi_{j,z})+\pi_{j,z}=1$ yield equation~\eqref{eq:approximate-cross-view-bound}.
-\end{proof}
-
 \begin{remark}[Exact completeness and quantitative stability]
+Stability implies exact outcome-relevant completeness, but the converse need not hold.
 \label{rem:exact-vs-stability}
-Outcome-relevant completeness preserves equality at zero discrepancy. Uniform stability controls nonzero discrepancies and therefore implies outcome-relevant completeness. The converse need not hold because equality at zero can be preserved even when no finite Lipschitz constant $\Gamma_j$ exists.
 \end{remark}
 
 \begin{remark}[Sensitivity interpretation]
-\label{rem:sensitivity-interpretation}
-For a scientifically specified $\Gamma_j$, the approximate bound gives
+For a scientifically specified $\Gamma_j$,
 \begin{align}
-\tau
-\in
-\left[
-\tau_{Z_j}-\Gamma_jD_j(\phi_j),
-\tau_{Z_j}+\Gamma_jD_j(\phi_j)
-\right].
+\tau\in[\tau_{Z_j}-\Gamma_jD_j(\phi_j),\tau_{Z_j}+\Gamma_jD_j(\phi_j)].
 \end{align}
-A small discrepancy alone does not guarantee small causal bias. The causal quantity is the product $\Gamma_jD_j(\phi_j)$.
+\label{rem:sensitivity-interpretation}
 \end{remark}
 
-\begin{remark}[Uniformity across candidate representations]
-\label{rem:uniform-across-representations}
-For representation learning, let $\Gamma_j(\phi)$ be a stability budget for candidate $\phi$. Comparing candidates by discrepancy requires
+\begin{remark}[Uniformity across representations]
+Learning by discrepancy requires a common budget
 \begin{align}
-\sup_{\phi\in\Phi_j}\Gamma_j(\phi)
-\le
-\overline\Gamma_j
-<\infty.
+\sup_{\phi\in\Phi_j}\Gamma_j(\phi)\le\overline\Gamma_j<\infty.
 \label{eq:uniform-candidate-stability}
 \end{align}
-Without this uniform condition, a representation can have a small observed discrepancy and an arbitrarily large stability constant.
+\label{rem:uniform-across-representations}
 \end{remark}
+
+\subsection{Comparison with Existing Proximal Frameworks}
+\label{sec:comparison-proximal-frameworks}
+
+Standard proximal causal inference assigns treatment-inducing and outcome-inducing proxy roles and uses bridge equations and completeness \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. PROBE instead holds out $W_j$, constructs $Z_j$ from $V_j$, and links observed balance to causal conclusions through outcome-relevant completeness or stability.
+
+\begin{figure}[t]
+\centering
+\subfloat[Standard proximal]{\includegraphics[width=0.46\textwidth]{../figures/2026-08-27-standard-proximal-causal-graph.pdf}}
+\hfill
+\subfloat[PROBE-compatible]{\includegraphics[width=0.46\textwidth]{../figures/2026-08-27-proximal-balancing-maximal-dependence.pdf}}
+\caption{Illustrative graphs for standard proximal causal inference and PROBE. The graphs do not by themselves imply the conditional-independence, completeness, or stability assumptions.}
+\label{fig:proximal-probe-graphs}
+\end{figure}
+\FloatBarrier

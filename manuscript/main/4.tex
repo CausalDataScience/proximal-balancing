@@ -1,8 +1,7 @@
 \section{Representation Learning and AIPW Estimation}
 \label{sec:estimation}
 
-The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The analysis uses one prespecified held-out block $j$ throughout.
-For finite-sample analysis, this section restricts equation~\eqref{eq:fixed-view-representation} to the deterministic subclass. We identify each deterministic map with $v\mapsto\phi(v,0)$ and write it simply as $\phi(v)$.
+The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The analysis uses one prespecified held-out block $j$ throughout. The AIPW construction below applies to discrete or continuous $Z_j$. Explicit concentration constants are subsequently given for a finite-strata specialization.
 
 \subsection{Representation Learning}
 \label{sec:representation-learning}
@@ -18,7 +17,56 @@ Partition the observed sample into three mutually disjoint subsets,
 \end{align}
 with respective sizes $n_{\mathrm D}$, $n_{\mathrm N}$, and $n_{\mathrm E}$. The discrepancy-learning sample $\mathcal I_{\mathrm D}$ selects a representation. The nuisance-learning sample $\mathcal I_{\mathrm N}$ estimates the outcome regressions and propensity used by AIPW. The evaluation sample $\mathcal I_{\mathrm E}$ calculates the final estimate. Conditional on the preceding samples, the objects evaluated on the next sample are fixed.
 
-For the finite-sample learning result, fix a finite candidate library
+Augment each fold with fresh independent randomization variables $\epsilon_{j,i}^{\mathrm D}$, $\epsilon_{j,i}^{\mathrm N}$, and $\epsilon_{j,i}^{\mathrm E}$, each distributed as $\operatorname{Unif}(0,1)$ and independent of the observed data and of all other randomization variables. For a candidate $\phi$, its representation on a unit in fold $s\in\{\mathrm D,\mathrm N,\mathrm E\}$ is $\phi(V_{j,i},\epsilon_{j,i}^{s})$. Thus the empirical criterion below is computed from the augmented discrepancy-learning sample $\{(O_i,\epsilon_{j,i}^{\mathrm D}):i\in\mathcal I_{\mathrm D}\}$.
+
+For a general candidate class $\mathcal F_j\subseteq\Phi_j$, let $\widehat D_j(\phi)$ be an empirical criterion estimating $D_j(\phi)$. Suppose that, with probability at least $1-\delta_{\mathrm D}$,
+\begin{align}
+\sup_{\phi\in\mathcal F_j}
+|\widehat D_j(\phi)-D_j(\phi)|
+\le r_{j,n_{\mathrm D}}.
+\label{eq:generic-uniform-deviation}
+\end{align}
+If $\widehat\phi_j$ is an $\varepsilon_{\mathrm{opt},j}$-approximate minimizer of $\widehat D_j$, the standard empirical-risk argument gives
+\begin{align}
+D_j(\widehat\phi_j)
+\le
+\inf_{\phi\in\mathcal F_j}D_j(\phi)
++2r_{j,n_{\mathrm D}}
++\varepsilon_{\mathrm{opt},j}.
+\label{eq:generic-representation-oracle}
+\end{align}
+This oracle inequality is agnostic to whether the learned representation is discrete or continuous. Its operational content depends on constructing an empirical conditional-dependence criterion for which equation~\eqref{eq:generic-uniform-deviation} can be proved.
+For a fresh $\epsilon_j\sim\operatorname{Unif}(0,1)$ independent of the causal variables, define
+\begin{align}
+\widehat Z_j\triangleq\widehat\phi_j(V_j,\epsilon_j),
+\qquad
+\tau_{\widehat Z_j}
+\triangleq
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,\widehat Z_j)
+-
+\mathbb E(Y\mid A=0,\widehat Z_j)
+\right].
+\label{eq:learned-adjustment-functional}
+\end{align}
+This definition is used when the two conditional means are absolutely integrable under the law of $\widehat Z_j$.
+If every candidate obeys the assumptions of Theorem~\ref{thm:approximate-cross-view-bound} with common stability budget $\overline\Gamma_j$, then the same event also gives
+\begin{align}
+|\tau_{\widehat Z_j}-\tau|
+\le
+\overline\Gamma_j
+\left\{
+\inf_{\phi\in\mathcal F_j}D_j(\phi)
++2r_{j,n_{\mathrm D}}
++\varepsilon_{\mathrm{opt},j}
+\right\}.
+\label{eq:generic-representation-oracle-causal}
+\end{align}
+
+\paragraph{Finite-strata specialization.}
+We now give one explicit realization of the preceding argument. Restrict to deterministic maps, identifying each such map with $v\mapsto\phi(v,0)$ and writing it as $\phi(v)$. Assume every candidate takes values in a common finite set $\mathcal S_j\subset\mathbb R^{d_{Z_j}}$, and define $M_j\triangleq|\mathcal S_j|$.
+
+Fix a finite candidate library
 \begin{align}
 \mathcal F_j\subseteq\Phi_j,
 \qquad
@@ -28,7 +76,7 @@ For $\phi\in\mathcal F_j$, define
 \begin{align}
 Z_j^\phi\triangleq\phi(X,W_{-j})
 \end{align}
-and let $\mathcal R_j(\phi)$ be its set of positive-mass strata. Assume there are constants $p_{\min}>0$ and $\eta\in(0,1/2]$ such that every candidate and every $z\in\mathcal R_j(\phi)$ satisfy
+and let $\mathcal R_j(\phi)$ be its set of positive-mass strata. For $z\in\mathcal R_j(\phi)$, write $p_{j,z}(\phi)\triangleq P(Z_j^\phi=z)$. Assume there are constants $p_{\min}>0$ and $\eta\in(0,1/2]$ such that every candidate and every $z\in\mathcal R_j(\phi)$ satisfy
 \begin{align}
 P(Z_j^\phi=z)&\ge p_{\min},
 \label{eq:library-minimum-mass}\\
@@ -41,7 +89,7 @@ Assume also that the bounded kernel satisfies
 \sup_v\sqrt{\kappa_j(v,v)}\le\rho_j<\infty.
 \label{eq:kernel-bound}
 \end{align}
-The primitive cross-view Assumptions~\ref{ass:joint-latent-exchangeability} and \ref{ass:held-out-separation} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation. Their stability budgets are required to obey the common bound in equation~\eqref{eq:uniform-candidate-stability}.
+The two primitive cross-view clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation. Their stability budgets are required to obey the common bound in equation~\eqref{eq:uniform-candidate-stability}.
 
 \begin{definition}[Empirical cross-view discrepancy]
 \label{def:empirical-cross-view-discrepancy}
@@ -88,7 +136,7 @@ and
 If an occupied empirical stratum contains only one treatment arm, set $\widehat D_j(\phi)=+\infty$.
 \end{definition}
 
-\begin{proposition}[Uniform deviation over the finite library]
+\begin{proposition}[Uniform deviation for the finite-strata specialization]
 \label{prop:uniform-discrepancy-deviation}
 Let $\delta_{\mathrm D}\in(0,1)$ and suppose
 \begin{align}
@@ -139,29 +187,6 @@ r_{j,n_{\mathrm D}}(\delta_{\mathrm D}).
 \end{align}
 \end{proposition}
 
-\begin{proof}
-Equation~\eqref{eq:learning-sample-threshold} and a multiplicative Chernoff bound imply that every candidate treatment-by-stratum cell contains at least $n_{\mathrm D}p_{\min}\eta/2$ observations except on an event of probability at most $\delta_{\mathrm D}/4$. Conditional on the cell assignments, bounded Hilbert-space mean concentration and a union bound over at most $2M_jN_j$ cells give
-\begin{align}
-|\widehat\Delta_{j,z}(\phi)-\Delta_{j,z}(\phi)|
-\le
-2e_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-\end{align}
-simultaneously, with failure probability at most $\delta_{\mathrm D}/2$. A multinomial $L_1$ concentration bound gives
-\begin{align}
-\sum_z|\widehat p_{j,z}(\phi)-p_{j,z}(\phi)|
-\le
-\sqrt{
-\frac{
-2\left[
-M_j\log2+
-\log\left(4N_j/\delta_{\mathrm D}\right)
-\right]
-}{n_{\mathrm D}}
-}
-\end{align}
-simultaneously over candidates, with failure probability at most $\delta_{\mathrm D}/4$. On the intersection of the three events, use $0\le\Delta_{j,z}(\phi)\le2\rho_j$ and the triangle inequality to obtain equation~\eqref{eq:uniform-discrepancy-deviation}. The three failure probabilities sum to $\delta_{\mathrm D}$.
-\end{proof}
-
 \begin{definition}[Approximate empirical minimizer]
 \label{def:approximate-empirical-minimizer}
 Let $\varepsilon_{\mathrm{opt},j}\ge0$. The representation learner returns $\widehat\phi_j\in\mathcal F_j$ satisfying
@@ -173,14 +198,14 @@ Let $\varepsilon_{\mathrm{opt},j}\ge0$. The representation learner returns $\wid
 \varepsilon_{\mathrm{opt},j}.
 \label{eq:approximate-erm}
 \end{align}
-The learned representation is
+In this deterministic specialization, the learned representation is
 \begin{align}
-\widehat Z_j\triangleq\widehat\phi_j(X,W_{-j}).
+\widehat Z_j\triangleq\widehat\phi_j(V_j).
 \end{align}
 The tolerance records optimization error and is zero for an exact empirical minimizer.
 \end{definition}
 
-\begin{theorem}[Representation-learning oracle inequality]
+\begin{theorem}[Finite-strata representation-learning oracle inequality]
 \label{thm:representation-oracle}
 Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation} hold. Suppose Assumptions~\ref{ass:consistency} through \ref{ass:held-out-separation} hold for block $j$, and suppose representation overlap and uniform outcome-relevant stability hold for every candidate with the common budget $\overline\Gamma_j$. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
@@ -213,24 +238,6 @@ On the same event,
 \end{align}
 \end{theorem}
 
-\begin{proof}
-On the uniform-deviation event,
-\begin{align}
-D_j(\widehat\phi_j)
-&\le
-\widehat D_j(\widehat\phi_j)+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
-&\le
-\inf_{\phi\in\mathcal F_j}\widehat D_j(\phi)
-+\varepsilon_{\mathrm{opt},j}
-+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
-&\le
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-+\varepsilon_{\mathrm{opt},j}.
-\end{align}
-This proves equation~\eqref{eq:representation-oracle-discrepancy}. Conditional on $\mathcal I_{\mathrm D}$, the selected map is fixed. Theorem~\ref{thm:approximate-cross-view-bound} and the common stability budget give $|\tau_{\widehat Z_j}-\tau|\le\overline\Gamma_jD_j(\widehat\phi_j)$. Substitution proves equation~\eqref{eq:representation-oracle-causal}.
-\end{proof}
-
 \begin{remark}[Practical learner outside the finite-library theorem]
 \label{rem:practical-learning-gap}
 The theorem covers hard, finite-valued representations in a finite prespecified library. A neural learner using random features, soft assignments, and Adam requires additional bounds for neural-class complexity, feature approximation, soft-to-hard transfer, and optimization error. These guarantees are not supplied by Theorem~\ref{thm:representation-oracle}.
@@ -239,7 +246,7 @@ The theorem covers hard, finite-valued representations in a finite prespecified 
 \subsection{AIPW Estimation}
 \label{sec:aipw-estimation}
 
-Conditional on $\mathcal I_{\mathrm D}$, the map $\widehat\phi_j$ is fixed. For a fresh observation, define the conditional outcome means and representation propensity
+Conditional on $\mathcal I_{\mathrm D}$, the map $\widehat\phi_j$ is fixed. A fresh independent $\epsilon_j\sim\operatorname{Unif}(0,1)$ produces $\widehat Z_j=\widehat\phi_j(V_j,\epsilon_j)$. Define the conditional outcome means and representation propensity
 \begin{align}
 m_{a,j}(z)
 &\triangleq
@@ -249,9 +256,9 @@ e_j(z)
 P(A=1\mid\widehat Z_j=z).
 \label{eq:aipw-nuisances}
 \end{align}
-For the observed adjustment functional $\tau_{\widehat Z_j}$, the efficient influence function in the nonparametric model for $(\widehat Z_j,A,Y)$ is
+For the observed adjustment functional $\tau_{\widehat Z_j}$, the following is the AIPW score:
 \begin{align}
-\psi_j(O)
+\psi_j(O,\epsilon_j)
 \triangleq{}&
 m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)
 \nonumber\\
@@ -263,13 +270,13 @@ m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)
 \tau_{\widehat Z_j}.
 \label{eq:fixed-representation-eif}
 \end{align}
-Use $\mathcal I_{\mathrm N}$ to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
+When this score is square-integrable, it is the efficient influence function in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the augmented nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i},\epsilon_{j,i}^{\mathrm N})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
 
 \begin{definition}[Honest AIPW estimator]
 \label{def:honest-aipw}
-For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(X_i,W_{-j,i})$ and
+For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i},\epsilon_{j,i}^{\mathrm E})$ and
 \begin{align}
-S_j(O_i)
+S_j(O_i,\epsilon_{j,i}^{\mathrm E})
 \triangleq{}&
 \widehat m_{1,j}(\widehat Z_{j,i})
 -
@@ -290,7 +297,7 @@ The honest AIPW estimator is
 \widehat\tau_j^{\mathrm{AIPW}}
 \triangleq
 \frac{1}{n_{\mathrm E}}
-\sum_{i\in\mathcal I_{\mathrm E}}S_j(O_i).
+\sum_{i\in\mathcal I_{\mathrm E}}S_j(O_i,\epsilon_{j,i}^{\mathrm E}).
 }
 \label{eq:honest-aipw}
 \end{align}
@@ -300,7 +307,7 @@ The honest AIPW estimator is
 \label{prop:aipw-remainder}
 Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$,
 \begin{align}
-&\mathbb E\{S_j(O)\}-\tau_{\widehat Z_j}
+&\mathbb E\{S_j(O,\epsilon_j)\}-\tau_{\widehat Z_j}
 \nonumber\\
 &=
 \mathbb E
@@ -319,24 +326,6 @@ Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$,
 \label{eq:aipw-remainder}
 \end{align}
 \end{proposition}
-
-\begin{proof}
-Fix $\widehat Z_j=z$. Taking the conditional expectation of the score and using equation~\eqref{eq:aipw-nuisances} gives
-\begin{align}
-\mathbb E\{S_j(O)\mid\widehat Z_j=z\}
-={}&
-\widehat m_{1,j}(z)-\widehat m_{0,j}(z)
-\nonumber\\
-&+
-\frac{e_j(z)\{m_{1,j}(z)-\widehat m_{1,j}(z)\}}
-{\widehat e_j(z)}
-\nonumber\\
-&-
-\frac{\{1-e_j(z)\}\{m_{0,j}(z)-\widehat m_{0,j}(z)\}}
-{1-\widehat e_j(z)}.
-\end{align}
-Subtract $m_{1,j}(z)-m_{0,j}(z)$ and collect the two nuisance errors. Averaging the resulting identity over $\widehat Z_j$ proves equation~\eqref{eq:aipw-remainder}.
-\end{proof}
 
 The remainder is zero if the propensity estimator is correct. It is also zero if both conditional outcome estimators are correct.
 
@@ -387,24 +376,10 @@ Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$, with proba
 \end{align}
 \end{theorem}
 
-\begin{proof}
-The boundedness and clipping conditions imply
-\begin{align}
-|S_j(O)|
-\le
-2B\left(1+\frac{1}{\eta}\right).
-\end{align}
-Conditional on the two learning samples, Hoeffding's inequality bounds the difference between the evaluation average and its conditional expectation by the first term in equation~\eqref{eq:aipw-error-radius}. Proposition~\ref{prop:aipw-remainder}, Cauchy--Schwarz, and the propensity clipping bound control the absolute conditional remainder by
-\begin{align}
-\frac{q_{e,j}(q_{0,j}+q_{1,j})}{\eta}.
-\end{align}
-The triangle inequality proves equation~\eqref{eq:conditional-aipw-error}.
-\end{proof}
-
 \subsection{End-to-End Finite-Sample Bound}
 \label{sec:end-to-end-bound}
 
-\begin{theorem}[End-to-end sensitivity bound]
+\begin{theorem}[Finite-strata end-to-end sensitivity bound]
 \label{thm:end-to-end-sensitivity}
 Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation}, Theorem~\ref{thm:representation-oracle}, and Theorem~\ref{thm:conditional-aipw-error} hold. Then, jointly over the three independent samples, with probability at least $1-\delta_{\mathrm D}-\delta_{\mathrm E}$,
 \begin{align}
@@ -445,27 +420,6 @@ It also satisfies the oracle form
 \end{align}
 \end{theorem}
 
-\begin{proof}
-The triangle inequality gives
-\begin{align}
-|\widehat\tau_j^{\mathrm{AIPW}}-\tau|
-\le
-|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|
-+
-|\tau_{\widehat Z_j}-\tau|.
-\label{eq:end-to-end-triangle}
-\end{align}
-Theorem~\ref{thm:conditional-aipw-error} bounds the first term. Theorem~\ref{thm:approximate-cross-view-bound} and uniform candidate stability bound the second term by $\overline\Gamma_jD_j(\widehat\phi_j)$. Proposition~\ref{prop:uniform-discrepancy-deviation} gives
-\begin{align}
-D_j(\widehat\phi_j)
-\le
-\widehat D_j(\widehat\phi_j)
-+
-r_{j,n_{\mathrm D}}(\delta_{\mathrm D}),
-\end{align}
-which proves equation~\eqref{eq:end-to-end-empirical}. Equation~\eqref{eq:representation-oracle-discrepancy} proves the oracle form. A union bound over the discrepancy-learning and evaluation events gives the stated joint probability.
-\end{proof}
-
 \begin{corollary}[Consistency]
 \label{cor:learned-aipw-consistency}
 Consider a sequence of candidate libraries, sample splits, nuisance estimators, optimization tolerances, and stability budgets satisfying Theorem~\ref{thm:end-to-end-sensitivity}. If
@@ -494,10 +448,6 @@ then
 \tau.
 \end{align}
 \end{corollary}
-
-\begin{proof}
-The first three conditions make the evaluation-sample and nuisance-product components of $\varepsilon_{\mathrm{AIPW},j}$ converge to zero. Equation~\eqref{eq:consistency-representation-condition} makes the stability-weighted representation term vanish. The failure probability of Theorem~\ref{thm:end-to-end-sensitivity} also converges to zero, which proves convergence in probability.
-\end{proof}
 
 \begin{remark}[Interpretation and observability]
 \label{rem:end-to-end-observability}

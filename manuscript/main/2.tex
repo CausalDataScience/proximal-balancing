@@ -1,119 +1,33 @@
 \section{Problem Setting}
 \label{sec:setup}
 
-\subsection{Preliminaries}
-\label{sec:preliminaries}
-
-\paragraph{Structural causal models.}
-A structural causal model (SCM) consists of endogenous variables, exogenous disturbances, and structural assignments. Writing the endogenous variables as $S_1,\ldots,S_d$, an acyclic SCM has equations
-\begin{align}
-S_k=f_k(\operatorname{pa}_k,E_k),
-\qquad k=1,\ldots,d,
-\end{align}
-where $\operatorname{pa}_k$ contains the direct causes of $S_k$ and $E_k$ is an exogenous disturbance. The intervention $\operatorname{do}(A=a)$ replaces the structural equation for $A$ by the constant $a$ while leaving the other equations unchanged. The resulting outcome is the potential outcome $Y(a)$. An average causal effect is \emph{identified} when its value is uniquely determined by the observed-data distribution for every SCM in the stated model class \citep{pearl2009causality}.
-
-\paragraph{Proximal causal inference.}
-Ordinary adjustment seeks observed covariates that block all noncausal paths from treatment to outcome. Proximal causal inference instead allows an unobserved confounder and uses proxy measurements of it. Standard proximal formulations assign two different proxy roles and posit a bridge equation whose solution translates an observable conditional moment into the target causal functional \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. Their completeness condition requires the relevant conditional-expectation operator to be injective, so that no nonzero latent function is invisible to all proxy conditional moments. This condition does not follow from the mere existence of a correlated proxy. PROBE instead uses outcome-relevant completeness to interpret exact balance measured through a held-out proxy block and a quantitative stability condition when balance is only approximate.
-
-\subsection{Problem Setting}
-\label{sec:problem-setting}
-
 We observe independent copies
 \begin{align}
 O_i=(X_i,W_i,A_i,Y_i),
 \qquad i=1,\ldots,n,
 \end{align}
-where $X$ is a possibly high-dimensional vector of observed pretreatment covariates, $A\in\{0,1\}$ is treatment, and $Y$ is the observed outcome. The observed pretreatment measurement $W$ is divided into prespecified blocks,
+where $X\in\mathcal X$ is a possibly high-dimensional vector of observed pretreatment covariates, $\mathcal X$ is its value space, $A\in\{0,1\}$ is treatment, and $Y$ is the observed outcome.
+
+For each $a\in\{0,1\}$, the \emph{potential outcome} $Y(a)$ is the outcome that would be observed if treatment were set to $a$. Our target is the population average treatment effect
+\begin{align}
+\tau\triangleq\mathbb E\{Y(1)-Y(0)\}.
+\end{align}
+
+Let $U$ denote an unobserved pretreatment variable that may affect both treatment $A$ and outcome $Y$. When $U$ affects both $A$ and $Y$, the observed-data distribution alone does not identify $\tau$ without additional structure. We therefore observe a proxy measurement $W$ that contains information about $U$. The proxy is divided into prespecified blocks,
 \begin{align}
 W=(W_1,\ldots,W_J).
 \end{align}
-Each block may be scalar or vector-valued. A block can represent one repeated measurement, sensor channel, laboratory panel, or prespecified region of a larger measurement. We call $W$ a candidate proxy because some or all blocks may contain information about an unobserved pretreatment variable $U$ that affects treatment selection and the outcome.
+Each block may be scalar or vector-valued. A block can represent one repeated measurement, sensor channel, laboratory panel, or prespecified region of a larger measurement.
 
-Fix one block index $j\in\{1,\ldots,J\}$ before analyzing the data. We call $W_j$ the \emph{held-out proxy block} and write
+Fix one block index $j\in\{1,\ldots,J\}$ before analyzing the data. We call $W_j$ the \emph{held-out proxy block} and let $\mathcal W_j$ denote its value space. We call the combination of all other blocks the \emph{remaining proxy block} and write
 \begin{align}
 W_{-j}
 \triangleq
 (W_1,\ldots,W_{j-1},W_{j+1},\ldots,W_J)
 \end{align}
-for all remaining proxy blocks. The measured input available for constructing an adjustment representation is
+for the resulting vector of remaining proxy blocks. Let $\mathcal V_j$ denote the value space of the pair $(X,W_{-j})$. Finally, define
 \begin{align}
-V_j\triangleq(X,W_{-j}).
+V_j\triangleq(X,W_{-j})\in\mathcal V_j.
 \label{eq:representation-input}
 \end{align}
-The representation itself is introduced only in Section~\ref{sec:identification}.
-
-Figure~\ref{fig:proximal-probe-graphs} contrasts the conventional two-proxy roles with a broad graph compatible with the PROBE problem setting.
-\FloatBarrier
-\begin{figure}[ht]
-\centering
-\subfloat[Standard two-proxy proximal graph]{%
-\begin{minipage}[t]{0.47\textwidth}
-\centering
-\begin{tikzpicture}[
-  x=1cm,y=1cm,
-  every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
-  treatment/.style={draw=coltreat,text=coltreat}, outcome/.style={draw=colout,text=colout},
-  latent/.style={draw=collatent,text=collatent},
-  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent}]
-\path[use as bounding box] (-2.1,-0.8) rectangle (2.1,3.0);
-\node[latent] (u) at (0,2.55) {$U$};
-\node (x) at (0,1.30) {$X$};
-\node (zt) at (-1.45,1.30) {$Z^{\mathrm{tr}}$};
-\node (wo) at (1.45,1.30) {$W^{\mathrm{out}}$};
-\node[treatment] (a) at (-0.85,-0.25) {$A$};
-\node[outcome] (y) at (0.85,-0.25) {$Y$};
-\draw[latentedge] (u) -- (x);
-\draw[latentedge] (u) -- (zt);
-\draw[latentedge] (u) -- (wo);
-\draw[latentedge] (u) to[bend right=18] (a);
-\draw[latentedge] (u) to[bend left=18] (y);
-\draw[edge] (x) -- (a);
-\draw[edge] (x) -- (y);
-\draw[edge] (zt) -- (a);
-\draw[edge] (wo) -- (y);
-\draw[edge] (a) -- (y);
-\end{tikzpicture}
-\end{minipage}}
-\hfill
-\subfloat[Maximal PROBE-compatible graph]{%
-\begin{minipage}[t]{0.47\textwidth}
-\centering
-\begin{tikzpicture}[
-  x=1cm,y=1cm,
-  every node/.style={circle,draw=black,fill=white,minimum size=7mm,inner sep=0pt,font=\sffamily\small},
-  treatment/.style={draw=coltreat,text=coltreat}, outcome/.style={draw=colout,text=colout},
-  latent/.style={draw=collatent,text=collatent},
-  edge/.style={-{Latex[length=1.4mm,width=1.7mm]},line width=0.55pt},
-  latentedge/.style={edge,draw=collatent}]
-\path[use as bounding box] (-2.1,-0.8) rectangle (2.1,3.0);
-\node[latent] (u) at (0,2.55) {$U$};
-\node (wm) at (-1.45,1.30) {$W_{-j}$};
-\node (x) at (0,1.30) {$X$};
-\node (wj) at (1.45,1.30) {$W_j$};
-\node[treatment] (a) at (-0.85,-0.25) {$A$};
-\node[outcome] (y) at (0.85,-0.25) {$Y$};
-\draw[latentedge] (u) -- (wm);
-\draw[latentedge] (u) -- (x);
-\draw[latentedge] (u) -- (wj);
-\draw[latentedge] (u) to[bend right=18] (a);
-\draw[latentedge] (u) to[bend left=18] (y);
-\draw[edge] (x) -- (a);
-\draw[edge] (x) -- (y);
-\draw[edge] (wm) -- (a);
-\draw[edge] (wm) to[bend right=12] (y);
-\draw[edge] (wm) to[bend left=24] (wj);
-\draw[edge] (wj) -- (y);
-\draw[edge] (a) -- (y);
-\end{tikzpicture}
-\end{minipage}}
-\caption{Illustrative maximal causal graphs. Panel (a) displays the conventional treatment-inducing proxy $Z^{\mathrm{tr}}$ and outcome-inducing proxy $W^{\mathrm{out}}$. Panel (b) allows the remaining blocks $W_{-j}$ to affect treatment, outcome, and the held-out block, while $W_j$ may affect the outcome but has no direct arrow into treatment. These graphs illustrate permitted causal relations; neither graph is equivalent to the completeness and conditional-independence assumptions stated later.}
-\label{fig:proximal-probe-graphs}
-\end{figure}
-\FloatBarrier
-
-For each $a\in\{0,1\}$, let $Y(a)$ denote the outcome that would be observed if treatment were set to $a$. The target is the population average treatment effect
-\begin{align}
-\tau\triangleq\mathbb E\{Y(1)-Y(0)\}.
-\end{align}
-We allow $U$ to remain associated with treatment after conditioning on all observed pretreatment measurements. The research question is whether the prespecified block structure can support a learned adjustment representation that identifies $\tau$ under exact PROBE balance and controls residual hidden-confounding bias when balance is approximate. The representation and the assumptions that give its balance a causal meaning are introduced next.
+The variable $V_j$ is the combined vector of the observed covariates $X$ and the remaining proxy blocks $W_{-j}$.

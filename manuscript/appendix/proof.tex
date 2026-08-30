@@ -1,12 +1,213 @@
-\section{Proof Obligations}
+\section{Proofs}
 \label{app:proofs}
 
-The first proof obligation is the conditioning-safety argument for $Z_j=\phi_j(X,W_{-j})$. It must show how joint latent exchangeability and separation of the held-out block remain valid after conditioning on the learned representation.
+\subsection{Proofs for Section~\ref{sec:identification}}
 
-The second proof obligation is the exact bias decomposition and cross-view factorization. These results must connect the observed adjustment functional, the two treatment-arm latent laws, and the held-out distribution through one common proxy channel.
+\paragraph{Conditioning safety.}
+\begin{proof}[Proof of Lemma~\ref{lem:conditioning-safety}]
+Conditional on $V_j$, $Z_j$ depends only on $\epsilon_j$. The displayed independence of $\epsilon_j$ makes adding $Z_j$ safe in each of the two separate clauses of Assumption~\ref{ass:joint-latent-exchangeability}.
+\end{proof}
 
-The third proof obligation is exact identification under outcome-relevant completeness. It must show that exact observed balance makes the two outcome-relevant latent averages equal without asserting equality of the full latent distributions.
+\paragraph{Cross-view factorization.}
+\begin{proof}[Proof of Lemma~\ref{lem:cross-view-factorization}]
+Integrate the common conditional law in equation~\eqref{eq:common-channel-after-z} over $Q_{a,j,z}$. By the generative definition of $\mathcal K_j$ in Definition~\ref{def:latent-proxy-objects}, the resulting law of $(X,W_j)$ is $\mathcal K_jQ_{a,j,z}$.
+\end{proof}
 
-The fourth proof obligation is the approximate sensitivity bound. It must show how the stability constant converts each held-out discrepancy into an outcome-relevant latent bound and how the stratum weights aggregate to $\Gamma_jD_j(\phi_j)$.
+\paragraph{Exact identification.}
+\begin{proof}[Proof of Theorem~\ref{thm:exact-cross-view-identification}]
+Exact PROBE balance and Lemma~\ref{lem:cross-view-factorization} imply
+\begin{align}
+\mathcal K_jQ_{1,j,z}=\mathcal K_jQ_{0,j,z}
+\end{align}
+for $P_{Z_j}$-almost every $z$. Assumption~\ref{ass:outcome-relevant-completeness} therefore gives, for each $a\in\{0,1\}$,
+\begin{align}
+\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
+=
+\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\label{eq:orc-equal-latent-means}
+\end{align}
+By Lemma~\ref{lem:conditioning-safety} and iterated expectation, for each $b\in\{0,1\}$,
+\begin{align}
+\mathbb E\{Y(a)\mid A=b,Z_j=z\}
+=
+\mathbb E_{Q_{b,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\end{align}
+Equation~\eqref{eq:orc-equal-latent-means} proves equation~\eqref{eq:conditional-mean-exchangeability}. Consistency then gives
+\begin{align}
+m_{a,j}(z)
+&=
+\mathbb E\{Y(a)\mid A=a,Z_j=z\}
+\nonumber\\
+&=
+\mathbb E\{Y(a)\mid Z_j=z\}.
+\end{align}
+Integrating the difference between the two treatment levels with respect to $P_{Z_j}$ yields $\tau_{Z_j}=\tau$.
+\end{proof}
 
-The fifth proof obligation is the finite-sample chain from uniform discrepancy concentration through empirical representation selection to honest AIPW estimation. Its final inequality must display the representation, stability, nuisance, and evaluation-sample terms separately.
+\paragraph{Zero discrepancy and exact balance.}
+\begin{proof}[Proof of Proposition~\ref{prop:zero-discrepancy}]
+The nonnegative random variable $\Delta_j(Z_j;\phi_j)$ has expectation zero exactly when it is zero almost surely. Characteristicness converts zero MMD into equality of the two conditional laws, and overlap makes this equality equivalent to conditional independence.
+\end{proof}
+
+\paragraph{Supporting bias decomposition.}
+For this supporting lemma, define $\pi_j(z)\triangleq P(A=1\mid Z_j=z)$.
+For each $a\in\{0,1\}$ and $P_{Z_j}$-almost every $z$, define
+\begin{align}
+\delta_{a,j}(z)
+\triangleq
+\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
+-
+\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\label{eq:stratum-mass-propensity}
+\end{align}
+
+\begin{lemma}[Exact bias decomposition]
+\label{lem:exact-bias-decomposition}
+Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and equation~\eqref{eq:adjustment-integrability},
+\begin{align}
+\tau_{Z_j}-\tau
+=
+\mathbb E\left[
+\{1-\pi_j(Z_j)\}\delta_{1,j}(Z_j)
++
+\pi_j(Z_j)\delta_{0,j}(Z_j)
+\right].
+\label{eq:exact-bias-decomposition}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Consistency and Lemma~\ref{lem:conditioning-safety} give, for $P_{Z_j}$-almost every $z$,
+\begin{align}
+m_{a,j}(z)
+=
+\mathbb E_{Q_{a,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\label{eq:observed-arm-mean}
+\end{align}
+Conditional expectation over $A$ gives
+\begin{align}
+\mathbb E\{Y(a)\mid Z_j=z\}
+={}&
+\pi_j(z)\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}\}
+\nonumber\\
+&+\{1-\pi_j(z)\}\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}\}.
+\label{eq:potential-arm-mixture}
+\end{align}
+Subtract the two conditional expressions, collect terms, and integrate with respect to $P_{Z_j}$.
+\end{proof}
+
+\paragraph{Approximate cross-view bias bound.}
+\begin{proof}[Proof of Theorem~\ref{thm:approximate-cross-view-bound}]
+Lemma~\ref{lem:exact-bias-decomposition}, the triangle inequality, stability, and equation~\eqref{eq:observed-latent-discrepancy-link} give
+\begin{align}
+|\tau_{Z_j}-\tau|
+&\le\mathbb E[\{1-\pi_j(Z_j)\}|\delta_{1,j}(Z_j)|+\pi_j(Z_j)|\delta_{0,j}(Z_j)|]\\
+&\le\Gamma_j\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
+\end{align}
+\end{proof}
+
+\subsection{Proofs for Section~\ref{sec:estimation}}
+
+\paragraph{Uniform discrepancy deviation.}
+\begin{proof}[Proof of Proposition~\ref{prop:uniform-discrepancy-deviation}]
+Equation~\eqref{eq:learning-sample-threshold} and a multiplicative Chernoff bound imply that every candidate treatment-by-stratum cell contains at least $n_{\mathrm D}p_{\min}\eta/2$ observations except on an event of probability at most $\delta_{\mathrm D}/4$. Conditional on the cell assignments, bounded Hilbert-space mean concentration and a union bound over at most $2M_jN_j$ cells give
+\begin{align}
+|\widehat\Delta_{j,z}(\phi)-\Delta_j(z;\phi)|
+\le
+2e_{j,n_{\mathrm D}}(\delta_{\mathrm D})
+\end{align}
+simultaneously, with failure probability at most $\delta_{\mathrm D}/2$. A multinomial $L_1$ concentration bound gives
+\begin{align}
+\sum_z|\widehat p_{j,z}(\phi)-p_{j,z}(\phi)|
+\le
+\sqrt{
+\frac{
+2\left[
+M_j\log2+
+\log\left(4N_j/\delta_{\mathrm D}\right)
+\right]
+}{n_{\mathrm D}}
+}
+\end{align}
+simultaneously over candidates, with failure probability at most $\delta_{\mathrm D}/4$. On the intersection of the three events, use $0\le\Delta_j(z;\phi)\le2\rho_j$ and the triangle inequality to obtain equation~\eqref{eq:uniform-discrepancy-deviation}. The three failure probabilities sum to $\delta_{\mathrm D}$.
+\end{proof}
+
+\paragraph{Representation-learning oracle inequality.}
+\begin{proof}[Proof of Theorem~\ref{thm:representation-oracle}]
+On the uniform-deviation event,
+\begin{align}
+D_j(\widehat\phi_j)
+&\le
+\widehat D_j(\widehat\phi_j)+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
+&\le
+\inf_{\phi\in\mathcal F_j}\widehat D_j(\phi)
++\varepsilon_{\mathrm{opt},j}
++r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
+&\le
+\inf_{\phi\in\mathcal F_j}D_j(\phi)
++2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
++\varepsilon_{\mathrm{opt},j}.
+\end{align}
+This proves equation~\eqref{eq:representation-oracle-discrepancy}. Conditional on $\mathcal I_{\mathrm D}$, the selected map is fixed. Theorem~\ref{thm:approximate-cross-view-bound} and the common stability budget give $|\tau_{\widehat Z_j}-\tau|\le\overline\Gamma_jD_j(\widehat\phi_j)$. Substitution proves equation~\eqref{eq:representation-oracle-causal}.
+\end{proof}
+
+\paragraph{Exact signed nuisance remainder.}
+\begin{proof}[Proof of Proposition~\ref{prop:aipw-remainder}]
+Fix $\widehat Z_j=z$. Taking the conditional expectation of the score and using equation~\eqref{eq:aipw-nuisances} gives
+\begin{align}
+\mathbb E\{S_j(O,\epsilon_j)\mid\widehat Z_j=z\}
+={}&
+\widehat m_{1,j}(z)-\widehat m_{0,j}(z)
+\nonumber\\
+&+
+\frac{e_j(z)\{m_{1,j}(z)-\widehat m_{1,j}(z)\}}
+{\widehat e_j(z)}
+\nonumber\\
+&-
+\frac{\{1-e_j(z)\}\{m_{0,j}(z)-\widehat m_{0,j}(z)\}}
+{1-\widehat e_j(z)}.
+\end{align}
+Subtract $m_{1,j}(z)-m_{0,j}(z)$ and collect the two nuisance errors. Averaging the resulting identity over $\widehat Z_j$ proves equation~\eqref{eq:aipw-remainder}.
+\end{proof}
+
+\paragraph{Conditional finite-sample AIPW error.}
+\begin{proof}[Proof of Theorem~\ref{thm:conditional-aipw-error}]
+The boundedness and clipping conditions imply
+\begin{align}
+|S_j(O,\epsilon_j)|
+\le
+2B\left(1+\frac{1}{\eta}\right).
+\end{align}
+Conditional on the two learning samples, Hoeffding's inequality bounds the difference between the evaluation average and its conditional expectation by the first term in equation~\eqref{eq:aipw-error-radius}. Proposition~\ref{prop:aipw-remainder}, Cauchy--Schwarz, and the propensity clipping bound control the absolute conditional remainder by
+\begin{align}
+\frac{q_{e,j}(q_{0,j}+q_{1,j})}{\eta}.
+\end{align}
+The triangle inequality proves equation~\eqref{eq:conditional-aipw-error}.
+\end{proof}
+
+\paragraph{End-to-end sensitivity bound.}
+\begin{proof}[Proof of Theorem~\ref{thm:end-to-end-sensitivity}]
+The triangle inequality gives
+\begin{align}
+|\widehat\tau_j^{\mathrm{AIPW}}-\tau|
+\le
+|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|
++
+|\tau_{\widehat Z_j}-\tau|.
+\label{eq:end-to-end-triangle}
+\end{align}
+Theorem~\ref{thm:conditional-aipw-error} bounds the first term. Theorem~\ref{thm:approximate-cross-view-bound} and uniform candidate stability bound the second term by $\overline\Gamma_jD_j(\widehat\phi_j)$. Proposition~\ref{prop:uniform-discrepancy-deviation} gives
+\begin{align}
+D_j(\widehat\phi_j)
+\le
+\widehat D_j(\widehat\phi_j)
++
+r_{j,n_{\mathrm D}}(\delta_{\mathrm D}),
+\end{align}
+which proves equation~\eqref{eq:end-to-end-empirical}. Equation~\eqref{eq:representation-oracle-discrepancy} proves the oracle form. A union bound over the discrepancy-learning and evaluation events gives the stated joint probability.
+\end{proof}
+
+\paragraph{Consistency.}
+\begin{proof}[Proof of Corollary~\ref{cor:learned-aipw-consistency}]
+The first three conditions make the evaluation-sample and nuisance-product components of $\varepsilon_{\mathrm{AIPW},j}$ converge to zero. Equation~\eqref{eq:consistency-representation-condition} makes the stability-weighted representation term vanish. The failure probability of Theorem~\ref{thm:end-to-end-sensitivity} also converges to zero, which proves convergence in probability.
+\end{proof}
