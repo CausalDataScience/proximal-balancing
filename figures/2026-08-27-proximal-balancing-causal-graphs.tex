@@ -12,97 +12,119 @@
 
 \begin{document}
 \begin{tikzpicture}[
-  x=1.2cm,
-  y=0.9cm,
-  >={Latex[width=1.4mm,length=1.7mm]},
+  x=1cm,
+  y=1cm,
+  >={Latex[width=1.2mm,length=1.5mm]},
   font=\sffamily\sansmath\scriptsize,
-  varnode/.style={draw,circle,inner sep=0mm,minimum size=7mm,
-    font=\sffamily\sansmath\footnotesize},
+  varnode/.style={draw,circle,inner sep=0mm,minimum size=6mm,
+    font=\sffamily\sansmath\scriptsize},
   observed/.style={varnode,draw=black,text=black,fill=white},
   latent/.style={varnode,draw=collatent,draw opacity=0.72,text=collatent,
     fill=filllatent,fill opacity=0.55,text opacity=1},
   treatment/.style={varnode,draw=coltreat,text=coltreat,fill=white},
   outcome/.style={varnode,draw=colout,text=colout,fill=white},
-  observed edge/.style={->,draw=black,line width=0.45pt},
-  latent edge/.style={->,draw=collatent,opacity=0.72,line width=0.45pt}
+  observed edge/.style={->,draw=black,line width=0.4pt},
+  latent edge/.style={->,draw=collatent,opacity=0.72,line width=0.4pt}
 ]
 
-% Panel (a): the smallest graph in the nested sequence.
+% Panel (a): base PROBE-compatible graph.
 \begin{scope}[xshift=0cm]
-  \node[latent] (Ua) at (0,2.70) {$U$};
-  \node[observed] (Wma) at (-1.30,1.55) {$W_{-j}$};
-  \node[observed] (Xa) at (0,1.55) {$X$};
-  \node[observed] (Wja) at (1.30,1.55) {$W_j$};
-  \node[treatment] (Aa) at (-0.85,-0.35) {$A$};
-  \node[outcome] (Ya) at (0.85,-0.35) {$Y$};
+  \node[latent] (Ua) at (0,1.65) {$U$};
+  \node[observed] (Wma) at (-0.90,0.72) {$W_{-j}$};
+  \node[observed] (Xa) at (0,0.72) {$X$};
+  \node[observed] (Wja) at (0.90,0.72) {$W_j$};
+  \node[treatment] (Aa) at (-0.58,-0.50) {$A$};
+  \node[outcome] (Ya) at (0.58,-0.50) {$Y$};
 
   \draw[latent edge] (Ua) -- (Wma);
   \draw[latent edge] (Ua) -- (Xa);
   \draw[latent edge] (Ua) -- (Wja);
-  \draw[latent edge] (Ua) to[bend right=17] (Aa);
-  \draw[latent edge] (Ua) to[bend left=17] (Ya);
+  \draw[latent edge] (Ua) to[bend right=13] (Aa);
+  \draw[latent edge] (Ua) to[bend left=13] (Ya);
   \draw[observed edge] (Xa) -- (Wma);
   \draw[observed edge] (Xa) -- (Wja);
   \draw[observed edge] (Xa) -- (Aa);
   \draw[observed edge] (Xa) -- (Ya);
-  \draw[observed edge] (Wma) to[out=-82,in=168,looseness=0.92] (Aa);
+  \draw[observed edge] (Wma) -- (Aa);
   \draw[observed edge] (Aa) -- (Ya);
 
-  \node[align=center,font=\sffamily\sansmath\footnotesize] at (0,-1.00)
-    {(a) Indirect proxy effects};
+  \node[align=center,font=\sffamily\sansmath\scriptsize] at (0,-0.95) {(a)};
 \end{scope}
 
 % Panel (b): panel (a) plus the held-out-proxy effect on outcome.
-\begin{scope}[xshift=5.1cm]
-  \node[latent] (Ub) at (0,2.70) {$U$};
-  \node[observed] (Wmb) at (-1.30,1.55) {$W_{-j}$};
-  \node[observed] (Xb) at (0,1.55) {$X$};
-  \node[observed] (Wjb) at (1.30,1.55) {$W_j$};
-  \node[treatment] (Ab) at (-0.85,-0.35) {$A$};
-  \node[outcome] (Yb) at (0.85,-0.35) {$Y$};
+\begin{scope}[xshift=3.15cm]
+  \node[latent] (Ub) at (0,1.65) {$U$};
+  \node[observed] (Wmb) at (-0.90,0.72) {$W_{-j}$};
+  \node[observed] (Xb) at (0,0.72) {$X$};
+  \node[observed] (Wjb) at (0.90,0.72) {$W_j$};
+  \node[treatment] (Ab) at (-0.58,-0.50) {$A$};
+  \node[outcome] (Yb) at (0.58,-0.50) {$Y$};
 
   \draw[latent edge] (Ub) -- (Wmb);
   \draw[latent edge] (Ub) -- (Xb);
   \draw[latent edge] (Ub) -- (Wjb);
-  \draw[latent edge] (Ub) to[bend right=17] (Ab);
-  \draw[latent edge] (Ub) to[bend left=17] (Yb);
+  \draw[latent edge] (Ub) to[bend right=13] (Ab);
+  \draw[latent edge] (Ub) to[bend left=13] (Yb);
   \draw[observed edge] (Xb) -- (Wmb);
   \draw[observed edge] (Xb) -- (Wjb);
   \draw[observed edge] (Xb) -- (Ab);
   \draw[observed edge] (Xb) -- (Yb);
-  \draw[observed edge] (Wmb) to[out=-82,in=168,looseness=0.92] (Ab);
-  \draw[observed edge] (Wjb) to[out=-98,in=32,looseness=0.92] (Yb);
+  \draw[observed edge] (Wmb) -- (Ab);
+  \draw[observed edge] (Wjb) -- (Yb);
   \draw[observed edge] (Ab) -- (Yb);
 
-  \node[align=center,font=\sffamily\sansmath\footnotesize] at (0,-1.00)
-    {(b) Held-out proxy affects outcome};
+  \node[align=center,font=\sffamily\sansmath\scriptsize] at (0,-0.95) {(b)};
 \end{scope}
 
 % Panel (c): panel (b) plus the remaining-proxy effect on outcome.
-\begin{scope}[xshift=10.2cm]
-  \node[latent] (Uc) at (0,2.70) {$U$};
-  \node[observed] (Wmc) at (-1.30,1.55) {$W_{-j}$};
-  \node[observed] (Xc) at (0,1.55) {$X$};
-  \node[observed] (Wjc) at (1.30,1.55) {$W_j$};
-  \node[treatment] (Ac) at (-0.85,-0.35) {$A$};
-  \node[outcome] (Yc) at (0.85,-0.35) {$Y$};
+\begin{scope}[xshift=6.30cm]
+  \node[latent] (Uc) at (0,1.65) {$U$};
+  \node[observed] (Wmc) at (-0.90,0.72) {$W_{-j}$};
+  \node[observed] (Xc) at (0,0.72) {$X$};
+  \node[observed] (Wjc) at (0.90,0.72) {$W_j$};
+  \node[treatment] (Ac) at (-0.58,-0.50) {$A$};
+  \node[outcome] (Yc) at (0.58,-0.50) {$Y$};
 
   \draw[latent edge] (Uc) -- (Wmc);
   \draw[latent edge] (Uc) -- (Xc);
   \draw[latent edge] (Uc) -- (Wjc);
-  \draw[latent edge] (Uc) to[bend right=17] (Ac);
-  \draw[latent edge] (Uc) to[bend left=17] (Yc);
+  \draw[latent edge] (Uc) to[bend right=13] (Ac);
+  \draw[latent edge] (Uc) to[bend left=13] (Yc);
   \draw[observed edge] (Xc) -- (Wmc);
   \draw[observed edge] (Xc) -- (Wjc);
   \draw[observed edge] (Xc) -- (Ac);
   \draw[observed edge] (Xc) -- (Yc);
-  \draw[observed edge] (Wmc) to[out=-82,in=168,looseness=0.92] (Ac);
-  \draw[observed edge] (Wmc) to[out=-18,in=148,looseness=0.90] (Yc);
-  \draw[observed edge] (Wjc) to[out=-98,in=32,looseness=0.92] (Yc);
+  \draw[observed edge] (Wmc) -- (Ac);
+  \draw[observed edge] (Wmc) -- (Yc);
+  \draw[observed edge] (Wjc) -- (Yc);
   \draw[observed edge] (Ac) -- (Yc);
 
-  \node[align=center,font=\sffamily\sansmath\footnotesize] at (0,-1.00)
-    {(c) Maximal allowed dependence};
+  \node[align=center,font=\sffamily\sansmath\scriptsize] at (0,-0.95) {(c)};
+\end{scope}
+
+% Panel (d): representative standard two-proxy proximal structure.
+\begin{scope}[xshift=9.45cm]
+  \node[latent] (Ud) at (0,1.65) {$U$};
+  \node[observed] (Ztd) at (-0.90,0.72) {$Z^{\mathrm{tr}}$};
+  \node[observed] (Xd) at (0,0.72) {$X$};
+  \node[observed] (Wd) at (0.90,0.72) {$W$};
+  \node[treatment] (Ad) at (-0.58,-0.50) {$A$};
+  \node[outcome] (Yd) at (0.58,-0.50) {$Y$};
+
+  \draw[latent edge] (Ud) -- (Ztd);
+  \draw[latent edge] (Ud) -- (Xd);
+  \draw[latent edge] (Ud) -- (Wd);
+  \draw[latent edge] (Ud) to[bend right=13] (Ad);
+  \draw[latent edge] (Ud) to[bend left=13] (Yd);
+  \draw[observed edge] (Xd) -- (Ztd);
+  \draw[observed edge] (Xd) -- (Wd);
+  \draw[observed edge] (Xd) -- (Ad);
+  \draw[observed edge] (Xd) -- (Yd);
+  \draw[observed edge] (Ztd) -- (Ad);
+  \draw[observed edge] (Wd) -- (Yd);
+  \draw[observed edge] (Ad) -- (Yd);
+
+  \node[align=center,font=\sffamily\sansmath\scriptsize] at (0,-0.95) {(d)};
 \end{scope}
 
 \end{tikzpicture}

@@ -50,7 +50,7 @@ For a fresh $\epsilon_j\sim\operatorname{Unif}(0,1)$ independent of the causal v
 \label{eq:learned-adjustment-functional}
 \end{align}
 This definition is used when the two conditional means are absolutely integrable under the law of $\widehat Z_j$.
-If every candidate obeys the assumptions of Theorem~\ref{thm:approximate-cross-view-bound} with common stability budget $\overline\Gamma_j$, then the same event also gives
+If every candidate obeys the assumptions of Theorem~\ref{thm:approximate-proxy-bias-bound} with common stability budget $\overline\Gamma_j$, then the same event also gives
 \begin{align}
 |\tau_{\widehat Z_j}-\tau|
 \le
@@ -89,10 +89,10 @@ Assume also that the bounded kernel satisfies
 \sup_v\sqrt{\kappa_j(v,v)}\le\rho_j<\infty.
 \label{eq:kernel-bound}
 \end{align}
-The two primitive cross-view clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation. Their stability budgets are required to obey the common bound in equation~\eqref{eq:uniform-candidate-stability}.
+The two primitive held-out-block clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation. Their stability budgets are required to obey the common bound in equation~\eqref{eq:uniform-candidate-stability}.
 
-\begin{definition}[Empirical cross-view discrepancy]
-\label{def:empirical-cross-view-discrepancy}
+\begin{definition}[Empirical held-out proxy discrepancy]
+\label{def:empirical-held-out-proxy-discrepancy}
 For observation $i\in\mathcal I_{\mathrm D}$ and candidate $\phi\in\mathcal F_j$, write
 \begin{align}
 Z_{j,i}^{\phi}\triangleq\phi(X_i,W_{-j,i}).

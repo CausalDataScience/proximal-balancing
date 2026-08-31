@@ -9,7 +9,12 @@ Z_j\triangleq\phi_j(V_j,\epsilon_j).
 \end{align}
 The deterministic case is included when $\phi_j$ ignores its second input. Let $\Phi_j$ denote a prespecified class of such representation functions.
 
-\subsection{Assumptions}
+This is the defining PROBE construction: the held-out block $W_j$ is excluded from the input to $\phi_j$ and reserved for the balance condition introduced below.
+
+\subsection{Identification for a Prespecified Held-Out Block}
+\label{sec:fixed-held-out-block-identification}
+
+\subsubsection{Assumptions}
 \label{sec:identification-assumptions}
 
 \begin{assumption}[Consistency and integrability]
@@ -36,6 +41,16 @@ W_j&\perp\!\!\!\perp A\mid(U,V_j).
 \label{eq:held-out-separation}
 \end{align}
 \end{assumption}
+
+Figure~\ref{fig:proximal-causal-structures} shows three PROBE-compatible examples and one representative standard proximal structure. In panel (d), $Z^{\mathrm{tr}}$ denotes a conventional treatment-inducing proxy.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.86\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
+\caption{Panels (a)--(c) show causal structures compatible with Assumption~\ref{ass:joint-latent-exchangeability}. Panel (d) shows a representative standard two-proxy proximal structure. The graphs alone do not imply representation overlap, outcome-relevant completeness, or exact balance.}
+\label{fig:proximal-causal-structures}
+\end{figure}
+\FloatBarrier
 
 \begin{assumption}[Representation overlap]
 \label{ass:representation-overlap}
@@ -115,15 +130,17 @@ For $P_{Z_j}$-almost every $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and each $a\in\
 \end{align}
 \end{assumption}
 
-\subsection{Exact Cross-View Identification}
-\label{sec:exact-cross-view-identification}
+\subsubsection{Exact Identification for a Fixed Block}
+\label{sec:exact-proxy-identification}
+
+Observed balance alone need not remove hidden confounding. The common held-out channel and outcome-relevant completeness connect the observable balance condition to equality of the latent potential-outcome means that matter for causal identification.
 
 \begin{theorem}[Causal effect identification using a proxy]
-\label{thm:exact-cross-view-identification}
-Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold. If the representation $Z_j=\phi_j(V_j,\epsilon_j)$ satisfies
+\label{thm:exact-proxy-identification}
+Fix a prespecified block $j\in\{1,\ldots,J\}$. Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold for this block and its representation. If $Z_j=\phi_j(V_j,\epsilon_j)$ is constructed such that
 \begin{align}
 (X,W_j)\perp\!\!\!\perp A\mid Z_j,
-\label{eq:exact-cross-view-balance}
+\label{eq:exact-proxy-balance}
 \end{align}
 then
 \begin{align}
@@ -138,30 +155,86 @@ then
 \end{align}
 \end{theorem}
 
-In plain terms, treated and untreated units have the same conditional distribution of the observed covariates $X$ and the held-out proxy block $W_j$ within each value of $Z_j$. Assumption~\ref{ass:outcome-relevant-completeness} then ensures that any remaining latent difference cannot change the relevant potential-outcome means, so adjustment by $Z_j$ recovers the average treatment effect. The theorem does not claim that a representation satisfying exact balance always exists or can always be learned from a finite sample.
+In plain terms, treated and untreated units have the same conditional distribution of the observed covariates $X$ and the held-out proxy block $W_j$ within each value of $Z_j$. The proof first uses the common held-out channel to factor the two observed laws through $\mathcal K_j$. Exact balance equates the two channel images, outcome-relevant completeness equates the corresponding potential-outcome means, and consistency and overlap yield the displayed adjustment formula. The full proof is given in Appendix~\ref{app:proofs}. The theorem does not claim that a representation satisfying exact balance always exists or can always be learned from a finite sample.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.99\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
-\caption{Nested causal graphs compatible with Assumption~\ref{ass:joint-latent-exchangeability} under a Markovian structural causal model with independent errors. Panel (a) is contained in panel (b), which is contained in panel (c). The directed acyclic graphs alone do not imply consistency, representation overlap, outcome-relevant completeness, exact balance, or the existence of a representation attaining exact balance.}
-\label{fig:nested-cross-view-graphs}
-\end{figure}
-\FloatBarrier
+\subsubsection{Comparison with the Canonical Two-Proxy Proximal Model}
 
-\subsubsection{Difference from Standard Proximal Graph Structures}
+The canonical two-proxy proximal model, illustrated in Figure~\ref{fig:proximal-causal-structures}\textup{(d)}, prespecifies a treatment-inducing proxy $Z^{\mathrm{tr}}$ and an outcome-inducing proxy $W$ \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. PROBE instead places the outcome-side common-channel restriction only on the held-out block $W_j$. Components of the remaining block $W_{-j}$ may affect treatment $A$ only, outcome $Y$ only, both, or neither, as illustrated by panels (a)--(c). This is less restrictive at the level of prespecified proxy-role exclusions, particularly when $W_j$ is a small part of a high-dimensional $W$. It does not imply that the complete PROBE assumption package is weaker.
 
-Standard proximal causal inference assigns distinct treatment-inducing and outcome-inducing proxy roles and identifies causal effects through bridge equations and completeness \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. In Figure~\ref{fig:standard-proximal-graph}, the conventional treatment-inducing proxy is denoted by $Z^{\mathrm{tr}}$ to distinguish it from our learned adjustment representation $Z_j$. Our setup instead starts from a high-dimensional candidate proxy, holds out $W_j$, constructs $Z_j$ from the remaining input $V_j$, and links observed conditional balance to causal identification through outcome-relevant completeness.
+The canonical route identifies the causal effect by solving an outcome bridge equation and imposing completeness on the treatment-inducing proxy operator. PROBE instead combines observable balance with outcome-relevant completeness. A natural question is whether either framework's sufficient conditions contain those of the other. The following proposition shows that neither package implies the other, so the two frameworks cover distinct model classes.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.62\textwidth]{../figures/2026-08-27-standard-proximal-causal-graph.pdf}
-\caption{A representative standard two-proxy proximal graph. The treatment-inducing proxy $Z^{\mathrm{tr}}$ is a measured proxy variable, not the learned representation $Z_j$ used in our method.}
-\label{fig:standard-proximal-graph}
-\end{figure}
-\FloatBarrier
+\begin{proposition}[Non-nesting of canonical proximal and PROBE sufficient conditions]
+\label{prop:non-nesting-proximal-probe}
+Fix a latent variable $U$, observed covariates $X$, canonical proxy roles $(Z^{\mathrm{tr}},W)$, and a PROBE orientation $(V_j,W_j,Z_j)$.
+Let $\mathsf C$ denote the conjunction of the canonical proxy restrictions for $(Z^{\mathrm{tr}},W)$, existence of an integrable outcome bridge, and treatment-proxy completeness. Let $\mathsf P_j$ denote the conjunction of latent exchangeability, the common held-out channel, representation overlap, exact balance, and exact outcome-relevant completeness for orientation $j$.
+Within the class of laws satisfying consistency, integrability, and strict latent overlap $0<P(A=1\mid U,X)<1$ almost surely,
+\begin{align*}
+\mathsf C\not\Longrightarrow\mathsf P_j,
+\qquad
+\mathsf P_j\not\Longrightarrow\mathsf C.
+\end{align*}
+\end{proposition}
 
-\subsection{Approximate Cross-View Bias Bound}
-\label{sec:approximate-cross-view-bound}
+This proposition establishes non-inclusion of the two fixed sufficient-condition packages. It does not say that every method or reparameterization from one framework fails under a law covered by the other. Computationally, canonical proximal estimators solve a regularized inverse bridge or conditional-moment problem. PROBE instead optimizes an observed held-out balance criterion and then estimates the causal effect by adjustment on the learned representation. Section~\ref{sec:estimation} gives the learning and AIPW details.
+
+\subsection{Identification When the Valid Held-Out Block Is Unknown}
+\label{sec:unknown-valid-held-out-block}
+
+The fixed-block theorem requires the analyst to prespecify a block whose structural assumptions are valid. We now consider the leave-one-block-out orientations $j\in\{1,\ldots,J\}$ without assuming that the data reveal which orientation, if any, is structurally valid. For each $j$, fix a candidate representation $Z_j=\phi_j(V_j,\epsilon_j)$ using the construction above.
+
+Define the population-observable balance-screen set
+\begin{align}
+\mathcal B
+\triangleq
+\biggl\{
+j\in\{1,\ldots,J\}:\;&
+0<P(A=1\mid Z_j)<1\ \text{a.s.},\quad
+(X,W_j)\perp\!\!\!\perp A\mid Z_j,
+\notag\\
+&
+\mathbb E\!\left[
+\left|\mathbb E(Y\mid A=1,Z_j)\right|
++
+\left|\mathbb E(Y\mid A=0,Z_j)\right|
+\right]<\infty
+\biggr\}.
+\label{eq:population-balance-screen}
+\end{align}
+For each $j\in\mathcal B$, define the candidate adjustment value
+\begin{align}
+\theta_j
+\triangleq
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,Z_j)
+-
+\mathbb E(Y\mid A=0,Z_j)
+\right].
+\label{eq:block-candidate-adjustment-value}
+\end{align}
+Let $\mathcal G\subseteq\mathcal B$ be the set of indices for which latent exchangeability, the common held-out channel, and exact outcome-relevant completeness in Assumptions~\ref{ass:joint-latent-exchangeability} and~\ref{ass:outcome-relevant-completeness} hold for that orientation.
+
+\begin{theorem}[Identification with an unknown valid block]
+\label{thm:unknown-valid-block-identification}
+Suppose Assumption~\ref{ass:consistency} holds and the candidate representations are fixed. Then
+\begin{align}
+\theta_j=\tau
+\qquad\text{for every }j\in\mathcal G.
+\end{align}
+Consequently:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $\mathcal G\neq\varnothing$, then $\tau\in\{\theta_j:j\in\mathcal B\}$. If, in addition, $\theta_j=\theta^\star$ for every $j\in\mathcal B$, then $\tau=\theta^\star$.
+\item If $\mathcal B\neq\varnothing$ and $|\mathcal G|>|\mathcal B|/2$, then
+\begin{align}
+\operatorname{median}\bigl((\theta_j)_{j\in\mathcal B}\bigr)=\tau,
+\end{align}
+where one indexed value is retained for every $j\in\mathcal B$.
+\end{enumerate}
+\end{theorem}
+
+The candidate set $\{\theta_j:j\in\mathcal B\}$ is an existence-based containment result and is not claimed to be sharp. Membership in $\mathcal B$ is determined by the population observed-data law, but exact population equality is not a finite-sample certificate. Membership in $\mathcal G$, its nonemptiness, and the majority-valid condition are structural properties involving the unobserved variable $U$ and are not determined by the balance screen.
+
+\subsection{Approximate PROBE Balance and Bias Bound}
+\label{sec:approximate-proxy-bound}
 
 Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whose reproducing kernel Hilbert space $\mathcal H_j$ is separable. For probability laws $P,P'$ on $(X,W_j)$, write
 \begin{align}
@@ -171,8 +244,8 @@ Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whos
 \end{align}
 where $m_j(P)=\int\kappa_j(r,\cdot)P(dr)$.
 
-\begin{definition}[Cross-view discrepancy]
-\label{def:cross-view-discrepancy}
+\begin{definition}[Held-out proxy discrepancy]
+\label{def:held-out-proxy-discrepancy}
 For $P_{Z_j}$-almost every $z$, define
 \begin{align}
 \Delta_j(z;\phi_j)
@@ -182,12 +255,12 @@ For $P_{Z_j}$-almost every $z$, define
 \mathcal L(X,W_j\mid A=1,Z_j=z),
 \mathcal L(X,W_j\mid A=0,Z_j=z)
 \right\},
-\label{eq:stratum-cross-view-discrepancy}
+\label{eq:stratum-held-out-proxy-discrepancy}
 \end{align}
 and define
 \begin{align}
 D_j(\phi_j)\triangleq\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
-\label{eq:aggregate-cross-view-discrepancy}
+\label{eq:aggregate-held-out-proxy-discrepancy}
 \end{align}
 \end{definition}
 
@@ -202,7 +275,7 @@ Under representation overlap,
 \end{align}
 \end{proposition}
 
-The factorization used in the proof of Theorem~\ref{thm:exact-cross-view-identification} gives, almost everywhere,
+The factorization used in the proof of Theorem~\ref{thm:exact-proxy-identification} gives, almost everywhere,
 \begin{align}
 \Delta_j(z;\phi_j)
 =
@@ -223,8 +296,8 @@ There is a finite $\Gamma_j$ such that, for $P_{Z_j}$-almost every $z$, every $a
 
 Uniform stability converts a difference between held-out proxy distributions into a common upper bound on the corresponding difference in potential-outcome means.
 
-\begin{theorem}[Approximate cross-view bias bound]
-\label{thm:approximate-cross-view-bound}
+\begin{theorem}[Approximate PROBE bias bound]
+\label{thm:approximate-proxy-bias-bound}
 Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and Assumption~\ref{ass:uniform-stability},
 \begin{align}
 \boxed{
@@ -238,7 +311,7 @@ Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and As
 \right|
 \le\Gamma_jD_j(\phi_j).
 }
-\label{eq:approximate-cross-view-bound}
+\label{eq:approximate-proxy-bias-bound}
 \end{align}
 \end{theorem}
 
