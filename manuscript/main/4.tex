@@ -1,7 +1,7 @@
 \section{Representation Learning and AIPW Estimation}
 \label{sec:estimation}
 
-The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The analysis uses one prespecified held-out block $j$ throughout. The AIPW construction below applies to discrete or continuous $Z_j$. Explicit concentration constants are subsequently given for a finite-strata specialization.
+The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The representation-learning and AIPW analysis below uses one prespecified held-out block $j$ throughout. The AIPW construction applies to discrete or continuous $Z_j$. Explicit concentration constants are subsequently given for a finite-strata specialization.
 
 \subsection{Representation Learning}
 \label{sec:representation-learning}
@@ -36,6 +36,13 @@ D_j(\widehat\phi_j)
 \label{eq:generic-representation-oracle}
 \end{align}
 This oracle inequality is agnostic to whether the learned representation is discrete or continuous. Its operational content depends on constructing an empirical conditional-dependence criterion for which equation~\eqref{eq:generic-uniform-deviation} can be proved.
+For each $\phi\in\mathcal F_j$, let $\Gamma_j(\phi)$ denote a valid stability constant in Assumption~\ref{ass:uniform-stability}. Representation learning also requires a common stability budget across the candidate class:
+\begin{align}
+\sup_{\phi\in\mathcal F_j}\Gamma_j(\phi)
+\le
+\overline\Gamma_j<\infty.
+\label{eq:uniform-candidate-stability}
+\end{align}
 For a fresh $\epsilon_j\sim\operatorname{Unif}(0,1)$ independent of the causal variables, define
 \begin{align}
 \widehat Z_j\triangleq\widehat\phi_j(V_j,\epsilon_j),
@@ -456,5 +463,67 @@ Theorem~\ref{thm:end-to-end-sensitivity} separates the final error into an AIPW 
 
 \begin{remark}[Scope]
 \label{rem:end-to-end-scope}
-The theorem uses one prespecified held-out block, hard finite strata, a finite candidate library, and an honest three-way split. It does not establish a neural-class rate, a soft-to-hard approximation bound, an Adam optimization guarantee, or a cross-fitting theorem. Experimental aggregation across several held-out orientations is also outside this fixed-$j$ result.
+The theorem uses one prespecified held-out block, hard finite strata, a finite candidate library, and an honest three-way split. It does not establish a neural-class rate, a soft-to-hard approximation bound, an Adam optimization guarantee, or a cross-fitting theorem. The random-search result below concerns only computational subsampling of population orientations and does not extend this fixed-$j$ learning and inference result.
 \end{remark}
+
+\subsection{Searching Across Held-Out Orientations}
+\label{sec:random-orientation-search}
+
+Exhaustive evaluation of all orientations in $\mathfrak S$ may be computationally expensive. We therefore consider randomized subsampling of the population candidates defined in Section~\ref{sec:unknown-valid-held-out-block}. This result concerns computational search over exact population values. It is not a finite-sample clustering or causal-inference guarantee.
+
+Let $T\triangleq|\mathfrak S|=2^J-2$ and $N\triangleq|\mathcal B|$. Let the search budget $M\in\{0,\ldots,T\}$ be chosen independently of the observed data and all representation-learning outcomes. Conditional on $M=m$, sample $m$ orientations uniformly without replacement from $\mathfrak S$. Let $\mathcal R_m$ be the sampled orientations that also belong to $\mathcal B$, and let $R\triangleq|\mathcal R_m|$. Then
+\begin{align}
+R\mid M=m\sim\operatorname{Hypergeometric}(T,N,m).
+\label{eq:retained-orientation-count}
+\end{align}
+Conditional on $(M=m,R=r)$, the retained set $\mathcal R_m$ is a uniformly sampled $r$-element subset of $\mathcal B$.
+
+For $c\in\mathbb R$, define the population count
+\begin{align}
+n(c)\triangleq\bigl|\{S\in\mathcal B:\theta_S=c\}\bigr|.
+\label{eq:population-orientation-count}
+\end{align}
+Let
+\begin{align}
+L\triangleq\bigl|\{c\in\mathbb R:c\ne\tau,\ n(c)>0\}\bigr|
+\label{eq:number-nontarget-clusters}
+\end{align}
+be the number of non-target population values. When $L\ge1$, define
+\begin{align}
+p_\tau
+\triangleq
+\frac{n(\tau)}{N},
+\qquad
+p_\star
+\triangleq
+\max_{c\ne\tau:\,n(c)>0}\frac{n(c)}{N},
+\qquad
+\Delta\triangleq p_\tau-p_\star.
+\label{eq:population-plurality-gap}
+\end{align}
+
+\begin{theorem}[Recovery by random orientation search]
+\label{thm:random-orientation-plurality}
+\normalfont
+Suppose $\mathcal B\ne\varnothing$ and
+\begin{align*}
+n(\tau)>\max_{c\ne\tau:\,n(c)>0}n(c),
+\end{align*}
+where the maximum over an empty collection is zero. Fix $m\in\{0,\ldots,T\}$ such that $P(M=m)>0$, and fix an integer $1\le r_0\le\min(m,N)$. Suppose
+\begin{align}
+P(R\ge r_0\mid M=m)\ge1-\eta_R(m).
+\label{eq:retained-count-probability}
+\end{align}
+The procedure returns failure when $R=0$. If $L\ge1$, select the value having the largest retained count and treat any tie as failure. Conditional on $M=m$, this procedure returns $\tau$ with probability at least
+\begin{align}
+\left[
+1-\eta_R(m)-L\exp\left\{-\frac{r_0\Delta^2}{2}\right\}
+\right]_+,
+\qquad
+[x]_+\triangleq\max(x,0).
+\label{eq:random-search-plurality-probability}
+\end{align}
+If $L=0$, every retained candidate equals $\tau$, so recovery succeeds whenever $R\ge1$; neither $p_\tau$, $p_\star$, nor $\Delta$ is needed in this case.
+\end{theorem}
+
+The probability in Theorem~\ref{thm:random-orientation-plurality} concerns only the randomized computational search. If $M$ is random and $P(R\ge r_0)\ge1-\eta_R$, averaging the same argument over $M$ gives the unconditional version of equation~\eqref{eq:random-search-plurality-probability} with $\eta_R(m)$ replaced by $\eta_R$. When $L=0$, the success probability is at least $1-\eta_R$ provided $r_0\ge1$.

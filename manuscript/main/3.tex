@@ -2,326 +2,317 @@
 \label{sec:identification}
 
 Let $d_{V_j}$ denote the coordinate dimension of $V_j$. Fix a user-specified output dimension $d_{Z_j}\le d_{V_j}$. Let $\epsilon_j\sim\operatorname{Unif}(0,1)$ be independent of $(U,V_j,W_j,A,Y(0),Y(1))$. For a measurable representation function, define
-\begin{align}
-\phi_j:\mathcal V_j\times[0,1]\longrightarrow\mathbb R^{d_{Z_j}},
-\qquad
-Z_j\triangleq\phi_j(V_j,\epsilon_j).
-\end{align}
+	\begin{align}
+		\phi_j:\mathcal V_j\times[0,1]\longrightarrow\mathbb R^{d_{Z_j}}, \qquad Z_j\triangleq\phi_j(V_j,\epsilon_j).
+	\end{align}
 The deterministic case is included when $\phi_j$ ignores its second input. Let $\Phi_j$ denote a prespecified class of such representation functions.
 
-This is the defining PROBE construction: the held-out block $W_j$ is excluded from the input to $\phi_j$ and reserved for the balance condition introduced below.
 
-\subsection{Identification for a Prespecified Held-Out Block}
-\label{sec:fixed-held-out-block-identification}
+\subsection{Identification for a Prespecified Held-Out Block} \label{sec:fixed-held-out-block-identification}
 
-\subsubsection{Assumptions}
-\label{sec:identification-assumptions}
+\subsubsection{Assumptions} \label{sec:identification-assumptions}
 
 \begin{assumption}[Consistency and integrability]
-\label{ass:consistency}
-For each $a\in\{0,1\}$,
-\begin{align}
-Y=Y(A),
-\qquad
-\mathbb E|Y(a)|<\infty.
-\label{eq:consistency}
-\end{align}
+	\label{ass:consistency}
+	For each $a\in\{0,1\}$,
+	\begin{align}
+		Y=Y(A), \qquad
+		\mathbb E|Y(a)|<\infty.
+	\label{eq:consistency}
+	\end{align}
 \end{assumption}
 
-Consistency connects the observed outcome $Y$ to the potential outcome corresponding to the treatment actually received. Integrability ensures that the causal means used below are finite.
-
-\begin{assumption}[Latent exchangeability and a common held-out channel]
-\label{ass:joint-latent-exchangeability}
-\label{ass:held-out-separation}
-For each $a\in\{0,1\}$,
-\begin{align}
-Y(a)&\perp\!\!\!\perp A\mid(U,V_j),
-\label{eq:joint-latent-exchangeability}\\
-W_j&\perp\!\!\!\perp A\mid(U,V_j).
-\label{eq:held-out-separation}
-\end{align}
+\begin{assumption}[Latent exchangeability and a common held-out channel] \label{ass:joint-latent-exchangeability} \label{ass:held-out-separation}
+	For each $a\in\{0,1\}$,
+	\begin{align}
+	Y(a)&\perp\!\!\!\perp A\mid(U,V_j),
+	\label{eq:joint-latent-exchangeability}\\
+	W_j&\perp\!\!\!\perp A\mid(U,V_j).
+	\label{eq:held-out-separation}
+	\end{align}
 \end{assumption}
 
-Figure~\ref{fig:proximal-causal-structures} shows three PROBE-compatible examples and one representative standard proximal structure. In panel (d), $Z^{\mathrm{tr}}$ denotes a conventional treatment-inducing proxy.
+The first clause says that $(U,V_j)$ is sufficient to remove hidden confounding between treatment and each potential outcome.
+The second clause says that, after $(U,V_j)$ is fixed, treatment status provides no additional information about the distribution of $W_j$.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.86\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
-\caption{Panels (a)--(c) show causal structures compatible with Assumption~\ref{ass:joint-latent-exchangeability}. Panel (d) shows a representative standard two-proxy proximal structure. The graphs alone do not imply representation overlap, outcome-relevant completeness, or exact balance.}
-\label{fig:proximal-causal-structures}
+Figure~\ref{fig:proximal-causal-structures} shows three PROBE-compatible examples and one representative standard proximal structure.
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.86\textwidth]{../figures/2026-08-27-proximal-balancing-causal-graphs.pdf}
+	\caption{PROBE-compatible causal structures in panels (a)--(c) and a standard two-proxy proximal structure in panel (d).}
+	\label{fig:proximal-causal-structures}
 \end{figure}
-\FloatBarrier
 
-\begin{assumption}[Representation overlap]
-\label{ass:representation-overlap}
-\begin{align}
-0<P(A=1\mid Z_j)<1
-\qquad\text{almost surely}.
-\label{eq:representation-overlap}
-\end{align}
-\end{assumption}
 
 We then introduce the latent and proxy objects within each representation stratum.
 
 \begin{definition}[Latent and proxy objects within a representation stratum]
 \label{def:latent-proxy-objects}
-Let $P_{Z_j}$ denote the distribution of $Z_j$. The conditional laws below refer to fixed versions that exist under the maintained probability model. For $P_{Z_j}$-almost every $z$, define
-\begin{align}
-Q_{a,j,z}&\triangleq\mathcal L(V_j,U\mid A=a,Z_j=z),
-\qquad a\in\{0,1\}.
-\end{align}
-Define the held-out proxy channel by
-\begin{align}
-K_j(\cdot\mid v,u)
-\triangleq
-\mathcal L(W_j\mid V_j=v,U=u).
-\end{align}
-For any probability law $Q$ on $(V_j,U)$ and measurable $B\subseteq\mathcal X\times\mathcal W_j$, define
-\begin{align*}
-(\mathcal K_jQ)(B)
-\triangleq
-\int
-\left[
-\int_{\mathcal W_j}
-\mathbf 1\{(x,w_j)\in B\}
-K_j(dw_j\mid v,u)
-\right]
-Q(dv,du),
-\qquad v=(x,w_{-j}).
-\end{align*}
-Equivalently, first draw $(V_j,U)=(X,W_{-j},U)\sim Q$, then draw $W_j\sim K_j(\cdot\mid V_j,U)$, and finally retain $(X,W_j)$ while integrating out $(W_{-j},U)$. Thus, $\mathcal K_jQ$ is a probability law on $(X,W_j)$.
+\normalfont
+	Let $P_{Z_j}$ denote the distribution of $Z_j$. For $P_{Z_j}$-almost every $z$, fix versions of the following conditional laws. Define
+	\begin{align}
+		Q_{a,j,z} \triangleq \mathcal L(V_j,U\mid A=a,Z_j=z), \qquad a\in\{0,1\},
+	\end{align}
+	and define the common conditional law of the held-out block by
+	\begin{align}
+		K_j(\cdot\mid v,u) \triangleq \mathcal L(W_j\mid V_j=v,U=u).
+	\end{align}
+	For any probability law $Q$ on $(V_j,U)$, let $\mathcal K_jQ$ denote the induced law of $(X,W_j)$ obtained by first drawing $(V_j,U)=(X,W_{-j},U)\sim Q$, then drawing $W_j\sim K_j(\cdot\mid V_j,U)$, and finally retaining $(X,W_j)$.
 
-For each $a\in\{0,1\}$, define
-\begin{align}
-\mu_{a,j,z}(v,u)
-\triangleq
-\mathbb E\{Y(a)\mid V_j=v,U=u,Z_j=z\}.
-\end{align}
-The admissible law class is
-\begin{align}
-\mathcal Q_{j,z}
-\triangleq
-\biggl\{
-Q:\;&Q\text{ is a probability law on }(V_j,U),\
-Q\ll\mathcal L(V_j,U\mid Z_j=z), \notag\\
-&\mathbb E_Q|\mu_{a,j,z}(V_j,U)|<\infty
-\text{ for }a\in\{0,1\}
-\biggr\}.
-\end{align}
-The relation $Q\ll\mathcal L(V_j,U\mid Z_j=z)$ means that $Q$ assigns zero probability to every event having zero probability under the pooled stratum law. The condition $\mathbb E_Q|\mu_{a,j,z}(V_j,U)|<\infty$ means that the average absolute conditional potential-outcome mean under $Q$ is finite.
-For $Q\in\mathcal Q_{j,z}$, write
-\begin{align}
-\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
-\triangleq
-\int\mu_{a,j,z}(v,u)Q(dv,du).
-\end{align}
+	For each $a\in\{0,1\}$, define
+	\begin{align}
+		\mu_{a,j,z}(v,u) \triangleq \mathbb E\{Y(a)\mid V_j=v,U=u,Z_j=z\}.
+	\end{align}
+	For $P_{Z_j}$-almost every $z$, let $\mathcal Q_{j,z}$ be the collection of probability laws $Q$ on $(V_j,U)$ such that $Q\ll\mathcal L(V_j,U\mid Z_j=z)$ and $\mathbb E_Q|\mu_{a,j,z}(V_j,U)|<\infty$ for both $a\in\{0,1\}$.
 \end{definition}
 
 \begin{assumption}[Exact outcome-relevant completeness]
-\label{ass:outcome-relevant-completeness}
-For $P_{Z_j}$-almost every $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and each $a\in\{0,1\}$,
-\begin{align}
-\mathcal K_jQ=\mathcal K_jQ'
-\quad\Longrightarrow\quad
-\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
-=
-\mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}.
-\label{eq:outcome-relevant-completeness}
-\end{align}
+	\label{ass:outcome-relevant-completeness}
+	For $P_{Z_j}$-almost every $z$, every $Q,Q'\in\mathcal Q_{j,z}$, and each $a\in\{0,1\}$,
+	\begin{align}
+	\mathcal K_jQ=\mathcal K_jQ'
+	\quad\Longrightarrow\quad
+	\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}
+	=
+	\mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}.
+	\label{eq:outcome-relevant-completeness}
+	\end{align}
 \end{assumption}
 
 \subsubsection{Exact Identification for a Fixed Block}
 \label{sec:exact-proxy-identification}
 
-Observed balance alone need not remove hidden confounding. The common held-out channel and outcome-relevant completeness connect the observable balance condition to equality of the latent potential-outcome means that matter for causal identification.
+The next theorem gives the central identification result. It states when adjustment for $Z_j$ identifies the population average treatment effect.
 
-\begin{theorem}[Causal effect identification using a proxy]
-\label{thm:exact-proxy-identification}
+\begin{theorem}[Causal effect identification using a proxy] \label{thm:exact-proxy-identification}
+\normalfont
 Fix a prespecified block $j\in\{1,\ldots,J\}$. Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold for this block and its representation. If $Z_j=\phi_j(V_j,\epsilon_j)$ is constructed such that
-\begin{align}
-(X,W_j)\perp\!\!\!\perp A\mid Z_j,
-\label{eq:exact-proxy-balance}
-\end{align}
-then
-\begin{align}
-\tau
-=
-\mathbb E\!\left[
-\mathbb E(Y\mid A=1,Z_j)
--
-\mathbb E(Y\mid A=0,Z_j)
-\right].
-\label{eq:exact-identification}
-\end{align}
+	\begin{align}
+		0<P(A=1\mid Z_j)<1
+		\quad\text{almost surely},
+		\label{eq:representation-overlap}
+	\end{align}
+and
+	\begin{align}
+		(X,W_j)\perp\!\!\!\perp A\mid Z_j, \label{eq:exact-proxy-balance}
+	\end{align}
+	then
+	\begin{align}
+		\tau = \mathbb E\!\left[ \mathbb E(Y\mid A=1,Z_j) - \mathbb E(Y\mid A=0,Z_j) \right]. \label{eq:exact-identification}
+	\end{align}
 \end{theorem}
 
-In plain terms, treated and untreated units have the same conditional distribution of the observed covariates $X$ and the held-out proxy block $W_j$ within each value of $Z_j$. The proof first uses the common held-out channel to factor the two observed laws through $\mathcal K_j$. Exact balance equates the two channel images, outcome-relevant completeness equates the corresponding potential-outcome means, and consistency and overlap yield the displayed adjustment formula. The full proof is given in Appendix~\ref{app:proofs}. The theorem does not claim that a representation satisfying exact balance always exists or can always be learned from a finite sample.
+The theorem is a conditional mean identification result. It establishes that the conditional mean of $Y(a)$ given $(A,Z_j)$ does not depend on $A$, and consistency converts this equality into the displayed adjustment formula. It does not assert the full conditional independence $Y(a)\perp\!\!\!\perp A\mid Z_j$.
 
 \subsubsection{Comparison with the Canonical Two-Proxy Proximal Model}
 
-The canonical two-proxy proximal model, illustrated in Figure~\ref{fig:proximal-causal-structures}\textup{(d)}, prespecifies a treatment-inducing proxy $Z^{\mathrm{tr}}$ and an outcome-inducing proxy $W$ \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. PROBE instead places the outcome-side common-channel restriction only on the held-out block $W_j$. Components of the remaining block $W_{-j}$ may affect treatment $A$ only, outcome $Y$ only, both, or neither, as illustrated by panels (a)--(c). This is less restrictive at the level of prespecified proxy-role exclusions, particularly when $W_j$ is a small part of a high-dimensional $W$. It does not imply that the complete PROBE assumption package is weaker.
+Graphically and structurally, PROBE differs from the standard proximal causal inference framework \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. The standard framework prespecifies a treatment-inducing proxy $Z^{\mathrm{tr}}$ and an outcome-inducing proxy $Z^{\mathrm{out}}$. By contrast, PROBE requires only the held-out block $W_j$ to satisfy $W_j\perp\!\!\!\perp A\mid(U,V_j)$. The remaining block is not subject to this restriction and may affect $A$, $Y$, both, or neither, as illustrated by panels (a)--(c).
 
-The canonical route identifies the causal effect by solving an outcome bridge equation and imposing completeness on the treatment-inducing proxy operator. PROBE instead combines observable balance with outcome-relevant completeness. A natural question is whether either framework's sufficient conditions contain those of the other. The following proposition shows that neither package implies the other, so the two frameworks cover distinct model classes.
+The underlying assumptions and identification strategies are also different. A representative canonical completeness condition is
+\begin{align}
+	\mathbb E\{g(U)\mid Z^{\mathrm{tr}},A,X\}=0
+	\quad\Longrightarrow\quad
+	g(U)=0
+	\quad\text{almost surely}
+	\label{eq:canonical-proxy-completeness}
+\end{align}
+for functions $g$ in the specified class. Identification then proceeds by seeking an outcome bridge $h$ satisfying an observed conditional-moment equation such as
+	\begin{align}
+		\mathbb E(Y\mid Z^{\mathrm{tr}},A,X) =
+		\mathbb E\{h(Z^{\mathrm{out}},A,X)\mid Z^{\mathrm{tr}},A,X\}.
+		\label{eq:canonical-outcome-bridge}
+	\end{align}
+
+
+PROBE instead combines observable balance in Theorem~\ref{thm:exact-proxy-identification} with outcome-relevant completeness in Assumption~\ref{ass:outcome-relevant-completeness}. For comparison, the canonical proximal conditions refer to proxy validity, existence of an integrable outcome bridge, and treatment-proxy completeness for a designated proxy pair. The PROBE conditions refer to Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness}, representation overlap, and exact balance for a designated proxy split. A natural question is whether either framework's sufficient conditions contain those of the other.
 
 \begin{proposition}[Non-nesting of canonical proximal and PROBE sufficient conditions]
-\label{prop:non-nesting-proximal-probe}
-Fix a latent variable $U$, observed covariates $X$, canonical proxy roles $(Z^{\mathrm{tr}},W)$, and a PROBE orientation $(V_j,W_j,Z_j)$.
-Let $\mathsf C$ denote the conjunction of the canonical proxy restrictions for $(Z^{\mathrm{tr}},W)$, existence of an integrable outcome bridge, and treatment-proxy completeness. Let $\mathsf P_j$ denote the conjunction of latent exchangeability, the common held-out channel, representation overlap, exact balance, and exact outcome-relevant completeness for orientation $j$.
-Within the class of laws satisfying consistency, integrability, and strict latent overlap $0<P(A=1\mid U,X)<1$ almost surely,
-\begin{align*}
-\mathsf C\not\Longrightarrow\mathsf P_j,
-\qquad
-\mathsf P_j\not\Longrightarrow\mathsf C.
-\end{align*}
+	\label{prop:non-nesting-proximal-probe}
+	\normalfont
+	There exists a causal data-generating process for which the canonical proximal conditions hold for a designated proxy pair but the PROBE conditions fail for a designated proxy split. Conversely, there exists a causal data-generating process for which the PROBE conditions hold for a designated proxy split but the canonical proximal conditions fail for a designated proxy pair.
 \end{proposition}
-
-This proposition establishes non-inclusion of the two fixed sufficient-condition packages. It does not say that every method or reparameterization from one framework fails under a law covered by the other. Computationally, canonical proximal estimators solve a regularized inverse bridge or conditional-moment problem. PROBE instead optimizes an observed held-out balance criterion and then estimates the causal effect by adjustment on the learned representation. Section~\ref{sec:estimation} gives the learning and AIPW details.
 
 \subsection{Identification When the Valid Held-Out Block Is Unknown}
 \label{sec:unknown-valid-held-out-block}
 
-The fixed-block theorem requires the analyst to prespecify a block whose structural assumptions are valid. We now consider the leave-one-block-out orientations $j\in\{1,\ldots,J\}$ without assuming that the data reveal which orientation, if any, is structurally valid. For each $j$, fix a candidate representation $Z_j=\phi_j(V_j,\epsilon_j)$ using the construction above.
+Section~\ref{sec:fixed-held-out-block-identification} fixes the held-out block in advance. We now allow its composition to be unknown. Consider every nonempty proper subset
+\begin{align}
+	\mathfrak S \triangleq
+	\{S\subset\{1,\ldots,J\}:1\le |S|\le J-1\}.
+	\label{eq:all-held-out-orientations}
+\end{align}
+A subset $S$ and its complement $S^c$ are distinct because they exchange the held-out and remaining roles. For each $S\in\mathfrak S$, let $W_S=(W_j)_{j\in S}$ be the held-out vector, let $W_{-S}=(W_j)_{j\notin S}$ be the remaining vector, and define
+\begin{align}
+	V_S\triangleq(X,W_{-S}),
+	\qquad
+	Z_S\triangleq\phi_S(V_S,\epsilon_S),
+	\label{eq:subset-representation}
+\end{align}
+using the same construction as for a single held-out block.
 
-Define the population-observable balance-screen set
+For each $S\in\mathfrak S$, define, whenever it is well-defined,
 \begin{align}
-\mathcal B
-\triangleq
-\biggl\{
-j\in\{1,\ldots,J\}:\;&
-0<P(A=1\mid Z_j)<1\ \text{a.s.},\quad
-(X,W_j)\perp\!\!\!\perp A\mid Z_j,
-\notag\\
-&
-\mathbb E\!\left[
-\left|\mathbb E(Y\mid A=1,Z_j)\right|
-+
-\left|\mathbb E(Y\mid A=0,Z_j)\right|
-\right]<\infty
-\biggr\}.
-\label{eq:population-balance-screen}
+	\theta_S \triangleq \mathbb E\!\left[
+	\mathbb E(Y\mid A=1,Z_S)
+	-
+	\mathbb E(Y\mid A=0,Z_S)
+	\right].
+	\label{eq:block-candidate-adjustment-value}
 \end{align}
-For each $j\in\mathcal B$, define the candidate adjustment value
+
+Theorem~\ref{thm:exact-proxy-identification} applies to each proxy split $S$ after replacing $(V_j,W_j,Z_j)$ by $(V_S,W_S,Z_S)$ throughout. Thus, if Assumption~\ref{ass:consistency} and the grouped versions of Assumptions~\ref{ass:joint-latent-exchangeability} and~\ref{ass:outcome-relevant-completeness} hold, representation overlap holds, and $(X,W_S)\perp\!\!\!\perp A\mid Z_S$, then $\theta_S=\tau$.
+
+The balance condition is observable at the population level. Define the population balance-screen set
 \begin{align}
-\theta_j
-\triangleq
-\mathbb E\!\left[
-\mathbb E(Y\mid A=1,Z_j)
--
-\mathbb E(Y\mid A=0,Z_j)
-\right].
-\label{eq:block-candidate-adjustment-value}
+	\mathcal B
+	\triangleq
+	\bigl\{S\in\mathfrak S:
+	\theta_S\text{ is well-defined in }\mathbb R,
+	0<P(A=1\mid Z_S)<1\ \text{a.s.},
+	(X,W_S)\perp\!\!\!\perp A\mid Z_S
+	\bigr\},
+	\label{eq:population-balance-screen}
 \end{align}
-Let $\mathcal G\subseteq\mathcal B$ be the set of indices for which latent exchangeability, the common held-out channel, and exact outcome-relevant completeness in Assumptions~\ref{ass:joint-latent-exchangeability} and~\ref{ass:outcome-relevant-completeness} hold for that orientation.
+Each $S\in\mathcal B$ defines one retained proxy split and one candidate effect $\theta_S$ through Equation~\eqref{eq:block-candidate-adjustment-value}. The next result considers the case in which the true effect $\tau$ occurs more often than any other candidate value.
 
 \begin{theorem}[Identification with an unknown valid block]
 \label{thm:unknown-valid-block-identification}
-Suppose Assumption~\ref{ass:consistency} holds and the candidate representations are fixed. Then
-\begin{align}
-\theta_j=\tau
-\qquad\text{for every }j\in\mathcal G.
-\end{align}
-Consequently:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item If $\mathcal G\neq\varnothing$, then $\tau\in\{\theta_j:j\in\mathcal B\}$. If, in addition, $\theta_j=\theta^\star$ for every $j\in\mathcal B$, then $\tau=\theta^\star$.
-\item If $\mathcal B\neq\varnothing$ and $|\mathcal G|>|\mathcal B|/2$, then
-\begin{align}
-\operatorname{median}\bigl((\theta_j)_{j\in\mathcal B}\bigr)=\tau,
-\end{align}
-where one indexed value is retained for every $j\in\mathcal B$.
-\end{enumerate}
-\end{theorem}
+	\normalfont
+	Suppose $\mathcal B\neq\varnothing$ and
+	\begin{align}
+		\bigl|\{S\in\mathcal B:\theta_S=\tau\}\bigr|
+		>
+		\max_{\substack{c\in\mathbb R,\ c\ne\tau\\
+		\{S\in\mathcal B:\theta_S=c\}\ne\varnothing}}
+		\bigl|\{S\in\mathcal B:\theta_S=c\}\bigr|,
+		\label{eq:unique-target-plurality}
+	\end{align}
+	This condition means that more proxy splits in $\mathcal B$ yield $\tau$ than yield any other candidate value. We use the convention that the maximum over an empty collection is zero.
 
-The candidate set $\{\theta_j:j\in\mathcal B\}$ is an existence-based containment result and is not claimed to be sharp. Membership in $\mathcal B$ is determined by the population observed-data law, but exact population equality is not a finite-sample certificate. Membership in $\mathcal G$, its nonemptiness, and the majority-valid condition are structural properties involving the unobserved variable $U$ and are not determined by the balance screen.
+	Then,
+	\begin{align}
+		\{\tau\}
+		=
+		\underset{c\in\mathbb R}{\operatorname{arg\,max}}
+		\bigl|\{S\in\mathcal B:\theta_S=c\}\bigr|.
+		\label{eq:exhaustive-plurality-identification}
+	\end{align}
+\end{theorem}
+The theorem states that $\tau$ can be identified even when we do not know the exact held-out proxy $W_j$, if it is the unique most frequent candidate value. The following corollary is the strict-majority special case of Theorem~\ref{thm:unknown-valid-block-identification}. It gives both the unique most frequent candidate value and the corresponding median aggregation result.
+
+\begin{corollary}[Target-valued majority and median aggregation]
+	\label{cor:target-majority-median}
+	\normalfont
+	Suppose $\mathcal B\neq\varnothing$ and
+	\begin{align}
+		\bigl|\{S\in\mathcal B:\theta_S=\tau\}\bigr|>\frac{|\mathcal B|}{2}.
+		\label{eq:target-valued-majority}
+	\end{align}
+	That is, more than half of the retained proxy splits yield the true causal effect. Then
+	\begin{align}
+		\{\tau\}
+		=
+		\underset{c\in\mathbb R}{\operatorname{arg\,max}}
+		\bigl|\{S\in\mathcal B:\theta_S=c\}\bigr|,
+	\end{align}
+	and
+	\begin{align}
+		\operatorname{median}\bigl((\theta_S)_{S\in\mathcal B}\bigr)=\tau.
+	\end{align}
+\end{corollary}
+
+Figure~\ref{fig:majority-valid-orientations} illustrates the result. The labels $W_{1:3}$ and $W_{4:5}$ denote grouped proxy blocks, not single variables. Under Assumption~\ref{ass:consistency}, if all five singleton proxy splits pass the balance screen and proxy splits $1,2,3$ satisfy the grouped versions of Assumptions~\ref{ass:joint-latent-exchangeability} and~\ref{ass:outcome-relevant-completeness}, then three of the five singleton candidate values equal $\tau$, so their median equals $\tau$.
+
+\FloatBarrier
+	\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.75\textwidth]{../figures/2026-08-31-majority-valid-orientations.pdf}
+	\caption{Median aggregation over five singleton proxy splits.}
+	\label{fig:majority-valid-orientations}
+\end{figure}
+
+
 
 \subsection{Approximate PROBE Balance and Bias Bound}
 \label{sec:approximate-proxy-bound}
 
-Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whose reproducing kernel Hilbert space $\mathcal H_j$ is separable. For probability laws $P,P'$ on $(X,W_j)$, write
+Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whose reproducing kernel Hilbert space $\mathcal H_j$ is separable. For probability laws $P,P'$ on $(X,W_j)$, define their maximum mean discrepancy \citep{gretton2012kernel} by
 \begin{align}
-\operatorname{MMD}_{\kappa_j}(P,P')
-\triangleq
-\|m_j(P)-m_j(P')\|_{\mathcal H_j},
+	\operatorname{MMD}_{\kappa_j}(P,P')
+	\triangleq
+	\|m_j(P)-m_j(P')\|_{\mathcal H_j},
 \end{align}
 where $m_j(P)=\int\kappa_j(r,\cdot)P(dr)$.
 
 \begin{definition}[Held-out proxy discrepancy]
 \label{def:held-out-proxy-discrepancy}
-For $P_{Z_j}$-almost every $z$, define
-\begin{align}
-\Delta_j(z;\phi_j)
-\triangleq
-\operatorname{MMD}_{\kappa_j}
-\left\{
-\mathcal L(X,W_j\mid A=1,Z_j=z),
-\mathcal L(X,W_j\mid A=0,Z_j=z)
-\right\},
-\label{eq:stratum-held-out-proxy-discrepancy}
-\end{align}
-and define
-\begin{align}
-D_j(\phi_j)\triangleq\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
-\label{eq:aggregate-held-out-proxy-discrepancy}
-\end{align}
+\normalfont
+	For $P_{Z_j}$-almost every $z$, define
+	\begin{align}
+		\Delta_j(z;\phi_j)
+		\triangleq
+		\operatorname{MMD}_{\kappa_j}
+		\left\{
+		\mathcal L(X,W_j\mid A=1,Z_j=z),
+		\mathcal L(X,W_j\mid A=0,Z_j=z)
+		\right\},
+		\label{eq:stratum-held-out-proxy-discrepancy}
+	\end{align}
+	and define
+	\begin{align}
+		D_j(\phi_j)\triangleq\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
+		\label{eq:aggregate-held-out-proxy-discrepancy}
+	\end{align}
 \end{definition}
 
 \begin{proposition}[Zero discrepancy and exact balance]
-\label{prop:zero-discrepancy}
-Under representation overlap,
-\begin{align}
-\boxed{D_j(\phi_j)=0
-\quad\Longleftrightarrow\quad
-(X,W_j)\perp\!\!\!\perp A\mid Z_j.}
-\label{eq:zero-discrepancy-equivalence}
-\end{align}
+	\label{prop:zero-discrepancy}
+	\normalfont
+	Under the representation overlap condition in Equation~\eqref{eq:representation-overlap},
+	\begin{align}
+		D_j(\phi_j)=0
+		\quad\Longleftrightarrow\quad
+		(X,W_j)\perp\!\!\!\perp A\mid Z_j.
+		\label{eq:zero-discrepancy-equivalence}
+	\end{align}
 \end{proposition}
 
-The factorization used in the proof of Theorem~\ref{thm:exact-proxy-identification} gives, almost everywhere,
-\begin{align}
-\Delta_j(z;\phi_j)
-=
-\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ_{1,j,z},\mathcal K_jQ_{0,j,z}).
-\label{eq:observed-latent-discrepancy-link}
-\end{align}
-
+To control bias when exact balance, $D_j(\phi_j)=0$, cannot be achieved, we impose the following quantitative stability condition.
 \begin{assumption}[Uniform outcome-relevant stability]
 \label{ass:uniform-stability}
-There is a finite $\Gamma_j$ such that, for $P_{Z_j}$-almost every $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}$,
-\begin{align}
-\left|\mathbb E_Q\{\mu_{a,j,z}\}-\mathbb E_{Q'}\{\mu_{a,j,z}\}\right|
-\le
-\Gamma_j\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ,\mathcal K_jQ').
-\label{eq:uniform-stability}
+\normalfont
+	There is a finite $\Gamma_j$ such that, for $P_{Z_j}$-almost every $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}$,
+	\begin{align}
+	\left|\mathbb E_Q\{\mu_{a,j,z}\}-\mathbb E_{Q'}\{\mu_{a,j,z}\}\right|
+	\le
+	\Gamma_j\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ,\mathcal K_jQ').
+	\label{eq:uniform-stability}
 \end{align}
 \end{assumption}
 
-Uniform stability converts a difference between held-out proxy distributions into a common upper bound on the corresponding difference in potential-outcome means.
+Uniform stability converts a difference between held-out proxy distributions into a common upper bound on the corresponding difference in potential-outcome means. Assumption~\ref{ass:uniform-stability} is a quantitative strengthening of Assumption~\ref{ass:outcome-relevant-completeness}: equality of the two induced proxy laws makes the right-hand side zero and therefore recovers exact outcome-relevant completeness. In particular, Assumption~\ref{ass:uniform-stability} implies Assumption~\ref{ass:outcome-relevant-completeness}, whereas the converse need not hold. Given Assumptions~\ref{ass:consistency} and~\ref{ass:joint-latent-exchangeability} and representation overlap, exact balance together with Assumption~\ref{ass:outcome-relevant-completeness} suffices for Theorem~\ref{thm:exact-proxy-identification}; Assumption~\ref{ass:uniform-stability} is not needed in that exact case. When the discrepancy is nonzero, Assumption~\ref{ass:outcome-relevant-completeness} alone gives no numerical control of causal bias, whereas Assumption~\ref{ass:uniform-stability} yields the $\Gamma_jD_j(\phi_j)$ bound below. Balance is an observed distributional condition and replaces neither the latent exchangeability condition nor the applicable outcome-relevant completeness or stability condition.
 
 \begin{theorem}[Approximate PROBE bias bound]
 \label{thm:approximate-proxy-bias-bound}
-Under Assumptions~\ref{ass:consistency}--\ref{ass:representation-overlap} and Assumption~\ref{ass:uniform-stability},
-\begin{align}
-\boxed{
-\left|
-\mathbb E\!\left[
-\mathbb E(Y\mid A=1,Z_j)
--
-\mathbb E(Y\mid A=0,Z_j)
-\right]
--\tau
-\right|
-\le\Gamma_jD_j(\phi_j).
-}
-\label{eq:approximate-proxy-bias-bound}
-\end{align}
+\normalfont
+	Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold, and the representation overlap condition in Equation~\eqref{eq:representation-overlap} holds.
+	\begin{align}
+		\left|
+		\mathbb E\!\left[\mathbb E(Y\mid A=1,Z_j) - \mathbb E(Y\mid A=0,Z_j) \right]
+		-\tau
+		\right|
+		\le\Gamma_jD_j(\phi_j).
+		\label{eq:approximate-proxy-bias-bound}
+	\end{align}
 \end{theorem}
 
-\begin{remark}[Exact completeness and quantitative stability]
-Stability implies exact outcome-relevant completeness, but the converse need not hold.
-\label{rem:exact-vs-stability}
-\end{remark}
+Theorem~\ref{thm:approximate-proxy-bias-bound} can be reported as a population sensitivity region once a scientifically plausible value of $\Gamma_j$ is specified.
 
-\begin{remark}[Sensitivity interpretation]
-For a scientifically specified $\Gamma_j$,
+\begin{proposition}[Population sensitivity region]
+\label{prop:population-sensitivity-region}
+\normalfont
+Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for a scientifically specified finite $\Gamma_j$, and the representation overlap condition in Equation~\eqref{eq:representation-overlap} holds. Then
 \begin{align}
 \tau\in
 \Bigl[{}&
@@ -333,14 +324,7 @@ For a scientifically specified $\Gamma_j$,
 +\Gamma_jD_j(\phi_j)
 \Bigr].
 \end{align}
-\label{rem:sensitivity-interpretation}
-\end{remark}
+\end{proposition}
 
-\begin{remark}[Uniformity across representations]
-Learning by discrepancy requires a common budget
-\begin{align}
-\sup_{\phi\in\Phi_j}\Gamma_j(\phi)\le\overline\Gamma_j<\infty.
-\label{eq:uniform-candidate-stability}
-\end{align}
-\label{rem:uniform-across-representations}
-\end{remark}
+This is a population sensitivity region indexed by $\Gamma_j$, not a finite-sample confidence interval. When $D_j(\phi_j)=0$, the region collapses to the point-identified value in Theorem~\ref{thm:exact-proxy-identification}.
+The population discrepancy $D_j(\phi_j)$ is observable, whereas $\Gamma_j$ is a structural sensitivity parameter justified by scientific knowledge, additional theory, or external information.
