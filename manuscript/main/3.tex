@@ -1,11 +1,11 @@
 \section{Identification}
 \label{sec:identification}
 
-Let $d_{V_j}$ denote the coordinate dimension of $V_j$. Fix a user-specified output dimension $d_{Z_j}\le d_{V_j}$. Let $\epsilon_j\sim\operatorname{Unif}(0,1)$ be independent of $(U,V_j,W_j,A,Y(0),Y(1))$. For a measurable representation function, define
+Let $d_{V_j}$ denote the coordinate dimension of $V_j$. Fix a user-specified output dimension $d_{Z_j}\le d_{V_j}$. For a measurable representation function, define
 	\begin{align}
-		\phi_j:\mathcal V_j\times[0,1]\longrightarrow\mathbb R^{d_{Z_j}}, \qquad Z_j\triangleq\phi_j(V_j,\epsilon_j).
+		\phi_j:\mathcal V_j\longrightarrow\mathbb R^{d_{Z_j}}, \qquad Z_j\triangleq\phi_j(V_j).
 	\end{align}
-The deterministic case is included when $\phi_j$ ignores its second input. Let $\Phi_j$ denote a prespecified class of such representation functions.
+Let $\Phi_j$ denote a prespecified class of such representation functions.
 
 
 \subsection{Identification for a Prespecified Held-Out Block} \label{sec:fixed-held-out-block-identification}
@@ -87,7 +87,7 @@ The next theorem gives the central identification result. It states when adjustm
 
 \begin{theorem}[Causal effect identification using a proxy] \label{thm:exact-proxy-identification}
 \normalfont
-Fix a prespecified block $j\in\{1,\ldots,J\}$. Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold for this block and its representation. If $Z_j=\phi_j(V_j,\epsilon_j)$ is constructed such that
+Fix a prespecified block $j\in\{1,\ldots,J\}$. Suppose Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness} hold for this block and its representation. If $Z_j=\phi_j(V_j)$ is constructed such that
 	\begin{align}
 		0<P(A=1\mid Z_j)<1
 		\quad\text{almost surely},
@@ -146,7 +146,7 @@ A subset $S$ and its complement $S^c$ are distinct because they exchange the hel
 \begin{align}
 	V_S\triangleq(X,W_{-S}),
 	\qquad
-	Z_S\triangleq\phi_S(V_S,\epsilon_S),
+	Z_S\triangleq\phi_S(V_S),
 	\label{eq:subset-representation}
 \end{align}
 using the same construction as for a single held-out block.

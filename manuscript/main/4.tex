@@ -1,87 +1,34 @@
 \section{Representation Learning and AIPW Estimation}
 \label{sec:estimation}
 
-The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The representation-learning and AIPW analysis below uses one prespecified held-out block $j$ throughout. The AIPW construction applies to discrete or continuous $Z_j$. Explicit concentration constants are subsequently given for a finite-strata specialization.
+The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The representation-learning and AIPW analysis below uses one prespecified held-out block $j$ throughout.
 
 \subsection{Representation Learning}
 \label{sec:representation-learning}
 
-Partition the observed sample into three mutually disjoint subsets,
+Recall that one observed record is $O_i=(X_i,W_i,A_i,Y_i)$. Partition the observed sample into three mutually disjoint subsets,
 \begin{align}
-\mathcal I_{\mathrm D},
-\qquad
-\mathcal I_{\mathrm N},
-\qquad
-\mathcal I_{\mathrm E},
-\label{eq:honest-three-way-split}
+	\mathcal I_{\mathrm D},
+	\qquad
+	\mathcal I_{\mathrm N},
+	\qquad
+	\mathcal I_{\mathrm E},
+	\label{eq:honest-three-way-split}
 \end{align}
 with respective sizes $n_{\mathrm D}$, $n_{\mathrm N}$, and $n_{\mathrm E}$. The discrepancy-learning sample $\mathcal I_{\mathrm D}$ selects a representation. The nuisance-learning sample $\mathcal I_{\mathrm N}$ estimates the outcome regressions and propensity used by AIPW. The evaluation sample $\mathcal I_{\mathrm E}$ calculates the final estimate. Conditional on the preceding samples, the objects evaluated on the next sample are fixed.
 
-Augment each fold with fresh independent randomization variables $\epsilon_{j,i}^{\mathrm D}$, $\epsilon_{j,i}^{\mathrm N}$, and $\epsilon_{j,i}^{\mathrm E}$, each distributed as $\operatorname{Unif}(0,1)$ and independent of the observed data and of all other randomization variables. For a candidate $\phi$, its representation on a unit in fold $s\in\{\mathrm D,\mathrm N,\mathrm E\}$ is $\phi(V_{j,i},\epsilon_{j,i}^{s})$. Thus the empirical criterion below is computed from the augmented discrepancy-learning sample $\{(O_i,\epsilon_{j,i}^{\mathrm D}):i\in\mathcal I_{\mathrm D}\}$.
-
-For a general candidate class $\mathcal F_j\subseteq\Phi_j$, let $\widehat D_j(\phi)$ be an empirical criterion estimating $D_j(\phi)$. Suppose that, with probability at least $1-\delta_{\mathrm D}$,
-\begin{align}
-\sup_{\phi\in\mathcal F_j}
-|\widehat D_j(\phi)-D_j(\phi)|
-\le r_{j,n_{\mathrm D}}.
-\label{eq:generic-uniform-deviation}
-\end{align}
-If $\widehat\phi_j$ is an $\varepsilon_{\mathrm{opt},j}$-approximate minimizer of $\widehat D_j$, the standard empirical-risk argument gives
-\begin{align}
-D_j(\widehat\phi_j)
-\le
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+2r_{j,n_{\mathrm D}}
-+\varepsilon_{\mathrm{opt},j}.
-\label{eq:generic-representation-oracle}
-\end{align}
-This oracle inequality is agnostic to whether the learned representation is discrete or continuous. Its operational content depends on constructing an empirical conditional-dependence criterion for which equation~\eqref{eq:generic-uniform-deviation} can be proved.
-For each $\phi\in\mathcal F_j$, let $\Gamma_j(\phi)$ denote a valid stability constant in Assumption~\ref{ass:uniform-stability}. Representation learning also requires a common stability budget across the candidate class:
-\begin{align}
-\sup_{\phi\in\mathcal F_j}\Gamma_j(\phi)
-\le
-\overline\Gamma_j<\infty.
-\label{eq:uniform-candidate-stability}
-\end{align}
-For a fresh $\epsilon_j\sim\operatorname{Unif}(0,1)$ independent of the causal variables, define
-\begin{align}
-\widehat Z_j\triangleq\widehat\phi_j(V_j,\epsilon_j),
-\qquad
-\tau_{\widehat Z_j}
-\triangleq
-\mathbb E\!\left[
-\mathbb E(Y\mid A=1,\widehat Z_j)
--
-\mathbb E(Y\mid A=0,\widehat Z_j)
-\right].
-\label{eq:learned-adjustment-functional}
-\end{align}
-This definition is used when the two conditional means are absolutely integrable under the law of $\widehat Z_j$.
-If every candidate obeys the assumptions of Theorem~\ref{thm:approximate-proxy-bias-bound} with common stability budget $\overline\Gamma_j$, then the same event also gives
-\begin{align}
-|\tau_{\widehat Z_j}-\tau|
-\le
-\overline\Gamma_j
-\left\{
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+2r_{j,n_{\mathrm D}}
-+\varepsilon_{\mathrm{opt},j}
-\right\}.
-\label{eq:generic-representation-oracle-causal}
-\end{align}
-
-\paragraph{Finite-strata specialization.}
-We now give one explicit realization of the preceding argument. Restrict to deterministic maps, identifying each such map with $v\mapsto\phi(v,0)$ and writing it as $\phi(v)$. Assume every candidate takes values in a common finite set $\mathcal S_j\subset\mathbb R^{d_{Z_j}}$, and define $M_j\triangleq|\mathcal S_j|$.
+We now give a fully specified finite-sample result for deterministic maps $v\mapsto\phi(v)$. Assume every candidate takes values in a common finite set $\mathcal S_j\subset\mathbb R^{d_{Z_j}}$, and define $M_j\triangleq|\mathcal S_j|$.
 
 Fix a finite candidate library
 \begin{align}
-\mathcal F_j\subseteq\Phi_j,
-\qquad
-N_j\triangleq|\mathcal F_j|<\infty.
+	\mathcal F_j\subseteq\Phi_j,
+	\qquad
+	N_j\triangleq|\mathcal F_j|<\infty.
 \end{align}
+
 For $\phi\in\mathcal F_j$, define
 \begin{align}
-Z_j^\phi\triangleq\phi(X,W_{-j})
+	Z_j^\phi\triangleq\phi(X,W_{-j})
 \end{align}
 and let $\mathcal R_j(\phi)$ be its set of positive-mass strata. For $z\in\mathcal R_j(\phi)$, write $p_{j,z}(\phi)\triangleq P(Z_j^\phi=z)$. Assume there are constants $p_{\min}>0$ and $\eta\in(0,1/2]$ such that every candidate and every $z\in\mathcal R_j(\phi)$ satisfy
 \begin{align}
@@ -96,7 +43,14 @@ Assume also that the bounded kernel satisfies
 \sup_v\sqrt{\kappa_j(v,v)}\le\rho_j<\infty.
 \label{eq:kernel-bound}
 \end{align}
-The two primitive held-out-block clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation. Their stability budgets are required to obey the common bound in equation~\eqref{eq:uniform-candidate-stability}.
+For each $\phi\in\mathcal F_j$, let $\Gamma_j(\phi)$ denote a valid stability constant in Assumption~\ref{ass:uniform-stability}. Require a common stability budget across the candidate library:
+\begin{align}
+\sup_{\phi\in\mathcal F_j}\Gamma_j(\phi)
+\le
+\overline\Gamma_j<\infty.
+\label{eq:uniform-candidate-stability}
+\end{align}
+The two primitive held-out-block clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation.
 
 \begin{definition}[Empirical held-out proxy discrepancy]
 \label{def:empirical-held-out-proxy-discrepancy}
@@ -196,7 +150,7 @@ r_{j,n_{\mathrm D}}(\delta_{\mathrm D}).
 
 \begin{definition}[Approximate empirical minimizer]
 \label{def:approximate-empirical-minimizer}
-Let $\varepsilon_{\mathrm{opt},j}\ge0$. The representation learner returns $\widehat\phi_j\in\mathcal F_j$ satisfying
+The nonnegative number $\varepsilon_{\mathrm{opt},j}$ is the allowed gap between the empirical discrepancy attained by the learner and the smallest empirical discrepancy in the candidate library. The representation learner returns $\widehat\phi_j\in\mathcal F_j$ satisfying
 \begin{align}
 \widehat D_j(\widehat\phi_j)
 \le
@@ -205,16 +159,26 @@ Let $\varepsilon_{\mathrm{opt},j}\ge0$. The representation learner returns $\wid
 \varepsilon_{\mathrm{opt},j}.
 \label{eq:approximate-erm}
 \end{align}
-In this deterministic specialization, the learned representation is
+In this deterministic setting, the learned representation and its population adjustment functional are
 \begin{align}
-\widehat Z_j\triangleq\widehat\phi_j(V_j).
+\widehat Z_j
+&\triangleq
+\widehat\phi_j(V_j),\nonumber\\
+\tau_{\widehat Z_j}
+&\triangleq
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,\widehat Z_j)
+-
+\mathbb E(Y\mid A=0,\widehat Z_j)
+\right].
+\label{eq:learned-adjustment-functional}
 \end{align}
-The tolerance records optimization error and is zero for an exact empirical minimizer.
+An exact empirical minimizer has $\varepsilon_{\mathrm{opt},j}=0$. The adjustment functional is used whenever its two conditional means are absolutely integrable under the law of $\widehat Z_j$.
 \end{definition}
 
-\begin{theorem}[Finite-strata representation-learning oracle inequality]
+\begin{theorem}[Finite-sample representation learning]
 \label{thm:representation-oracle}
-Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation} hold. Suppose Assumptions~\ref{ass:consistency} through \ref{ass:held-out-separation} hold for block $j$, and suppose representation overlap and uniform outcome-relevant stability hold for every candidate with the common budget $\overline\Gamma_j$. Then, with probability at least $1-\delta_{\mathrm D}$,
+Let $\delta_{\mathrm D}\in(0,1)$, suppose the minimum-mass, overlap, and bounded-kernel conditions in equations~\eqref{eq:library-minimum-mass}--\eqref{eq:kernel-bound} hold, and suppose the learning-sample size satisfies equation~\eqref{eq:learning-sample-threshold}. Let $r_{j,n_{\mathrm D}}(\delta_{\mathrm D})$ be the explicit radius in equation~\eqref{eq:discrepancy-radius}. Suppose $\widehat\phi_j\in\mathcal F_j$ satisfies equation~\eqref{eq:approximate-erm} for some $\varepsilon_{\mathrm{opt},j}\ge0$. Suppose Assumption~\ref{ass:consistency} holds and Assumption~\ref{ass:joint-latent-exchangeability} holds for block $j$. For every $\phi\in\mathcal F_j$, suppose Assumption~\ref{ass:uniform-stability} holds with $\Gamma_j(\phi)\le\overline\Gamma_j$. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
 \boxed{
 D_j(\widehat\phi_j)
@@ -253,7 +217,7 @@ The theorem covers hard, finite-valued representations in a finite prespecified 
 \subsection{AIPW Estimation}
 \label{sec:aipw-estimation}
 
-Conditional on $\mathcal I_{\mathrm D}$, the map $\widehat\phi_j$ is fixed. A fresh independent $\epsilon_j\sim\operatorname{Unif}(0,1)$ produces $\widehat Z_j=\widehat\phi_j(V_j,\epsilon_j)$. Define the conditional outcome means and representation propensity
+Conditional on $\mathcal I_{\mathrm D}$ and any algorithmic seed used in training, the map $\widehat\phi_j$ is fixed and $\widehat Z_j=\widehat\phi_j(V_j)$. Define the conditional outcome means and representation propensity
 \begin{align}
 m_{a,j}(z)
 &\triangleq
@@ -265,7 +229,7 @@ P(A=1\mid\widehat Z_j=z).
 \end{align}
 For the observed adjustment functional $\tau_{\widehat Z_j}$, the following is the AIPW score:
 \begin{align}
-\psi_j(O,\epsilon_j)
+\psi_j(O)
 \triangleq{}&
 m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)
 \nonumber\\
@@ -277,13 +241,13 @@ m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)
 \tau_{\widehat Z_j}.
 \label{eq:fixed-representation-eif}
 \end{align}
-When this score is square-integrable, it is the efficient influence function in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the augmented nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i},\epsilon_{j,i}^{\mathrm N})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
+When this score is square-integrable, it is the efficient influence function in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
 
 \begin{definition}[Honest AIPW estimator]
 \label{def:honest-aipw}
-For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i},\epsilon_{j,i}^{\mathrm E})$ and
+For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$ and
 \begin{align}
-S_j(O_i,\epsilon_{j,i}^{\mathrm E})
+S_j(O_i)
 \triangleq{}&
 \widehat m_{1,j}(\widehat Z_{j,i})
 -
@@ -304,7 +268,7 @@ The honest AIPW estimator is
 \widehat\tau_j^{\mathrm{AIPW}}
 \triangleq
 \frac{1}{n_{\mathrm E}}
-\sum_{i\in\mathcal I_{\mathrm E}}S_j(O_i,\epsilon_{j,i}^{\mathrm E}).
+\sum_{i\in\mathcal I_{\mathrm E}}S_j(O_i).
 }
 \label{eq:honest-aipw}
 \end{align}
@@ -314,7 +278,7 @@ The honest AIPW estimator is
 \label{prop:aipw-remainder}
 Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$,
 \begin{align}
-&\mathbb E\{S_j(O,\epsilon_j)\}-\tau_{\widehat Z_j}
+&\mathbb E\{S_j(O)\}-\tau_{\widehat Z_j}
 \nonumber\\
 &=
 \mathbb E

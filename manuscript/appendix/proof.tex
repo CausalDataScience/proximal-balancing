@@ -5,7 +5,7 @@
 
 \paragraph{Exact identification.}
 \begin{proof}[Proof of Theorem~\ref{thm:exact-proxy-identification}]
-Because $Z_j$ is constructed from $V_j$ and the independent variable $\epsilon_j$, the two clauses of Assumption~\ref{ass:joint-latent-exchangeability} remain valid after additionally conditioning on $Z_j$. Thus, for each $a\in\{0,1\}$,
+Because $Z_j=\phi_j(V_j)$ is a measurable function of $V_j$, conditioning on $(U,V_j,Z_j)$ is equivalent to conditioning on $(U,V_j)$. The two clauses of Assumption~\ref{ass:joint-latent-exchangeability} therefore remain valid after additionally conditioning on $Z_j$. Thus, for each $a\in\{0,1\}$,
 \begin{align}
 \mathbb E\{Y(a)\mid A,V_j,U,Z_j\}
 &=
@@ -83,7 +83,7 @@ is an outcome bridge because $\mathbb E(Z^{\mathrm{out}}\mid U=u)=1/4+u/2$, so $
 \end{align*}
 and determinant $1/2$. Conditional on either treatment arm, both latent states have positive probability, and the corresponding unnormalized conditional-expectation matrix has determinant $3/32$. It therefore has full column rank, which proves the canonical treatment-proxy completeness condition.
 
-Now consider any measurable randomized representation $Z_j=\phi_j(V_j,\epsilon_j)$, where $\epsilon_j$ is independent of all preceding variables. The Markov relation $U\to V_j\to Z_j$ holds. Conditional on $(U,Z_j)$, treatment and $W_j$ are independent, and
+Now consider any measurable representation $Z_j=\phi_j(V_j)$. The Markov relation $U\to V_j\to Z_j$ holds. Conditional on $(U,Z_j)$, treatment and $W_j$ are independent, and
 \begin{align*}
 \mathbb E(A\mid U,Z_j)
 =
@@ -357,7 +357,7 @@ This proves equation~\eqref{eq:representation-oracle-discrepancy}. Conditional o
 \begin{proof}[Proof of Proposition~\ref{prop:aipw-remainder}]
 Fix $\widehat Z_j=z$. Taking the conditional expectation of the score and using equation~\eqref{eq:aipw-nuisances} gives
 \begin{align}
-\mathbb E\{S_j(O,\epsilon_j)\mid\widehat Z_j=z\}
+\mathbb E\{S_j(O)\mid\widehat Z_j=z\}
 ={}&
 \widehat m_{1,j}(z)-\widehat m_{0,j}(z)
 \nonumber\\
@@ -376,7 +376,7 @@ Subtract $m_{1,j}(z)-m_{0,j}(z)$ and collect the two nuisance errors. Averaging 
 \begin{proof}[Proof of Theorem~\ref{thm:conditional-aipw-error}]
 The boundedness and clipping conditions imply
 \begin{align}
-|S_j(O,\epsilon_j)|
+|S_j(O)|
 \le
 2B\left(1+\frac{1}{\eta}\right).
 \end{align}

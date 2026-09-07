@@ -1,7 +1,7 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-Single proxy balancing asks what a structured high-dimensional pretreatment proxy can reveal about hidden-confounding bias after learning a low-dimensional adjustment representation. For one prespecified held-out block $j$, PROBE learns $Z_j=\phi_j(V_j,\epsilon_j)$ and evaluates treatment balance through $(X,W_j)$. Exact held-out proxy balance identifies the ATE under the stated structural assumptions, while approximate balance yields the sensitivity certificate
+Single proxy balancing asks what a structured high-dimensional pretreatment proxy can reveal about hidden-confounding bias after learning a low-dimensional adjustment representation. For one prespecified held-out block $j$, PROBE learns $Z_j=\phi_j(V_j)$ and evaluates treatment balance through $(X,W_j)$. Exact held-out proxy balance identifies the ATE under the stated structural assumptions, while approximate balance yields the sensitivity certificate
 \[
 \left|\mathbb E\!\left\{\mathbb E(Y\mid A=1,Z_j)-\mathbb E(Y\mid A=0,Z_j)\right\}-\tau\right|
 \le\Gamma_jD_j(\phi_j).
