@@ -3,9 +3,10 @@
 
 Let $d_{V_j}$ denote the coordinate dimension of $V_j$. Fix a user-specified output dimension $d_{Z_j}\le d_{V_j}$. For a measurable representation function, define
 	\begin{align}
-		\phi_j:\mathcal V_j\longrightarrow\mathbb R^{d_{Z_j}}, \qquad Z_j\triangleq\phi_j(V_j).
+		\phi:\mathcal V_j\longrightarrow\mathbb R^{d_{Z_j}}, \qquad Z_j^\phi\triangleq\phi(V_j).
 	\end{align}
 Let $\Phi_j$ denote a prespecified class of such representation functions.
+When a representation function $\phi_j\in\Phi_j$ is fixed, we abbreviate $Z_j^{\phi_j}=\phi_j(V_j)$ as $Z_j$.
 
 
 \subsection{Identification for a Prespecified Held-Out Block} \label{sec:fixed-held-out-block-identification}
@@ -237,94 +238,124 @@ Figure~\ref{fig:majority-valid-orientations} illustrates the result. The labels 
 \subsection{Approximate PROBE Balance and Bias Bound}
 \label{sec:approximate-proxy-bound}
 
-Let $\kappa_j$ be a bounded, measurable, characteristic kernel on $(X,W_j)$ whose reproducing kernel Hilbert space $\mathcal H_j$ is separable. For probability laws $P,P'$ on $(X,W_j)$, define their maximum mean discrepancy \citep{gretton2012kernel} by
+Exact balance is an ideal endpoint.
+We now consider representations that achieve only approximate, rather than exact, balance.
+Fix a representation $\phi\in\Phi_j$ and write $T_j\triangleq(X,W_j)$; the notation $Z_j^\phi$ was defined at the beginning of this section.
+Define
 \begin{align}
-	\operatorname{MMD}_{\kappa_j}(P,P')
-	\triangleq
-	\|m_j(P)-m_j(P')\|_{\mathcal H_j},
+	e_{j,\phi}(z)&\triangleq P(A=1\mid Z_j^\phi=z),
+	&
+	q_{j,\phi}(t,z)&\triangleq P(A=1\mid T_j=t,Z_j^\phi=z).
+	\label{eq:residual-propensities}
 \end{align}
-where $m_j(P)=\int\kappa_j(r,\cdot)P(dr)$.
+Their difference is the treatment information that remains in the held-out variables after conditioning on the representation.
 
-\begin{definition}[Held-out proxy discrepancy]
+\begin{definition}[Residual treatment discrepancy]
 \label{def:held-out-proxy-discrepancy}
 \normalfont
-	For $P_{Z_j}$-almost every $z$, define
+	Define
 	\begin{align}
-		\Delta_j(z;\phi_j)
-		\triangleq
-		\operatorname{MMD}_{\kappa_j}
-		\left\{
-		\mathcal L(X,W_j\mid A=1,Z_j=z),
-		\mathcal L(X,W_j\mid A=0,Z_j=z)
-		\right\},
-		\label{eq:stratum-held-out-proxy-discrepancy}
-	\end{align}
-	and define
-	\begin{align}
-		D_j(\phi_j)\triangleq\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
-		\label{eq:aggregate-held-out-proxy-discrepancy}
+		D_{\mathrm{res},j}^2(\phi)
+		&\triangleq
+		\mathbb E\!\left[
+		\{q_{j,\phi}(T_j,Z_j^\phi)-e_{j,\phi}(Z_j^\phi)\}^2
+		\right],
+		\label{eq:aggregate-held-out-proxy-discrepancy}\\
+		D_{\mathrm{res},j}(\phi)
+		&\triangleq\{D_{\mathrm{res},j}^2(\phi)\}^{1/2}.
+		\label{eq:residual-discrepancy-root}
 	\end{align}
 \end{definition}
-
+The discrepancy measures the treatment information in $T_j$ that remains after conditioning on $Z_j^\phi$.
 \begin{proposition}[Zero discrepancy and exact balance]
 	\label{prop:zero-discrepancy}
 	\normalfont
-	Under the representation overlap condition in Equation~\eqref{eq:representation-overlap},
 	\begin{align}
-		D_j(\phi_j)=0
+		D_{\mathrm{res},j}(\phi)=0
 		\quad\Longleftrightarrow\quad
-		(X,W_j)\perp\!\!\!\perp A\mid Z_j.
+		A\perp\!\!\!\perp T_j\mid Z_j^\phi.
 		\label{eq:zero-discrepancy-equivalence}
 	\end{align}
 \end{proposition}
 
-To control bias when exact balance, $D_j(\phi_j)=0$, cannot be achieved, we impose the following quantitative stability condition.
-\begin{assumption}[Uniform outcome-relevant stability]
-\label{ass:uniform-stability}
+To relate the discrepancy with the causal bias bound, we define
+\begin{align}
+	P_{j,\phi,z}\triangleq\mathcal L(T_j\mid Z_j^\phi=z),
+	\label{eq:reference-held-out-law}
+\end{align}
+For $P_{Z_j^\phi}$-almost every $z$ and $a\in\{0,1\}$, write
+$Q_{a,j,z}^\phi\triangleq\mathcal L(V_j,U\mid A=a,Z_j^\phi=z)$ and
+$\mu_{a,j,z}^\phi(v,u)\triangleq\mathbb E\{Y(a)\mid V_j=v,U=u,Z_j^\phi=z\}$.
+Let $\mathcal Q_{j,z}^\phi$ be the collection of probability laws $Q$ on $(V_j,U)$ such that
+$Q\ll\mathcal L(V_j,U\mid Z_j^\phi=z)$ and
+$\mathbb E_Q|\mu_{a,j,z}^\phi(V_j,U)|<\infty$ for both $a\in\{0,1\}$.
+We assume the following:
+\begin{assumption}[$L_2$ outcome-relevant stability]
+	\label{ass:uniform-stability}
 \normalfont
-	There is a finite $\Gamma_j$ such that, for $P_{Z_j}$-almost every $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}$,
+	For every representation $\phi$ under consideration,
+	there is a finite scalar $\Gamma_j(\phi)>0$
+	such that, for $P_{Z_j^\phi}$-almost every $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}^{\phi}$,
 	\begin{align}
-	\left|\mathbb E_Q\{\mu_{a,j,z}\}-\mathbb E_{Q'}\{\mu_{a,j,z}\}\right|
+	\left|\mathbb E_Q\{\mu_{a,j,z}^{\phi}\}
+	-
+	\mathbb E_{Q'}\{\mu_{a,j,z}^{\phi}\}\right|
 	\le
-	\Gamma_j\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ,\mathcal K_jQ').
+	\Gamma_j(\phi)
+		\left\|
+		\frac{d(\mathcal K_jQ-\mathcal K_jQ')}{dP_{j,\phi,z}}
+		\right\|_{L_2(P_{j,\phi,z})}.
 	\label{eq:uniform-stability}
 \end{align}
 \end{assumption}
 
-Uniform stability converts a difference between held-out proxy distributions into a common upper bound on the corresponding difference in potential-outcome means. Assumption~\ref{ass:uniform-stability} is a quantitative strengthening of Assumption~\ref{ass:outcome-relevant-completeness}: equality of the two induced proxy laws makes the right-hand side zero and therefore recovers exact outcome-relevant completeness. In particular, Assumption~\ref{ass:uniform-stability} implies Assumption~\ref{ass:outcome-relevant-completeness}, whereas the converse need not hold. Given Assumptions~\ref{ass:consistency} and~\ref{ass:joint-latent-exchangeability} and representation overlap, exact balance together with Assumption~\ref{ass:outcome-relevant-completeness} suffices for Theorem~\ref{thm:exact-proxy-identification}; Assumption~\ref{ass:uniform-stability} is not needed in that exact case. When the discrepancy is nonzero, Assumption~\ref{ass:outcome-relevant-completeness} alone gives no numerical control of causal bias, whereas Assumption~\ref{ass:uniform-stability} yields the $\Gamma_jD_j(\phi_j)$ bound below. Balance is an observed distributional condition and replaces neither the latent exchangeability condition nor the applicable outcome-relevant completeness or stability condition.
-
+If $\mathcal K_jQ=\mathcal K_jQ'$, the right-hand side is zero. Assumption~\ref{ass:uniform-stability} therefore implies Assumption~\ref{ass:outcome-relevant-completeness}.
 \begin{theorem}[Approximate PROBE bias bound]
 \label{thm:approximate-proxy-bias-bound}
 \normalfont
-	Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold, and the representation overlap condition in Equation~\eqref{eq:representation-overlap} holds.
+	Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for $Z_j^\phi$.
+	Suppose there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(z)\le1-\eta$ for $P_{Z_j^\phi}$-almost every $z$. Then
 	\begin{align}
 		\left|
-		\mathbb E\!\left[\mathbb E(Y\mid A=1,Z_j) - \mathbb E(Y\mid A=0,Z_j) \right]
+		\mathbb E\!\left[
+		\mathbb E(Y\mid A=1,Z_j^\phi)
+		-
+		\mathbb E(Y\mid A=0,Z_j^\phi)
+		\right]
 		-\tau
 		\right|
-		\le\Gamma_jD_j(\phi_j).
-		\label{eq:approximate-proxy-bias-bound}
+		\le
+		\frac{\Gamma_j(\phi)}{\eta(1-\eta)}
+		D_{\mathrm{res},j}(\phi).
+		\label{eq:uniform-approximate-proxy-bias-bound}
 	\end{align}
 \end{theorem}
 
-Theorem~\ref{thm:approximate-proxy-bias-bound} can be reported as a population sensitivity region once a scientifically plausible value of $\Gamma_j$ is specified.
-
+The theorem implies the following sensitivity result.
 \begin{proposition}[Population sensitivity region]
 \label{prop:population-sensitivity-region}
 \normalfont
-Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for a scientifically specified finite $\Gamma_j$, and the representation overlap condition in Equation~\eqref{eq:representation-overlap} holds. Then
+Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for $Z_j^\phi$, and suppose there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(z)\le1-\eta$ for $P_{Z_j^\phi}$-almost every $z$. Define
 \begin{align}
-\tau\in
-\Bigl[{}&
-\mathbb E\!\left\{\mathbb E(Y\mid A=1,Z_j)-\mathbb E(Y\mid A=0,Z_j)\right\}
--\Gamma_jD_j(\phi_j),
-\nonumber\\
-&
-\mathbb E\!\left\{\mathbb E(Y\mid A=1,Z_j)-\mathbb E(Y\mid A=0,Z_j)\right\}
-+\Gamma_jD_j(\phi_j)
-\Bigr].
+	\tau_\phi
+	\triangleq
+	\mathbb E\!\left[
+	\mathbb E(Y\mid A=1,Z_j^\phi)
+	-
+	\mathbb E(Y\mid A=0,Z_j^\phi)
+	\right].
+\end{align}
+Then
+\begin{align}
+	\tau\in
+	\left[
+	\tau_\phi-
+	\frac{\Gamma_j(\phi)}{\eta(1-\eta)}D_{\mathrm{res},j}(\phi),
+	\tau_\phi+
+		\frac{\Gamma_j(\phi)}{\eta(1-\eta)}D_{\mathrm{res},j}(\phi)
+	\right].
 \end{align}
 \end{proposition}
 
-This is a population sensitivity region indexed by $\Gamma_j$, not a finite-sample confidence interval. When $D_j(\phi_j)=0$, the region collapses to the point-identified value in Theorem~\ref{thm:exact-proxy-identification}.
-The population discrepancy $D_j(\phi_j)$ is observable, whereas $\Gamma_j$ is a structural sensitivity parameter justified by scientific knowledge, additional theory, or external information.
+This is a population sensitivity region, not a finite-sample confidence interval. When $D_{\mathrm{res},j}(\phi)=0$, it collapses to the point-identified value in Theorem~\ref{thm:exact-proxy-identification}. The residual discrepancy is a functional of the observed distribution.
+The constant $\Gamma_j(\phi)$ is structural and must be justified by scientific knowledge, additional theory, or sensitivity analysis.

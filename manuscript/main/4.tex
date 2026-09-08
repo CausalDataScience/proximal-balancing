@@ -17,153 +17,146 @@ Recall that one observed record is $O_i=(X_i,W_i,A_i,Y_i)$. Partition the observ
 \end{align}
 with respective sizes $n_{\mathrm D}$, $n_{\mathrm N}$, and $n_{\mathrm E}$. The discrepancy-learning sample $\mathcal I_{\mathrm D}$ selects a representation. The nuisance-learning sample $\mathcal I_{\mathrm N}$ estimates the outcome regressions and propensity used by AIPW. The evaluation sample $\mathcal I_{\mathrm E}$ calculates the final estimate. Conditional on the preceding samples, the objects evaluated on the next sample are fixed.
 
-We now give a fully specified finite-sample result for deterministic maps $v\mapsto\phi(v)$. Assume every candidate takes values in a common finite set $\mathcal S_j\subset\mathbb R^{d_{Z_j}}$, and define $M_j\triangleq|\mathcal S_j|$.
+ Let $\mathcal F_{j,n_{\mathrm D}}\subseteq\Phi_j$ be a prespecified, possibly infinite class of deterministic encoders. For $\phi\in\mathcal F_{j,n_{\mathrm D}}$, write $Z_j^\phi=\phi(V_j)$ and retain $T_j=(X,W_j)$ from Section~\ref{sec:approximate-proxy-bound}.
 
-Fix a finite candidate library
-\begin{align}
-	\mathcal F_j\subseteq\Phi_j,
-	\qquad
-	N_j\triangleq|\mathcal F_j|<\infty.
-\end{align}
+\begin{assumption}[Common representation overlap]
+\label{ass:library-overlap}
+\normalfont
+There is a constant $\eta\in(0,1/2]$ such that, for every $\phi\in\mathcal F_{j,n_{\mathrm D}}$,
 
-For $\phi\in\mathcal F_j$, define
 \begin{align}
-	Z_j^\phi\triangleq\phi(X,W_{-j})
-\end{align}
-and let $\mathcal R_j(\phi)$ be its set of positive-mass strata. For $z\in\mathcal R_j(\phi)$, write $p_{j,z}(\phi)\triangleq P(Z_j^\phi=z)$. Assume there are constants $p_{\min}>0$ and $\eta\in(0,1/2]$ such that every candidate and every $z\in\mathcal R_j(\phi)$ satisfy
-\begin{align}
-P(Z_j^\phi=z)&\ge p_{\min},
-\label{eq:library-minimum-mass}\\
-\eta
-\le P(A=1\mid Z_j^\phi=z)&\le1-\eta.
+\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta\quad\text{almost surely}.
 \label{eq:library-overlap}
 \end{align}
-Assume also that the bounded kernel satisfies
-\begin{align}
-\sup_v\sqrt{\kappa_j(v,v)}\le\rho_j<\infty.
-\label{eq:kernel-bound}
-\end{align}
-For each $\phi\in\mathcal F_j$, let $\Gamma_j(\phi)$ denote a valid stability constant in Assumption~\ref{ass:uniform-stability}. Require a common stability budget across the candidate library:
-\begin{align}
-\sup_{\phi\in\mathcal F_j}\Gamma_j(\phi)
-\le
-\overline\Gamma_j<\infty.
-\label{eq:uniform-candidate-stability}
-\end{align}
-The two primitive held-out-block clauses of Assumption~\ref{ass:joint-latent-exchangeability} do not depend on the selected candidate. Representation overlap and outcome-relevant stability must hold for every candidate-specific representation.
 
-\begin{definition}[Empirical held-out proxy discrepancy]
+\end{assumption}
+For any prespecified nonempty proper subset $S\subset\{1,\ldots,J\}$, the results below also apply with $(V_j,W_j,Z_j^\phi)$ replaced by $(V_S,W_S,\phi(V_S))$ and with the same assumptions imposed on this grouped split.
+
+The Brier-risk definition below estimates residual discrepancy by comparing squared-loss prediction of $A$ from $Z_j^\phi$ alone with prediction from $(T_j,Z_j^\phi)$ \citep{brier1950verification}.
+
+\begin{definition}[Brier-risk residual discrepancy]
 \label{def:empirical-held-out-proxy-discrepancy}
-For observation $i\in\mathcal I_{\mathrm D}$ and candidate $\phi\in\mathcal F_j$, write
+\normalfont
+ Let $\mathcal H_{0,n_{\mathrm D}}$ and $\mathcal H_{1,n_{\mathrm D}}$ be prespecified classes of measurable $[0,1]$-valued predictors with inputs $Z_j^\phi$ and $(T_j,Z_j^\phi)$, respectively, fixed independently of $\mathcal I_{\mathrm D}$. Assume $\mathcal H_{1,n_{\mathrm D}}$ contains each member of $\mathcal H_{0,n_{\mathrm D}}$ lifted to ignore $T_j$. For $b\in\{0,1\}$, define
 \begin{align}
-Z_{j,i}^{\phi}\triangleq\phi(X_i,W_{-j,i}).
+	R_{0,\phi}(h)&\triangleq\mathbb E[\{A-h(Z_j^\phi)\}^2],
+	&
+	\widehat R_{0,\phi}(h)&\triangleq\frac1{n_{\mathrm D}}\sum_{i\in\mathcal I_{\mathrm D}}\{A_i-h(Z_{j,i}^\phi)\}^2,\\
+	R_{1,\phi}(h)&\triangleq\mathbb E[\{A-h(T_j,Z_j^\phi)\}^2],
+	&
+	\widehat R_{1,\phi}(h)&\triangleq\frac1{n_{\mathrm D}}\sum_{i\in\mathcal I_{\mathrm D}}\{A_i-h(T_{j,i},Z_{j,i}^\phi)\}^2,
+	\label{eq:brier-risks}
 \end{align}
-For treatment arm $a$ and stratum $z$, define
+where $Z_{j,i}^\phi=\phi(V_{j,i})$. For each $\phi$, let $\widehat h_{b,\phi}\in\mathcal H_{b,n_{\mathrm D}}$ be an approximate empirical minimizer satisfying, for some $\varepsilon_{b,\phi}\ge0$,
 \begin{align}
-N_{a,z}^{\phi}
-&\triangleq
-\sum_{i\in\mathcal I_{\mathrm D}}
-\mathbf 1\{A_i=a,Z_{j,i}^{\phi}=z\},\\
-N_z^\phi
-&\triangleq
-N_{0,z}^{\phi}+N_{1,z}^{\phi},\\
-\widehat p_{j,z}(\phi)
-&\triangleq
-\frac{N_z^\phi}{n_{\mathrm D}}.
+	\widehat R_{b,\phi}(\widehat h_{b,\phi})
+	\le
+	\inf_{h\in\mathcal H_{b,n_{\mathrm D}}}\widehat R_{b,\phi}(h)
+	+
+	\varepsilon_{b,\phi},
+	\qquad b\in\{0,1\}.
+	\label{eq:approximate-critic-fits}
 \end{align}
-When $N_{a,z}^{\phi}>0$, define the empirical kernel mean
+Define $\varepsilon_{\mathrm{crit},j}\triangleq\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}(\varepsilon_{0,\phi}+\varepsilon_{1,\phi})$ and
 \begin{align}
-\widehat m_{a,j,z}(\phi)
-\triangleq
-\frac{1}{N_{a,z}^{\phi}}
-\sum_{i\in\mathcal I_{\mathrm D}}
-\mathbf 1\{A_i=a,Z_{j,i}^{\phi}=z\}
-\kappa_j\{(X_i,W_{j,i}),\cdot\}.
+	\widetilde D_{j,n_{\mathrm D}}^2(\phi)
+	\triangleq
+	\max\left\{(
+	\widehat R_{0,\phi}(\widehat h_{0,\phi})
+	-
+	\widehat R_{1,\phi}(\widehat h_{1,\phi})), 0
+	\right\},
+	\label{eq:empirical-discrepancy}
 \end{align}
-When both treatment-arm cells are nonempty, define
-\begin{align}
-\widehat\Delta_{j,z}(\phi)
-\triangleq
-\|\widehat m_{1,j,z}(\phi)-\widehat m_{0,j,z}(\phi)\|_{\mathcal H_j}
-\end{align}
-and
-\begin{align}
-\widehat D_j(\phi)
-\triangleq
-\sum_{z:N_z^\phi>0}
-\widehat p_{j,z}(\phi)\widehat\Delta_{j,z}(\phi).
-\label{eq:empirical-discrepancy}
-\end{align}
-If an occupied empirical stratum contains only one treatment arm, set $\widehat D_j(\phi)=+\infty$.
 \end{definition}
 
-\begin{proposition}[Uniform deviation for the finite-strata specialization]
+Each encoder $\phi$ and critic $h$ give a squared-loss function of one observation: $\{A-h(\phi(V_j))\}^2$ or $\{A-h(T_j,\phi(V_j))\}^2$. Varying both $\phi$ and $h$ over their prespecified classes gives the loss classes $\mathcal L_{0,j,n_{\mathrm D}}$ and $\mathcal L_{1,j,n_{\mathrm D}}$, respectively. Let $\mathfrak R_{n_{\mathrm D}}(\mathcal L)$ denote the expected Rademacher complexity of a loss class $\mathcal L$. For $\delta_{\mathrm D}\in(0,1)$, define
+
+\begin{align}
+	r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
+	\triangleq
+	2\{\mathfrak R_{n_{\mathrm D}}(\mathcal L_{0,j,n_{\mathrm D}})+\mathfrak R_{n_{\mathrm D}}(\mathcal L_{1,j,n_{\mathrm D}})\}
+	+
+	2\sqrt{\frac{\log(4/\delta_{\mathrm D})}{2n_{\mathrm D}}}.
+	\label{eq:discrepancy-radius}
+\end{align}
+
+This radius controls sampling fluctuation uniformly over the encoder--critic choices. The complexity terms account for the flexibility of the two loss classes, and the last term sets the failure-probability level $\delta_{\mathrm D}$.
+
+\begin{proposition}[Uniform residual-discrepancy deviation]
 \label{prop:uniform-discrepancy-deviation}
-Let $\delta_{\mathrm D}\in(0,1)$ and suppose
+\normalfont
+For each $\phi\in\mathcal F_{j,n_{\mathrm D}}$, define
 \begin{align}
-n_{\mathrm D}
-\ge
-\frac{8}{p_{\min}\eta}
-\log\left(\frac{8M_jN_j}{\delta_{\mathrm D}}\right).
-\label{eq:learning-sample-threshold}
+	a_{0,n_{\mathrm D}}(\phi)
+	&\triangleq
+	\inf_{h\in\mathcal H_{0,n_{\mathrm D}}}R_{0,\phi}(h)
+	-
+	\mathbb E[\{A-e_{j,\phi}(Z_j^\phi)\}^2],\\
+	a_{1,n_{\mathrm D}}(\phi)
+	&\triangleq
+	\inf_{h\in\mathcal H_{1,n_{\mathrm D}}}R_{1,\phi}(h)
+	-
+	\mathbb E[\{A-q_{j,\phi}(T_j,Z_j^\phi)\}^2],\\
+	a_{j,n_{\mathrm D}}
+	&\triangleq
+	\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
+	\{a_{0,n_{\mathrm D}}(\phi)+a_{1,n_{\mathrm D}}(\phi)\}.
+	\label{eq:critic-approximation-error}
 \end{align}
-Define
+
+Under the measurability conditions stated in   Assumption~\ref{ass:learning-measurability}, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
-e_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-\triangleq
-\rho_j
-\left[
-2+
-\sqrt{2\log\left(\frac{4M_jN_j}{\delta_{\mathrm D}}\right)}
-\right]
-\sqrt{\frac{2}{n_{\mathrm D}p_{\min}\eta}}
-\end{align}
-and
-\begin{align}
-r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-\triangleq{}&
-2e_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-\nonumber\\
-&+
-2\rho_j
-\sqrt{
-\frac{
-2\left[
-M_j\log2+
-\log\left(\frac{4N_j}{\delta_{\mathrm D}}\right)
-\right]
-}{n_{\mathrm D}}
-}.
-\label{eq:discrepancy-radius}
-\end{align}
-Under equations~\eqref{eq:library-minimum-mass} through \eqref{eq:kernel-bound}, with probability at least $1-\delta_{\mathrm D}$,
-\begin{align}
-\boxed{
-\sup_{\phi\in\mathcal F_j}
-|\widehat D_j(\phi)-D_j(\phi)|
-\le
-r_{j,n_{\mathrm D}}(\delta_{\mathrm D}).
-}
-\label{eq:uniform-discrepancy-deviation}
+	\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
+	|\widetilde D_{j,n_{\mathrm D}}^2(\phi)-D_{\mathrm{res},j}^2(\phi)|
+	\le
+	r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}.
+	\label{eq:uniform-discrepancy-deviation}
 \end{align}
 \end{proposition}
+At any fixed confidence level $1-\delta_{\mathrm D}$, this error bound is $O(n_{\mathrm D}^{-1/2})$ if both Rademacher complexities, $a_{j,n_{\mathrm D}}$, and $\varepsilon_{\mathrm{crit},j}$ are each $O(n_{\mathrm D}^{-1/2})$.
 
 \begin{definition}[Approximate empirical minimizer]
 \label{def:approximate-empirical-minimizer}
-The nonnegative number $\varepsilon_{\mathrm{opt},j}$ is the allowed gap between the empirical discrepancy attained by the learner and the smallest empirical discrepancy in the candidate library. The representation learner returns $\widehat\phi_j\in\mathcal F_j$ satisfying
+\normalfont
+ For a prescribed tolerance $\varepsilon_{\mathrm{enc},j}\ge0$, an approximate empirical minimizer is an encoder $\widehat\phi_j\in\mathcal F_{j,n_{\mathrm D}}$ selected measurably from the training observations and algorithmic seed such that
 \begin{align}
-\widehat D_j(\widehat\phi_j)
+\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)
 \le
-\inf_{\phi\in\mathcal F_j}\widehat D_j(\phi)
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}\widetilde D_{j,n_{\mathrm D}}^2(\phi)
 +
-\varepsilon_{\mathrm{opt},j}.
+\varepsilon_{\mathrm{enc},j}.
 \label{eq:approximate-erm}
 \end{align}
-In this deterministic setting, the learned representation and its population adjustment functional are
+An exact empirical minimizer has $\varepsilon_{\mathrm{enc},j}=0$.
+
+\end{definition}
+
+\begin{proposition}[Residual-discrepancy oracle inequality]
+\label{thm:representation-oracle}
+\normalfont
+ Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes,  approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
-\widehat Z_j
-&\triangleq
-\widehat\phi_j(V_j),\nonumber\\
+ D_{\mathrm{res},j}^2(\widehat\phi_j)
+ &\le
+ \left[\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)\right]_+
+ +r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j},
+ \label{eq:representation-empirical-discrepancy}\\
+ D_{\mathrm{res},j}^2(\widehat\phi_j)
+ &\le
+ \inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
+ +2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\}
+ +\varepsilon_{\mathrm{enc},j}.
+\label{eq:representation-oracle-discrepancy}
+\end{align}
+\end{proposition}
+
+Condition on the training observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, which fixes $\widehat\phi_j$. Here and below, population expectations involving this learned encoder use a fresh observation $O=(X,W,A,Y)$ independent of the training observations and seed, with this conditioning understood.
+The learned representation and its population adjustment functional are
+
+\begin{align}
+Z_j^{\widehat\phi_j}
+&\triangleq\widehat\phi_j(V_j),\qquad\widehat Z_j\triangleq Z_j^{\widehat\phi_j},\nonumber\\
 \tau_{\widehat Z_j}
 &\triangleq
 \mathbb E\!\left[
@@ -173,51 +166,32 @@ In this deterministic setting, the learned representation and its population adj
 \right].
 \label{eq:learned-adjustment-functional}
 \end{align}
-An exact empirical minimizer has $\varepsilon_{\mathrm{opt},j}=0$. The adjustment functional is used whenever its two conditional means are absolutely integrable under the law of $\widehat Z_j$.
-\end{definition}
 
-\begin{theorem}[Finite-sample representation learning]
-\label{thm:representation-oracle}
-Let $\delta_{\mathrm D}\in(0,1)$, suppose the minimum-mass, overlap, and bounded-kernel conditions in equations~\eqref{eq:library-minimum-mass}--\eqref{eq:kernel-bound} hold, and suppose the learning-sample size satisfies equation~\eqref{eq:learning-sample-threshold}. Let $r_{j,n_{\mathrm D}}(\delta_{\mathrm D})$ be the explicit radius in equation~\eqref{eq:discrepancy-radius}. Suppose $\widehat\phi_j\in\mathcal F_j$ satisfies equation~\eqref{eq:approximate-erm} for some $\varepsilon_{\mathrm{opt},j}\ge0$. Suppose Assumption~\ref{ass:consistency} holds and Assumption~\ref{ass:joint-latent-exchangeability} holds for block $j$. For every $\phi\in\mathcal F_j$, suppose Assumption~\ref{ass:uniform-stability} holds with $\Gamma_j(\phi)\le\overline\Gamma_j$. Then, with probability at least $1-\delta_{\mathrm D}$,
+Thus $\tau_{\widehat Z_j}=\tau_\phi\big|_{\phi=\widehat\phi_j}$, where $\tau_\phi$ is the population adjustment functional defined in Proposition~\ref{prop:population-sensitivity-region}.
+The adjustment functional is used whenever its two conditional means are absolutely integrable under the law of $\widehat Z_j$.
+
+\begin{theorem}[Causal error of the learned representation]
+\label{cor:representation-causal}
+\normalfont
+
+Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes,  approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
-\boxed{
-D_j(\widehat\phi_j)
-\le
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+
-2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-+
-\varepsilon_{\mathrm{opt},j}.
-}
-\label{eq:representation-oracle-discrepancy}
-\end{align}
-On the same event,
-\begin{align}
-\boxed{
-|\tau_{\widehat Z_j}-\tau|
-\le
-\overline\Gamma_j
-\left[
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+
-2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-+
-\varepsilon_{\mathrm{opt},j}
-\right].
-}
-\label{eq:representation-oracle-causal}
+	|\tau_{\widehat Z_j}-\tau|
+	\le
+	\frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
+	\left[
+	\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
+	+2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\}
+	+\varepsilon_{\mathrm{enc},j}
+	\right]^{1/2}.
+	\label{eq:representation-oracle-causal}
 \end{align}
 \end{theorem}
-
-\begin{remark}[Practical learner outside the finite-library theorem]
-\label{rem:practical-learning-gap}
-The theorem covers hard, finite-valued representations in a finite prespecified library. A neural learner using random features, soft assignments, and Adam requires additional bounds for neural-class complexity, feature approximation, soft-to-hard transfer, and optimization error. These guarantees are not supplied by Theorem~\ref{thm:representation-oracle}.
-\end{remark}
+At fixed confidence and fixed overlap constant $\eta$, the right-hand side is $O_p(n_{\mathrm D}^{-1/4})$ if $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)=0$, each of $r_{j,n_{\mathrm D}}(\delta_{\mathrm D})$, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j}$, and $\varepsilon_{\mathrm{enc},j}$ is $O(n_{\mathrm D}^{-1/2})$, and $\Gamma_j(\widehat\phi_j)=O_p(1)$. This is a conditional upper-bound rate; it is not a universal or minimax rate.
 
 \subsection{AIPW Estimation}
 \label{sec:aipw-estimation}
-
-Conditional on $\mathcal I_{\mathrm D}$ and any algorithmic seed used in training, the map $\widehat\phi_j$ is fixed and $\widehat Z_j=\widehat\phi_j(V_j)$. Define the conditional outcome means and representation propensity
+ Conditional on the observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, the map $\widehat\phi_j$ is fixed and $\widehat Z_j=\widehat\phi_j(V_j)$. Below, conditioning on learning samples means conditioning on all observations indexed by those samples and the seeds used to fit the encoder and nuisance functions; population expectations use a fresh independent observation. Define the conditional outcome means and representation propensity
 \begin{align}
 m_{a,j}(z)
 &\triangleq
@@ -350,21 +324,20 @@ Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$, with proba
 \subsection{End-to-End Finite-Sample Bound}
 \label{sec:end-to-end-bound}
 
-\begin{theorem}[Finite-strata end-to-end sensitivity bound]
+\begin{theorem}[End-to-end sensitivity bound]
 \label{thm:end-to-end-sensitivity}
-Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation}, Theorem~\ref{thm:representation-oracle}, and Theorem~\ref{thm:conditional-aipw-error} hold. Then, jointly over the three independent samples, with probability at least $1-\delta_{\mathrm D}-\delta_{\mathrm E}$,
+ Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation},  Proposition~\ref{thm:representation-oracle},  Theorem~\ref{cor:representation-causal}, and Theorem~\ref{thm:conditional-aipw-error} hold. Then, jointly over the three independent samples, with probability at least $1-\delta_{\mathrm D}-\delta_{\mathrm E}$,
 \begin{align}
 \boxed{
 |\widehat\tau_j^{\mathrm{AIPW}}-\tau|
 \le
 \varepsilon_{\mathrm{AIPW},j}
 +
-\overline\Gamma_j
+\frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
 \left[
-\widehat D_j(\widehat\phi_j)
-+
-r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-\right].
+\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)
++r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}
+\right]^{1/2}.
 }
 \label{eq:end-to-end-empirical}
 \end{align}
@@ -377,14 +350,12 @@ It also satisfies the oracle form
 \varepsilon_{\mathrm{AIPW},j}
 \\
 &\quad+
-\overline\Gamma_j
+\frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
 \left[
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+
-2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-+
-\varepsilon_{\mathrm{opt},j}
-\right].
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
++2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\}
++\varepsilon_{\mathrm{enc},j}
+\right]^{1/2}.
 \end{aligned}
 }
 \label{eq:end-to-end-oracle}
@@ -393,7 +364,7 @@ It also satisfies the oracle form
 
 \begin{corollary}[Consistency]
 \label{cor:learned-aipw-consistency}
-Consider a sequence of candidate libraries, sample splits, nuisance estimators, optimization tolerances, and stability budgets satisfying Theorem~\ref{thm:end-to-end-sensitivity}. If
+ Consider a sequence of encoder and critic classes, sample splits, nuisance estimators, optimization tolerances, and candidate-specific stability constants satisfying Theorem~\ref{thm:end-to-end-sensitivity} with common constants $B<\infty$ and $\eta\in(0,1/2]$; write $\widehat\phi_{j,n}$ for the selected encoder at total sample size $n$. If
 \begin{align}
 \delta_{\mathrm D,n}+\delta_{\mathrm E,n}&\longrightarrow0,\\
 \frac{\log(2/\delta_{\mathrm E,n})}{n_{\mathrm E}}&\longrightarrow0,\\
@@ -401,14 +372,12 @@ q_{e,j,n}(q_{0,j,n}+q_{1,j,n})&\xrightarrow{p}0,
 \end{align}
 and
 \begin{align}
-\overline\Gamma_{j,n}
+\frac{\Gamma_j(\widehat\phi_{j,n})}{\eta(1-\eta)}
 \left[
-\inf_{\phi\in\mathcal F_{j,n}}D_j(\phi)
-+
-2r_{j,n_{\mathrm D}}(\delta_{\mathrm D,n})
-+
-\varepsilon_{\mathrm{opt},j,n}
-\right]
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
++2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D,n})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j,n}\}
++\varepsilon_{\mathrm{enc},j,n}
+\right]^{1/2}
 \xrightarrow{p}0,
 \label{eq:consistency-representation-condition}
 \end{align}
@@ -422,12 +391,12 @@ then
 
 \begin{remark}[Interpretation and observability]
 \label{rem:end-to-end-observability}
-Theorem~\ref{thm:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The stability budget $\overline\Gamma_j$ and the nuisance errors $q_{e,j}$, $q_{0,j}$, and $q_{1,j}$ are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by additional theory, external information, or a declared sensitivity analysis.
+Theorem~\ref{thm:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The  selected stability constant $\Gamma_j(\widehat\phi_j)$, critic approximation error $a_{j,n_{\mathrm D}}$, optimization tolerances, and nuisance errors are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by theory, computation, external information, or a declared sensitivity analysis.
 \end{remark}
 
 \begin{remark}[Scope]
 \label{rem:end-to-end-scope}
-The theorem uses one prespecified held-out block, hard finite strata, a finite candidate library, and an honest three-way split. It does not establish a neural-class rate, a soft-to-hard approximation bound, an Adam optimization guarantee, or a cross-fitting theorem. The random-search result below concerns only computational subsampling of population orientations and does not extend this fixed-$j$ learning and inference result.
+The theorem uses one prespecified held-out block, deterministic encoders, bounded critics, and an honest three-way split. It permits continuous representations and complexity-controlled neural classes, but it does not guarantee that a particular numerical optimizer reaches a global minimum. The random-search result below concerns only computational subsampling of population orientations and does not extend this fixed-$j$ learning and inference result.
 \end{remark}
 
 \subsection{Searching Across Held-Out Orientations}

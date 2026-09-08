@@ -107,21 +107,21 @@
   \node[latent] (Ud) at (0,1.65) {$U$};
   \node[observed] (Ztd) at (-0.90,0.72) {$Z^{\mathrm{tr}}$};
   \node[observed] (Xd) at (0,0.72) {$X$};
-  \node[observed] (Wd) at (0.90,0.72) {$W$};
+  \node[observed] (Zod) at (0.90,0.72) {$Z^{\mathrm{out}}$};
   \node[treatment] (Ad) at (-0.58,-0.50) {$A$};
   \node[outcome] (Yd) at (0.58,-0.50) {$Y$};
 
   \draw[latent edge] (Ud) -- (Ztd);
   \draw[latent edge] (Ud) -- (Xd);
-  \draw[latent edge] (Ud) -- (Wd);
+  \draw[latent edge] (Ud) -- (Zod);
   \draw[latent edge] (Ud) to[bend right=13] (Ad);
   \draw[latent edge] (Ud) to[bend left=13] (Yd);
   \draw[observed edge] (Xd) -- (Ztd);
-  \draw[observed edge] (Xd) -- (Wd);
+  \draw[observed edge] (Xd) -- (Zod);
   \draw[observed edge] (Xd) -- (Ad);
   \draw[observed edge] (Xd) -- (Yd);
   \draw[observed edge] (Ztd) -- (Ad);
-  \draw[observed edge] (Wd) -- (Yd);
+  \draw[observed edge] (Zod) -- (Yd);
   \draw[observed edge] (Ad) -- (Yd);
 
   \node[align=center,font=\sffamily\sansmath\scriptsize] at (0,-0.95) {(d)};

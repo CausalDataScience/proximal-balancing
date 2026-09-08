@@ -225,132 +225,238 @@ The stronger condition that more than half of the proxy splits in $\mathcal B$ s
 
 \paragraph{Zero discrepancy and exact balance.}
 \begin{proof}[Proof of Proposition~\ref{prop:zero-discrepancy}]
-The nonnegative random variable $\Delta_j(Z_j;\phi_j)$ has expectation zero exactly when it is zero almost surely. Characteristicness converts zero MMD into equality of the two conditional laws, and overlap makes this equality equivalent to conditional independence.
+By Definition~\ref{def:held-out-proxy-discrepancy}, $D_{\mathrm{res},j}(\phi)=0$ if and only if
+\begin{align}
+q_{j,\phi}(T_j,Z_j^\phi)=e_{j,\phi}(Z_j^\phi)
+\quad\text{almost surely}.
+\end{align}
+Because $A$ is binary, this equality is equivalent to $T_j\perp\!\!\!\perp A\mid Z_j^\phi$.
 \end{proof}
 
 \paragraph{Supporting bias decomposition.}
-For this supporting calculation, define $\pi_j(z)\triangleq P(A=1\mid Z_j=z)$.
-For each $a\in\{0,1\}$ and $P_{Z_j}$-almost every $z$, define
+Fix a representation $\phi$ and abbreviate $e(z)=e_{j,\phi}(z)$. For each $a\in\{0,1\}$ and $P_{Z_j^\phi}$-almost every $z$, define
 \begin{align}
-\delta_{a,j}(z)
+\delta_{a,j}^{\phi}(z)
 \triangleq
-\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}(V_j,U)\}
+\mathbb E_{Q_{1,j,z}^{\phi}}\{\mu_{a,j,z}^{\phi}(V_j,U)\}
 -
-\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\mathbb E_{Q_{0,j,z}^{\phi}}\{\mu_{a,j,z}^{\phi}(V_j,U)\}.
 \label{eq:stratum-mass-propensity}
 \end{align}
-Under Assumptions~\ref{ass:consistency} and \ref{ass:joint-latent-exchangeability}, and under $0<P(A=1\mid Z_j)<1$ almost surely, consistency and equation~\eqref{eq:conditioning-safe-outcome-app} give, for $P_{Z_j}$-almost every $z$,
+Under Assumptions~\ref{ass:consistency} and \ref{ass:joint-latent-exchangeability}, and under $0<e(Z_j^\phi)<1$ almost surely, the conditioning argument used in equation~\eqref{eq:conditioning-safe-outcome-app} gives
 \begin{align}
-\mathbb E(Y\mid A=a,Z_j=z)
+\mathbb E(Y\mid A=a,Z_j^\phi=z)
 =
-\mathbb E_{Q_{a,j,z}}\{\mu_{a,j,z}(V_j,U)\}.
+\mathbb E_{Q_{a,j,z}^{\phi}}\{\mu_{a,j,z}^{\phi}(V_j,U)\}.
 \label{eq:observed-arm-mean}
 \end{align}
 Conditional expectation over $A$ gives
 \begin{align}
-\mathbb E\{Y(a)\mid Z_j=z\}
+\mathbb E\{Y(a)\mid Z_j^\phi=z\}
 ={}&
-\pi_j(z)\mathbb E_{Q_{1,j,z}}\{\mu_{a,j,z}\}
+e(z)\mathbb E_{Q_{1,j,z}^{\phi}}\{\mu_{a,j,z}^{\phi}\}
 \nonumber\\
-&+\{1-\pi_j(z)\}\mathbb E_{Q_{0,j,z}}\{\mu_{a,j,z}\}.
+&+\{1-e(z)\}\mathbb E_{Q_{0,j,z}^{\phi}}\{\mu_{a,j,z}^{\phi}\}.
 \label{eq:potential-arm-mixture}
 \end{align}
-Subtracting the two conditional expressions and collecting terms gives, for $P_{Z_j}$-almost every $z$,
+Subtracting the two conditional expressions and collecting terms gives
 \begin{align}
-&\mathbb E(Y\mid A=1,Z_j=z)
--
-\mathbb E(Y\mid A=0,Z_j=z)
+&\mathbb E(Y\mid A=1,Z_j^\phi=z)
+-\mathbb E(Y\mid A=0,Z_j^\phi=z)
 \nonumber\\
 &\quad-
 \left[
-\mathbb E\{Y(1)\mid Z_j=z\}
+\mathbb E\{Y(1)\mid Z_j^\phi=z\}
 -
-\mathbb E\{Y(0)\mid Z_j=z\}
+\mathbb E\{Y(0)\mid Z_j^\phi=z\}
 \right]
 \nonumber\\
 &\qquad=
-\{1-\pi_j(z)\}\delta_{1,j}(z)
-+
-\pi_j(z)\delta_{0,j}(z).
+\{1-e(z)\}\delta_{1,j}^{\phi}(z)
++e(z)\delta_{0,j}^{\phi}(z).
 \label{eq:pointwise-bias-decomposition}
 \end{align}
 
 \paragraph{Approximate PROBE bias bound.}
 \begin{proof}[Proof of Theorem~\ref{thm:approximate-proxy-bias-bound}]
-Representation overlap gives $Q_{b,j,z}\ll\mathcal L(V_j,U\mid Z_j=z)$ for $b\in\{0,1\}$. Assumption~\ref{ass:consistency}, equation~\eqref{eq:conditioning-safe-outcome-app}, and Jensen's inequality give the required integrability, so $Q_{b,j,z}\in\mathcal Q_{j,z}$ almost everywhere.
-The common held-out channel and the definition of $\Delta_j(z;\phi_j)$ give, for $P_{Z_j}$-almost every $z$,
+Fix $z$ in the almost-sure set on which overlap and the structural conditions hold. Bayes' rule gives
 \begin{align}
-\Delta_j(z;\phi_j)
-=
-\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ_{1,j,z},\mathcal K_jQ_{0,j,z}).
-\label{eq:observed-latent-discrepancy-link}
+\frac{d\mathcal L(T_j\mid A=1,Z_j^\phi=z)}{dP_{j,\phi,z}}(t)
+&=\frac{q_{j,\phi}(t,z)}{e(z)},\\
+\frac{d\mathcal L(T_j\mid A=0,Z_j^\phi=z)}{dP_{j,\phi,z}}(t)
+&=\frac{1-q_{j,\phi}(t,z)}{1-e(z)}.
 \end{align}
-Assumption~\ref{ass:uniform-stability} and equation~\eqref{eq:observed-latent-discrepancy-link} therefore give, for each $a\in\{0,1\}$ and almost every $z$,
+Subtracting gives the density identity
 \begin{align}
-|\delta_{a,j}(z)|
-\le
-\Gamma_j\Delta_j(z;\phi_j).
+\frac{d\{\mathcal L(T_j\mid A=1,Z_j^\phi=z)
+-\mathcal L(T_j\mid A=0,Z_j^\phi=z)\}}
+{dP_{j,\phi,z}}(t)
+&=
+\frac{q_{j,\phi}(t,z)-e(z)}
+{e(z)\{1-e(z)\}}.
+\label{eq:residual-density-identity}
+\end{align}
+The common held-out channel gives $\mathcal K_jQ_{b,j,z}^{\phi}=\mathcal L(T_j\mid A=b,Z_j^\phi=z)$ for $b\in\{0,1\}$. Assumption~\ref{ass:uniform-stability} therefore implies
+\begin{align}
+|\delta_{a,j}^{\phi}(z)|
+&\le
+\frac{\Gamma_j(\phi)}{e(z)\{1-e(z)\}}
+\left[
+\mathbb E\!\left(
+\left.
+\{q_{j,\phi}(T_j,z)-e(z)\}^2
+\right|Z_j^\phi=z
+\right)
+\right]^{1/2}.
 \label{eq:stratum-bias-stability-bound}
 \end{align}
-The bounded kernel and finite $\Gamma_j$ imply $D_j(\phi_j)<\infty$, so the right-hand side of equation~\eqref{eq:pointwise-bias-decomposition} is integrable. Assumption~\ref{ass:consistency} makes the conditional potential-outcome contrast integrable. Equation~\eqref{eq:pointwise-bias-decomposition} therefore also makes the observed conditional contrast integrable. We may now integrate that identity and use the triangle inequality and equation~\eqref{eq:stratum-bias-stability-bound} to obtain
+Apply the triangle inequality to equation~\eqref{eq:pointwise-bias-decomposition}, use equation~\eqref{eq:stratum-bias-stability-bound} for both potential outcomes, and integrate over $Z_j^\phi$. Cauchy--Schwarz gives
 \begin{align}
 &\left|
 \mathbb E\!\left[
-\mathbb E(Y\mid A=1,Z_j)
+\mathbb E(Y\mid A=1,Z_j^\phi)
 -
-\mathbb E(Y\mid A=0,Z_j)
+\mathbb E(Y\mid A=0,Z_j^\phi)
 \right]
 -\tau
 \right|
 \nonumber\\
-&\le\mathbb E[\{1-\pi_j(Z_j)\}|\delta_{1,j}(Z_j)|+\pi_j(Z_j)|\delta_{0,j}(Z_j)|]\\
-&\le\Gamma_j\mathbb E\{\Delta_j(Z_j;\phi_j)\}.
+&\le
+\mathbb E\!\left[
+\frac{\Gamma_j(\phi)}
+{e_{j,\phi}(Z_j^\phi)\{1-e_{j,\phi}(Z_j^\phi)\}}
+\left\{
+\mathbb E\!\left[
+\left.
+\{q_{j,\phi}(T_j,Z_j^\phi)-e_{j,\phi}(Z_j^\phi)\}^2
+\right|Z_j^\phi
+\right]
+\right\}^{1/2}
+\right]\\
+&\le
+\frac{\Gamma_j(\phi)}{\eta(1-\eta)}D_{\mathrm{res},j}(\phi).
 \end{align}
+Because $\Gamma_j(\phi)$ does not depend on $z$, the overlap bound $\eta\le e_{j,\phi}(z)\le1-\eta$ gives the last inequality and proves equation~\eqref{eq:uniform-approximate-proxy-bias-bound}.
 \end{proof}
 
 \subsection{Proofs for Section~\ref{sec:estimation}}
 
 \paragraph{Uniform discrepancy deviation.}
 \begin{proof}[Proof of Proposition~\ref{prop:uniform-discrepancy-deviation}]
-Equation~\eqref{eq:learning-sample-threshold} and a multiplicative Chernoff bound imply that every candidate treatment-by-stratum cell contains at least $n_{\mathrm D}p_{\min}\eta/2$ observations except on an event of probability at most $\delta_{\mathrm D}/4$. Conditional on the cell assignments, bounded Hilbert-space mean concentration and a union bound over at most $2M_jN_j$ cells give
+For clarity, the joint encoder--critic loss classes used in the proposition are
 \begin{align}
-|\widehat\Delta_{j,z}(\phi)-\Delta_j(z;\phi)|
-\le
-2e_{j,n_{\mathrm D}}(\delta_{\mathrm D})
+\mathcal L_{0,j,n_{\mathrm D}}
+&\triangleq
+\left\{
+o\mapsto\{a-h(\phi(v_j))\}^2:
+\phi\in\mathcal F_{j,n_{\mathrm D}},\ h\in\mathcal H_{0,n_{\mathrm D}}
+\right\},\\
+\mathcal L_{1,j,n_{\mathrm D}}
+&\triangleq
+\left\{
+o\mapsto\{a-h(t_j,\phi(v_j))\}^2:
+\phi\in\mathcal F_{j,n_{\mathrm D}},\ h\in\mathcal H_{1,n_{\mathrm D}}
+\right\},
+\label{eq:joint-encoder-critic-loss-classes-app}
 \end{align}
-simultaneously, with failure probability at most $\delta_{\mathrm D}/2$. A multinomial $L_1$ concentration bound gives
+where $o=(v_j,t_j,a,y)$. For a loss class $\mathcal L$, its expected Rademacher complexity is
 \begin{align}
-\sum_z|\widehat p_{j,z}(\phi)-p_{j,z}(\phi)|
-\le
-\sqrt{
-\frac{
-2\left[
-M_j\log2+
-\log\left(4N_j/\delta_{\mathrm D}\right)
-\right]
-}{n_{\mathrm D}}
-}
+\mathfrak R_{n_{\mathrm D}}(\mathcal L)
+\triangleq
+\mathbb E\!\left[
+\sup_{\ell\in\mathcal L}
+\frac1{n_{\mathrm D}}\sum_{i=1}^{n_{\mathrm D}}\sigma_i\ell(O_i)
+\right],
+\label{eq:expected-rademacher-complexity-app}
 \end{align}
-simultaneously over candidates, with failure probability at most $\delta_{\mathrm D}/4$. On the intersection of the three events, use $0\le\Delta_j(z;\phi)\le2\rho_j$ and the triangle inequality to obtain equation~\eqref{eq:uniform-discrepancy-deviation}. The three failure probabilities sum to $\delta_{\mathrm D}$.
+where the $\sigma_i$ are independent Rademacher signs independent of the observations.\par\phantomsection\label{par:learning-measurability}
+
+\begin{assumption}[Measurability for representation learning]
+\label{ass:learning-measurability}
+\normalfont
+Assume the two loss classes are pointwise measurable and separable, so the displayed suprema are measurable. Assume also that the selected approximate encoder and critic minimizers are measurable functions of the training observations and algorithmic seed.
+\end{assumption}
+ The same argument may instead be stated with outer probability and outer expectation.
+
+Every loss in either class lies in $[0,1]$. Standard symmetrization and bounded-difference concentration therefore imply, simultaneously for $b\in\{0,1\}$, that
+\begin{align}
+\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}},\,h\in\mathcal H_{b,n_{\mathrm D}}}
+|\widehat R_{b,\phi}(h)-R_{b,\phi}(h)|
+\le
+2\mathfrak R_{n_{\mathrm D}}(\mathcal L_{b,j,n_{\mathrm D}})
++\sqrt{\frac{\log(4/\delta_{\mathrm D})}{2n_{\mathrm D}}}
+\label{eq:brier-risk-uniform-deviation-app}
+\end{align}
+with probability at least $1-\delta_{\mathrm D}$. Let $R_{b,\phi}^{\star}=\inf_{h\in\mathcal H_{b,n_{\mathrm D}}}R_{b,\phi}(h)$ and define $\widehat R_{b,\phi}^{\star}$ analogously. Equation~\eqref{eq:brier-risk-uniform-deviation-app} controls $|\widehat R_{b,\phi}^{\star}-R_{b,\phi}^{\star}|$ by the same right-hand side. Equation~\eqref{eq:approximate-critic-fits} also gives
+\begin{align}
+0
+\le
+\widehat R_{b,\phi}(\widehat h_{b,\phi})
+-\widehat R_{b,\phi}^{\star}
+\le
+\varepsilon_{b,\phi}.
+\label{eq:critic-optimization-gap-app}
+\end{align}
+
+The conditional-mean property of squared loss yields the Brier identity
+\begin{align}
+&\mathbb E[\{A-e_{j,\phi}(Z_j^\phi)\}^2]
+-\mathbb E[\{A-q_{j,\phi}(T_j,Z_j^\phi)\}^2]
+\nonumber\\
+&\qquad=
+\mathbb E[\{q_{j,\phi}(T_j,Z_j^\phi)-e_{j,\phi}(Z_j^\phi)\}^2]
+=D_{\mathrm{res},j}^2(\phi).
+\label{eq:brier-residual-identity-app}
+\end{align}
+It follows from equation~\eqref{eq:critic-approximation-error} that
+\begin{align}
+\left|
+R_{0,\phi}^{\star}-R_{1,\phi}^{\star}
+-D_{\mathrm{res},j}^2(\phi)
+\right|
+\le
+a_{0,n_{\mathrm D}}(\phi)+a_{1,n_{\mathrm D}}(\phi)
+\le a_{j,n_{\mathrm D}}.
+\label{eq:population-critic-gap-app}
+\end{align}
+Combine equations~\eqref{eq:brier-risk-uniform-deviation-app}--\eqref{eq:population-critic-gap-app}. The positive-part map is one-Lipschitz and $D_{\mathrm{res},j}^2(\phi)\ge0$, so taking the supremum over $\phi$ gives equation~\eqref{eq:uniform-discrepancy-deviation}.
 \end{proof}
 
 \paragraph{Representation-learning oracle inequality.}
-\begin{proof}[Proof of Theorem~\ref{thm:representation-oracle}]
-On the uniform-deviation event,
+\begin{proof}[Proof of  Proposition~\ref{thm:representation-oracle}]
+On the event in equation~\eqref{eq:uniform-discrepancy-deviation}, set
 \begin{align}
-D_j(\widehat\phi_j)
-&\le
-\widehat D_j(\widehat\phi_j)+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
-&\le
-\inf_{\phi\in\mathcal F_j}\widehat D_j(\phi)
-+\varepsilon_{\mathrm{opt},j}
-+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})\\
-&\le
-\inf_{\phi\in\mathcal F_j}D_j(\phi)
-+2r_{j,n_{\mathrm D}}(\delta_{\mathrm D})
-+\varepsilon_{\mathrm{opt},j}.
+\xi_{j,n_{\mathrm D}}
+\triangleq
+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}.
 \end{align}
-This proves equation~\eqref{eq:representation-oracle-discrepancy}. Conditional on $\mathcal I_{\mathrm D}$, the selected map is fixed. Theorem~\ref{thm:approximate-proxy-bias-bound} and the common stability budget give $|\tau_{\widehat Z_j}-\tau|\le\overline\Gamma_jD_j(\widehat\phi_j)$. Substitution proves equation~\eqref{eq:representation-oracle-causal}.
+The deviation inequality evaluated at $\widehat\phi_j$ immediately gives equation~\eqref{eq:representation-empirical-discrepancy}. Moreover,
+\begin{align}
+D_{\mathrm{res},j}^2(\widehat\phi_j)
+&\le
+\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)+\xi_{j,n_{\mathrm D}}\\
+&\le
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
+\widetilde D_{j,n_{\mathrm D}}^2(\phi)
++\varepsilon_{\mathrm{enc},j}+\xi_{j,n_{\mathrm D}}\\
+&\le
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
+D_{\mathrm{res},j}^2(\phi)
++2\xi_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{enc},j},
+\end{align}
+which proves equation~\eqref{eq:representation-oracle-discrepancy}.
+\end{proof}
+
+\paragraph{Causal error of the learned representation.}
+\begin{proof}[Proof of  Theorem~\ref{cor:representation-causal}]
+Conditional on the training observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, the selected encoder is fixed; the population expectations below use a fresh observation independent of these training inputs. Equation~\eqref{eq:uniform-approximate-proxy-bias-bound} gives
+\begin{align}
+|\tau_{\widehat Z_j}-\tau|
+\le
+\frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
+D_{\mathrm{res},j}(\widehat\phi_j).
+\end{align}
+Taking the square root of equation~\eqref{eq:representation-oracle-discrepancy} and substituting it into this display proves equation~\eqref{eq:representation-oracle-causal}.
 \end{proof}
 
 \paragraph{Exact signed nuisance remainder.}
@@ -398,20 +504,12 @@ The triangle inequality gives
 |\tau_{\widehat Z_j}-\tau|.
 \label{eq:end-to-end-triangle}
 \end{align}
-Theorem~\ref{thm:conditional-aipw-error} bounds the first term. Theorem~\ref{thm:approximate-proxy-bias-bound} and uniform candidate stability bound the second term by $\overline\Gamma_jD_j(\widehat\phi_j)$. Proposition~\ref{prop:uniform-discrepancy-deviation} gives
-\begin{align}
-D_j(\widehat\phi_j)
-\le
-\widehat D_j(\widehat\phi_j)
-+
-r_{j,n_{\mathrm D}}(\delta_{\mathrm D}),
-\end{align}
-which proves equation~\eqref{eq:end-to-end-empirical}. Equation~\eqref{eq:representation-oracle-discrepancy} proves the oracle form. A union bound over the discrepancy-learning and evaluation events gives the stated joint probability.
+Theorem~\ref{thm:conditional-aipw-error} bounds the first term. Equation~\eqref{eq:uniform-approximate-proxy-bias-bound} bounds the second term by $\Gamma_j(\widehat\phi_j)D_{\mathrm{res},j}(\widehat\phi_j)/\{\eta(1-\eta)\}$. Equation~\eqref{eq:representation-empirical-discrepancy} and monotonicity of the square root prove equation~\eqref{eq:end-to-end-empirical}. Equation~\eqref{eq:representation-oracle-causal} proves the oracle form. A union bound over the discrepancy-learning and evaluation events gives the stated joint probability.
 \end{proof}
 
 \paragraph{Consistency.}
 \begin{proof}[Proof of Corollary~\ref{cor:learned-aipw-consistency}]
-The first three conditions make the evaluation-sample and nuisance-product components of $\varepsilon_{\mathrm{AIPW},j}$ converge to zero. Equation~\eqref{eq:consistency-representation-condition} makes the stability-weighted representation term vanish. The failure probability of Theorem~\ref{thm:end-to-end-sensitivity} also converges to zero, which proves convergence in probability.
+The first three conditions make the evaluation-sample and nuisance-product components of $\varepsilon_{\mathrm{AIPW},j}$ converge to zero. Equation~\eqref{eq:consistency-representation-condition} makes the stability-weighted residual-discrepancy term vanish. The failure probability of Theorem~\ref{thm:end-to-end-sensitivity} also converges to zero, which proves convergence in probability.
 \end{proof}
 
 \paragraph{Random orientation search.}
@@ -472,3 +570,194 @@ Here a tie and the event $R=0$ are counted as failures. If $L=0$, every orientat
 \end{proof}
 
 If $M$ is random and independent of the observed data and learning outcomes, then conditional on every realized $(M,R)=(m,r)$ the retained set remains a uniform $r$-element subset of $\mathcal B$. Therefore, if $P(R\ge r_0)\ge1-\eta_R$, the same argument after averaging over $M$ gives the unconditional bound in the main text with $\eta_R(m)$ replaced by $\eta_R$. When $L=0$, success occurs whenever $R\ge1$.
+
+\subsection{Finite-Strata MMD Specialization}
+\label{app:finite-strata-mmd-specialization}
+
+This subsection records the earlier finite-strata analysis as an independent specialization. It is not used by the continuous-representation results in the main text.
+
+Fix a finite library $\mathcal F_j^{\mathrm{fs}}\subseteq\Phi_j$ with $N_j^{\mathrm{fs}}\triangleq|\mathcal F_j^{\mathrm{fs}}|$. Every $\phi\in\mathcal F_j^{\mathrm{fs}}$ is deterministic and takes values in a common finite set $\mathcal S_j$ of size $M_j$. Write $Z_j^\phi=\phi(V_j)$, let $\mathcal R_j(\phi)$ be its positive-mass strata, and set $p_{j,z}(\phi)=P(Z_j^\phi=z)$. Assume, uniformly over the library and $z\in\mathcal R_j(\phi)$,
+\begin{align}
+P(Z_j^\phi=z)&\ge p_{\min}>0,
+&
+\eta\le P(A=1\mid Z_j^\phi=z)&\le1-\eta
+\label{eq:finite-mmd-mass-overlap}
+\end{align}
+for some $\eta\in(0,1/2]$. Let $\kappa_j$ be a characteristic kernel on $(X,W_j)$ with reproducing kernel Hilbert space $\mathcal H_j$ and
+\begin{align}
+\sup_v\sqrt{\kappa_j(v,v)}\le\rho_j<\infty.
+\label{eq:finite-mmd-kernel-bound}
+\end{align}
+For $z\in\mathcal R_j(\phi)$, define
+\begin{align}
+\Delta_{j,z}^{\mathrm{MMD}}(\phi)
+&\triangleq
+\operatorname{MMD}_{\kappa_j}
+\left\{
+\mathcal L(X,W_j\mid A=1,Z_j^\phi=z),
+\mathcal L(X,W_j\mid A=0,Z_j^\phi=z)
+\right\},\\
+D_j^{\mathrm{MMD}}(\phi)
+&\triangleq
+\sum_{z\in\mathcal R_j(\phi)}
+p_{j,z}(\phi)\Delta_{j,z}^{\mathrm{MMD}}(\phi).
+\label{eq:finite-mmd-population-discrepancy}
+\end{align}
+
+For $i\in\mathcal I_{\mathrm D}$, let $Z_{j,i}^\phi=\phi(V_{j,i})$ and define
+\begin{align}
+N_{a,z}^\phi
+&\triangleq
+\sum_{i\in\mathcal I_{\mathrm D}}
+\mathbf 1\{A_i=a,Z_{j,i}^\phi=z\},
+&
+N_z^\phi&\triangleq N_{0,z}^\phi+N_{1,z}^\phi,\\
+\widehat p_{j,z}(\phi)&\triangleq\frac{N_z^\phi}{n_{\mathrm D}},
+&
+\widehat m_{a,j,z}(\phi)
+&\triangleq
+\frac{1}{N_{a,z}^\phi}
+\sum_{i\in\mathcal I_{\mathrm D}}
+\mathbf 1\{A_i=a,Z_{j,i}^\phi=z\}
+\kappa_j\{(X_i,W_{j,i}),\cdot\}.
+\end{align}
+When both treatment-arm cells are nonempty, set
+\begin{align}
+\widehat\Delta_{j,z}^{\mathrm{MMD}}(\phi)
+&\triangleq
+\|\widehat m_{1,j,z}(\phi)-\widehat m_{0,j,z}(\phi)\|_{\mathcal H_j},\\
+\widehat D_j^{\mathrm{MMD}}(\phi)
+&\triangleq
+\sum_{z:N_z^\phi>0}
+\widehat p_{j,z}(\phi)\widehat\Delta_{j,z}^{\mathrm{MMD}}(\phi).
+\label{eq:finite-mmd-empirical-discrepancy}
+\end{align}
+If an occupied stratum contains only one treatment arm, set $\widehat D_j^{\mathrm{MMD}}(\phi)=+\infty$.
+
+The MMD specialization uses its own structural stability condition. For every $\phi\in\mathcal F_j^{\mathrm{fs}}$, every positive-mass stratum $z$, every $a\in\{0,1\}$, and all $Q,Q'\in\mathcal Q_{j,z}$, assume
+\begin{align}
+\left|\mathbb E_Q\{\mu_{a,j,z}\}-\mathbb E_{Q'}\{\mu_{a,j,z}\}\right|
+\le
+\Gamma_j^{\mathrm{MMD}}(\phi)
+\operatorname{MMD}_{\kappa_j}(\mathcal K_jQ,\mathcal K_jQ'),
+\qquad
+\sup_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+\Gamma_j^{\mathrm{MMD}}(\phi)
+\le\overline\Gamma_j^{\mathrm{MMD}}<\infty.
+\label{eq:finite-mmd-stability}
+\end{align}
+
+\begin{proposition}[Finite-strata MMD learning bound]
+\label{prop:finite-strata-mmd-learning-bound}
+Let $\delta_{\mathrm D}\in(0,1)$ and suppose
+\begin{align}
+n_{\mathrm D}
+\ge
+\frac{8}{p_{\min}\eta}
+\log\left(\frac{8M_jN_j^{\mathrm{fs}}}{\delta_{\mathrm D}}\right).
+\label{eq:finite-mmd-sample-threshold}
+\end{align}
+Define
+\begin{align}
+e_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
+&\triangleq
+\rho_j
+\left[
+2+\sqrt{2\log\left(\frac{4M_jN_j^{\mathrm{fs}}}{\delta_{\mathrm D}}\right)}
+\right]
+\sqrt{\frac{2}{n_{\mathrm D}p_{\min}\eta}},\\
+r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
+&\triangleq
+2e_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
++2\rho_j
+\sqrt{
+\frac{
+2\left[M_j\log2+\log\{4N_j^{\mathrm{fs}}/\delta_{\mathrm D}\}\right]
+}{n_{\mathrm D}}
+}.
+\label{eq:finite-mmd-radius}
+\end{align}
+Then, with probability at least $1-\delta_{\mathrm D}$,
+\begin{align}
+\sup_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+\left|
+\widehat D_j^{\mathrm{MMD}}(\phi)-D_j^{\mathrm{MMD}}(\phi)
+\right|
+\le
+r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D}).
+\label{eq:finite-mmd-uniform-deviation}
+\end{align}
+If $\widehat\phi_j^{\mathrm{fs}}$ obeys
+\begin{align}
+\widehat D_j^{\mathrm{MMD}}(\widehat\phi_j^{\mathrm{fs}})
+\le
+\inf_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+\widehat D_j^{\mathrm{MMD}}(\phi)
++\varepsilon_{\mathrm{opt},j}^{\mathrm{fs}},
+\label{eq:finite-mmd-approximate-erm}
+\end{align}
+then, on the same event,
+\begin{align}
+D_j^{\mathrm{MMD}}(\widehat\phi_j^{\mathrm{fs}})
+&\le
+\inf_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+D_j^{\mathrm{MMD}}(\phi)
++2r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
++\varepsilon_{\mathrm{opt},j}^{\mathrm{fs}},
+\label{eq:finite-mmd-oracle}\\
+|\tau_{\widehat Z_j^{\mathrm{fs}}}-\tau|
+&\le
+\overline\Gamma_j^{\mathrm{MMD}}
+\left[
+\inf_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+D_j^{\mathrm{MMD}}(\phi)
++2r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
++\varepsilon_{\mathrm{opt},j}^{\mathrm{fs}}
+\right],
+\label{eq:finite-mmd-causal-oracle}
+\end{align}
+where $\widehat Z_j^{\mathrm{fs}}=\widehat\phi_j^{\mathrm{fs}}(V_j)$, provided the primitive structural conditions and overlap used in the exact bias decomposition hold for every candidate.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:finite-mmd-sample-threshold} and a multiplicative Chernoff bound imply that every candidate treatment-by-stratum cell contains at least $n_{\mathrm D}p_{\min}\eta/2$ observations except on an event of probability at most $\delta_{\mathrm D}/4$. Conditional on the cell assignments, bounded Hilbert-space mean concentration and a union bound over at most $2M_jN_j^{\mathrm{fs}}$ cells give
+\begin{align}
+\left|
+\widehat\Delta_{j,z}^{\mathrm{MMD}}(\phi)
+-\Delta_{j,z}^{\mathrm{MMD}}(\phi)
+\right|
+\le
+2e_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
+\end{align}
+simultaneously, with failure probability at most $\delta_{\mathrm D}/2$. A multinomial $L_1$ concentration bound gives
+\begin{align}
+\sum_z|\widehat p_{j,z}(\phi)-p_{j,z}(\phi)|
+\le
+\sqrt{
+\frac{
+2\left[M_j\log2+\log\{4N_j^{\mathrm{fs}}/\delta_{\mathrm D}\}\right]
+}{n_{\mathrm D}}
+}
+\end{align}
+simultaneously over candidates, with failure probability at most $\delta_{\mathrm D}/4$. On the intersection of these events, $0\le\Delta_{j,z}^{\mathrm{MMD}}(\phi)\le2\rho_j$ and the triangle inequality give equation~\eqref{eq:finite-mmd-uniform-deviation}.
+
+The empirical-risk comparison yields
+\begin{align}
+D_j^{\mathrm{MMD}}(\widehat\phi_j^{\mathrm{fs}})
+&\le
+\widehat D_j^{\mathrm{MMD}}(\widehat\phi_j^{\mathrm{fs}})
++r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})\\
+&\le
+\inf_{\phi\in\mathcal F_j^{\mathrm{fs}}}
+D_j^{\mathrm{MMD}}(\phi)
++2r_{j,n_{\mathrm D}}^{\mathrm{MMD}}(\delta_{\mathrm D})
++\varepsilon_{\mathrm{opt},j}^{\mathrm{fs}},
+\end{align}
+which proves equation~\eqref{eq:finite-mmd-oracle}. The exact bias decomposition and the MMD stability condition in equation~\eqref{eq:finite-mmd-stability} give
+\begin{align}
+|\tau_{Z_j^\phi}-\tau|
+\le
+\Gamma_j^{\mathrm{MMD}}(\phi)D_j^{\mathrm{MMD}}(\phi).
+\end{align}
+Apply this inequality to $\widehat\phi_j^{\mathrm{fs}}$ and substitute equation~\eqref{eq:finite-mmd-oracle} to obtain equation~\eqref{eq:finite-mmd-causal-oracle}.
+\end{proof}
