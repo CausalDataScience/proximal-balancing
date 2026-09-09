@@ -105,7 +105,7 @@ For each $\phi\in\mathcal F_{j,n_{\mathrm D}}$, define
 	\label{eq:critic-approximation-error}
 \end{align}
 
-Under the measurability conditions stated in   Assumption~\ref{ass:learning-measurability}, with probability at least $1-\delta_{\mathrm D}$,
+Under the measurability conditions stated in Assumption~\ref{ass:learning-measurability}, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
 	\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
 	|\widetilde D_{j,n_{\mathrm D}}^2(\phi)-D_{\mathrm{res},j}^2(\phi)|
@@ -135,13 +135,8 @@ An exact empirical minimizer has $\varepsilon_{\mathrm{enc},j}=0$.
 \begin{proposition}[Residual-discrepancy oracle inequality]
 \label{thm:representation-oracle}
 \normalfont
- Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes,  approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
+ Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
- D_{\mathrm{res},j}^2(\widehat\phi_j)
- &\le
- \left[\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)\right]_+
- +r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j},
- \label{eq:representation-empirical-discrepancy}\\
  D_{\mathrm{res},j}^2(\widehat\phi_j)
  &\le
  \inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
@@ -174,7 +169,7 @@ The adjustment functional is used whenever its two conditional means are absolut
 \label{cor:representation-causal}
 \normalfont
 
-Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes,  approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
+Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} and Assumption~\ref{ass:learning-measurability} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
 	|\tau_{\widehat Z_j}-\tau|
 	\le
@@ -191,213 +186,129 @@ At fixed confidence and fixed overlap constant $\eta$, the right-hand side is $O
 
 \subsection{AIPW Estimation}
 \label{sec:aipw-estimation}
- Conditional on the observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, the map $\widehat\phi_j$ is fixed and $\widehat Z_j=\widehat\phi_j(V_j)$. Below, conditioning on learning samples means conditioning on all observations indexed by those samples and the seeds used to fit the encoder and nuisance functions; population expectations use a fresh independent observation. Define the conditional outcome means and representation propensity
-\begin{align}
-m_{a,j}(z)
-&\triangleq
-\mathbb E(Y\mid A=a,\widehat Z_j=z),\\
-e_j(z)
-&\triangleq
-P(A=1\mid\widehat Z_j=z).
-\label{eq:aipw-nuisances}
+This section estimates the adjustment functional $\tau_{\widehat Z_j}$ of the learned representation with an augmented inverse probability weighted (AIPW) estimator \citep{robins1994estimation,tsiatis2006semiparametric} computed on the evaluation sample.
+ Define the conditional outcome means and representation propensity
+\begin{align}\label{eq:aipw-nuisances}
+	m_{a,j}(z) &\triangleq \mathbb E(Y\mid A=a,\widehat Z_j=z),\\
+	e_j(z) &\triangleq P(A=1\mid\widehat Z_j=z).
 \end{align}
 For the observed adjustment functional $\tau_{\widehat Z_j}$, the following is the AIPW score:
-\begin{align}
-\psi_j(O)
-\triangleq{}&
-m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)
-\nonumber\\
-&+
-\frac{A\{Y-m_{1,j}(\widehat Z_j)\}}{e_j(\widehat Z_j)}
--
-\frac{(1-A)\{Y-m_{0,j}(\widehat Z_j)\}}{1-e_j(\widehat Z_j)}
--
-\tau_{\widehat Z_j}.
-\label{eq:fixed-representation-eif}
+\begin{align}\label{eq:fixed-representation-eif}
+	\mathtt{IF}_j(O) \triangleq & m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j) +
+	\frac{A\{Y-m_{1,j}(\widehat Z_j)\}}{e_j(\widehat Z_j)}
+	-
+	\frac{(1-A)\{Y-m_{0,j}(\widehat Z_j)\}}{1-e_j(\widehat Z_j)}
+	-
+	\tau_{\widehat Z_j}.
 \end{align}
-When this score is square-integrable, it is the efficient influence function in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
+When this score is square-integrable, it is the \textit{efficient influence function} in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
 
 \begin{definition}[Honest AIPW estimator]
 \label{def:honest-aipw}
+\normalfont
 For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$ and
-\begin{align}
-S_j(O_i)
-\triangleq{}&
-\widehat m_{1,j}(\widehat Z_{j,i})
--
-\widehat m_{0,j}(\widehat Z_{j,i})
-\nonumber\\
-&+
-\frac{A_i\{Y_i-\widehat m_{1,j}(\widehat Z_{j,i})\}}
-{\widehat e_j(\widehat Z_{j,i})}
-\nonumber\\
-&-
-\frac{(1-A_i)\{Y_i-\widehat m_{0,j}(\widehat Z_{j,i})\}}
-{1-\widehat e_j(\widehat Z_{j,i})}.
-\label{eq:aipw-score}
+\begin{align}\label{eq:aipw-score}
+	\mathtt{UIF}_j(O_i)
+	\triangleq{}&
+	\widehat m_{1,j}(\widehat Z_{j,i})
+	-
+	\widehat m_{0,j}(\widehat Z_{j,i})
+	\nonumber\\
+	&+
+	\frac{A_i\{Y_i-\widehat m_{1,j}(\widehat Z_{j,i})\}}
+	{\widehat e_j(\widehat Z_{j,i})}
+	\nonumber\\
+	&-
+	\frac{(1-A_i)\{Y_i-\widehat m_{0,j}(\widehat Z_{j,i})\}}
+	{1-\widehat e_j(\widehat Z_{j,i})}.
 \end{align}
+The score $\mathtt{UIF}_j$ is the uncentered plug-in version of $\mathtt{IF}_j$: it replaces the nuisance functions by their estimates and omits the centering term $\tau_{\widehat Z_j}$.
 The honest AIPW estimator is
-\begin{align}
-\boxed{
-\widehat\tau_j^{\mathrm{AIPW}}
-\triangleq
-\frac{1}{n_{\mathrm E}}
-\sum_{i\in\mathcal I_{\mathrm E}}S_j(O_i).
-}
-\label{eq:honest-aipw}
+\begin{align}\label{eq:honest-aipw}
+	\widehat\tau_j^{\mathrm{AIPW}} \triangleq \frac{1}{n_{\mathrm E}} \sum_{i\in\mathcal I_{\mathrm E}}\mathtt{UIF}_j(O_i).
 \end{align}
 \end{definition}
 
+The plug-in score has the doubly robust remainder structure of augmented inverse probability weighting \citep{chernozhukov2017double,kennedy2022semiparametric}: its conditional bias is a product of the propensity error and the outcome-regression errors, as the next proposition states exactly.
 \begin{proposition}[Exact signed nuisance remainder]
 \label{prop:aipw-remainder}
+\normalfont
 Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$,
-\begin{align}
-&\mathbb E\{S_j(O)\}-\tau_{\widehat Z_j}
-\nonumber\\
-&=
-\mathbb E
-\Bigg[
-\{\widehat e_j(\widehat Z_j)-e_j(\widehat Z_j)\}
-\Bigg\{
-\frac{\widehat m_{1,j}(\widehat Z_j)-m_{1,j}(\widehat Z_j)}
-{\widehat e_j(\widehat Z_j)}
-\nonumber\\
-&\hspace{51mm}
-+
-\frac{\widehat m_{0,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)}
-{1-\widehat e_j(\widehat Z_j)}
-\Bigg\}
-\Bigg].
-\label{eq:aipw-remainder}
+\begin{align}\label{eq:aipw-remainder}
+	\mathbb E\{\mathtt{UIF}_j(O)\}-\tau_{\widehat Z_j} &=
+	\mathbb E
+	\Bigg[
+	\{\widehat e_j(\widehat Z_j)-e_j(\widehat Z_j)\}
+	\Bigg\{
+	\frac{\widehat m_{1,j}(\widehat Z_j)-m_{1,j}(\widehat Z_j)}
+	{\widehat e_j(\widehat Z_j)} +
+	\frac{\widehat m_{0,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j)}
+	{1-\widehat e_j(\widehat Z_j)}
+	\Bigg\}
+	\Bigg].
 \end{align}
 \end{proposition}
 
 The remainder is zero if the propensity estimator is correct. It is also zero if both conditional outcome estimators are correct.
 
-\begin{theorem}[Conditional finite-sample AIPW error]
-\label{thm:conditional-aipw-error}
-Suppose $|Y|\le B$ almost surely. Clip the nuisance estimates so that
+Clip the propensity estimate so that $\eta\le\widehat e_j(z)\le1-\eta$. Conditional on the two learning samples, that is, on their observations and the seeds used to fit the encoder and the nuisance functions, define for a function $g$ of $\widehat Z_j$ the norm $\|g\|_{2,\widehat Z_j}\triangleq[\mathbb E\{g(\widehat Z_j)^2\mid\mathcal I_{\mathrm D},\mathcal I_{\mathrm N}\}]^{1/2}$ and the realized nuisance errors
 \begin{align}
--B\le\widehat m_{a,j}(z)\le B,
+q_{e,j}\triangleq\|\widehat e_j-e_j\|_{2,\widehat Z_j},
 \qquad
-\eta\le\widehat e_j(z)\le1-\eta.
-\label{eq:nuisance-clipping}
-\end{align}
-For a function $g$ of $\widehat Z_j$, define
-\begin{align}
-\|g\|_{2,\widehat Z_j}
-\triangleq
-\left[
-\mathbb E\{g(\widehat Z_j)^2\mid
-\mathcal I_{\mathrm D},\mathcal I_{\mathrm N}\}
-\right]^{1/2}.
-\end{align}
-After the two learning samples are observed, define
-\begin{align}
-q_{e,j}&\triangleq\|\widehat e_j-e_j\|_{2,\widehat Z_j},\\
-q_{a,j}&\triangleq\|\widehat m_{a,j}-m_{a,j}\|_{2,\widehat Z_j},
+q_{a,j}\triangleq\|\widehat m_{a,j}-m_{a,j}\|_{2,\widehat Z_j},
 \qquad a\in\{0,1\}.
 \label{eq:realized-nuisance-errors}
 \end{align}
-For $\delta_{\mathrm E}\in(0,1)$, define
+Let $\sigma_j^2\triangleq\mathrm{Var}\{\mathtt{UIF}_j(O)\mid\mathcal I_{\mathrm D},\mathcal I_{\mathrm N}\}$ denote the conditional variance of the plug-in score; it is finite whenever $\mathbb E(Y^2)<\infty$ and the outcome estimates are square-integrable. For $\delta_{\mathrm E}\in(0,1)$, define
 \begin{align}
 \varepsilon_{\mathrm{AIPW},j}
-\triangleq{}&
-2B\left(1+\frac{1}{\eta}\right)
-\sqrt{\frac{2\log(2/\delta_{\mathrm E})}{n_{\mathrm E}}}
-\nonumber\\
-&+
+\triangleq
+\frac{\sigma_j}{\sqrt{n_{\mathrm E}\delta_{\mathrm E}}}
++
 \frac{q_{e,j}(q_{0,j}+q_{1,j})}{\eta}.
 \label{eq:aipw-error-radius}
 \end{align}
-Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$, with probability at least $1-\delta_{\mathrm E}$ over $\mathcal I_{\mathrm E}$,
+The next theorem is the final guarantee of this section: the causal error of the honest AIPW estimator is at most the estimation radius $\varepsilon_{\mathrm{AIPW},j}$ plus the stability-weighted residual discrepancy of the learned representation.
+
+\begin{theorem}[Finite-sample causal error of honest AIPW]
+\label{thm:conditional-aipw-error}
+\normalfont
+
+Suppose $\sigma_j<\infty$. Conditional on the two learning samples, with probability at least $1-\delta_{\mathrm E}$ over $\mathcal I_{\mathrm E}$,
 \begin{align}
-\boxed{
 |\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|
 \le
 \varepsilon_{\mathrm{AIPW},j}.
-}
 \label{eq:conditional-aipw-error}
 \end{align}
-\end{theorem}
-
-\subsection{End-to-End Finite-Sample Bound}
-\label{sec:end-to-end-bound}
-
-\begin{theorem}[End-to-end sensitivity bound]
-\label{thm:end-to-end-sensitivity}
- Suppose the conditions of Proposition~\ref{prop:uniform-discrepancy-deviation},  Proposition~\ref{thm:representation-oracle},  Theorem~\ref{cor:representation-causal}, and Theorem~\ref{thm:conditional-aipw-error} hold. Then, jointly over the three independent samples, with probability at least $1-\delta_{\mathrm D}-\delta_{\mathrm E}$,
+If, in addition, the assumptions of Theorem~\ref{cor:representation-causal} hold, then on the same event
 \begin{align}
-\boxed{
 |\widehat\tau_j^{\mathrm{AIPW}}-\tau|
 \le
 \varepsilon_{\mathrm{AIPW},j}
 +
 \frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
-\left[
-\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)
-+r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}
-\right]^{1/2}.
-}
-\label{eq:end-to-end-empirical}
+D_{\mathrm{res},j}(\widehat\phi_j).
+\label{eq:end-to-end-sensitivity}
 \end{align}
-It also satisfies the oracle form
-\begin{align}
-\boxed{
-\begin{aligned}
-|\widehat\tau_j^{\mathrm{AIPW}}-\tau|
-&\le
-\varepsilon_{\mathrm{AIPW},j}
-\\
-&\quad+
-\frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)}
-\left[
-\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
-+2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\}
-+\varepsilon_{\mathrm{enc},j}
-\right]^{1/2}.
-\end{aligned}
-}
-\label{eq:end-to-end-oracle}
-\end{align}
+
 \end{theorem}
 
 \begin{corollary}[Consistency]
 \label{cor:learned-aipw-consistency}
- Consider a sequence of encoder and critic classes, sample splits, nuisance estimators, optimization tolerances, and candidate-specific stability constants satisfying Theorem~\ref{thm:end-to-end-sensitivity} with common constants $B<\infty$ and $\eta\in(0,1/2]$; write $\widehat\phi_{j,n}$ for the selected encoder at total sample size $n$. If
-\begin{align}
-\delta_{\mathrm D,n}+\delta_{\mathrm E,n}&\longrightarrow0,\\
-\frac{\log(2/\delta_{\mathrm E,n})}{n_{\mathrm E}}&\longrightarrow0,\\
-q_{e,j,n}(q_{0,j,n}+q_{1,j,n})&\xrightarrow{p}0,
-\end{align}
-and
-\begin{align}
-\frac{\Gamma_j(\widehat\phi_{j,n})}{\eta(1-\eta)}
-\left[
-\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)
-+2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D,n})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j,n}\}
-+\varepsilon_{\mathrm{enc},j,n}
-\right]^{1/2}
-\xrightarrow{p}0,
-\label{eq:consistency-representation-condition}
-\end{align}
-then
-\begin{align}
-\widehat\tau_{j,n}^{\mathrm{AIPW}}
-\xrightarrow{p}
-\tau.
-\end{align}
+\normalfont
+
+Consider a sequence of encoder and critic classes, sample splits, nuisance estimators, optimization tolerances, and selected encoders $\widehat\phi_{j,n}$ indexed by the total sample size $n$, with a common overlap constant $\eta\in(0,1/2]$, such that Theorem~\ref{thm:conditional-aipw-error} applies at every $n$. Suppose the following three conditions hold.
+\begin{enumerate}[label=(C\arabic*),leftmargin=*]
+\item \textit{Vanishing evaluation error.} $\delta_{\mathrm E,n}\to0$ and $\sigma_{j,n}^2/(n_{\mathrm E}\delta_{\mathrm E,n})\to0$. The evaluation sample grows faster than the confidence level shrinks.
+\item \textit{Vanishing nuisance product.} $q_{e,j,n}(q_{0,j,n}+q_{1,j,n})\xrightarrow{p}0$. The propensity and outcome-regression errors need not vanish individually; their product vanishes, for example, when each is $o_p(n^{-1/4})$.
+\item \textit{Vanishing learned imbalance.} $\Gamma_j(\widehat\phi_{j,n})D_{\mathrm{res},j}(\widehat\phi_{j,n})\xrightarrow{p}0$. By Proposition~\ref{thm:representation-oracle}, this holds when $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)$, the two Rademacher complexities, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j,n}$, $\varepsilon_{\mathrm{enc},j,n}$, and $\delta_{\mathrm D,n}$ all converge to zero and $\Gamma_j(\widehat\phi_{j,n})=O_p(1)$.
+\end{enumerate}
+Then $\widehat\tau_{j,n}^{\mathrm{AIPW}}\xrightarrow{p}\tau$.
+
 \end{corollary}
 
-\begin{remark}[Interpretation and observability]
-\label{rem:end-to-end-observability}
-Theorem~\ref{thm:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The  selected stability constant $\Gamma_j(\widehat\phi_j)$, critic approximation error $a_{j,n_{\mathrm D}}$, optimization tolerances, and nuisance errors are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by theory, computation, external information, or a declared sensitivity analysis.
-\end{remark}
-
-\begin{remark}[Scope]
-\label{rem:end-to-end-scope}
-The theorem uses one prespecified held-out block, deterministic encoders, bounded critics, and an honest three-way split. It permits continuous representations and complexity-controlled neural classes, but it does not guarantee that a particular numerical optimizer reaches a global minimum. The random-search result below concerns only computational subsampling of population orientations and does not extend this fixed-$j$ learning and inference result.
-\end{remark}
+Equation~\eqref{eq:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The selected stability constant $\Gamma_j(\widehat\phi_j)$, critic approximation error $a_{j,n_{\mathrm D}}$, optimization tolerances, and nuisance errors are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by theory, computation, external information, or a declared sensitivity analysis.
 
 \subsection{Searching Across Held-Out Orientations}
 \label{sec:random-orientation-search}

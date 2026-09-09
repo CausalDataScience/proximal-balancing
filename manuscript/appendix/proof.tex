@@ -423,14 +423,14 @@ Combine equations~\eqref{eq:brier-risk-uniform-deviation-app}--\eqref{eq:populat
 \end{proof}
 
 \paragraph{Representation-learning oracle inequality.}
-\begin{proof}[Proof of  Proposition~\ref{thm:representation-oracle}]
+\begin{proof}[Proof of Proposition~\ref{thm:representation-oracle}]
 On the event in equation~\eqref{eq:uniform-discrepancy-deviation}, set
 \begin{align}
 \xi_{j,n_{\mathrm D}}
 \triangleq
 r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}.
 \end{align}
-The deviation inequality evaluated at $\widehat\phi_j$ immediately gives equation~\eqref{eq:representation-empirical-discrepancy}. Moreover,
+The deviation inequality at $\widehat\phi_j$, Equation~\eqref{eq:approximate-erm}, and the deviation inequality at a near-minimizer of $D_{\mathrm{res},j}^2$ over $\mathcal F_{j,n_{\mathrm D}}$ give
 \begin{align}
 D_{\mathrm{res},j}^2(\widehat\phi_j)
 &\le
@@ -448,7 +448,7 @@ which proves equation~\eqref{eq:representation-oracle-discrepancy}.
 \end{proof}
 
 \paragraph{Causal error of the learned representation.}
-\begin{proof}[Proof of  Theorem~\ref{cor:representation-causal}]
+\begin{proof}[Proof of Theorem~\ref{cor:representation-causal}]
 Conditional on the training observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, the selected encoder is fixed; the population expectations below use a fresh observation independent of these training inputs. Equation~\eqref{eq:uniform-approximate-proxy-bias-bound} gives
 \begin{align}
 |\tau_{\widehat Z_j}-\tau|
@@ -463,7 +463,7 @@ Taking the square root of equation~\eqref{eq:representation-oracle-discrepancy} 
 \begin{proof}[Proof of Proposition~\ref{prop:aipw-remainder}]
 Fix $\widehat Z_j=z$. Taking the conditional expectation of the score and using equation~\eqref{eq:aipw-nuisances} gives
 \begin{align}
-\mathbb E\{S_j(O)\mid\widehat Z_j=z\}
+\mathbb E\{\mathtt{UIF}_j(O)\mid\widehat Z_j=z\}
 ={}&
 \widehat m_{1,j}(z)-\widehat m_{0,j}(z)
 \nonumber\\
@@ -480,36 +480,17 @@ Subtract $m_{1,j}(z)-m_{0,j}(z)$ and collect the two nuisance errors. Averaging 
 
 \paragraph{Conditional finite-sample AIPW error.}
 \begin{proof}[Proof of Theorem~\ref{thm:conditional-aipw-error}]
-The boundedness and clipping conditions imply
-\begin{align}
-|S_j(O)|
-\le
-2B\left(1+\frac{1}{\eta}\right).
-\end{align}
-Conditional on the two learning samples, Hoeffding's inequality bounds the difference between the evaluation average and its conditional expectation by the first term in equation~\eqref{eq:aipw-error-radius}. Proposition~\ref{prop:aipw-remainder}, Cauchy--Schwarz, and the propensity clipping bound control the absolute conditional remainder by
+ Conditional on the two learning samples, the evaluation observations are independent and the score $\mathtt{UIF}_j(O)$ has variance $\sigma_j^2$, so Chebyshev's inequality bounds the difference between the evaluation average and its conditional expectation by $\sigma_j/\sqrt{n_{\mathrm E}\delta_{\mathrm E}}$, the first term in equation~\eqref{eq:aipw-error-radius}, with probability at least $1-\delta_{\mathrm E}$. Proposition~\ref{prop:aipw-remainder}, Cauchy--Schwarz, and the propensity clipping bound control the absolute conditional remainder by
 \begin{align}
 \frac{q_{e,j}(q_{0,j}+q_{1,j})}{\eta}.
 \end{align}
 The triangle inequality proves equation~\eqref{eq:conditional-aipw-error}.
-\end{proof}
-
-\paragraph{End-to-end sensitivity bound.}
-\begin{proof}[Proof of Theorem~\ref{thm:end-to-end-sensitivity}]
-The triangle inequality gives
-\begin{align}
-|\widehat\tau_j^{\mathrm{AIPW}}-\tau|
-\le
-|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|
-+
-|\tau_{\widehat Z_j}-\tau|.
-\label{eq:end-to-end-triangle}
-\end{align}
-Theorem~\ref{thm:conditional-aipw-error} bounds the first term. Equation~\eqref{eq:uniform-approximate-proxy-bias-bound} bounds the second term by $\Gamma_j(\widehat\phi_j)D_{\mathrm{res},j}(\widehat\phi_j)/\{\eta(1-\eta)\}$. Equation~\eqref{eq:representation-empirical-discrepancy} and monotonicity of the square root prove equation~\eqref{eq:end-to-end-empirical}. Equation~\eqref{eq:representation-oracle-causal} proves the oracle form. A union bound over the discrepancy-learning and evaluation events gives the stated joint probability.
+For equation~\eqref{eq:end-to-end-sensitivity}, the triangle inequality gives $|\widehat\tau_j^{\mathrm{AIPW}}-\tau|\le|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|+|\tau_{\widehat Z_j}-\tau|$. Equation~\eqref{eq:conditional-aipw-error} bounds the first term on the same event, and equation~\eqref{eq:uniform-approximate-proxy-bias-bound} bounds the second term by $\Gamma_j(\widehat\phi_j)D_{\mathrm{res},j}(\widehat\phi_j)/\{\eta(1-\eta)\}$.
 \end{proof}
 
 \paragraph{Consistency.}
 \begin{proof}[Proof of Corollary~\ref{cor:learned-aipw-consistency}]
-The first three conditions make the evaluation-sample and nuisance-product components of $\varepsilon_{\mathrm{AIPW},j}$ converge to zero. Equation~\eqref{eq:consistency-representation-condition} makes the stability-weighted residual-discrepancy term vanish. The failure probability of Theorem~\ref{thm:end-to-end-sensitivity} also converges to zero, which proves convergence in probability.
+ Condition (C1) makes the evaluation term $\sigma_{j,n}/\sqrt{n_{\mathrm E}\delta_{\mathrm E,n}}$ of $\varepsilon_{\mathrm{AIPW},j}$ vanish, condition (C2) makes its nuisance-product term vanish, and condition (C3) makes the stability-weighted residual-discrepancy term in equation~\eqref{eq:end-to-end-sensitivity} vanish. The failure probability $\delta_{\mathrm E,n}$ of Theorem~\ref{thm:conditional-aipw-error} also converges to zero, which proves convergence in probability.
 \end{proof}
 
 \paragraph{Random orientation search.}
