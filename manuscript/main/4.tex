@@ -208,17 +208,14 @@ When this score is square-integrable, it is the \textit{efficient influence func
 \normalfont
 For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$ and
 \begin{align}\label{eq:aipw-score}
-	\mathtt{UIF}_j(O_i)
-	\triangleq{}&
+	\mathtt{UIF}_j(O_i) \triangleq{}&
 	\widehat m_{1,j}(\widehat Z_{j,i})
 	-
 	\widehat m_{0,j}(\widehat Z_{j,i})
-	\nonumber\\
-	&+
+	+
 	\frac{A_i\{Y_i-\widehat m_{1,j}(\widehat Z_{j,i})\}}
 	{\widehat e_j(\widehat Z_{j,i})}
-	\nonumber\\
-	&-
+	-
 	\frac{(1-A_i)\{Y_i-\widehat m_{0,j}(\widehat Z_{j,i})\}}
 	{1-\widehat e_j(\widehat Z_{j,i})}.
 \end{align}
@@ -310,64 +307,130 @@ Then $\widehat\tau_{j,n}^{\mathrm{AIPW}}\xrightarrow{p}\tau$.
 
 Equation~\eqref{eq:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The selected stability constant $\Gamma_j(\widehat\phi_j)$, critic approximation error $a_{j,n_{\mathrm D}}$, optimization tolerances, and nuisance errors are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by theory, computation, external information, or a declared sensitivity analysis.
 
-\subsection{Searching Across Held-Out Orientations}
+\subsection[Searching Across Proxy Splits]{Searching Across Proxy Splits}
 \label{sec:random-orientation-search}
+Exhaustive evaluation of all proxy splits in $\mathfrak S$, defined in Equation~\eqref{eq:all-held-out-orientations}, may be computationally expensive. The number of splits, $|\mathfrak S|=2^J-2$, grows exponentially in the number of blocks $J$, and each split requires its own representation and nuisance fits.
 
-Exhaustive evaluation of all orientations in $\mathfrak S$ may be computationally expensive. We therefore consider randomized subsampling of the population candidates defined in Section~\ref{sec:unknown-valid-held-out-block}. This result concerns computational search over exact population values. It is not a finite-sample clustering or causal-inference guarantee.
+ Algorithm~\ref{alg:probe-search} therefore samples $m$ proxy splits instead of evaluating all of them, and then works in four stages. The sampling stage draws the splits $S$ (line~\ref{ln:sample}). The screening stage keeps the splits that pass the empirical balance screen (lines~\ref{ln:screen-start}--\ref{ln:screen-end}). The estimation stage computes one honest AIPW estimate per retained split (lines~\ref{ln:estimate-start}--\ref{ln:estimate-end}). The aggregation stage links estimates that lie within a common radius $\rho$ of one another and returns the median of the largest group (lines~\ref{ln:link}--\ref{ln:return}), which is the plurality rule of Theorem~\ref{thm:unknown-valid-block-identification} applied to estimated candidates.
 
-Let $T\triangleq|\mathfrak S|=2^J-2$ and $N\triangleq|\mathcal B|$. Let the search budget $M\in\{0,\ldots,T\}$ be chosen independently of the observed data and all representation-learning outcomes. Conditional on $M=m$, sample $m$ orientations uniformly without replacement from $\mathfrak S$. Let $\mathcal R_m$ be the sampled orientations that also belong to $\mathcal B$, and let $R\triangleq|\mathcal R_m|$. Then
+Three questions decide whether the output is the true effect. (1) Does the random draw keep enough splits in $\widehat{\mathcal B}$, the set of splits that would pass the screening stage in lines~\ref{ln:screen-start}--\ref{ln:screen-end}, which is the finite-sample counterpart of the population balance-screen set $\mathcal B$ in Equation~\eqref{eq:population-balance-screen}? (2) Among them, does the true effect remain the most frequent value, which is the plurality condition of Theorem~\ref{thm:unknown-valid-block-identification}? (3) Once the candidate values are estimated rather than exact, does the largest linked group still consist of the splits that carry the true effect?
+
+\begin{algorithm}[t]
+\caption{PROBE with proxy-split search}
+\label{alg:probe-search}
+	\KwIn{a block partition $W=(W_1,\ldots,W_J)$; observations split into $\mathcal I_{\mathrm D}$, $\mathcal I_{\mathrm N}$, $\mathcal I_{\mathrm E}$; a budget $m$; a threshold $t\ge0$; an overlap constant $\eta$; a linking radius $\rho>0$.}
+	\KwOut{an estimate $\widehat\tau$ of $\tau$, or a candidate set.}
+	Draw $m$ proxy splits uniformly without replacement from $\mathfrak S$\label{ln:sample}\;
+	\ForEach{sampled split $S$\label{ln:screen-start}}{
+		learn $\widehat\phi_S$ on $\mathcal I_{\mathrm D}$ by minimizing $\widetilde D_{S,n_{\mathrm D}}^2$\;
+		retain $S$ if $\widetilde D_{S,n_{\mathrm D}}^2(\widehat\phi_S)\le t$ and $\eta\le\widehat e_S\le1-\eta$\;
+	}
+	Let $\mathcal R_m$ be the set of retained splits\label{ln:screen-end}\;
+	\ForEach{$S\in\mathcal R_m$\label{ln:estimate-start}}{
+		compute the honest AIPW estimate $\widehat\theta_S$ of Definition~\ref{def:honest-aipw} on $\mathcal I_{\mathrm E}$\label{ln:estimate-end}\;
+	}
+	Link $S$ and $S'$ whenever $|\widehat\theta_S-\widehat\theta_{S'}|\le2\rho$, and form the connected components\label{ln:link}\;
+	\Return the median of $\{\widehat\theta_S\}$ over the largest component; if several components share the largest size, return their medians as a candidate set\label{ln:return}\;
+\end{algorithm}
+
+Throughout this subsection, condition on the learning samples $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$ and on any internal randomness of the learning procedure, so that for every $S\in\mathfrak S$ the learned encoder $\widehat\phi_S$, the nuisance estimates, the outcome of the screen in lines~\ref{ln:screen-start}--\ref{ln:screen-end}, and hence the set $\widehat{\mathcal B}$, are fixed. For $S\in\widehat{\mathcal B}$, let
+
+\begin{align}\label{eq:learned-candidate-value}
+	\theta_S\triangleq\tau_{\widehat Z_S}
+	=\mathbb E\bigl[\mathbb E(Y\mid A=1,\widehat Z_S)-\mathbb E(Y\mid A=0,\widehat Z_S)\bigr],
+	\qquad
+	\widehat Z_S\triangleq\widehat\phi_S(V_S),
+\end{align}
+be the population adjustment value of Equation~\eqref{eq:learned-adjustment-functional} for the learned representation. By Theorem~\ref{thm:approximate-proxy-bias-bound}, $\theta_S=\tau$ whenever $\widehat Z_S$ is exactly balanced and the assumptions of that theorem hold for $S$.
+
+Let $T\triangleq|\mathfrak S|=2^J-2$ and $N\triangleq|\widehat{\mathcal B}|$. Fix the budget $m\in\{1,\ldots,T\}$ of Algorithm~\ref{alg:probe-search}. Line~\ref{ln:sample} draws $m$ proxy splits uniformly without replacement from $\mathfrak S$, with randomness independent of the data. Let $\mathcal R_m$ be the sampled proxy splits that also belong to $\widehat{\mathcal B}$, which is the retained set of line~\ref{ln:screen-end}, and let $R\triangleq|\mathcal R_m|$. Then
 \begin{align}
-R\mid M=m\sim\operatorname{Hypergeometric}(T,N,m).
+	R\sim\operatorname{Hypergeometric}(T,N,m),
 \label{eq:retained-orientation-count}
 \end{align}
-Conditional on $(M=m,R=r)$, the retained set $\mathcal R_m$ is a uniformly sampled $r$-element subset of $\mathcal B$.
+since exactly $N$ of the $T$ candidates belong to $\widehat{\mathcal B}$ and the $m$ draws are made without replacement.
 
-For $c\in\mathbb R$, define the population count
-\begin{align}
-n(c)\triangleq\bigl|\{S\in\mathcal B:\theta_S=c\}\bigr|.
-\label{eq:population-orientation-count}
+For $c\in\mathbb R$, define the count and the number of non-target values
+\begin{align}\label{eq:population-orientation-count}
+	n(c)\triangleq\bigl|\{S\in\widehat{\mathcal B}:\theta_S=c\}\bigr|,
+	\qquad L\triangleq\bigl|\{c'\in\mathbb R:c'\ne\tau,\ n(c')>0\}\bigr|,
 \end{align}
-Let
-\begin{align}
-L\triangleq\bigl|\{c\in\mathbb R:c\ne\tau,\ n(c)>0\}\bigr|
-\label{eq:number-nontarget-clusters}
+ so that $n(c)$ is the number of screened splits whose candidate value equals $c$ and $L$ is the number of distinct candidate values other than $\tau$.
+ Adopt the convention that a maximum over an empty collection equals zero and define
+\begin{align}\label{eq:population-plurality-gap}
+	p_\tau
+	\triangleq
+	\frac{n(\tau)}{N},
+	\qquad
+	p_\star
+	\triangleq
+	\max_{c\ne\tau:\,n(c)>0}\frac{n(c)}{N},
+	\qquad
+	\Delta\triangleq p_\tau-p_\star.
 \end{align}
-be the number of non-target population values. When $L\ge1$, define
-\begin{align}
-p_\tau
-\triangleq
-\frac{n(\tau)}{N},
-\qquad
-p_\star
-\triangleq
-\max_{c\ne\tau:\,n(c)>0}\frac{n(c)}{N},
-\qquad
-\Delta\triangleq p_\tau-p_\star.
-\label{eq:population-plurality-gap}
-\end{align}
+Here $p_\tau$ is the fraction of screened proxy splits whose candidate value is the true effect, $p_\star$ is the largest fraction that share one incorrect value, and $\Delta$ is the margin by which the true effect wins the plurality vote. The condition $\Delta>0$ is the plurality condition of Eq.~\eqref{eq:unique-target-plurality} with $\mathcal B$ replaced by $\widehat{\mathcal B}$.
 
-\begin{theorem}[Recovery by random orientation search]
-\label{thm:random-orientation-plurality}
+Two quantities of the distribution in Equation~\eqref{eq:retained-orientation-count} enter the guarantee below: the probability that no sampled split passes the screen, and the expected value of $e^{-R\Delta^2/2}$,
+\begin{align}\label{eq:sampling-failure-terms}
+	P(R=0)=\binom{T-N}{m}\Big/\binom{T}{m},
+	\qquad
+	\mathbb E\bigl\{e^{-R\Delta^2/2}\bigr\}
+	=\sum_{r=0}^{\min(m,N)}\binom{N}{r}\binom{T-N}{m-r}\,e^{-r\Delta^2/2}\Big/\binom{T}{m}.
+\end{align}
+Both are finite sums, and both decrease as the budget $m$ grows, because $R$ is stochastically increasing in $m$.
+
+The following theorem bounds the error of the output of Algorithm~\ref{alg:probe-search}. Its probability is over the evaluation sample and the random draw of splits, conditional on the learning samples.
+
+\begin{theorem}[Error of Algorithm~\ref{alg:probe-search}]
+\label{thm:probe-search-error}
 \normalfont
-Suppose $\mathcal B\ne\varnothing$ and
-\begin{align*}
-n(\tau)>\max_{c\ne\tau:\,n(c)>0}n(c),
-\end{align*}
-where the maximum over an empty collection is zero. Fix $m\in\{0,\ldots,T\}$ such that $P(M=m)>0$, and fix an integer $1\le r_0\le\min(m,N)$. Suppose
-\begin{align}
-P(R\ge r_0\mid M=m)\ge1-\eta_R(m).
-\label{eq:retained-count-probability}
+
+Condition on the learning samples. Let $\widehat{\mathcal B}$ be the screened set of lines~\ref{ln:screen-start}--\ref{ln:screen-end}, let $\theta_S$ be as in Equation~\eqref{eq:learned-candidate-value}, let $n(c)$, $L$, and $\Delta$ be as in Equations~\eqref{eq:population-orientation-count} and~\eqref{eq:population-plurality-gap}, and let $\widehat\theta_S$ be the honest AIPW estimate of Definition~\ref{def:honest-aipw} for split $S$. Let $m\in\{1,\ldots,T\}$ be the budget, and suppose the following three conditions hold.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item \textit{Plurality.} $\Delta>0$, that is, $n(\tau)>n(c)$ for every $c\ne\tau$.
+\item \textit{Uniform radius.} On an event of probability at least $1-\delta$ over the evaluation sample, $|\widehat\theta_S-\theta_S|\le\rho$ for every $S\in\widehat{\mathcal B}$.
+\item \textit{Separation.} Any two distinct values in $\{\theta_S:S\in\widehat{\mathcal B}\}$ differ by more than $4\rho$.
+\end{enumerate}
+Then the output $\widehat\tau$ of Algorithm~\ref{alg:probe-search} run with linking radius $\rho$ satisfies
+\begin{align}\label{eq:probe-search-error-probability}
+	P\bigl(|\widehat\tau-\tau|\le\rho\bigr)
+	\ \ge\
+	1-\delta-P(R=0)-L\,\mathbb E\bigl\{e^{-R\Delta^2/2}\bigr\},
 \end{align}
-The procedure returns failure when $R=0$. If $L\ge1$, select the value having the largest retained count and treat any tie as failure. Conditional on $M=m$, this procedure returns $\tau$ with probability at least
-\begin{align}
-\left[
-1-\eta_R(m)-L\exp\left\{-\frac{r_0\Delta^2}{2}\right\}
-\right]_+,
-\qquad
-[x]_+\triangleq\max(x,0).
-\label{eq:random-search-plurality-probability}
-\end{align}
-If $L=0$, every retained candidate equals $\tau$, so recovery succeeds whenever $R\ge1$; neither $p_\tau$, $p_\star$, nor $\Delta$ is needed in this case.
+where $R\sim\operatorname{Hypergeometric}(T,N,m)$ as in Equation~\eqref{eq:retained-orientation-count}, the two sampling terms are given in Equation~\eqref{eq:sampling-failure-terms}, and an output that is a candidate set rather than a single value is counted as a failure.
+
 \end{theorem}
 
-The probability in Theorem~\ref{thm:random-orientation-plurality} concerns only the randomized computational search. If $M$ is random and $P(R\ge r_0)\ge1-\eta_R$, averaging the same argument over $M$ gives the unconditional version of equation~\eqref{eq:random-search-plurality-probability} with $\eta_R(m)$ replaced by $\eta_R$. When $L=0$, the success probability is at least $1-\eta_R$ provided $r_0\ge1$.
+Theorem~\ref{thm:probe-search-error} answers the three questions. The two sampling terms come from Lemma~\ref{lem:random-subsampling-plurality} in Appendix~\ref{app:proofs}: a uniform draw of $m$ splits keeps the true effect as the strictly most frequent retained value except with probability at most $P(R=0)+L\,\mathbb E\{e^{-R\Delta^2/2}\}$, which is the plurality argument of Theorem~\ref{thm:unknown-valid-block-identification} on a random subsample. Conditions (b) and (c) make the aggregation exact: estimates of equal population values lie within $2\rho$ of each other and estimates of distinct values lie more than $2\rho$ apart, so the components of line~\ref{ln:link} are exactly the groups of equal population values. Condition (b) follows from Theorem~\ref{thm:conditional-aipw-error} applied to each $S\in\widehat{\mathcal B}$ with $\delta_{\mathrm E}/N$ in place of $\delta_{\mathrm E}$, which suggests $\rho=\max_S\varepsilon_{\mathrm{AIPW},S}$ with its population quantities replaced by estimates or declared bounds. When the true-effect splits are only approximately balanced, Equation~\eqref{eq:uniform-approximate-proxy-bias-bound} confines their values to a band $[\tau-b,\tau+b]$, where $b$ is the largest value of that bound over these splits, and the theorem holds with $\rho+b$ in place of $\rho$ in the linking radius, in condition (c), and in the conclusion.
+
+The three failure terms of Equation~\eqref{eq:probe-search-error-probability} are paid with different resources. The estimation term $\delta$ is paid with the linking radius: Theorem~\ref{thm:conditional-aipw-error} delivers condition (b) at level $\delta$ with $\rho=\max_{S\in\widehat{\mathcal B}}\varepsilon_{\mathrm{AIPW},S}$ evaluated at $\delta_{\mathrm E}=\delta/N$, so a smaller $\delta$ requires a larger radius or a larger evaluation sample, and condition (c) caps the radius at $4\rho<\min\{|c-c'|:c\ne c',\ n(c)>0,\ n(c')>0\}$. The two sampling terms are paid with the budget $m$: the fraction $p\triangleq N/T$ of splits that pass the screen, the margin $\Delta$, and the number $L$ of non-target values are fixed by the learned candidates, and $m$ is the only remaining choice. The screen threshold $t$ moves these constants in opposite directions, since a stricter screen removes poorly balanced splits, which raises $\Delta$ and lowers $L$ but also lowers $p$. The next corollary converts a target level $\epsilon$ for the two sampling terms into a budget.
+
+\begin{corollary}[Budget for a target failure level]
+\label{cor:budget-rule}
+\normalfont
+
+Let $p\triangleq N/T$ and fix $\epsilon\in(0,1)$. Under the conditions of Theorem~\ref{thm:probe-search-error},
+\begin{align}\label{eq:sampling-failure-closed-form}
+	P(R=0)+L\,\mathbb E\bigl\{e^{-R\Delta^2/2}\bigr\}
+	\ \le\
+	(L+1)\exp\bigl\{-m\,p\,(1-e^{-\Delta^2/2})\bigr\}.
+\end{align}
+Consequently, $P(|\widehat\tau-\tau|\le\rho)\ge1-\delta-\epsilon$ whenever
+\begin{align}\label{eq:budget-rule}
+	m\ \ge\ \frac{\log\{(L+1)/\epsilon\}}{p\,(1-e^{-\Delta^2/2})},
+\end{align}
+and the simpler budget $m\ge3\log\{(L+1)/\epsilon\}/(p\Delta^2)$ is sufficient. If $L=0$, the budget $m\ge\log(1/\epsilon)/p$ suffices.
+
+\end{corollary}
+
+The budget grows like $\log\{(L+1)/\epsilon\}/(p\Delta^2)$: halving the margin $\Delta$ quadruples it, while tightening $\epsilon$ from $0.05$ to $0.01$ multiplies it by less than two. Neither $p$ nor $\Delta$ is observed, but Algorithm~\ref{alg:probe-search} estimates both after the fact: $R/m$ is an unbiased estimate of $p$, and on the event of Theorem~\ref{thm:probe-search-error} the sizes of the two largest components divided by $R$ estimate $p_\tau$ and $p_\star$.
+
+\begin{corollary}[Median under majority]
+\label{cor:median-under-majority}
+\normalfont
+
+Suppose condition (b) of Theorem~\ref{thm:probe-search-error} holds and more than half of the retained splits carry the true effect, that is, $|\{S\in\mathcal R_m:\theta_S=\tau\}|>R/2$. Then, on the same event, the median of $\{\widehat\theta_S:S\in\mathcal R_m\}$ lies within $\rho$ of $\tau$; conditions (a) and (c) and the linking step are not needed.
+
+\end{corollary}
+
+When the splits with $\theta_S=\tau$ form a strict majority, Corollary~\ref{cor:median-under-majority} dispenses with the linking step. It is the finite-sample counterpart of Corollary~\ref{cor:target-majority-median}.
