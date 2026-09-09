@@ -3,6 +3,14 @@
 
 \subsection{Proofs for Section~\ref{sec:identification}}
 
+\paragraph{Sufficient conditions for outcome-relevant completeness.}
+\begin{proof}[Proof of Proposition~\ref{prop:orc-sufficient}]
+Fix $z$ and $Q,Q'\in\mathcal Q_{j,z}$ with $\mathcal K_jQ=\mathcal K_jQ'$. Write $\pi_Q$ for the law of $(X,U)$ under $Q$, $\pi_{Q,X}$ for its $X$-marginal, and $\pi_Q(\cdot\mid x)$ for its conditional law of $U$ given $X=x$. By condition (i), $K_j(\cdot\mid v,u)=K_j(\cdot\mid x,u)$, so the law $\mathcal K_jQ$ of $(X,W_j)$ has $X$-marginal $\pi_{Q,X}$ and conditional law $\int K_j(\cdot\mid x,u)\,\pi_Q(du\mid x)$ given $X=x$. The equality $\mathcal K_jQ=\mathcal K_jQ'$ therefore gives $\pi_{Q,X}=\pi_{Q',X}$ and, for $\pi_{Q,X}$-almost every $x$, $\int K_j(\cdot\mid x,u)\,\pi_Q(du\mid x)=\int K_j(\cdot\mid x,u)\,\pi_{Q'}(du\mid x)$. Condition (ii) yields $\pi_Q(\cdot\mid x)=\pi_{Q'}(\cdot\mid x)$ for almost every $x$, hence $\pi_Q=\pi_{Q'}$. By condition (i), $\mu_{a,j,z}(v,u)=\bar\mu_{a,z}(x,u)$ for a measurable function $\bar\mu_{a,z}$, so $\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}=\int\bar\mu_{a,z}\,d\pi_Q=\int\bar\mu_{a,z}\,d\pi_{Q'}=\mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}$, which is Assumption~\ref{ass:outcome-relevant-completeness}.
+
+For case (a), the law of $W_j$ given $X=x$ under a law $\pi$ of $U$ is the vector $M_x\pi$, where $M_x$ is the $M\times K$ matrix of the statement and $\pi$ is viewed as a probability vector in $\mathbb R^K$. Rank $K$ means that $M_x$ is injective on $\mathbb R^K$, so (ii) holds. For case (b), the law of $W_j$ given $X=x$ is the convolution of the pushforward of $\pi$ under $g(x,\cdot)$ with the law of $\epsilon_j$. Its characteristic function is the product of the characteristic function of the pushforward and that of $\epsilon_j$, and the latter vanishes nowhere by assumption. Two laws $\pi$ and $\pi'$ with equal convolutions therefore have pushforwards with equal characteristic functions, hence equal pushforwards by the uniqueness theorem for characteristic functions, and injectivity of $g(x,\cdot)$ gives $\pi=\pi'$. Thus (ii) holds.
+
+\end{proof}
+
 \paragraph{Exact identification.}
 \begin{proof}[Proof of Theorem~\ref{thm:exact-proxy-identification}]
 Because $Z_j=\phi_j(V_j)$ is a measurable function of $V_j$, conditioning on $(U,V_j,Z_j)$ is equivalent to conditioning on $(U,V_j)$. The two clauses of Assumption~\ref{ass:joint-latent-exchangeability} therefore remain valid after additionally conditioning on $Z_j$. Thus, for each $a\in\{0,1\}$,
@@ -339,6 +347,11 @@ Apply the triangle inequality to equation~\eqref{eq:pointwise-bias-decomposition
 Because $\Gamma_j(\phi)$ does not depend on $z$, the overlap bound $\eta\le e_{j,\phi}(z)\le1-\eta$ gives the last inequality and proves equation~\eqref{eq:uniform-approximate-proxy-bias-bound}.
 \end{proof}
 
+\paragraph{Population sensitivity region.}
+\begin{proof}[Proof of Proposition~\ref{prop:population-sensitivity-region}]
+Theorem~\ref{thm:approximate-proxy-bias-bound} gives $|\tau_\phi-\tau|\le\Gamma_j(\phi)D_{\mathrm{res},j}(\phi)/\{\eta(1-\eta)\}$, and the displayed interval is the set of values of $\tau$ compatible with this inequality.
+\end{proof}
+
 \subsection{Proofs for Section~\ref{sec:estimation}}
 
 \paragraph{Uniform discrepancy deviation.}
@@ -369,14 +382,8 @@ where $o=(v_j,t_j,a,y)$. For a loss class $\mathcal L$, its expected Rademacher 
 \right],
 \label{eq:expected-rademacher-complexity-app}
 \end{align}
-where the $\sigma_i$ are independent Rademacher signs independent of the observations.\par\phantomsection\label{par:learning-measurability}
-
-\begin{assumption}[Measurability for representation learning]
-\label{ass:learning-measurability}
-\normalfont
-Assume the two loss classes are pointwise measurable and separable, so the displayed suprema are measurable. Assume also that the selected approximate encoder and critic minimizers are measurable functions of the training observations and algorithmic seed.
-\end{assumption}
- The same argument may instead be stated with outer probability and outer expectation.
+where the $\sigma_i$ are independent Rademacher signs independent of the observations. Assumption~\ref{ass:learning-measurability} supplies the measurability needed for these suprema.
+The same argument may instead be stated with outer probability and outer expectation.
 
 Every loss in either class lies in $[0,1]$. Standard symmetrization and bounded-difference concentration therefore imply, simultaneously for $b\in\{0,1\}$, that
 \begin{align}

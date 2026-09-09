@@ -83,6 +83,12 @@ Each encoder $\phi$ and critic $h$ give a squared-loss function of one observati
 
 This radius controls sampling fluctuation uniformly over the encoder--critic choices. The complexity terms account for the flexibility of the two loss classes, and the last term sets the failure-probability level $\delta_{\mathrm D}$.
 
+\begin{assumption}[Measurability for representation learning]
+\label{ass:learning-measurability}
+\normalfont
+The loss classes $\mathcal L_{0,j,n_{\mathrm D}}$ and $\mathcal L_{1,j,n_{\mathrm D}}$ are pointwise measurable and separable, so that suprema over them are measurable, and the selected approximate encoder and critic minimizers are measurable functions of the training observations and the algorithmic seed.
+\end{assumption}
+
 \begin{proposition}[Uniform residual-discrepancy deviation]
 \label{prop:uniform-discrepancy-deviation}
 \normalfont

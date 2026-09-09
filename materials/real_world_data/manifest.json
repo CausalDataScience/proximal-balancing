@@ -22,6 +22,13 @@
       "revision": null,
       "license": "No standard license stated. HBiostat grants permission to use the datasets with original-paper citation and requested attribution; see rhc/hbiostat-data.html.",
       "citation": "Connors et al. (1996), The effectiveness of right heart catheterization in the initial care of critically ill patients, JAMA 276:889-897."
+    },
+    "Twins": {
+      "upstream": "https://github.com/AMLab-Amsterdam/CEVAE/tree/master/datasets/TWINS",
+      "version": "master snapshot retrieved 2026-09-09; content fixed by file SHA-256",
+      "revision": null,
+      "license": "No license file in the CEVAE repository at retrieval time. Data derived from the public-use NBER twin birth records; use with citation of the original data source and of Louizos et al. (2017).",
+      "citation": "Louizos et al. (2017), Causal Effect Inference with Deep Latent-Variable Models, NeurIPS 30; Almond, Chay, and Lee (2005), The Costs of Low Birth Weight, QJE 120(3):1031-1083."
     }
   },
   "files": [
@@ -255,6 +262,41 @@
       "source_url": "https://hbiostat.org/data/repo/rhc.html",
       "sha256": "f255926741a2fae4b9ee0df8855e9b93f3607a1139bf569872dadd67ccb4d354",
       "bytes": 14744
+    },
+    {
+      "dataset": "Twins",
+      "local_path": "twins/twin_pairs_T_3years_samesex.csv",
+      "source_url": "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_T_3years_samesex.csv",
+      "sha256": "fbe6eb1cad27794c61cbbd8b11b72a26e96549e59d64fb88b07b30aaf2bae07d",
+      "bytes": 1409691
+    },
+    {
+      "dataset": "Twins",
+      "local_path": "twins/twin_pairs_X_3years_samesex.csv",
+      "source_url": "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_X_3years_samesex.csv",
+      "sha256": "6ec6263e678f67205d584ebda083173c1ec44fb46ea7cfaafe3c87a31f612b86",
+      "bytes": 13812350
+    },
+    {
+      "dataset": "Twins",
+      "local_path": "twins/twin_pairs_Y_3years_samesex.csv",
+      "source_url": "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_Y_3years_samesex.csv",
+      "sha256": "d03428d23ed308673f9151e3934aa7712df27c1fed244ed44ecc80a98a60836b",
+      "bytes": 987735
+    },
+    {
+      "dataset": "Twins",
+      "local_path": "twins/covar_desc.txt",
+      "source_url": "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/covar_desc.txt",
+      "sha256": "51d126a3a16a7f46bfe42536bd0ae1e2e31dc840b0e5000b595b76b7aee672c0",
+      "bytes": 2113
+    },
+    {
+      "dataset": "Twins",
+      "local_path": "twins/covar_type.txt",
+      "source_url": "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/covar_type.txt",
+      "sha256": "fe8a7d72b53c92f74210b52743e047d150d1d38a475dbe142887ea5de444788a",
+      "bytes": 927
     }
   ]
 }
