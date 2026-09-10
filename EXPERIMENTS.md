@@ -1,569 +1,345 @@
-# PROBE experiments: handoff plan
+# PROBE experiments: status and plan
 
-Written: 2026-09-09. Owner of the theory and the manuscript: Yonghan Jung. This document is written so that a
-new collaborator can run, extend, and finish the experimental program without any other context. Read it top
-to bottom once; afterwards Sections 4 and 7 are the working references.
+Updated 2026-09-10. Owner of the theory and the manuscript: Yonghan Jung. This document is written to be read
+without any other context. Sections 1 to 3 are the status and the plan. Sections 4 to 6 are the reference.
+The appendices record what was tried and what it showed.
 
-## 1. What is being tested
+## 1. The question and the bar
 
-PROBE (PROxy Blockwise Exclusion) estimates the average treatment effect $\tau = \mathbb E\{Y(1) - Y(0)\}$
-from observational data $(X, W, A, Y)$ when an unobserved confounder $U$ affects both the binary treatment
-$A$ and the outcome $Y$, and the observed high-dimensional proxy $W = (W_1, \ldots, W_J)$ carries information
-about $U$ in blocks (groups of coordinates). $X$ are ordinary observed covariates.
+PROBE estimates the average treatment effect $\tau = \mathbb E\{Y(1) - Y(0)\}$ when an unobserved confounder
+$U$ moves both the binary treatment $A$ and the outcome $Y$, and the only trace of $U$ is a high-dimensional
+proxy $W = (W_1, \ldots, W_J)$ observed in blocks. It holds out a block set $S$, learns a representation
+$Z = \phi(X, W_{-S})$ from the covariates and the remaining blocks, and uses the held-out block as an audit:
+the representation is acceptable when $(X, W_S)$ says nothing more about $A$ once $Z$ is known. Algorithm 1
+does this for $m$ sampled block sets, screens each by that audit and by overlap, estimates $\tau$ by honest
+AIPW for each survivor, links survivors whose estimates agree, and returns the median of the largest linked
+group.
 
-The method holds one block set $S$ out, learns a representation $Z = \phi(X, W_{-S})$ from the covariates and
-the remaining blocks, and uses the held-out block $W_S$ as an audit: the representation is acceptable when
-$(X, W_S)$ carries no information about $A$ beyond $Z$. The audit statistic is the residual discrepancy
+**The bar, set on 2026-09-09 and unchanged.** In every experiment, over 20 replicates, with paired differences
+of absolute error and t-based 95% intervals (`paired_criterion` in the pipeline, stored under
+`summary[n]["criterion"]`):
 
-$$
-D^2_{\mathrm{res}}(\phi) = \mathbb E\bigl[\{P(A=1 \mid X, W_S, Z) - P(A=1 \mid Z)\}^2\bigr],
-$$
+1. PROBE beats the raw proxy adjustment. The interval for
+   $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,W)} - \tau|$ lies below zero. A tie is a failure.
+2. PROBE matches the oracle that sees $U$. The upper limit of
+   $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,U)} - \tau|$ is at most 0.10 in units of $\tau = 1$.
 
-estimated as the difference of two Brier risks (one critic predicts $A$ from $Z$, one from $(X, W_S, Z)$).
-Adjusting for a $Z$ with zero discrepancy identifies $\tau$ (manuscript Theorem 1) under the assumptions of
-manuscript Section 3, of which the important one is outcome-relevant completeness of the held-out block
-(Assumption 3, sufficient conditions in Proposition 1). Algorithm 1 (manuscript Section 4.3) does not know
-which block sets are valid: it samples $m$ block sets, screens each by discrepancy and overlap, estimates
-$\tau$ by honest AIPW for each survivor, links survivors whose estimates are within $2\rho$ of each other, and
-returns the median of the largest linked group. Theorem 6 bounds its error.
+Every comparator is the same honest AIPW with the same sample splits, the same clipping level and the same
+learners; only the adjustment set differs. Since 2026-09-10 all comparator numbers use strong learners, an L2
+logistic propensity with MLP outcome models. Tree-based comparators understate the raw adjustment badly and
+must not be used for any reported claim (Appendix A.1).
 
-The experiments must show four things: (i) naive and covariate-only adjustment fail; (ii) adjusting for the
-raw proxy also fails when the proxy is many weak coordinates; (iii) PROBE recovers $\tau$ at the accuracy of
-an oracle that observes $U$; (iv) the audit rejects invalid representations and block sets.
+## 2. Where we stand today
 
-Manuscript sources: `manuscript/main/3.tex` (identification), `manuscript/main/4.tex` (learning,
-estimation, Algorithm 1), `manuscript/appendix/proof.tex` (proofs). The manuscript in this package is the
-last accepted state; edits under review are kept in the authoring workspace and are not needed to run
-experiments.
+### 2.1 Headline performance
 
-## 2. Files
+Mean absolute error over 20 replicates at $n = 12000$, $\tau = 1$. Comparators use strong learners.
 
-| Path | Role |
-|---|---|
-| `code/probe_scms.py` | All synthetic data-generating processes (SCMs) `s1`..`s12`, defaults, block layout, validity of held-out sets, an ORC check (`check_orc`). |
-| `code/probe_e1_pipeline.py` | The full PROBE pipeline (encoder, critics, discrepancy, screening, honest AIPW, linking, median) plus baselines, the DGP audit table (`--audit-dgps`), and the replicate driver. |
-| `code/probe_e4_mnist.py` | Stage 1 of the MNIST image-proxy experiment (E4); reuses the pipeline components. |
-| `results/probe_e1_<scm>.json` | E1 grid output per SCM; written after every replicate; `complete` is false until the grid finishes. |
-| `materials/benchmarks/mnist/mnist.npz` | MNIST (Keras packaging), provenance in `materials/benchmarks/manifest.json`. |
-| `materials/real_world_data/` | Twins (CEVAE files), RHC, LaLonde, WSC, with `manifest.json`. |
-| `memo/2026-09-09-e4-mnist-proxy-plan.md` | Fixed design of E4. |
+| SCM | PROBE | raw $(X,W)$ | $X$ only | oracle $(X,U)$ | vs oracle | vs $(X,W)$ | verdict |
+|---|---|---|---|---|---|---|---|
+| s9 with strength 2.0, cross-fitting, strong nuisances | **0.055** | 0.172 | 1.219 | 0.016 | +0.04 [+0.02, +0.06] | $-0.12$ [$-0.15$, $-0.09$] | **passes both** |
+| s9 as first run | 0.100 | 0.304 | 1.300 | 0.030 | +0.07 [+0.04, +0.10] | $-0.20$ [$-0.25$, $-0.16$] | beats, does not match |
+| s12 mixed modality | 0.106 | 0.068 | 1.450 | 0.026 | +0.08 [+0.06, +0.10] | +0.04 [+0.02, +0.06] | loses |
+| s10 many weak proxies | 0.338 | 0.187 | 1.334 | 0.026 | +0.31 [+0.29, +0.34] | +0.15 [+0.13, +0.18] | loses |
+| s11 decoder proxy | 0.530 | 0.209 | 1.334 | 0.026 | +0.51 [+0.47, +0.54] | +0.32 [+0.29, +0.35] | loses |
+| s3 finite codes, $n = 1500$ | 1.628 | 0.575 | 1.432 | 0.135 | +1.49 | +1.05 | loses |
+| E4 MNIST images, $n = 6000$, 5 replicates | 1.120 | 0.717 | 1.272 | 0.041 | +1.08 | +0.40 | loses |
 
-Environment: Python 3.14, `numpy`, `scipy`, `scikit-learn`, `torch` (CPU is enough), versions in
-`requirements.txt`. Nothing uses a GPU.
+One configuration clears the bar: the instrument-contaminated SCM at the tuned strength, with cross-fitting
+and strong nuisances everywhere. Everything else loses to the raw adjustment once that adjustment is fitted
+with a learner that can add up weak signals.
 
-## 3. How to run
+### 2.2 Does more data close the gap?
 
-Sanity table of an SCM (propensity range, naive contrast, AIPW estimates of the fixed adjustment sets, audit
-power of one held-out block for $Z = X$ and for the oracle $Z = (X, U)$, ORC check):
+PROBE's mean output and its standard deviation across replicates, by sample size, on the original recipe.
+
+| SCM | $n = 1500$ | $n = 3000$ | $n = 6000$ | $n = 12000$ | raw $(X,W)$ at 6000 and 12000 |
+|---|---|---|---|---|---|
+| s9 | 0.577 (0.25) | 0.718 (0.25) | 0.902 (0.17) | 0.952 (0.11) | 0.39, 0.30 error |
+| s12 | 0.835 (0.15) | 0.821 (0.13) | 0.873 (0.08) | 0.894 (0.05) | flat |
+| s10 | 0.429 (0.17) | 0.482 (0.13) | 0.580 (0.12) | 0.662 (0.06) | 0.205, 0.187 error |
+| s11 | 0.025 (0.21) | 0.177 (0.15) | 0.320 (0.13) | 0.470 (0.07) | 0.201, 0.209 error |
+
+Three readings.
+
+- **s9 converges.** The error falls 0.44, 0.31, 0.16, 0.10, close to the $n^{-1/2}$ rate, the spread falls with
+  it, and the mean reaches 0.95. With the tuned recipe the mean at $n = 12000$ is 1.011 with spread 0.074, so
+  what remains is noise, not bias. More data keeps helping.
+- **s10, s11, s12 do not converge to the oracle.** The spread collapses (s10 from 0.17 to 0.06) while the mean
+  stays far from 1, so what remains is systematic. The mean does drift upward, because the representation is
+  learned on a growing sample, but it drifts slowly: s10 moves from 0.43 to 0.66 while $n$ grows eight times.
+- **The raw adjustment has already converged** in those SCMs, so waiting does not change the ranking.
+
+The reason s10 cannot converge is measurable. Adjusting for $X$ together with the best possible reconstruction
+of $U$ from the same blocks PROBE uses returns 0.69 at that setting. PROBE returns 0.662. PROBE is already
+getting everything the proxy contains; the proxy simply does not contain enough, because 200 coordinates with
+loading 0.35 leave 9% of the variance of $U$ unexplained and the outcome multiplies that residual by three.
+The fix is a proxy with more information, not a bigger sample: at loading 0.6 the same reconstruction returns
+0.91 and PROBE returns 0.85 to 0.89 in a single-replicate check.
+
+### 2.3 What is running or pending
+
+- `results/probe_e1_s9_strength2_crossfit_ncurve.json`: the passing recipe at $n \in \{1500, 3000, 6000\}$,
+  20 replicates, to complete the convergence curve for the configuration that clears the bar. Running.
+- The re-tuned SCM defaults from Appendix A.3 are not yet the module defaults, pending a decision.
+
+## 3. Experiment by experiment
+
+| Id | Content | Status | Next action |
+|---|---|---|---|
+| E1 | Five synthetic SCMs, $n \in \{1500, 3000, 6000, 12000\}$, 20 replicates, $m = 10$ | Complete on the original recipe for s10, s12, s9, s11; s3 stopped. Only s9 passes. | Re-run all five with the tuned strengths, `--nuisance mlp`, `--crossfit`. About 2 hours per SCM. |
+| E2 | Block-count sweep on s4, $J \in \{2, 4, 8, 16\}$ at $n = 6000$ | Not started; runs with existing code | `--scm s4 --n-blocks J`, 20 replicates, about 40 minutes per $J$ |
+| E3 | Comparators: classify-then-Kuroki-Pearl for the finite-code SCM, Single Proxy Control, two-proxy proximal | Not implemented | Implement after E1 is settled |
+| E4 | MNIST image proxies | Pilot failed twice; the setting was too degraded to be informative | Redesign in 3.1 |
+| E5 | Twins semi-synthetic benchmark | Data in place, protocol not implemented | After E4 |
+
+### 3.1 E4 redesign, in the order it should be done
+
+The current setting recovers the digit from three degraded images to $R^2 = 0.72$, and with the outcome
+coefficient at $-3$ that residual alone costs about 0.8 of bias. PROBE returns $-0.15$ to $-0.27$ and the raw
+four-image adjustment returns $+0.21$ to $+0.33$; both are useless, so the experiment as built cannot answer
+anything. Three changes, each with the number it is expected to move.
+
+1. **Stop degrading so hard.** Drop the occlusion and use pixel noise 0.5 or less. Measured effect on how well
+   the digit is recovered from three images: $R^2$ goes from 0.72 to 0.91, and the value obtained by adjusting
+   on that reconstruction goes from 0.21 to 0.78.
+2. **Replace the feature map.** Fifty principal components of the pixels recover the digit only to $R^2 = 0.94$
+   even on clean images. A small convolutional network trained on the MNIST test split as a digit classifier,
+   used as a frozen feature extractor, should reach 0.99. This is the change that matters most and it costs
+   about an hour of preparation.
+3. **Lower the confounding coefficient** from $-3$ to about $-1.5$, so that a few percent of unrecovered
+   latent variance costs 0.07 rather than 0.15.
+
+Decision rule after the redesign: adjusting on the reconstructed digit must return at least 0.9, and the raw
+four-image adjustment must stay below it. If both hold, the experiment can answer whether PROBE reaches the
+same place on image proxies. If the raw adjustment also reaches 0.9, the honest report is equivalence.
+
+### 3.2 Open decisions for Yonghan
+
+1. Adopt the re-tuned SCM defaults (Appendix A.3) as the module defaults.
+2. Keep one bar for every SCM, or split it: beat the raw adjustment where the proxy is contaminated, match the
+   proxy's own limit where it is clean.
+3. s3: try a latent-class decoder as the representation, or move it to the appendix as the finite-state case.
+4. Approve the E4 redesign in 3.1.
+
+## 4. Why the four failures happen
+
+**The representation learner is the bottleneck.** PROBE learns $Z$ from one third of the sample using the audit
+gap, a weak signal. The comparator's nuisance models get two thirds of the sample and a direct target. In a
+clean SCM the raw adjustment is therefore the one to beat and it is hard to beat, because
+$Z = \phi(X, W_{-S})$ uses a subset of the proxy and can never hold more information about $U$ than $W$ does.
+
+**So PROBE can win only where the raw adjustment is structurally wrong, not merely imprecise.** Four channels
+exist and only two are usable.
+
+1. *Contaminated blocks.* A block that drives treatment without carrying $U$ makes the raw adjustment amplify
+   whatever confounding is left, no matter which learner is used. This is s9 and it is the demonstrated win.
+2. *Collider blocks.* Conditioning on a block that mixes a treatment cause with an outcome cause creates
+   confounding: the raw adjustment returns $-0.05$ against $\tau = 1$. PROBE identifies $\tau$ in that world
+   under its assumptions, but the audit cannot tell an admissible representation input from an inadmissible
+   one, so the search does not find the right configuration (Appendix B.1).
+3. *Positivity.* Refuted. Augmented IPW with a good outcome model survives a propensity pushed to 0.001, and a
+   forcing variable that depends on $U$ breaks the representation's overlap as well (Appendix A.5).
+4. *Statistical efficiency.* Real room exists when the proxy is coded nonlinearly, but our representation
+   learner cannot take it (Appendix A.4).
+
+**The audit certifies balance, not admissibility.** This belongs in the manuscript as a limitation.
+
+## 5. How to run
+
+Environment: Python 3.14 with numpy, scipy, scikit-learn and torch, CPU only.
+
+Sanity table for one SCM, including the check of the sufficient conditions of Proposition 1:
 
 ```bash
 cd code && python3 probe_e1_pipeline.py --scm s10 --audit-dgps --n-audit 12000
 ```
 
-One replicate of Algorithm 1 on one SCM (prints retained splits, the Algorithm 1 output, the linking radius,
-component sizes, and the baselines):
+One replicate of Algorithm 1:
 
 ```bash
-cd code && python3 probe_e1_pipeline.py --scm s10 --n 3000 --reps 1 --m 10
+cd code && python3 probe_e1_pipeline.py --scm s9 --n 3000 --reps 1 --m 10
 ```
 
-The E1 grid for one SCM (what is running now; about 1.6 hours per SCM on a laptop core pair):
+The recipe that should be used for every reported result:
 
 ```bash
-cd code && OMP_NUM_THREADS=2 python3 probe_e1_pipeline.py --scm s10 --n 1500 3000 6000 12000 --reps 20 --m 10 --threads 2
+cd code && OMP_NUM_THREADS=2 python3 probe_e1_pipeline.py --scm s9 --scm-param proxy_strength=2.0 \
+  --n 1500 3000 6000 12000 --reps 20 --m 10 --crossfit --nuisance mlp --threads 2
 ```
 
-Any SCM parameter can be overridden with `--scm-param key=value` (repeatable); dimensions with `--d-x` and
-`--d-w`; encoder with `--d-z`, `--enc-steps`, `--enc-hidden`, `--lr`, `--lam`, `--keep-x`,
-`--pretrain-steps`; screening with `--t` (default two standard errors), `--eta`, `--overlap-min`; linking with
-`--rho`, `--rho-rule`, `--delta`; the split family with `--max-held`; the nuisance learners with `--nuisance {gbm,mlp}`
-(use `mlp` for every paper result, see 7.6); three-way fold rotation with `--crossfit`; alternative representations
-with `--enc-arch {mlp,set,index,index2}` and warm starts with `--pretrain-mode {none,treat,mask}` (ablations only,
-all inferior to the default audit-gap MLP).
-
-E4 stage 1:
+MNIST, stage one:
 
 ```bash
-cd code && OMP_NUM_THREADS=2 python3 probe_e4_mnist.py --sigma 1.0 --occ 10 --n 6000 --reps 5 --m 6
+cd code && python3 probe_e4_mnist.py --sigma 0.5 --occ 0 --n 6000 --reps 5 --m 6 --enc-arch prog --nuisance mlp
 ```
 
-## 4. The pipeline, step by step
+Options that matter: `--nuisance {gbm,mlp}` for the learners, `--crossfit` for the three-way fold rotation,
+`--d-x` and `--d-w` for dimensions, `--scm-param key=value` for any SCM parameter, `--max-held` and
+`--max-excluded` for the candidate family, `--t`, `--eta`, `--overlap-min` for the screen, `--rho`,
+`--rho-rule`, `--delta` for linking, `--enc-arch {mlp,set,index,index2,prog}` and
+`--pretrain-mode {none,treat,mask}` and `--z-noise` for representation ablations.
 
-For one replicate with $n$ units and one sampled block set $S$:
+## 6. Reference
 
-1. Three-way split of the units: discrepancy sample $\mathcal I_D$, nuisance sample $\mathcal I_N$, evaluation
-   sample $\mathcal I_E$, one third each.
-2. Inputs $V = (X, W_{-S})$ and $T = (X, W_S)$, standardized with the means and standard deviations of
-   $\mathcal I_D$.
-3. Encoder $\phi$: an MLP (`Encoder`, hidden width 32) from $V$ to $Z \in \mathbb R^{d_z}$, $d_z = 3$ by
-   default. With `--keep-x`, $Z = (X, \psi(V))$ instead.
-4. Critics (`NestedCritics`): closed-form ridge regressions of $A - 1/2$ on random Fourier features. $h_0$ uses
-   128 features of $Z$; $h_1$ uses the same 128 features plus 128 features of $(T, Z)$, so the $h_1$ class
-   contains the $h_0$ class and the in-sample Brier gap $R_0 - R_1$ is nonnegative. A control critic $h_{1c}$
-   has the geometry of $h_1$ but sees $T$ with the held-out coordinates replaced by independent Gaussian
-   noise; its gap is the optimism floor that comes from feature count alone.
-5. Training (`train_encoder`): Adam on the in-sample nested gap plus a variance floor on $Z$, computed on 75%
-   of $\mathcal I_D$, with early stopping on the two-fold cross-fitted gap of the other 25% (checked every 10
-   steps, 300 steps maximum). Critic weights are detached at every step. `--pretrain-steps k` first trains
-   the encoder for $k$ steps to predict $A$ (Brier loss, linear head, head discarded); see Section 7.1 before
-   using it.
-6. Discrepancy (`empirical_discrepancy`): two-fold cross-fitted per-unit gaps on $\mathcal I_D$; the reported
-   statistic is $\widehat D^2 = \max\{\text{mean}(\text{gap} - \text{control gap}), 0\}$ with its standard
-   error.
-7. Screen: the split survives when $\widehat D^2 \le t$ (default $t = 2\,\widehat{\mathrm{se}}$) and at least
-   98% of the evaluation units have an estimated propensity inside $[\eta, 1 - \eta]$, $\eta = 0.05$.
-8. Nuisances (`fit_nuisances`): gradient boosting for $\mathbb E[Y \mid Z, A = a]$ and $P(A = 1 \mid Z)$ on
-   $\mathcal I_N$; honest AIPW (`aipw`) on $\mathcal I_E$ with propensities clipped to $[\eta, 1 - \eta]$;
-   returns $\theta_S$, its influence-function standard deviation, and the overlap share.
-9. Algorithm 1 over the $m$ sampled block sets (`run_replicate`): linking radius
-   $\rho = z_{1 - \delta/(2m)}\,\hat\sigma / \sqrt{n_E}$ (or Chebyshev with `--rho-rule chebyshev`),
-   $\delta = 0.1$; union-find links survivors with $|\theta_S - \theta_{S'}| \le 2\rho$; the output is the
-   median of the largest component (ties are reported as `candidates`). `mean_over_retained` and
-   `median_over_retained` are stored for reference only.
-10. Baselines (`baseline_aipw`), all honest AIPW with the same learners, clipping, and evaluation sample, with
-    nuisances fitted on $\mathcal I_D \cup \mathcal I_N$: `naive` (difference in means), `baseline_X`
-    ($X$ only), `baseline_XW` ($X$ and all of $W$), `baseline_X_Wmean` ($X$ and the mean of $W$),
-    `oracle_XU` ($X$ and $U$).
+### 6.1 Files
 
-Split family: all block sets of size 1 to $\lfloor J/2 \rfloor$ (`all_splits`); $m$ of them are sampled per
-replicate. Sets holding out more than half of the blocks leave too little information for the
-representation (see Section 7.3).
+| Path | Role |
+|---|---|
+| `code/probe_scms.py` | All synthetic data-generating processes, defaults, block layout, validity of a configuration, and the numerical check of Proposition 1 |
+| `code/probe_e1_pipeline.py` | The pipeline: representation, critics, discrepancy, screening, honest AIPW, linking, median, baselines, the sanity table and the replicate driver |
+| `code/probe_e4_mnist.py` | MNIST image proxies, stage one |
+| `results/probe_e1_<scm>.json` | Grid output, written after every replicate; `complete` is false while a grid is running |
+| `materials/benchmarks/mnist/` | MNIST with provenance in `materials/benchmarks/manifest.json` |
+| `materials/real_world_data/` | Twins, right heart catheterization, LaLonde, WSC with a manifest |
+| `memo/2026-09-09-e4-mnist-proxy-plan.md` | The fixed E4 design |
 
-Result JSON: `config`, resolved `scm_params`, `summary[n]` (mean absolute error of every estimator, the
-single-output rate and mean number of retained splits of Algorithm 1), and `runs`, one record per replicate
-with every split's `S`, `D2_hat`, `gap_cf`, `null_floor`, `gap_se`, `threshold`, `screen_pass`, `theta`,
-`sigma`, `overlap_frac`, `best_step`, and `valid_heldout` (whether the set satisfies Assumption 2 and the
-sufficient conditions of Proposition 1).
+### 6.2 The pipeline, step by step
 
-## 5. The data-generating processes
+For one replicate and one configuration:
 
-Common skeleton (`probe_scms.py`; $\tau = 1$ in every SCM):
+1. Three-way split into a discrepancy sample, a nuisance sample and an evaluation sample. With `--crossfit`
+   the three roles rotate and the three answers are averaged.
+2. Inputs $V = (X, W_{-S})$ and $T = (X, W_S)$, standardized on the discrepancy sample.
+3. Representation: an MLP from $V$ to $Z \in \mathbb R^{d_z}$, $d_z = 3$ by default, trained on the in-sample
+   nested gap with early stopping on a held-out quarter. Alternatives exist for ablations.
+4. Critics: closed-form ridge regressions of $A - 1/2$ on random Fourier features. One critic sees $Z$, the
+   other sees the same features plus features of $(T, Z)$, so its class contains the first and the gap is
+   nonnegative. A control critic has the same geometry but sees the held-out coordinates replaced by noise;
+   its gap is the optimism that comes from feature count alone and is subtracted.
+5. Screen: the configuration survives when the corrected discrepancy is within two standard errors of zero and
+   at least 98% of evaluation units have an estimated propensity inside $[\eta, 1 - \eta]$ with $\eta = 0.05$.
+6. Estimation: gradient boosting or the strong learners for the nuisances on the nuisance sample, honest AIPW
+   on the evaluation sample.
+7. Algorithm 1: linking radius $\rho = z_{1 - \delta/(2m)}\hat\sigma/\sqrt{n_E}$ with $\delta = 0.1$,
+   union-find over $|\theta_S - \theta_{S'}| \le 2\rho$, output the median of the largest component.
 
-$$
-X = b_x U + \epsilon_X \in \mathbb R^{20},\qquad
-P(A = 1 \mid U, X) = c + (1 - 2c)\,\mathrm{expit}\{u_{\mathrm{tr}} U + 0.6\, a_x^\top X\},\qquad
-Y = A + 0.7\, y_x^\top X + 0.3\,(y_t^\top X)^2 + u_{\mathrm{out}} U + \epsilon_Y .
-$$
+### 6.3 The data-generating processes
 
-The main five SCMs use the Simpson configuration $u_{\mathrm{tr}} = 1.2$, $u_{\mathrm{out}} = -3$, $c = 0.05$
-(s9: $1.5$, $-4$): the treated have larger $U$ and larger $U$ lowers $Y$, so the naive and the $X$-adjusted
-contrasts have the wrong sign while the oracle recovers 1.
+All share the skeleton $X = b_x U + \epsilon_X \in \mathbb R^{20}$,
+$P(A = 1 \mid U, X) = c + (1 - 2c)\,\mathrm{expit}\{u_{\mathrm{tr}} U + 0.6 a_x^\top X\}$,
+$Y = A + 0.7 y_x^\top X + 0.3 (y_t^\top X)^2 + u_{\mathrm{out}} U + \epsilon_Y$ with $\tau = 1$. The five main
+SCMs use $u_{\mathrm{tr}} = 1.2$, $u_{\mathrm{out}} = -3$, $c = 0.05$ (s9 uses 1.5 and $-4$), under which the
+naive contrast and the $X$-adjusted contrast have the wrong sign.
 
-| SCM | Proxy channel $W_k = g_k(U) + \text{noise}$ | Blocks | ORC status (Proposition 1) |
+| SCM | Proxy channel | Blocks | Proposition 1 |
 |---|---|---|---|
-| s10 | linear, 200 coordinates, loadings $0.35 \times$ Unif(0.35, 1) with random signs, $N(0,1)$ noise | 10 blocks of 20 | (i) and (b) hold for every block |
-| s12 | four modalities of 40 coordinates: linear; Poisson with rate $\exp(0.3 + m_\ell U)$; Bernoulli with logit $m_\ell U$; $\tanh(m_\ell U) + 0.5\,N(0,1)$ | 4 blocks | linear (b), Poisson (c), tanh (b); the binary block alone is not complete for a continuous $U$, so `heldout_set_valid` marks $S = \{2\}$ invalid |
-| s3 | finite latent $U \in \{0..7\}$ with values linspace(-1.5, 1.5); each block a noisy 8-bit one-hot code, bits flipped with probability 0.25 | 10 blocks of 8 | finite-state completeness: channel matrix of one code block has rank 8 (a single bit has rank 2, so whole code blocks are the unit) |
-| s9 | block 0 is an instrument ($N(0,1)$, enters the treatment index with coefficient 2, no $U$ information); blocks 1..4 linear proxies with loadings $1.5 \times$ Unif(0.35, 1) | 5 blocks of 2 | blocks 1..4 satisfy (i) and (b); any set containing block 0 violates Assumption 2 |
-| s11 | decoder $W_j = A_{2,j}^\top \tanh(a_1 U + b_1) + B_j N_j + 1.5\,\epsilon_j$, block-specific nuisance factors $N_j \sim N(0, I_{20})$, nuisance scale 2 | 10 blocks of 30 | (i) and (b) hold; injectivity of $u \mapsto A_{2,j}^\top\tanh(a_1 u + b_1)$ checked numerically by `check_orc` (minimum secant ratio 0.26 to 0.42) |
+| s9 | block 0 is an instrument with no $U$ content; blocks 1 to 4 are linear proxies | 5 of 2 | holds for blocks 1 to 4; block 0 is an invalid held-out block by construction |
+| s10 | linear, 200 coordinates with small loadings | 10 of 20 | holds for every block |
+| s11 | decoder $A_2^\top \tanh(a_1 U + b_1)$ plus block-specific nuisance factors and noise | 10 of 30 | holds, injectivity checked numerically |
+| s12 | four modalities: linear, Poisson counts, binary codes, tanh | 4 of 40 | linear, Poisson and tanh are covered; the binary block alone is not |
+| s3 | finite latent in $\{0..7\}$, each block a noisy 8-bit one-hot code | 10 of 8 | finite-state completeness, rank 8 verified |
+| s13 | $a_k \sin(f_k U + p_k)$ plus noise, 600 to 1200 coordinates | 6 | holds, injectivity checked numerically |
+| s14 | block 0 measures $L_1 + L_2$ with $L_1 \to A$ and $L_2 \to Y$ | 5 of 4 | block 0 is inadmissible in both roles |
 
-Sanity table at $n = 12000$ (estimates of $\tau = 1$; $\widehat D^2$ is the audit statistic of block 1 with
-$Z = X$, standard error in parentheses):
+Appendix SCMs: s5 has a second latent no proxy measures, s4 sweeps the block count, s8 limits overlap, s1 and
+s2 are controls, s6 and s7 place a direct effect in one block.
 
-| SCM | naive | X-only | (X, W) | oracle (X, U) | $\widehat D^2$ (Z = X) |
-|---|---|---|---|---|---|
-| s10 | -1.53 | -0.50 | +0.22 | +0.92 | 0.0067 (0.0006) |
-| s12 | -1.53 | -0.50 | +0.82 | +0.92 | 0.0168 (0.0009) |
-| s3 | -1.65 | -0.37 | -0.05 | +0.99 | 0.0017 (0.0003) |
-| s9 | -1.39 | -0.43 | +0.65 (valid blocks only: +0.78) | +0.99 | 0.0029 (0.0003) |
-| s11 | -1.53 | -0.50 | +0.25 | +0.92 | 0.0035 (0.0005) |
+### 6.4 Reporting conventions
 
-The oracle is 0.92 rather than 1.00 in the three high-dimensional SCMs because the gradient-boosting
-nuisances are imperfect under this strong confounding; PROBE cannot be expected to beat the oracle.
+- Report absolute error in units of $\tau = 1$, and for the Simpson settings also the outcome standard
+  deviation, about 3.2 in s10, so the error can be read against the noise.
+- Seeds: `ROOT_SEED` with the namespaced `seed_key`; structural coefficients once per SCM, data per replicate.
+- Never put a result with `complete: false` in a figure.
 
-Appendix SCMs: s5 (a second latent $U_2$ that no proxy measures: the audit is blind by design), s4 (scalar
-injective blocks, for the block-count sweep), s8 (limited overlap), s1 and s2 (linear and nonlinear controls),
-s6 and s7 (a block that affects $A$ or $Y$ directly).
+## Appendix A: diagnostics and dead ends
 
-## 6. Experiment list and status
+### A.1 The comparator learner changes the conclusion
 
-| Id | Content | Status on 2026-09-09 |
-|---|---|---|
-| E1 | Main grid: five SCMs, $n \in \{1500, 3000, 6000, 12000\}$, 20 replicates, $m = 10$; figure: absolute error of naive, X-only, (X, W), PROBE, oracle against $n$ | Original recipe complete for s10, s12, s9, s11 (`results/probe_e1_<scm>.json`); s3 stopped (7.1). To be re-run with the re-tuned strengths, `--nuisance mlp`, and `--crossfit` (7.6, 8). |
-| E2 | Block-count sweep on s4: $J \in \{2, 4, 8, 16\}$ at $n = 6000$, 20 replicates; shows that exact balance is approached as $J$ grows | Not started; runs with existing code (`--scm s4 --n-blocks J`). |
-| E3 | Comparators on the tabular SCMs: classify-then-Kuroki-Pearl for s3, Single Proxy Control (Park, Richardson, Tchetgen Tchetgen), two-proxy proximal doubly robust estimator, all with the same sample splits | Not implemented. |
-| E4 | MNIST image proxies (design fixed in the memo): degradation sweep and $n$ sweep | Stage 1 script written; pilot stopped because the encoder failed, see 7.2. |
-| E5 | Twins semi-synthetic benchmark (CEVAE protocol: latent = same-sex/birth-weight class, proxies = noisy copies of the latent) | Data present, protocol not implemented. |
-| Appendix | s5 audit blindness, s8 overlap, s1/s2 controls, s6/s7 invalid blocks | Not started; runs with existing code. |
+At $n = 12000$, adjusting for $(X, W)$ with gradient boosting versus with an L2 logistic propensity and MLP
+outcomes: s10 gives $+0.14$ against $+0.80$, s11 $+0.20$ against $+0.80$, s3 $-0.09$ against $+0.58$, s9
+$+0.61$ against $+0.74$. The oracle itself moves from 0.91 to 0.99. Trees cannot add up two hundred weak
+coordinates. Every claim in this project must therefore be scored against the strong learners.
 
-E1 grid results with the original recipe (tree nuisances, original proxy strengths; mean absolute error of
-Algorithm 1 / raw $(X,W)$ / oracle, 20 replicates; s3 was stopped, see 7.1):
+### A.2 Where PROBE's remaining error lives
 
-| SCM | $n=1500$ | $n=3000$ | $n=6000$ | $n=12000$ |
+At $n = 12000$ on s9 with strong nuisances, PROBE has mean 0.912 and spread 0.139 while the oracle has spread
+0.027; roughly half the error is bias and half is noise. Cross-fitting cut the spread from 0.139 to 0.079 and
+the error from 0.119 to 0.085. Restricting held-out sets to a single block made it worse, 0.145, because too
+few configurations survive for the median to be stable. Neither a larger representation nor longer training
+helped.
+
+### A.3 Re-tuned SCM settings
+
+Measured at $n = 12000$: how well $U$ is recovered from the blocks feeding the representation, the value
+obtained by adjusting on that reconstruction, and the raw adjustment with strong learners.
+
+| SCM | change | recovery $R^2$ | value on the reconstruction | raw $(X,W)$ |
 |---|---|---|---|---|
-| s10 | 0.57 / 0.66 / 0.11 | 0.52 / 0.71 / 0.09 | 0.42 / 0.78 / 0.07 | 0.34 / 0.78 / 0.05 |
-| s12 | 0.19 / 0.20 / 0.11 | 0.19 / 0.16 / 0.09 | 0.13 / 0.17 / 0.07 | 0.11 / 0.17 / 0.05 |
-| s9 | 0.44 / 0.46 / 0.09 | 0.31 / 0.39 / 0.09 | 0.16 / 0.38 / 0.05 | 0.10 / 0.39 / 0.03 |
-| s11 | 0.98 / 0.68 / 0.11 | 0.82 / 0.70 / 0.09 | 0.68 / 0.72 / 0.07 | 0.53 / 0.73 / 0.05 |
+| s10 | loading 0.35 to 0.6 | 0.91 to 0.965 | 0.765 to 0.906 | 0.783 to 0.915 |
+| s11 | noise 1.5 to 0.7, nuisance scale 2 to 1 | 0.908 to 0.973 | 0.740 to 0.935 | 0.742 to 0.887 |
+| s9 | strength 1.5 to 2.5 | 0.871 to 0.944 | 0.751 to 0.886 | 0.738 to 0.891 |
+| s12 | loading 0.35 to 0.7 | 0.964 to 0.983 | 0.908 to 0.958 | 0.938 to 0.943 |
+| s3 | flip 0.25 to 0.15 | 0.929 to 0.998 | 0.781 to 0.997 | 0.408 to 0.742 |
 
-These files are the "original recipe" record. Section 7.6 explains why they are not the paper's evidence: the
-$(X,W)$ column uses a tree learner that cannot add up many weak coordinates, and the proxy strengths put the
-information ceiling far below the oracle.
+PROBE on the re-tuned settings, one replicate, three configurations: s10 0.85 to 0.89, s11 0.83, s12 0.87 to
+0.92, s9 0.83 to 1.03, s3 0.45 to 0.65.
 
-## 7. Known problems, what was tried, and what to do next
+### A.4 s3 and s13: the representation learner cannot decode
 
-### 7.1 s3: the encoder does not recover a categorical latent from many weak binary codes
+s3 asks the representation to find the position of the largest count among eight noisy code bits. Eight
+changes were tried: code strength (flip 0.25, 0.15, 0.10), code length (8, 6, 4), block count 15, keeping $X$
+in $Z$, sample size to 12000, a wider and longer-trained network, representation dimension 8 and 16, a shared
+per-block map with pooling, a treatment-predictive warm start and an unsupervised masked-block warm start. The
+best result was 0.64 against an oracle of 0.99. The measured content of the representation explains it: $Z$
+carries 75% to 95% of the variance of the latent score, which is what a linear read of the counts gives.
 
-Symptom: at $n = 1500$ all splits pass the screen ($\widehat D^2$ median 0) while the estimates are far from
-1 (median -0.65). The audit is blind because one code block carries little information about $A$ given a
-partial $Z$, and the encoder learns only a linear approximation of $U$. The Bayes rule for $U$ from the
-remaining nine blocks is the position with the most ones (an argmax of eight counts); a linear function of the
-counts explains about 81% of the variance of $\mu(U)$, and PROBE removes about 70% of the confounding bias,
-which matches a linear-level representation.
+s13 codes the latent through coordinate-specific sine functions. There the raw adjustment fails too, returning
+0.63 to 0.85 while adjusting on a good reconstruction returns 0.95. PROBE returns 0.55 to 0.90 with the audit
+gap representation and 0.81 to 0.90 with a prognostic representation built from outcome regressions. The room
+is real and our learner cannot take it.
 
-Per-split estimates $\theta_S$ (three fixed sets, $n = 3000$; oracle about 0.98):
+### A.5 Refuted mechanisms
 
-| Change tried | PROBE $\theta_S$ (mean, range) | (X, W) | Note |
-|---|---|---|---|
-| none (K = 8, flip 0.25) | -0.04 (-0.20 to +0.13) | -0.29 | current default |
-| flip 0.15 | +0.51 (+0.29 to +0.75) | +0.25 | audit signal doubles |
-| flip 0.10 | +0.67 (+0.45 to +0.94) | +0.51 | |
-| K = 6, flip 0.15 | +0.80 (+0.47 to +1.11) | +0.51 | |
-| K = 4, flip 0.15 | +0.79 (+0.63 to +0.86) | +0.64 | |
-| 15 blocks, flip 0.15 | +0.52 (+0.23 to +0.82) | +0.31 | more blocks do not help |
-| `--keep-x` | worse in every setting | | |
-| $n = 6000$, flip 0.15, default encoder | 0.53, 0.29, 0.52 | +0.30 | larger $n$ alone does not help |
-| $n = 6000$, hidden 64, 1000 steps, lr 0.001 | 0.49, 0.60, 0.19 | | larger encoder does not help |
-| $n = 12000$, default encoder | 0.64, 0.55, 0.48 | +0.41 | oracle 0.99; the plateau persists at the largest $n$ of the grid |
-| $n = 12000$, hidden 64, 1000 steps (lr 0.001 or 0.003) | 0.59, 0.63, 0.45 and 0.62, 0.50, 0.44 | | same |
-| `--pretrain-steps 300` (treatment-predictive warm start) | -1.04, -0.66, -0.96 | | harmful: the warm start overfits $A$ on 1000 units |
-| $d_z = 8$ | 0.66, 0.27, 0.55 | | $R^2$ of $\mu(U)$ given $Z$ on fresh units rises from 0.75 to 0.91 (block 1 held out) but the estimates do not follow |
-| $d_z = 16$ | 0.63, 0.43, 0.55 | | $R^2$ 0.88 to 0.92; same conclusion |
-| set encoder (`--enc-arch set`), $d_z = 3$ | 0.20, 0.35, 0.12 | | worse: the architecture can represent the counts, but the balance objective does not train it to |
-| set encoder, $d_z = 8$ | 0.28, 0.31, 0.26 | | same |
-| set encoder at $n = 6000$, $d_z = 3$ or 8 | 0.41, 0.47, 0.30 and 0.52, 0.43, 0.28 | +0.30 | oracle 0.89; same at flip 0.25 (about 0) |
+*Positivity.* With an eligibility flag in block 0 that forces treatment, the raw adjustment returns 0.42 while
+adjusting on the valid blocks returns 0.83 and the oracle 0.92, but every PROBE configuration fails the
+overlap gate, and excluding the flag block also removes the latent information it carries, leaving 0.53 to
+0.62. Adding exogenous noise to $Z$ to buy overlap makes it worse: at noise levels 0, 0.25, 0.5, 1, 2 the
+overlap share rises 0.86, 0.88, 0.90, 0.95, 0.995 while the estimate falls 0.93, 0.81, 0.54, $-0.17$, $-1.04$.
 
-Why every change so far failed: the encoder's only training signal is the audit gap, and the audit block
-is one weak code (8 bits with flip probability 0.15 to 0.25). Once $Z$ carries the linear part of $U$, the
-information left in a single held-out block about $A$ given $Z$ is small, the ridge critics barely detect it,
-and the gradient toward the missing nonlinear part (the argmax over eight position counts) vanishes. Enlarging
-the representation or giving the encoder the right architecture does not create a signal that is not there.
+*Stronger instruments.* Raising the instrument coefficient from 2 to 6 improves the raw adjustment from 0.84
+to 1.02, because a strong instrument makes treatment more random with respect to $U$ and leaves less
+confounding to amplify. The win has an interior maximum and s9's default sits near it.
 
-Next steps, in order: (a) learn the representation body from the proxy structure itself, without the audit
-block: an unsupervised warm start such as cross-block prediction (predict one remaining block from the others;
-because blocks are conditionally independent given $U$, the shared information is exactly $U$) or an
-autoencoder of $W_{-S}$, followed by the balance objective for fine-tuning and by the audit for screening.
-This is consistent with the manuscript: $\phi$ may be any learner, the theory concerns the audited $Z$. Do not
-use a treatment-predictive warm start (row above) or any use of $Y$. (b) If (a) works on s3, apply the same
-recipe to E4 (Section 7.2) with a shared per-image map. (c) Report the $U$ content of $Z$ ($R^2$ of $\mu(U)$
-given $Z$ on fresh units, as in the table) next to the estimates in every s3 experiment; it separates
-representation failures from estimation failures. Acceptance: at $n = 12000$ the valid-split $\theta_S$ within 0.1 of the oracle, and at smaller
-$n$ the screen rejecting splits whose $\theta_S$ is off by more than $2\rho$.
+### A.6 Other findings
 
-### 7.2 E4: the MNIST setting was too degraded, and the ceiling diagnostic shows it
+The screen's floor correction does not fully remove the optimism of the critics: with the raw oracle as the
+representation the corrected discrepancy is 0.0016 in s10, 0.0041 in s12, 0.0008 in s11 instead of zero. A
+synthetic null and a conditional-permutation control both failed to fix it. Learned representations pass, so
+screen pass rates should be reported for learned representations only.
 
-Ceiling diagnostic ($n = 12000$, PCA-50 features, the latent score regressed on $X$ and three images with an
-MLP fitted on 24000 units, then adjustment on the fitted score; oracle 1.04):
+Configurations that hold out more than half the blocks leave too little for the representation: in s12 the
+three-block held-out set returned 0.51 and 0.66 while the screen caught it once in two replicates. The
+candidate family is therefore capped at half the blocks by default.
 
-| degradation | $R^2$(score) | ceiling | raw four-image | X-only | room |
-|---|---|---|---|---|---|
-| none | 0.943 | +0.885 | +0.716 | $-0.336$ | +0.17 |
-| $\sigma = 0.5$ | 0.907 | +0.782 | +0.472 | $-0.336$ | +0.31 |
-| $\sigma = 0.5$, 10 px occlusion | 0.821 | +0.462 | +0.311 | $-0.336$ | +0.15 |
-| $\sigma = 1$ | 0.817 | +0.540 | +0.285 | $-0.336$ | +0.26 |
-| $\sigma = 1$, 10 px occlusion (the chosen main setting) | 0.715 | +0.209 | +0.113 | $-0.336$ | +0.10 |
+## Appendix B: theory notes
 
-The main setting has a ceiling of 0.21: with the digit recovered only to $R^2 = 0.72$ and a confounding
-coefficient of $-3$, no method that sees the proxy through PCA-50 features can do better. That, not PROBE, is
-why the pilot failed. PROBE with the prognostic representation and MLP nuisances over five replicates returns
-$-0.15$, $-0.13$, $-0.01$, $-0.04$, $-0.27$ against a raw four-image adjustment of $+0.21$ to $+0.33$
-(`results/probe_e4_mnist_prog_sigma1.0_occ10.json`); the audit-gap encoder returned $-0.49$
-(`results/probe_e4_mnist_pilot_sigma1.0_occ10.json`).
+### B.1 A clean separation exists but is not certifiable
 
-Redesign, in order: run clean or mildly degraded images ($\sigma \le 0.5$, no occlusion), replace PCA-50 by
-CNN features so that the digit is recovered to $R^2$ near 0.99, and lower the confounding coefficient from
-$-3$ to about $-1.5$ so that a residual of a few percent does not translate into a bias of 0.15. Only then does
-the question the experiment is meant to answer, whether PROBE matches the proxy ceiling on image proxies,
-become answerable.
+Let $U, L_1, L_2, \epsilon_1, \epsilon_Y$ be independent standard normals, $W_1 = U$, $W_2 = U + \epsilon_1$,
+$W_3 = L_1 + L_2$, $A \sim \mathrm{Bernoulli}\{\mathrm{expit}(U + L_1)\}$ and
+$Y = \tau A + U + L_2 + \epsilon_Y$. With block 2 audited, block 1 feeding the representation, block 3 used in
+neither role and $Z = W_1$, all assumptions of Section 3 hold, balance and overlap hold, and Theorem 1
+identifies $\tau$; the raw adjustment conditions on a collider and does not. The same observed distribution
+also admits the configuration that puts block 3 into the representation, which passes both screens and returns
+a different value, so balance and overlap cannot separate them. The advantage rests on the untestable
+assumption that the representation input is admissible.
 
-### 7.2.1 Original note: the same failure with MNIST proxies through PCA features
+### B.2 Randomized representations
 
-Pilot replicate ($n = 6000$, $\sigma = 1$, occlusion 10 px, 50 principal components per image): Algorithm 1
-output -0.48, X-only -0.42, raw feature adjustment -0.17, oracle +0.91. The digit identity has to be decoded
-nonlinearly from 150 PCA coordinates of three images; the balance objective alone does not train the MLP to
-do it. Fixes (a) to (c) of 7.1 apply, with the set encoder being the most natural (a shared per-image map with
-pooling, later a shared CNN). Do not use a supervised digit classifier as the feature map: its output is
-essentially $\hat U$ and would leak the latent into every method.
+If $Z = \phi(X, W_{-S}, \xi)$ with $\xi$ exogenous, identification is unchanged: the assumptions survive the
+extra conditioning and the theorem never used determinism. Appending noise as a coordinate changes nothing.
+Garbling trades balance for overlap: in
+$D^2_{\mathrm{res}} = \mathbb E\{\mathrm{Var}(A \mid Z)\} - \mathbb E\{\mathrm{Var}(A \mid T, Z)\}$ the value
+is zero at no noise for a balancing $\phi$ and rises with the noise level, while the overlap constant improves,
+so Theorem 3's bound can be minimized at a strictly stochastic representation. Numerically the optimum stayed
+at zero noise (A.5). A pure-noise representation has a strictly positive discrepancy, so randomization cannot
+fool the audit.
 
-### 7.3 Held-out sets that leave too little behind
+### B.3 The three-role search
 
-In s12 the set that holds out three of the four blocks gave $\theta_S$ of 0.51 and 0.66 at $n = 12000$
-while the screen caught it only once in two replicates. The split family is therefore limited to sets of at
-most half of the blocks (`--max-held`). Keep this restriction unless there is a reason to study the full
-family.
-
-### 7.4 Screen floor calibration
-
-With the raw oracle $Z = (X, U)$ the floor-corrected $\widehat D^2$ is 0.0016 (s10), 0.0041 (s12), 0.0008
-(s11) at $n = 12000$ instead of 0, because $h_1$'s extra features of $(T, Z)$ also approximate
-$P(A \mid Z)$ better than $h_0$'s features of $Z$ alone. A synthetic null ($A^\ast \sim
-\mathrm{Bernoulli}(\hat h_0(Z))$) gives a floor of 0 and a conditional-permutation control gives the same
-floor as the Gaussian-noise control, so neither fixes it. Learned representations pass the screen
-($\widehat D^2 \le 0.001$) because the encoder chooses coordinates that $h_0$ fits well. Consequence: the
-oracle is a yardstick for the estimate, not for the screen; report screen pass rates for learned $Z$ only.
-Open item: a floor that reproduces the approximation gain.
-
-### 7.5 Small-sample linking radius
-
-At $n = 1500$ the evaluation sample has 500 units and $\rho \approx 0.7$, so every survivor links into one
-component and the median cannot separate good from bad splits. This is expected; the $n$ curve is the result.
-
-## 7.6 First-principles audit of the design (2026-09-09, late evening)
-
-Two findings change how Sections 5 to 8 must be read.
-
-1. **The raw proxy adjustment fails only with the tree learner.** With an L2 logistic propensity and MLP outcome
-   models (`--nuisance mlp`), adjusting for $(X, W)$ reaches 0.78 in s10 and s11, 0.74 in s9, 0.94 in s12
-   ($n = 12000$), against 0.14 to 0.61 with gradient boosting. The oracle itself moves from 0.91 to 0.99.
-   Every claim that "(X, W) fails" in the tabular SCMs was an artifact of the learner.
-2. **The oracle is out of reach by information, not by learning.** Adjusting for $(X, E[U \mid X, W_{-1}])$,
-   with the posterior mean approximated on 100k units, gives 0.77 (s10), 0.74 (s11), 0.75 (s9), 0.91 (s12),
-   0.78 (s3, a lower bound) at the current proxy strengths, because $R^2(U \mid X, W_{-1})$ is 0.87 to 0.96 and
-   the Simpson strength $u_{\mathrm{out}} = -3$ turns a residual variance of $1 - R^2$ into a bias of about
-   $3 \times 1.2 \times 0.8 \times (1 - R^2)$. Matching the oracle within 0.1 needs $R^2 \gtrsim 0.97$.
-
-Re-tuned candidates (ceiling scan, $n = 12000$, MLP nuisances): s10 loading 0.6 ($R^2$ 0.965, ceiling 0.91,
-$(X,W)$ 0.92); s11 $\sigma = 0.7$, nuisance scale 1.0 (0.973, 0.94, 0.89); s9 loading 2.5 (0.944, 0.89, 0.89);
-s12 loading 0.7 (0.983, 0.96, 0.94); s3 flip 0.15 (0.998, 0.997, $(X,W)$ 0.74).
-
-PROBE on the candidates (audit-gap MLP encoder, MLP nuisances, $n = 12000$, one replicate, three splits):
-s10 0.85 to 0.89; s11 0.83; s12 0.87 to 0.92; s9 0.83 to 1.03 (with instrument coefficient 4: 0.86 to 0.99,
-while $(X,W)$ with MLP nuisances is 1.00); s3 0.45 to 0.65. PROBE therefore sits at or slightly below the
-strong $(X, W)$ adjustment and about 0.1 below the oracle in the valid SCMs.
-
-Representation ablation (same nuisances): a ridge-logistic propensity index of $(X, W_{-S})$ gives 0.05 to 0.22
-and fails the overlap gate in s9 (it keeps the instrument); propensity plus outcome indices give 0.47 to 0.75;
-the audit-gap encoder gives 0.62 to 0.98 with intact overlap. Treatment-predictive representations amplify the
-residual confounding; the balance objective is instrument-averse. Keep the audit-gap encoder.
-
-Consequences. In valid tabular SCMs PROBE cannot beat a strong $(X, W)$ adjustment; the honest claim is
-equivalence with the proxy ceiling plus the audit certificate. "Beats $(X, W)$" is attainable only where the
-raw adjustment fails for structural reasons: nonlinear code structure (s3, ceiling 0.997 versus $(X,W)$ 0.74,
-provided the encoder decodes it), and image proxies (E4). The current E1 grid (tree nuisances, old strengths)
-is kept only as the "old recipe" record.
-
-## 8. Success criterion (set by Yonghan, 2026-09-09; status after the audit above)
-
-**First cell that passes the (X, W) condition with strong baselines: s9 at $n = 12000$.** With the saved
-grid outputs (tree nuisances inside PROBE) scored against logistic+MLP baselines on the same 20 replicates:
-MAE PROBE 0.100, oracle 0.030, $(X, W)$ 0.304; paired PROBE minus $(X,W)$ = $-0.20$ [$-0.25$, $-0.16$];
-PROBE minus oracle = $+0.07$ [$+0.04$, $+0.10$]. Re-running PROBE with `--nuisance mlp`
-(`results/probe_e1_s9_n12000_mlp.json`): MAE PROBE 0.119, oracle 0.021, $(X,W)$ 0.287; PROBE minus
-$(X,W)$ = $-0.17$ [$-0.21$, $-0.12$]; PROBE minus oracle = $+0.10$ [$+0.04$, $+0.16$]. The instrument story
-holds against strong baselines; the remaining 0.1 to the oracle is in the representation stage (3-dimensional
-$Z$ learned on one third of the sample), not in the nuisance stage.
-
-**s12 at $n = 12000$ (valid SCM) against strong baselines:** MAE PROBE 0.106, oracle 0.026, $(X, W)$ 0.068;
-PROBE minus $(X,W)$ = $+0.04$ [$+0.02$, $+0.06$] (PROBE loses), PROBE minus oracle = $+0.08$ [$+0.06$, $+0.10$].
-This is the expected picture in a valid SCM with strong proxies: the raw adjustment with a good learner is the
-ceiling and PROBE sits slightly below it. Against the tree baselines of the saved grid, s12 passed both
-conditions from $n = 6000$ on, which shows how much the criterion depends on the baseline learner.
-
-**s9 with three-way cross-fitting (`--crossfit --nuisance mlp`, `results/probe_e1_s9_n12000_mlp_crossfit.json`):**
-MAE PROBE 0.085 (mean 0.93, sd 0.08, down from sd 0.14 without cross-fitting), oracle 0.016, $(X,W)$ 0.289;
-PROBE minus $(X,W)$ = $-0.20$ [$-0.23$, $-0.18$]; PROBE minus oracle = $+0.07$ [$+0.04$, $+0.10$] (upper limit
-0.1005, at the margin). Cross-fitting removes the variance part of the gap; the remaining $-0.07$ is bias from
-the representation at proxy strength 1.5. A run at strength 2.0 tests whether both conditions hold at once
-(`results/probe_e1_s9_n12000_mlp_crossfit_strength2.json`). Cross-fitting is the recipe for every paper result.
-
-**First cell meeting both conditions against strong baselines: s9 at proxy strength 2.0, $n = 12000$,
-cross-fitting, MLP nuisances** (`results/probe_e1_s9_n12000_mlp_crossfit_strength2.json`, 20 replicates):
-MAE PROBE 0.055 (mean 1.011, sd 0.074), oracle 0.016, $(X,W)$ 0.172; PROBE minus oracle = $+0.04$
-[$+0.02$, $+0.06$] (matches); PROBE minus $(X,W)$ = $-0.12$ [$-0.15$, $-0.09$] (beats). Proposed s9 default:
-proxy strength 2.0 (instrument coefficient 2.0 unchanged); the recipe `--crossfit --nuisance mlp` for all runs.
-
-For every main SCM at the largest sample size, over the 20 replicates, with paired differences of absolute
-error (PROBE minus comparator) and t-based 95% intervals (`paired_criterion` in the pipeline, stored under
-`summary[n]["criterion"]`):
-
-1. PROBE beats the raw proxy adjustment: the interval of $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,W)} - \tau|$ lies
-   below 0. A tie with $(X, W)$ is a failure.
-2. PROBE matches the oracle: the upper limit of $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,U)} - \tau|$ is at most
-   0.10 (equivalence margin in units of $\tau = 1$).
-
-Status of the saved cells on 2026-09-09: no cell meets both conditions. s12 ties with $(X, W)$; s9 and s10
-beat $(X, W)$ but are far from the oracle; s11 and s3 lose to $(X, W)$. The encoder fix of Section 7.1 is
-therefore the critical path; the unsupervised masked-block warm start is implemented as
-`--pretrain-mode mask --pretrain-steps 500` and under test.
-
-### 8.1 Scoreboard of every saved cell (2026-09-10)
-
-Mean absolute error over 20 replicates, $\tau = 1$. "vs oracle" and "vs (X,W)" are the paired 95% intervals of
-the criterion above. The baseline learner is stated per block: the four original-recipe grids use gradient
-boosting for every AIPW, the s9 re-runs use an L2 logistic propensity with MLP outcomes.
-
-| Setting | $n$ | PROBE | $(X,W)$ | oracle | vs oracle | vs $(X,W)$ |
-|---|---|---|---|---|---|---|
-| s9, strength 2.0, cross-fit, MLP | 12000 | 0.055 | 0.172 | 0.016 | +0.04 [+0.02, +0.06] pass | $-0.12$ [$-0.15$, $-0.09$] pass |
-| s9, cross-fit, MLP | 12000 | 0.085 | 0.289 | 0.016 | +0.07 [+0.04, +0.10] margin | $-0.21$ [$-0.23$, $-0.18$] pass |
-| s9, MLP | 12000 | 0.119 | 0.287 | 0.021 | +0.10 [+0.04, +0.16] fail | $-0.17$ [$-0.21$, $-0.12$] pass |
-| s9, MLP, one-block held-out sets | 12000 | 0.145 | 0.287 | 0.021 | +0.12 fail | $-0.14$ pass |
-| s9, original (tree) | 12000 | 0.100 | 0.390 | 0.034 | +0.07 [+0.04, +0.10] pass | $-0.29$ pass |
-| s12, original (tree) | 12000 | 0.106 | 0.172 | 0.052 | +0.06 [+0.04, +0.07] pass | $-0.07$ pass (tree only) |
-| s12, MLP baselines on the same replicates | 12000 | 0.106 | 0.068 | 0.026 | +0.08 fail | +0.04 fail |
-| s10, original (tree) | 12000 | 0.338 | 0.780 | 0.052 | +0.29 fail | $-0.44$ pass (tree only) |
-| s11, original (tree) | 12000 | 0.530 | 0.732 | 0.052 | +0.48 fail | $-0.20$ pass (tree only) |
-| s3, original (tree) | 1500 | 1.628 | 1.213 | 0.107 | +1.52 fail | +0.42 fail |
-| E4 MNIST pilot (1 replicate) | 6000 | 1.485 | 1.166 | 0.095 | fail | fail |
-
-### 8.2 Why PROBE can beat the raw proxy adjustment only in specific regimes
-
-The representation uses $W_{-S}$, a subset of the proxy, so its information about $U$ never exceeds that of the
-full $W$. If every block is valid, positivity holds given $(X, W)$, the sample is large, and the learners are
-good, then adjusting for $(X, W)$ is at least as accurate as PROBE, and the scoreboard shows exactly that in
-s10, s11, s12 once the baseline uses a strong learner. PROBE can win only through one of four channels:
-
-1. **Invalid blocks.** A block that affects treatment directly (or is otherwise not a valid held-out channel)
-   makes the raw adjustment biased no matter how good the learner is, and the bias is amplified rather than
-   reduced. This is s9 and it is the one channel already demonstrated.
-2. **Positivity.** Conditioning on all of $W$ can drive $P(A = 1 \mid X, W)$ to 0 or 1, while a low-dimensional
-   $Z$ keeps overlap. Theorem 1 requires overlap for $Z$ only.
-3. **Statistical efficiency.** With a very high-dimensional or nonlinearly coded proxy, nuisance estimation on
-   the raw $(X, W)$ is poor at realistic $n$ while a three-dimensional $Z$ is easy to fit.
-4. **The certificate.** The audit reports whether the adjustment set is adequate; the raw adjustment offers no
-   such check. This is a claim about knowledge, not about error, and it needs the audit-power experiment (E1c).
-
-### 8.3 Design scan for DGPs that beat the raw proxy adjustment (2026-09-10)
-
-Each candidate is measured by its **room**: the accuracy of adjusting for $(X, E[U \mid X, W_{-S}])$, the proxy
-information ceiling, minus the accuracy of adjusting for the raw $(X, W)$ with strong learners. Room is what a
-representation could win. All numbers at $n = 12000$, one replicate, MLP nuisances, $\tau = 1$.
-
-| Candidate | mechanism | ceiling | raw $(X,W)$ | room | PROBE |
-|---|---|---|---|---|---|
-| instrument block, extreme propensity ($P(A \mid X, W) \in [0.001, 0.999]$, 63% outside $[0.05, 0.95]$) | positivity | 1.00 | 1.00 | +0.01 | not run |
-| instrument block, sweet spot (s9, strength 2.0, coefficient 2.0) | amplification | 1.00 | 0.84 | +0.16 | 0.98 |
-| instrument block, coefficient 3, 4, 6 | amplification | 1.01 | 0.94, 0.98, 1.02 | 0 | 0.89 to 0.98 |
-| near-instrument block (weak proxy that also drives treatment) | amplification | 0.98 | 1.01 | 0 | not run |
-| two instrument blocks | amplification | 0.96 | 0.89 | +0.07 | not run |
-| **s13 nonlinear frequency codes** ($W_k = a_k \sin(f_k U + p_k) + \epsilon$, $d_w = 600$ to 1200) | statistical | 0.95 | 0.63 to 0.85 | **+0.15 to +0.32** | 0.55 to 0.90 |
-| **s14 collider block** ($W_0 = L_1 + L_2$, $L_1 \to A$, $L_2 \to Y$) | structural | 0.97 | $-0.05$ | **+1.0** | 0.19 to 0.89, see below |
-
-Findings.
-
-1. **Positivity is not a channel.** Augmented IPW with a good outcome model is insensitive to a propensity
-   pushed to 0.001, so destroying overlap in $(X, W)$ does not create room.
-2. **Instrument amplification has a sweet spot and it is already used.** A stronger instrument makes treatment
-   more random with respect to $U$, so the confounding available for amplification shrinks: raw $(X,W)$ improves
-   from 0.84 to 1.02 as the coefficient goes from 2 to 6. The s9 default (strength 2.0, coefficient 2.0) is
-   near the maximum of the win, and there PROBE passes both conditions (8.1).
-3. **s13 has real room but the current representation cannot take it.** The audit-gap encoder recovers $U$ with
-   $R^2$ of 0.87 to 0.95 and lands at 0.55 to 0.90, below the raw adjustment. A prognostic representation
-   ($Z$ = predicted outcomes under both arms from MLP regressions on $W_{-S}$, `--enc-arch prog`) improves this
-   to 0.81 to 0.90, still at or below the raw adjustment and far from the 0.95 ceiling. The bottleneck is the
-   representation learner, not the DGP: PROBE trains it on one third of the sample from a weak signal, while
-   the baseline nuisances get two thirds and a direct signal.
-4. **s14 breaks the raw adjustment and PROBE alike.** Adjusting for the whole proxy is inconsistent
-   ($-0.05$ against $\tau = 1$, identically for trees and MLPs), because conditioning on the collider block
-   creates an association between a treatment cause and an outcome cause. PROBE's behaviour by role of the
-   contaminated block: held out, the audit rejects it ($\widehat D^2$ 0.018 to 0.024 against a threshold of
-   0.003, the correct refusal); inside the representation, the estimate is 0.19 to 0.56 and **the audit
-   passes**, because the audit tests balance with respect to the held-out block and not the exchangeability
-   clause that the collider violates; excluded from both roles, the estimate is 0.83 to 0.89. A three-role
-   search over (audited, representation, excluded) is implemented (`--max-excluded`, `all_configs`) and is
-   inside the theory, since Assumption 2 refers to the blocks that actually enter the representation. It does
-   not rescue s14: the candidate family is dominated by configurations that keep the collider in the
-   representation and pass the audit, and the correct configurations disagree among themselves depending on how
-   much valid proxy is left, so Algorithm 1 returns 0.15 to 0.19. This is a limitation to state in the paper,
-   not a win: **the audit certifies balance, it does not certify that the representation input is admissible.**
-
-### 8.4 Is a clean separation possible at all?
-
-Question: can the assumptions of Section 3 hold for some configuration while adjusting for the raw $(X, W)$ is
-inconsistent? Yes, and the following construction settles it. Let $U, L_1, L_2, \epsilon_1, \epsilon_Y$ be
-independent standard normals, three proxy blocks be
-$W_1 = U$, $W_2 = U + \epsilon_1$, $W_3 = L_1 + L_2$, treatment $A \sim \mathrm{Bernoulli}\{\mathrm{expit}(U + L_1)\}$
-and outcome $Y = \tau A + U + L_2 + \epsilon_Y$. Take the configuration audited $= \{2\}$, representation
-$= \{1\}$, excluded $= \{3\}$, and $Z = W_1$.
-
-- Latent exchangeability holds: given $(U, W_1)$, the outcome depends on $L_2$ and treatment on $L_1$, which are
-  independent.
-- The common held-out channel holds: given $(U, W_1)$, $W_2$ depends only on $\epsilon_1$.
-- Exact balance and overlap hold: $Z = U$, so $W_2$ adds nothing about $A$, and
-  $P(A = 1 \mid Z) = \mathbb E[\mathrm{expit}(U + L_1) \mid U] \in (0, 1)$.
-- So Theorem 1 identifies $\tau$. The raw adjustment conditions on $W_3$, a collider of a treatment cause and
-  an outcome cause, which makes $L_1$ and $L_2$ dependent within strata, so $Y(a) \not\perp A \mid (X, W)$ and the
-  raw functional is not $\tau$. In the s14 realization the raw adjustment returns $-0.05$ against $\tau = 1$.
-
-Two limits of this answer.
-
-1. **The separation is not certifiable from data.** The same observed distribution also admits the configuration
-   audited $= \{2\}$, representation $= \{1, 3\}$, which satisfies exact balance and overlap (so both screens
-   pass) and returns a different, biased value. Balance and overlap cannot tell the two apart, so the advantage
-   rests on the analyst's assumption that the blocks entering the representation are admissible. This is
-   Assumption 2 and it is untestable, which is the honest content of the s14 experiment.
-2. **Positivity is not a route to the separation.** If the block that forces treatment is exogenous, the outcome
-   model extrapolates correctly and the raw adjustment stays consistent; if it is a function of $U$, the
-   representation inherits the same lack of overlap. Numerically, with an eligibility flag $F$ measured by
-   block 0 and $A = 1$ whenever $F = 1$: with $F$ depending on $U$, the raw adjustment gives 0.42 but every
-   PROBE configuration fails the overlap gate (overlap share 0.86 to 0.96 against a 0.98 requirement), and
-   excluding block 0 costs the $U$ information it carries, so PROBE returns 0.53 to 0.62 against an oracle of
-   0.92. This is the mechanism refuted, not merely untested.
-
-What is left is the certifiable separation: contamination that a screen can actually see. A block that predicts
-treatment given $Z$ is caught by the audit when it is held out, and a block that destroys overlap is caught by
-the overlap gate when it enters the representation. Bias amplification is the case where this pays off
-asymptotically as well, and it is bounded by a tension that the scan in 8.3 makes explicit: amplification needs
-residual confounding to amplify, while matching the oracle needs the residual to be small. The s9 sweet spot is
-the interior maximum of that tension, which is why its margin is a factor of three rather than an order of
-magnitude.
-
-### 8.5 Randomized representations
-
-Everything above takes $Z = \phi(X, W_{-S})$ to be a deterministic function. Let $Z$ instead be drawn from a
-kernel, $Z = \phi(X, W_{-S}, \xi)$ with $\xi$ independent of $(U, X, W, A, Y(0), Y(1))$.
-
-- **Identification is unchanged.** Theorem 1 never uses determinism. Exogeneity gives
-  $Y(a) \perp A \mid (U, V_S, \xi)$ and $W_S \perp A \mid (U, V_S, \xi)$ from the corresponding assumptions
-  without $\xi$, the strata $\{Z = z\}$ still define laws of $(V_S, U)$ so outcome-relevant completeness is
-  well-formed, and the conclusion follows from exact balance and overlap for $Z$ as stated.
-- **Appending noise changes nothing.** For $Z = (\phi(V), \xi)$, both $P(A = 1 \mid T, Z)$ and $P(A = 1 \mid Z)$
-  equal their noiseless versions, so the discrepancy, the overlap and the estimand are identical.
-- **Garbling trades balance for overlap.** For $Z_\lambda = \phi(V) + \lambda \xi$, write
-  $D^2_{\mathrm{res}} = \mathbb E\{\mathrm{Var}(A \mid Z)\} - \mathbb E\{\mathrm{Var}(A \mid T, Z)\}$. At
-  $\lambda = 0$ with a balancing $\phi$ the discrepancy is zero, its global minimum; as $\lambda$ grows both
-  terms rise toward $\mathrm{Var}(A)$ and $\mathbb E\{\mathrm{Var}(A \mid T)\}$, while $P(A = 1 \mid Z_\lambda)$
-  contracts toward $P(A = 1)$ so the overlap constant $\eta$ improves. Theorem 3's bound
-  $\Gamma_S D_{\mathrm{res},S} / \{\eta(1 - \eta)\}$ therefore has a numerator that grows and a denominator that
-  improves with $\lambda$, and its minimizer can be interior: a strictly stochastic representation can carry a
-  smaller bias bound than every deterministic one. This is the natural repair for the case in 8.4 where the
-  deterministic representation inherits an overlap collapse.
-- **Numerically the optimum was still at zero noise** on that positivity DGP (`--z-noise`, one replicate,
-  $n = 12000$, flag block in the representation): noise 0, 0.25, 0.5, 1, 2 gives overlap share 0.86, 0.88,
-  0.90, 0.95, 0.995 and estimates 0.93, 0.81, 0.54, $-0.17$, $-1.04$, with $\widehat D^2$ 0.0001, 0.0000,
-  0.0003, 0.0047, 0.0155. Blurring buys overlap and pays in confounding faster than it gains. The interior
-  optimum is a statement about the bound, not a promise about the error.
-- **The audit monitors the damage.** The discrepancy rises with the noise level in step with the error, so the
-  screen rejects an over-blurred representation. Randomization does not fool the audit: a pure-noise $Z$ has
-  $D^2_{\mathrm{res}} = \mathrm{Var}(A) - \mathbb E\{\mathrm{Var}(A \mid T)\} > 0$.
-- **Costs.** The estimator becomes seed-dependent and Theorem 5's variance grows; averaging over draws of
-  $\xi$ restores a single answer and reduces variance without changing the target. The search theorem needs the
-  noise level on a finite grid, otherwise the candidate family is no longer finite and the counting in
-  Theorem 6 needs a covering argument.
-- **What randomization cannot do.** Exact balance asks $Z$ to retain everything in $V$ that $A$ depends on
-  beyond $T$; exogenous noise only discards information, so it cannot create balance that the noiseless
-  representation lacks. Stating this as a proposition needs a short data-processing argument.
-
-Consequences for the paper. The demonstrable claim is the s9 family: proxies contaminated by treatment-only
-variation, where the raw adjustment amplifies the residual confounding while the balance objective purges the
-contamination from $Z$ (the representation ablation in 7.6 is the direct evidence: the propensity-index
-representation keeps the instrument and loses overlap, the audit-gap encoder does not). In valid SCMs the honest
-claim is equivalence with the proxy ceiling plus the audit certificate. Two open leads: a representation learner
-strong enough to claim the s13 room, and an admissibility check that would close the s14 gap.
-
-
-## 9. Reporting conventions
-
-- The estimand is $\tau = 1$; report absolute error in units of $\tau$ and, for Simpson settings, also the
-  outcome standard deviation (about 3.2 in s10) so that the error can be read relative to the noise.
-- Every method uses the same replicate, the same sample split, the same evaluation sample, and the same
-  gradient-boosting learners; only the adjustment set differs.
-- Seeds: `ROOT_SEED` and the namespaced `seed_key` in `probe_e1_pipeline.py`; structural coefficients are
-  drawn once per SCM from `seed_key("coef")`, data from `seed_key("data", rep)`.
-- Keep `complete: false` results out of figures.
-
-## 10. Questions to settle with Yonghan before changing the design
-
-1. Whether s3 stays a main SCM after the encoder fix or moves to the appendix as the finite-state case.
-2. The comparator set of E3 and which implementation of Single Proxy Control to use.
-3. Whether E4 stage 2 (end-to-end CNN) is needed for the paper or stage 1 with a set encoder suffices.
+`all_configs(n_blocks, max_held, max_excluded)` searches over (audited, representation, excluded) rather than
+(audited, rest). This is inside the theory, since Assumption 2 refers to the blocks that actually enter the
+representation, and it only changes the counts in Theorem 6. It does not rescue the collider case: the family
+is dominated by configurations that keep the collider in the representation and pass the audit, and the
+correct configurations disagree with each other depending on how much valid proxy is left.
