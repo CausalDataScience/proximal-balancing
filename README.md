@@ -9,6 +9,10 @@ This package contains only the experiments accepted for the manuscript:
 
 KMU, Zika, exploratory high-dimensional/image suites, and superseded pilots are intentionally excluded.
 
+## Active experiment program (2026-09)
+
+The PROBE experiments in progress (five main SCMs with Algorithm 1, MNIST image proxies, comparators, Twins) are described for collaborators in `EXPERIMENTS.md`. Code: `code/probe_scms.py`, `code/probe_e1_pipeline.py`, `code/probe_e4_mnist.py`. Result files `results/probe_e1_*.json` carry a `complete` flag; partial files are in-progress grids.
+
 ## Quick verification
 
 ```bash

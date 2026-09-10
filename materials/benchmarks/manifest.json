@@ -1,0 +1,22 @@
+{
+ "manifest_version": 1,
+ "accessed_on": "2026-09-09",
+ "datasets": [
+  {
+   "dataset": "MNIST",
+   "description": "Handwritten digit images (60000 train, 10000 test, 28x28 grayscale) in the Keras npz packaging; used as image proxy blocks of a finite latent confounder in experiment E4.",
+   "origin": "Y. LeCun, C. Cortes, C. J. C. Burges, The MNIST database of handwritten digits",
+   "license": "Creative Commons Attribution-Share Alike 3.0 (as stated in the Keras dataset documentation)",
+   "local_origin": "copied from ~/.keras/datasets/mnist.npz (Keras download of 2024-10-15)"
+  }
+ ],
+ "files": [
+  {
+   "dataset": "MNIST",
+   "local_path": "mnist/mnist.npz",
+   "source_url": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz",
+   "sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+   "bytes": 11490434
+  }
+ ]
+}
