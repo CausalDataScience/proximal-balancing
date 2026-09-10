@@ -360,6 +360,45 @@ beat $(X, W)$ but are far from the oracle; s11 and s3 lose to $(X, W)$. The enco
 therefore the critical path; the unsupervised masked-block warm start is implemented as
 `--pretrain-mode mask --pretrain-steps 500` and under test.
 
+### 8.1 Scoreboard of every saved cell (2026-09-10)
+
+Mean absolute error over 20 replicates, $\tau = 1$. "vs oracle" and "vs (X,W)" are the paired 95% intervals of
+the criterion above. The baseline learner is stated per block: the four original-recipe grids use gradient
+boosting for every AIPW, the s9 re-runs use an L2 logistic propensity with MLP outcomes.
+
+| Setting | $n$ | PROBE | $(X,W)$ | oracle | vs oracle | vs $(X,W)$ |
+|---|---|---|---|---|---|---|
+| s9, strength 2.0, cross-fit, MLP | 12000 | 0.055 | 0.172 | 0.016 | +0.04 [+0.02, +0.06] pass | $-0.12$ [$-0.15$, $-0.09$] pass |
+| s9, cross-fit, MLP | 12000 | 0.085 | 0.289 | 0.016 | +0.07 [+0.04, +0.10] margin | $-0.21$ [$-0.23$, $-0.18$] pass |
+| s9, MLP | 12000 | 0.119 | 0.287 | 0.021 | +0.10 [+0.04, +0.16] fail | $-0.17$ [$-0.21$, $-0.12$] pass |
+| s9, MLP, one-block held-out sets | 12000 | 0.145 | 0.287 | 0.021 | +0.12 fail | $-0.14$ pass |
+| s9, original (tree) | 12000 | 0.100 | 0.390 | 0.034 | +0.07 [+0.04, +0.10] pass | $-0.29$ pass |
+| s12, original (tree) | 12000 | 0.106 | 0.172 | 0.052 | +0.06 [+0.04, +0.07] pass | $-0.07$ pass (tree only) |
+| s12, MLP baselines on the same replicates | 12000 | 0.106 | 0.068 | 0.026 | +0.08 fail | +0.04 fail |
+| s10, original (tree) | 12000 | 0.338 | 0.780 | 0.052 | +0.29 fail | $-0.44$ pass (tree only) |
+| s11, original (tree) | 12000 | 0.530 | 0.732 | 0.052 | +0.48 fail | $-0.20$ pass (tree only) |
+| s3, original (tree) | 1500 | 1.628 | 1.213 | 0.107 | +1.52 fail | +0.42 fail |
+| E4 MNIST pilot (1 replicate) | 6000 | 1.485 | 1.166 | 0.095 | fail | fail |
+
+### 8.2 Why PROBE can beat the raw proxy adjustment only in specific regimes
+
+The representation uses $W_{-S}$, a subset of the proxy, so its information about $U$ never exceeds that of the
+full $W$. If every block is valid, positivity holds given $(X, W)$, the sample is large, and the learners are
+good, then adjusting for $(X, W)$ is at least as accurate as PROBE, and the scoreboard shows exactly that in
+s10, s11, s12 once the baseline uses a strong learner. PROBE can win only through one of four channels:
+
+1. **Invalid blocks.** A block that affects treatment directly (or is otherwise not a valid held-out channel)
+   makes the raw adjustment biased no matter how good the learner is, and the bias is amplified rather than
+   reduced. This is s9 and it is the one channel already demonstrated.
+2. **Positivity.** Conditioning on all of $W$ can drive $P(A = 1 \mid X, W)$ to 0 or 1, while a low-dimensional
+   $Z$ keeps overlap. Theorem 1 requires overlap for $Z$ only.
+3. **Statistical efficiency.** With a very high-dimensional or nonlinearly coded proxy, nuisance estimation on
+   the raw $(X, W)$ is poor at realistic $n$ while a three-dimensional $Z$ is easy to fit.
+4. **The certificate.** The audit reports whether the adjustment set is adequate; the raw adjustment offers no
+   such check. This is a claim about knowledge, not about error, and it needs the audit-power experiment (E1c).
+
+New DGPs must therefore be designed on channels 2 and 3, or on richer versions of channel 1.
+
 ## 9. Reporting conventions
 
 - The estimand is $\tau = 1$; report absolute error in units of $\tau$ and, for Simpson settings, also the
