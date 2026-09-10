@@ -76,7 +76,10 @@ cd code && OMP_NUM_THREADS=2 python3 probe_e1_pipeline.py --scm s10 --n 1500 300
 Any SCM parameter can be overridden with `--scm-param key=value` (repeatable); dimensions with `--d-x` and
 `--d-w`; encoder with `--d-z`, `--enc-steps`, `--enc-hidden`, `--lr`, `--lam`, `--keep-x`,
 `--pretrain-steps`; screening with `--t` (default two standard errors), `--eta`, `--overlap-min`; linking with
-`--rho`, `--rho-rule`, `--delta`; the split family with `--max-held`.
+`--rho`, `--rho-rule`, `--delta`; the split family with `--max-held`; the nuisance learners with `--nuisance {gbm,mlp}`
+(use `mlp` for every paper result, see 7.6); three-way fold rotation with `--crossfit`; alternative representations
+with `--enc-arch {mlp,set,index,index2}` and warm starts with `--pretrain-mode {none,treat,mask}` (ablations only,
+all inferior to the default audit-gap MLP).
 
 E4 stage 1:
 
@@ -176,16 +179,26 @@ s6 and s7 (a block that affects $A$ or $Y$ directly).
 
 | Id | Content | Status on 2026-09-09 |
 |---|---|---|
-| E1 | Main grid: five SCMs, $n \in \{1500, 3000, 6000, 12000\}$, 20 replicates, $m = 10$; figure: absolute error of naive, X-only, (X, W), PROBE, oracle against $n$ | Running for s10, s12, s9, s11 (partial results in `results/`). s3 stopped, see 7.1. |
+| E1 | Main grid: five SCMs, $n \in \{1500, 3000, 6000, 12000\}$, 20 replicates, $m = 10$; figure: absolute error of naive, X-only, (X, W), PROBE, oracle against $n$ | Original recipe complete for s10, s12, s9, s11 (`results/probe_e1_<scm>.json`); s3 stopped (7.1). To be re-run with the re-tuned strengths, `--nuisance mlp`, and `--crossfit` (7.6, 8). |
 | E2 | Block-count sweep on s4: $J \in \{2, 4, 8, 16\}$ at $n = 6000$, 20 replicates; shows that exact balance is approached as $J$ grows | Not started; runs with existing code (`--scm s4 --n-blocks J`). |
 | E3 | Comparators on the tabular SCMs: classify-then-Kuroki-Pearl for s3, Single Proxy Control (Park, Richardson, Tchetgen Tchetgen), two-proxy proximal doubly robust estimator, all with the same sample splits | Not implemented. |
 | E4 | MNIST image proxies (design fixed in the memo): degradation sweep and $n$ sweep | Stage 1 script written; pilot stopped because the encoder failed, see 7.2. |
 | E5 | Twins semi-synthetic benchmark (CEVAE protocol: latent = same-sex/birth-weight class, proxies = noisy copies of the latent) | Data present, protocol not implemented. |
 | Appendix | s5 audit blindness, s8 overlap, s1/s2 controls, s6/s7 invalid blocks | Not started; runs with existing code. |
 
-Early E1 results (mean absolute error at $n = 1500$, 20 replicates): Algorithm 1 / X-only / (X, W) / oracle:
-s9 0.44 / 1.29 / 0.46 / 0.09; s12 0.19 / 1.41 / 0.20 / 0.11; s10 0.57 / 1.41 / 0.66 / 0.11;
-s11 0.98 / 1.41 / 0.68 / 0.11; s3 1.63 / 1.52 / 1.21 / 0.11 (stopped).
+E1 grid results with the original recipe (tree nuisances, original proxy strengths; mean absolute error of
+Algorithm 1 / raw $(X,W)$ / oracle, 20 replicates; s3 was stopped, see 7.1):
+
+| SCM | $n=1500$ | $n=3000$ | $n=6000$ | $n=12000$ |
+|---|---|---|---|---|
+| s10 | 0.57 / 0.66 / 0.11 | 0.52 / 0.71 / 0.09 | 0.42 / 0.78 / 0.07 | 0.34 / 0.78 / 0.05 |
+| s12 | 0.19 / 0.20 / 0.11 | 0.19 / 0.16 / 0.09 | 0.13 / 0.17 / 0.07 | 0.11 / 0.17 / 0.05 |
+| s9 | 0.44 / 0.46 / 0.09 | 0.31 / 0.39 / 0.09 | 0.16 / 0.38 / 0.05 | 0.10 / 0.39 / 0.03 |
+| s11 | 0.98 / 0.68 / 0.11 | 0.82 / 0.70 / 0.09 | 0.68 / 0.72 / 0.07 | 0.53 / 0.73 / 0.05 |
+
+These files are the "original recipe" record. Section 7.6 explains why they are not the paper's evidence: the
+$(X,W)$ column uses a tree learner that cannot add up many weak coordinates, and the proxy strengths put the
+information ceiling far below the oracle.
 
 ## 7. Known problems, what was tried, and what to do next
 
@@ -211,11 +224,14 @@ Per-split estimates $\theta_S$ (three fixed sets, $n = 3000$; oracle about 0.98)
 | `--keep-x` | worse in every setting | | |
 | $n = 6000$, flip 0.15, default encoder | 0.53, 0.29, 0.52 | +0.30 | larger $n$ alone does not help |
 | $n = 6000$, hidden 64, 1000 steps, lr 0.001 | 0.49, 0.60, 0.19 | | larger encoder does not help |
+| $n = 12000$, default encoder | 0.64, 0.55, 0.48 | +0.41 | oracle 0.99; the plateau persists at the largest $n$ of the grid |
+| $n = 12000$, hidden 64, 1000 steps (lr 0.001 or 0.003) | 0.59, 0.63, 0.45 and 0.62, 0.50, 0.44 | | same |
 | `--pretrain-steps 300` (treatment-predictive warm start) | -1.04, -0.66, -0.96 | | harmful: the warm start overfits $A$ on 1000 units |
 | $d_z = 8$ | 0.66, 0.27, 0.55 | | $R^2$ of $\mu(U)$ given $Z$ on fresh units rises from 0.75 to 0.91 (block 1 held out) but the estimates do not follow |
 | $d_z = 16$ | 0.63, 0.43, 0.55 | | $R^2$ 0.88 to 0.92; same conclusion |
 | set encoder (`--enc-arch set`), $d_z = 3$ | 0.20, 0.35, 0.12 | | worse: the architecture can represent the counts, but the balance objective does not train it to |
 | set encoder, $d_z = 8$ | 0.28, 0.31, 0.26 | | same |
+| set encoder at $n = 6000$, $d_z = 3$ or 8 | 0.41, 0.47, 0.30 and 0.52, 0.43, 0.28 | +0.30 | oracle 0.89; same at flip 0.25 (about 0) |
 
 Why every change so far failed: the encoder's only training signal is the audit gap, and the audit block
 is one weak code (8 bits with flip probability 0.15 to 0.25). Once $Z$ carries the linear part of $U$, the
@@ -266,7 +282,72 @@ Open item: a floor that reproduces the approximation gain.
 At $n = 1500$ the evaluation sample has 500 units and $\rho \approx 0.7$, so every survivor links into one
 component and the median cannot separate good from bad splits. This is expected; the $n$ curve is the result.
 
-## 8. Reporting conventions
+## 7.6 First-principles audit of the design (2026-09-09, late evening)
+
+Two findings change how Sections 5 to 8 must be read.
+
+1. **The raw proxy adjustment fails only with the tree learner.** With an L2 logistic propensity and MLP outcome
+   models (`--nuisance mlp`), adjusting for $(X, W)$ reaches 0.78 in s10 and s11, 0.74 in s9, 0.94 in s12
+   ($n = 12000$), against 0.14 to 0.61 with gradient boosting. The oracle itself moves from 0.91 to 0.99.
+   Every claim that "(X, W) fails" in the tabular SCMs was an artifact of the learner.
+2. **The oracle is out of reach by information, not by learning.** Adjusting for $(X, E[U \mid X, W_{-1}])$,
+   with the posterior mean approximated on 100k units, gives 0.77 (s10), 0.74 (s11), 0.75 (s9), 0.91 (s12),
+   0.78 (s3, a lower bound) at the current proxy strengths, because $R^2(U \mid X, W_{-1})$ is 0.87 to 0.96 and
+   the Simpson strength $u_{\mathrm{out}} = -3$ turns a residual variance of $1 - R^2$ into a bias of about
+   $3 \times 1.2 \times 0.8 \times (1 - R^2)$. Matching the oracle within 0.1 needs $R^2 \gtrsim 0.97$.
+
+Re-tuned candidates (ceiling scan, $n = 12000$, MLP nuisances): s10 loading 0.6 ($R^2$ 0.965, ceiling 0.91,
+$(X,W)$ 0.92); s11 $\sigma = 0.7$, nuisance scale 1.0 (0.973, 0.94, 0.89); s9 loading 2.5 (0.944, 0.89, 0.89);
+s12 loading 0.7 (0.983, 0.96, 0.94); s3 flip 0.15 (0.998, 0.997, $(X,W)$ 0.74).
+
+PROBE on the candidates (audit-gap MLP encoder, MLP nuisances, $n = 12000$, one replicate, three splits):
+s10 0.85 to 0.89; s11 0.83; s12 0.87 to 0.92; s9 0.83 to 1.03 (with instrument coefficient 4: 0.86 to 0.99,
+while $(X,W)$ with MLP nuisances is 1.00); s3 0.45 to 0.65. PROBE therefore sits at or slightly below the
+strong $(X, W)$ adjustment and about 0.1 below the oracle in the valid SCMs.
+
+Representation ablation (same nuisances): a ridge-logistic propensity index of $(X, W_{-S})$ gives 0.05 to 0.22
+and fails the overlap gate in s9 (it keeps the instrument); propensity plus outcome indices give 0.47 to 0.75;
+the audit-gap encoder gives 0.62 to 0.98 with intact overlap. Treatment-predictive representations amplify the
+residual confounding; the balance objective is instrument-averse. Keep the audit-gap encoder.
+
+Consequences. In valid tabular SCMs PROBE cannot beat a strong $(X, W)$ adjustment; the honest claim is
+equivalence with the proxy ceiling plus the audit certificate. "Beats $(X, W)$" is attainable only where the
+raw adjustment fails for structural reasons: nonlinear code structure (s3, ceiling 0.997 versus $(X,W)$ 0.74,
+provided the encoder decodes it), and image proxies (E4). The current E1 grid (tree nuisances, old strengths)
+is kept only as the "old recipe" record.
+
+## 8. Success criterion (set by Yonghan, 2026-09-09; status after the audit above)
+
+**First cell that passes the (X, W) condition with strong baselines: s9 at $n = 12000$.** With the saved
+grid outputs (tree nuisances inside PROBE) scored against logistic+MLP baselines on the same 20 replicates:
+MAE PROBE 0.100, oracle 0.030, $(X, W)$ 0.304; paired PROBE minus $(X,W)$ = $-0.20$ [$-0.25$, $-0.16$];
+PROBE minus oracle = $+0.07$ [$+0.04$, $+0.10$]. Re-running PROBE with `--nuisance mlp`
+(`results/probe_e1_s9_n12000_mlp.json`): MAE PROBE 0.119, oracle 0.021, $(X,W)$ 0.287; PROBE minus
+$(X,W)$ = $-0.17$ [$-0.21$, $-0.12$]; PROBE minus oracle = $+0.10$ [$+0.04$, $+0.16$]. The instrument story
+holds against strong baselines; the remaining 0.1 to the oracle is in the representation stage (3-dimensional
+$Z$ learned on one third of the sample), not in the nuisance stage.
+
+**s12 at $n = 12000$ (valid SCM) against strong baselines:** MAE PROBE 0.106, oracle 0.026, $(X, W)$ 0.068;
+PROBE minus $(X,W)$ = $+0.04$ [$+0.02$, $+0.06$] (PROBE loses), PROBE minus oracle = $+0.08$ [$+0.06$, $+0.10$].
+This is the expected picture in a valid SCM with strong proxies: the raw adjustment with a good learner is the
+ceiling and PROBE sits slightly below it. Against the tree baselines of the saved grid, s12 passed both
+conditions from $n = 6000$ on, which shows how much the criterion depends on the baseline learner.
+
+For every main SCM at the largest sample size, over the 20 replicates, with paired differences of absolute
+error (PROBE minus comparator) and t-based 95% intervals (`paired_criterion` in the pipeline, stored under
+`summary[n]["criterion"]`):
+
+1. PROBE beats the raw proxy adjustment: the interval of $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,W)} - \tau|$ lies
+   below 0. A tie with $(X, W)$ is a failure.
+2. PROBE matches the oracle: the upper limit of $|\hat\tau_{\mathrm{PROBE}} - \tau| - |\hat\tau_{(X,U)} - \tau|$ is at most
+   0.10 (equivalence margin in units of $\tau = 1$).
+
+Status of the saved cells on 2026-09-09: no cell meets both conditions. s12 ties with $(X, W)$; s9 and s10
+beat $(X, W)$ but are far from the oracle; s11 and s3 lose to $(X, W)$. The encoder fix of Section 7.1 is
+therefore the critical path; the unsupervised masked-block warm start is implemented as
+`--pretrain-mode mask --pretrain-steps 500` and under test.
+
+## 9. Reporting conventions
 
 - The estimand is $\tau = 1$; report absolute error in units of $\tau$ and, for Simpson settings, also the
   outcome standard deviation (about 3.2 in s10) so that the error can be read relative to the noise.
@@ -276,7 +357,7 @@ component and the median cannot separate good from bad splits. This is expected;
   drawn once per SCM from `seed_key("coef")`, data from `seed_key("data", rep)`.
 - Keep `complete: false` results out of figures.
 
-## 9. Questions to settle with Yonghan before changing the design
+## 10. Questions to settle with Yonghan before changing the design
 
 1. Whether s3 stays a main SCM after the encoder fix or moves to the appendix as the finite-state case.
 2. The comparator set of E3 and which implementation of Single Proxy Control to use.

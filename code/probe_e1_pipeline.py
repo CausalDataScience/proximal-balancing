@@ -107,10 +107,15 @@ def generate(n: int, key: tuple[int, ...], coef: dict[str, np.ndarray], scm: str
 class MLP(torch.nn.Module):
     def __init__(self, d_in: int, d_out: int, hidden: int = 32):
         super().__init__()
-        self.net = torch.nn.Sequential(torch.nn.Linear(d_in, hidden), torch.nn.ReLU(), torch.nn.Linear(hidden, hidden), torch.nn.ReLU(), torch.nn.Linear(hidden, d_out))
+        self.body = torch.nn.Sequential(torch.nn.Linear(d_in, hidden), torch.nn.ReLU(), torch.nn.Linear(hidden, hidden), torch.nn.ReLU())
+        self.out = torch.nn.Linear(hidden, d_out)
+        self.hidden = hidden
+
+    def features(self, x):
+        return self.body(x)
 
     def forward(self, x):
-        return self.net(x)
+        return self.out(self.body(x))
 
 
 class Encoder(torch.nn.Module):
@@ -229,7 +234,7 @@ def empirical_discrepancy(z: torch.Tensor, t: torch.Tensor, a: torch.Tensor, m_r
             "null_floor": float(ctrl.mean()), "D2": max(float(corrected.mean()), 0.0)}
 
 
-def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: int, keep_x: bool, steps: int, m_rff: int, seed: int, lr: float = 3e-3, lam: float = 1e-2, val_frac: float = 0.25, eval_every: int = 10, hidden: int = 32, pretrain_steps: int = 0, arch: str = "mlp", block_width: int = 0):
+def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: int, keep_x: bool, steps: int, m_rff: int, seed: int, lr: float = 3e-3, lam: float = 1e-2, val_frac: float = 0.25, eval_every: int = 10, hidden: int = 32, pretrain_steps: int = 0, arch: str = "mlp", block_width: int = 0, pretrain_mode: str = "none", v_blocks: list | None = None):
     """Minimize the in-sample nested Brier gap on a training part of the discrepancy sample, with early stopping
     on the held-out gap of a validation part (critics fitted on the training part, losses on the validation
     part).  Critic weights are detached at every step (envelope gradient); a variance floor prevents collapse."""
@@ -240,14 +245,30 @@ def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: in
     n_tr = int(round((1 - val_frac) * n)); tr, va = perm[:n_tr], perm[n_tr:]
     enc = SetEncoder(d_x, V.shape[1], d_z, keep_x, hidden, block_width) if arch == "set" else Encoder(d_x, V.shape[1], d_z, keep_x, hidden)
     d_zfull = (d_x if keep_x else 0) + d_z
-    if pretrain_steps > 0:
-        # warm start: a treatment-predictive representation (Brier loss of A given phi(V)) on the training part;
-        # the head is discarded and the balance objective below takes over.  Y is never used.
+    if pretrain_steps > 0 and pretrain_mode == "treat":
+        # treatment-predictive warm start (Brier loss of A given phi(V)); kept for the record, it overfits A on
+        # small discrepancy samples and was harmful in every test.  Y is never used.
         head = torch.nn.Linear(d_zfull, 1)
         opt0 = torch.optim.Adam(list(enc.parameters()) + list(head.parameters()), lr=lr)
         for _ in range(pretrain_steps):
             opt0.zero_grad()
             loss0 = ((A[tr] - torch.sigmoid(head(enc(V[tr])).squeeze(1))) ** 2).mean()
+            loss0.backward(); opt0.step()
+    if pretrain_steps > 0 and pretrain_mode == "mask":
+        # unsupervised warm start by masked-block prediction: the encoder body predicts one remaining block from
+        # the others (block set to its mean, i.e. zero after standardization).  Because the blocks are
+        # conditionally independent given U, the shared information that makes one block predictable from the
+        # others is exactly U, so the body learns the posterior of U from the proxies.  Uses V only: no A, no Y,
+        # no held-out block.
+        assert arch == "mlp" and v_blocks, "masked-block warm start needs the MLP encoder and the block layout of V"
+        dec = torch.nn.ModuleList([torch.nn.Linear(hidden, len(cols)) for cols in v_blocks])
+        opt0 = torch.optim.Adam(list(enc.psi.body.parameters()) + list(dec.parameters()), lr=lr)
+        cols_t = [torch.as_tensor(np.asarray(c), dtype=torch.long) for c in v_blocks]
+        for step in range(pretrain_steps):
+            b = step % len(v_blocks)
+            inp = V[tr].clone(); inp[:, cols_t[b]] = 0.0
+            opt0.zero_grad()
+            loss0 = ((dec[b](enc.psi.features(inp)) - V[tr][:, cols_t[b]]) ** 2).mean()
             loss0.backward(); opt0.step()
     c = NestedCritics(d_zfull, T.shape[1], m_rff, seed + 11, lam=lam, d_x=d_x)
     opt = torch.optim.Adam(enc.parameters(), lr=lr)
@@ -287,7 +308,23 @@ def encode(enc: Encoder, v: np.ndarray) -> np.ndarray:
 GBR = dict(n_estimators=150, max_depth=2, learning_rate=0.05, min_samples_leaf=10)
 
 
+NUISANCE_LEARNER = {"kind": "gbm"}  # "gbm" (gradient boosting) or "mlp" (L2 logistic propensity, MLP outcomes)
+
+
 def fit_nuisances(z: np.ndarray, a: np.ndarray, y: np.ndarray, seed: int):
+    if NUISANCE_LEARNER["kind"] == "mlp":
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.neural_network import MLPRegressor
+        from sklearn.pipeline import make_pipeline
+        from sklearn.preprocessing import StandardScaler
+        m1 = make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(64, 64), max_iter=400, random_state=seed, early_stopping=True)).fit(z[a == 1], y[a == 1])
+        m0 = make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(64, 64), max_iter=400, random_state=seed + 1, early_stopping=True)).fit(z[a == 0], y[a == 0])
+        e = make_pipeline(StandardScaler(), LogisticRegression(C=1.0, max_iter=3000)).fit(z, a)
+        return m1, m0, e
+    return _fit_nuisances_gbm(z, a, y, seed)
+
+
+def _fit_nuisances_gbm(z: np.ndarray, a: np.ndarray, y: np.ndarray, seed: int):
     m1 = GradientBoostingRegressor(random_state=seed, **GBR).fit(z[a == 1], y[a == 1])
     m0 = GradientBoostingRegressor(random_state=seed + 1, **GBR).fit(z[a == 0], y[a == 0])
     e = GradientBoostingClassifier(random_state=seed + 2, n_estimators=150, max_depth=2, learning_rate=0.05, min_samples_leaf=10).fit(z, a)
@@ -308,14 +345,31 @@ def aipw(z: np.ndarray, a: np.ndarray, y: np.ndarray, nuis, eta: float) -> dict[
 def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[int, ...], args, rep: int, n_index: int, diag: dict[str, np.ndarray] | None, blk: list[np.ndarray]) -> dict:
     held = np.concatenate([blk[b] for b in S]); rem = np.concatenate([blk[b] for b in range(len(blk)) if b not in S])
     X, W, A, Y = data["X"], data["W"], data["A"], data["Y"]
+    v_blocks, off = [], X.shape[1]
+    for b in range(len(blk)):
+        if b not in S:
+            v_blocks.append(np.arange(off, off + len(blk[b]))); off += len(blk[b])
     V = np.column_stack([X, W[:, rem]]); T = np.column_stack([X, W[:, held]])
     iD, iN, iE = idx["D"], idx["N"], idx["E"]
     mean_v, sd_v = V[iD].mean(0), V[iD].std(0) + 1e-8
     mean_t, sd_t = T[iD].mean(0), T[iD].std(0) + 1e-8
     Vs, Ts = (V - mean_v) / sd_v, (T - mean_t) / sd_t
     sid = int("".join(str(b) for b in S))
-    enc = train_encoder(Vs[iD], Ts[iD], A[iD], X.shape[1], args.d_z, args.keep_x, args.enc_steps, args.m_rff, torch_seed(*seed_key("encoder", rep, n_index, sid)), lr=args.lr, lam=args.lam, hidden=getattr(args, "enc_hidden", 32), pretrain_steps=getattr(args, "pretrain_steps", 0), arch=getattr(args, "enc_arch", "mlp"), block_width=len(rem) // max(1, len(blk) - len(S)))
-    Z = encode(enc, Vs)
+    arch = getattr(args, "enc_arch", "mlp")
+    if arch in ("index", "index2"):
+        # linear representation fitted on the discrepancy sample: ridge-logistic propensity index of V and, for
+        # index2, ridge outcome indices of V within each arm.  No audit-gap training; the audit only screens.
+        from sklearn.linear_model import LogisticRegression, Ridge
+        e = LogisticRegression(C=1.0, max_iter=3000).fit(Vs[iD], A[iD])
+        cols = [e.decision_function(Vs)]
+        if arch == "index2":
+            for arm in (1, 0):
+                m = Ridge(alpha=1.0 * len(iD)).fit(Vs[iD][A[iD] == arm], Y[iD][A[iD] == arm]); cols.append(m.predict(Vs))
+        Z = np.column_stack(cols).astype(np.float32)
+        enc = type("IndexEncoder", (), {"best_step": 0, "best_val_gap": float("nan")})()
+    else:
+        enc = train_encoder(Vs[iD], Ts[iD], A[iD], X.shape[1], args.d_z, args.keep_x, args.enc_steps, args.m_rff, torch_seed(*seed_key("encoder", rep, n_index, sid)), lr=args.lr, lam=args.lam, hidden=getattr(args, "enc_hidden", 32), pretrain_steps=getattr(args, "pretrain_steps", 0), arch=arch, block_width=len(rem) // max(1, len(blk) - len(S)), pretrain_mode=getattr(args, "pretrain_mode", "none"), v_blocks=v_blocks)
+        Z = encode(enc, Vs)
     zD = torch.tensor(Z[iD], dtype=torch.float32); tD = torch.tensor(Ts[iD], dtype=torch.float32); aD = torch.tensor(A[iD], dtype=torch.float32)
     disc = empirical_discrepancy(zD, tD, aD, args.m_rff, torch_seed(*seed_key("critic", rep, n_index, sid)), X.shape[1])
     nuis = fit_nuisances(Z[iN], A[iN], Y[iN], torch_seed(*seed_key("nuisance", rep, n_index, sid)) % (2 ** 31))
@@ -327,6 +381,8 @@ def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[
     if diag is not None:
         Vd = (np.column_stack([diag["X"], diag["W"][:, rem]]) - mean_v) / sd_v
         Td = (np.column_stack([diag["X"], diag["W"][:, held]]) - mean_t) / sd_t
+        if arch in ("index", "index2"):
+            raise NotImplementedError("oracle diagnostics are not implemented for index representations")
         Zd = encode(enc, Vd)
         half = len(Zd) // 2
         zd, td, ad = (torch.tensor(Zd, dtype=torch.float32), torch.tensor(Td, dtype=torch.float32), torch.tensor(diag["A"], dtype=torch.float32))
@@ -382,21 +438,47 @@ def baseline_aipw(feats: np.ndarray, data: dict, idx: dict, eta: float, seed: in
 
 
 # ----------------------------------------------------------------------------- driver
+def merge_rotations(recs: list[dict]) -> dict:
+    """Cross-fitted record for one held-out set: average of the rotation estimates, pooled influence-function
+    standard deviation over the union of evaluation folds, averaged discrepancy with its combined standard error."""
+    k = len(recs); m = dict(recs[0])
+    m["theta"] = float(np.mean([r["theta"] for r in recs]))
+    m["sigma"] = float(np.sqrt(np.mean([r["sigma"] ** 2 for r in recs])))
+    m["n"] = int(sum(r["n"] for r in recs))
+    m["overlap_frac"] = float(np.mean([r["overlap_frac"] for r in recs]))
+    for key in ("D2_hat", "D2_in", "gap_in", "gap_cf", "null_floor"):
+        m[key] = float(np.mean([r[key] for r in recs]))
+    m["gap_se"] = float(np.sqrt(np.sum([r["gap_se"] ** 2 for r in recs])) / k)
+    m["threshold"] = float(np.mean([r["threshold"] for r in recs])) if recs[0].get("threshold_fixed") else 2.0 * m["gap_se"]
+    m["screen_pass"] = bool(m["D2_hat"] <= m["threshold"] and m["overlap_frac"] >= recs[0]["overlap_min"])
+    m["rotations"] = [{"theta": r["theta"], "D2_hat": r["D2_hat"], "gap_se": r["gap_se"], "overlap_frac": r["overlap_frac"], "screen_pass": r["screen_pass"]} for r in recs]
+    return m
+
+
 def run_replicate(args, coef, scm: str, params: dict, rep: int, n: int, n_index: int) -> dict:
     data = generate(n, seed_key("data", rep), coef, scm, params)
     blk = scms.blocks(scm, **params)
     perm = rng(*seed_key("split", rep, n_index)).permutation(n)
     third = n // 3
-    idx = {"D": perm[:third], "N": perm[third:2 * third], "E": perm[2 * third:]}
+    folds = [perm[:third], perm[third:2 * third], perm[2 * third:]]
+    crossfit = getattr(args, "crossfit", False)
+    rotations = [{"D": folds[i], "N": folds[(i + 1) % 3], "E": folds[(i + 2) % 3]} for i in (range(3) if crossfit else [0])]
     diag = generate(args.n_diag, seed_key("diag", rep), coef, scm, params) if args.diagnostics else None
     splits = all_splits(len(blk), args.max_held)
     g = rng(*seed_key("sample_splits", rep, n_index))
     chosen = [splits[i] for i in sorted(g.choice(len(splits), size=min(args.m, len(splits)), replace=False))]
-    records = [run_split(data, idx, S, args, rep, n_index, diag, blk) for S in chosen]
+    records = []
+    for S in chosen:
+        recs = []
+        for r_i, idx in enumerate(rotations):
+            rec = run_split(data, idx, S, args, rep, n_index * 10 + r_i, diag, blk)
+            rec["overlap_min"] = args.overlap_min; rec["threshold_fixed"] = args.t is not None
+            recs.append(rec)
+        records.append(merge_rotations(recs) if crossfit else recs[0])
     for r in records:
         r["valid_heldout"] = scms.heldout_set_valid(scm, r["S"], **params)
     retained = [r for r in records if r["screen_pass"]]
-    out = {"scm": scm, "params": params, "rep": rep, "n": n, "T": len(splits), "m": len(chosen), "splits": records,
+    out = {"scm": scm, "params": params, "rep": rep, "n": n, "T": len(splits), "m": len(chosen), "crossfit": crossfit, "splits": records,
            "invalid_heldout_blocks": sorted(scms.invalid_heldout_blocks(scm, **params))}
     if retained:
         rho = linking_radius(retained, args, len(chosen))
@@ -406,13 +488,15 @@ def run_replicate(args, coef, scm: str, params: dict, rep: int, n: int, n_index:
     else:
         out["algorithm1"] = {"n_retained": 0, "output": None, "tie": False, "candidates": []}
     X, W = data["X"], data["W"]
-    s = torch_seed(*seed_key("nuisance", rep, n_index, 999)) % (2 ** 31)
     A_, Y_ = data["A"], data["Y"]
     out["naive"] = float(Y_[A_ == 1].mean() - Y_[A_ == 0].mean())
-    out["baseline_X"] = baseline_aipw(X, data, idx, args.eta, s)
-    out["baseline_XW"] = baseline_aipw(np.column_stack([X, W]), data, idx, args.eta, s + 1)
-    out["oracle_XU"] = baseline_aipw(scms.oracle_adjustment(scm, data), data, idx, args.eta, s + 2)
-    out["baseline_X_Wmean"] = baseline_aipw(np.column_stack([X, W.mean(1)]), data, idx, args.eta, s + 3)
+    s = torch_seed(*seed_key("nuisance", rep, n_index, 999)) % (2 ** 31)
+    def base(feats, seed):  # baselines are cross-fitted over the same rotations
+        return float(np.mean([baseline_aipw(feats, data, idx, args.eta, seed + 7 * r_i) for r_i, idx in enumerate(rotations)]))
+    out["baseline_X"] = base(X, s)
+    out["baseline_XW"] = base(np.column_stack([X, W]), s + 1)
+    out["oracle_XU"] = base(scms.oracle_adjustment(scm, data), s + 2)
+    out["baseline_X_Wmean"] = base(np.column_stack([X, W.mean(1)]), s + 3)
     return out
 
 
@@ -428,7 +512,25 @@ def summarize(runs: list[dict]) -> dict:
                            "mean_retained": float(np.mean([a["n_retained"] for a in alg]))},
             "mean_over_retained": err("mean_over_retained"), "median_over_retained": err("median_over_retained"),
             "naive": err("naive"), "baseline_X": err("baseline_X"), "baseline_XW": err("baseline_XW"), "oracle_XU": err("oracle_XU"),
-            "baseline_X_Wmean": err("baseline_X_Wmean")}
+            "baseline_X_Wmean": err("baseline_X_Wmean"), "criterion": paired_criterion(runs)}
+
+
+def paired_criterion(runs: list[dict], margin: float = 0.10) -> dict:
+    """Success criterion over replicates: PROBE must beat (X, W) and match the oracle.  Paired differences of
+    absolute error, PROBE minus comparator, with t-based 95% intervals.  beats_XW: upper limit below 0.
+    matches_oracle: upper limit at most `margin` (equivalence margin in units of tau)."""
+    trip = [(abs(r["algorithm1"]["output"] - TRUE_ATE), abs(r["oracle_XU"] - TRUE_ATE), abs(r["baseline_XW"] - TRUE_ATE))
+            for r in runs if r["algorithm1"].get("output") is not None]
+    if len(trip) < 2:
+        return {"n": len(trip)}
+    e = np.array(trip); d_or, d_xw = e[:, 0] - e[:, 1], e[:, 0] - e[:, 2]
+    from scipy.stats import t as tdist
+    q = tdist.ppf(0.975, len(e) - 1)
+    def ci(d):
+        m, se = float(d.mean()), float(d.std(ddof=1) / math.sqrt(len(d)))
+        return {"mean": m, "se": se, "lo": m - q * se, "hi": m + q * se}
+    c_or, c_xw = ci(d_or), ci(d_xw)
+    return {"n": len(e), "vs_oracle": c_or, "vs_XW": c_xw, "beats_XW": bool(c_xw["hi"] < 0), "matches_oracle": bool(c_or["hi"] <= margin), "margin": margin}
 
 
 def audit_dgps(args) -> None:
@@ -464,11 +566,14 @@ def main() -> None:
     ap.add_argument("--reps", type=int, default=1)
     ap.add_argument("--m", type=int, default=10, help="budget: number of sampled proxy splits")
     ap.add_argument("--max-held", type=int, default=None, help="largest number of blocks in a held-out set (default: half of the blocks)")
+    ap.add_argument("--crossfit", action="store_true", help="rotate the discrepancy, nuisance, and evaluation folds three ways and average (PROBE and baselines)")
     ap.add_argument("--d-z", type=int, default=3, help="representation dimension")
     ap.add_argument("--enc-steps", type=int, default=300)
     ap.add_argument("--enc-hidden", type=int, default=32, help="hidden width of the encoder MLP")
-    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set"], help="encoder architecture: plain MLP on (X, W_{-S}) or a shared per-block map with mean pooling")
-    ap.add_argument("--pretrain-steps", type=int, default=0, help="warm-start steps of treatment-predictive encoder training before the balance objective")
+    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set", "index", "index2"], help="representation: MLP trained on the audit gap, shared per-block map, ridge-logistic propensity index, or propensity plus outcome indices")
+    ap.add_argument("--nuisance", default="gbm", choices=["gbm", "mlp"], help="nuisance learners for every AIPW (gradient boosting, or L2 logistic propensity with MLP outcomes)")
+    ap.add_argument("--pretrain-steps", type=int, default=0, help="warm-start steps before the balance objective (see --pretrain-mode)")
+    ap.add_argument("--pretrain-mode", default="none", choices=["none", "treat", "mask"], help="warm start: none, treatment-predictive (harmful), or unsupervised masked-block prediction")
     ap.add_argument("--m-rff", type=int, default=128, help="random Fourier features per critic")
     ap.add_argument("--lr", type=float, default=3e-3)
     ap.add_argument("--lam", type=float, default=1e-2, help="ridge penalty of the critics during training (times n)")
@@ -495,6 +600,7 @@ def main() -> None:
     if args.audit_dgps:
         audit_dgps(args); return
     torch.set_num_threads(args.threads)
+    NUISANCE_LEARNER["kind"] = args.nuisance
     params = scm_params(args)
     coef = coefficients(args.scm, params)
     out = Path(args.out) if args.out else RESULTS_DIR / f"probe_e1_{args.scm}.json"
