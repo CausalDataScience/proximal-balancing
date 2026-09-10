@@ -441,6 +441,83 @@ Findings.
    much valid proxy is left, so Algorithm 1 returns 0.15 to 0.19. This is a limitation to state in the paper,
    not a win: **the audit certifies balance, it does not certify that the representation input is admissible.**
 
+### 8.4 Is a clean separation possible at all?
+
+Question: can the assumptions of Section 3 hold for some configuration while adjusting for the raw $(X, W)$ is
+inconsistent? Yes, and the following construction settles it. Let $U, L_1, L_2, \epsilon_1, \epsilon_Y$ be
+independent standard normals, three proxy blocks be
+$W_1 = U$, $W_2 = U + \epsilon_1$, $W_3 = L_1 + L_2$, treatment $A \sim \mathrm{Bernoulli}\{\mathrm{expit}(U + L_1)\}$
+and outcome $Y = \tau A + U + L_2 + \epsilon_Y$. Take the configuration audited $= \{2\}$, representation
+$= \{1\}$, excluded $= \{3\}$, and $Z = W_1$.
+
+- Latent exchangeability holds: given $(U, W_1)$, the outcome depends on $L_2$ and treatment on $L_1$, which are
+  independent.
+- The common held-out channel holds: given $(U, W_1)$, $W_2$ depends only on $\epsilon_1$.
+- Exact balance and overlap hold: $Z = U$, so $W_2$ adds nothing about $A$, and
+  $P(A = 1 \mid Z) = \mathbb E[\mathrm{expit}(U + L_1) \mid U] \in (0, 1)$.
+- So Theorem 1 identifies $\tau$. The raw adjustment conditions on $W_3$, a collider of a treatment cause and
+  an outcome cause, which makes $L_1$ and $L_2$ dependent within strata, so $Y(a) \not\perp A \mid (X, W)$ and the
+  raw functional is not $\tau$. In the s14 realization the raw adjustment returns $-0.05$ against $\tau = 1$.
+
+Two limits of this answer.
+
+1. **The separation is not certifiable from data.** The same observed distribution also admits the configuration
+   audited $= \{2\}$, representation $= \{1, 3\}$, which satisfies exact balance and overlap (so both screens
+   pass) and returns a different, biased value. Balance and overlap cannot tell the two apart, so the advantage
+   rests on the analyst's assumption that the blocks entering the representation are admissible. This is
+   Assumption 2 and it is untestable, which is the honest content of the s14 experiment.
+2. **Positivity is not a route to the separation.** If the block that forces treatment is exogenous, the outcome
+   model extrapolates correctly and the raw adjustment stays consistent; if it is a function of $U$, the
+   representation inherits the same lack of overlap. Numerically, with an eligibility flag $F$ measured by
+   block 0 and $A = 1$ whenever $F = 1$: with $F$ depending on $U$, the raw adjustment gives 0.42 but every
+   PROBE configuration fails the overlap gate (overlap share 0.86 to 0.96 against a 0.98 requirement), and
+   excluding block 0 costs the $U$ information it carries, so PROBE returns 0.53 to 0.62 against an oracle of
+   0.92. This is the mechanism refuted, not merely untested.
+
+What is left is the certifiable separation: contamination that a screen can actually see. A block that predicts
+treatment given $Z$ is caught by the audit when it is held out, and a block that destroys overlap is caught by
+the overlap gate when it enters the representation. Bias amplification is the case where this pays off
+asymptotically as well, and it is bounded by a tension that the scan in 8.3 makes explicit: amplification needs
+residual confounding to amplify, while matching the oracle needs the residual to be small. The s9 sweet spot is
+the interior maximum of that tension, which is why its margin is a factor of three rather than an order of
+magnitude.
+
+### 8.5 Randomized representations
+
+Everything above takes $Z = \phi(X, W_{-S})$ to be a deterministic function. Let $Z$ instead be drawn from a
+kernel, $Z = \phi(X, W_{-S}, \xi)$ with $\xi$ independent of $(U, X, W, A, Y(0), Y(1))$.
+
+- **Identification is unchanged.** Theorem 1 never uses determinism. Exogeneity gives
+  $Y(a) \perp A \mid (U, V_S, \xi)$ and $W_S \perp A \mid (U, V_S, \xi)$ from the corresponding assumptions
+  without $\xi$, the strata $\{Z = z\}$ still define laws of $(V_S, U)$ so outcome-relevant completeness is
+  well-formed, and the conclusion follows from exact balance and overlap for $Z$ as stated.
+- **Appending noise changes nothing.** For $Z = (\phi(V), \xi)$, both $P(A = 1 \mid T, Z)$ and $P(A = 1 \mid Z)$
+  equal their noiseless versions, so the discrepancy, the overlap and the estimand are identical.
+- **Garbling trades balance for overlap.** For $Z_\lambda = \phi(V) + \lambda \xi$, write
+  $D^2_{\mathrm{res}} = \mathbb E\{\mathrm{Var}(A \mid Z)\} - \mathbb E\{\mathrm{Var}(A \mid T, Z)\}$. At
+  $\lambda = 0$ with a balancing $\phi$ the discrepancy is zero, its global minimum; as $\lambda$ grows both
+  terms rise toward $\mathrm{Var}(A)$ and $\mathbb E\{\mathrm{Var}(A \mid T)\}$, while $P(A = 1 \mid Z_\lambda)$
+  contracts toward $P(A = 1)$ so the overlap constant $\eta$ improves. Theorem 3's bound
+  $\Gamma_S D_{\mathrm{res},S} / \{\eta(1 - \eta)\}$ therefore has a numerator that grows and a denominator that
+  improves with $\lambda$, and its minimizer can be interior: a strictly stochastic representation can carry a
+  smaller bias bound than every deterministic one. This is the natural repair for the case in 8.4 where the
+  deterministic representation inherits an overlap collapse.
+- **Numerically the optimum was still at zero noise** on that positivity DGP (`--z-noise`, one replicate,
+  $n = 12000$, flag block in the representation): noise 0, 0.25, 0.5, 1, 2 gives overlap share 0.86, 0.88,
+  0.90, 0.95, 0.995 and estimates 0.93, 0.81, 0.54, $-0.17$, $-1.04$, with $\widehat D^2$ 0.0001, 0.0000,
+  0.0003, 0.0047, 0.0155. Blurring buys overlap and pays in confounding faster than it gains. The interior
+  optimum is a statement about the bound, not a promise about the error.
+- **The audit monitors the damage.** The discrepancy rises with the noise level in step with the error, so the
+  screen rejects an over-blurred representation. Randomization does not fool the audit: a pure-noise $Z$ has
+  $D^2_{\mathrm{res}} = \mathrm{Var}(A) - \mathbb E\{\mathrm{Var}(A \mid T)\} > 0$.
+- **Costs.** The estimator becomes seed-dependent and Theorem 5's variance grows; averaging over draws of
+  $\xi$ restores a single answer and reduces variance without changing the target. The search theorem needs the
+  noise level on a finite grid, otherwise the candidate family is no longer finite and the counting in
+  Theorem 6 needs a covering argument.
+- **What randomization cannot do.** Exact balance asks $Z$ to retain everything in $V$ that $A$ depends on
+  beyond $T$; exogenous noise only discards information, so it cannot create balance that the noiseless
+  representation lacks. Stating this as a proposition needs a short data-processing argument.
+
 Consequences for the paper. The demonstrable claim is the s9 family: proxies contaminated by treatment-only
 variation, where the raw adjustment amplifies the residual confounding while the balance objective purges the
 contamination from $Z$ (the representation ablation in 7.6 is the direct evidence: the propensity-index

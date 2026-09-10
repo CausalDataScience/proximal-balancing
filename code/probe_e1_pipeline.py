@@ -38,7 +38,7 @@ ROOT_SEED = 190909
 TRUE_ATE = 1.0
 RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
 
-NAMESPACE = {"coef": 1, "data": 2, "diag": 3, "split": 4, "sample_splits": 5, "encoder": 6, "critic": 7, "nuisance": 8}
+NAMESPACE = {"coef": 1, "data": 2, "diag": 3, "split": 4, "sample_splits": 5, "encoder": 6, "critic": 7, "nuisance": 8, "znoise": 9}
 
 
 # ----------------------------------------------------------------------------- utilities
@@ -403,6 +403,15 @@ def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[
     else:
         enc = train_encoder(Vs[iD], Ts[iD], A[iD], X.shape[1], args.d_z, args.keep_x, args.enc_steps, args.m_rff, torch_seed(*seed_key("encoder", rep, n_index, sid)), lr=args.lr, lam=args.lam, hidden=getattr(args, "enc_hidden", 32), pretrain_steps=getattr(args, "pretrain_steps", 0), arch=arch, block_width=len(rem) // max(1, len(blk) - len(S)), pretrain_mode=getattr(args, "pretrain_mode", "none"), v_blocks=v_blocks)
         Z = encode(enc, Vs)
+    z_noise = getattr(args, "z_noise", 0.0)
+    if z_noise > 0:
+        # randomized representation: Z gets exogenous noise, drawn per unit and independent of everything else.
+        # Identification is unaffected (the noise is exogenous, so latent exchangeability and the held-out
+        # channel still hold), but the noise trades balance for overlap: the discrepancy grows and P(A=1|Z)
+        # moves toward P(A=1).  Theorem 3's bound Gamma * D / (eta (1 - eta)) can be smaller at a positive
+        # noise level than at zero when the deterministic representation has little overlap.
+        gz = np.random.default_rng(np.random.SeedSequence(seed_key("znoise", rep, n_index, sid)))
+        Z = Z + z_noise * Z.std(0, keepdims=True) * gz.standard_normal(Z.shape).astype(Z.dtype)
     zD = torch.tensor(Z[iD], dtype=torch.float32); tD = torch.tensor(Ts[iD], dtype=torch.float32); aD = torch.tensor(A[iD], dtype=torch.float32)
     disc = empirical_discrepancy(zD, tD, aD, args.m_rff, torch_seed(*seed_key("critic", rep, n_index, sid)), X.shape[1])
     nuis = fit_nuisances(Z[iN], A[iN], Y[iN], torch_seed(*seed_key("nuisance", rep, n_index, sid)) % (2 ** 31))
@@ -605,6 +614,7 @@ def main() -> None:
     ap.add_argument("--d-z", type=int, default=3, help="representation dimension")
     ap.add_argument("--enc-steps", type=int, default=300)
     ap.add_argument("--enc-hidden", type=int, default=32, help="hidden width of the encoder MLP")
+    ap.add_argument("--z-noise", type=float, default=0.0, help="exogenous noise added to Z, in units of its own standard deviation (randomized representation)")
     ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set", "index", "index2", "prog"], help="representation: MLP trained on the audit gap, shared per-block map, ridge-logistic propensity index, or propensity plus outcome indices")
     ap.add_argument("--nuisance", default="gbm", choices=["gbm", "mlp"], help="nuisance learners for every AIPW (gradient boosting, or L2 logistic propensity with MLP outcomes)")
     ap.add_argument("--pretrain-steps", type=int, default=0, help="warm-start steps before the balance objective (see --pretrain-mode)")
