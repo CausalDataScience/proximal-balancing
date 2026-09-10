@@ -333,6 +333,19 @@ This is the expected picture in a valid SCM with strong proxies: the raw adjustm
 ceiling and PROBE sits slightly below it. Against the tree baselines of the saved grid, s12 passed both
 conditions from $n = 6000$ on, which shows how much the criterion depends on the baseline learner.
 
+**s9 with three-way cross-fitting (`--crossfit --nuisance mlp`, `results/probe_e1_s9_n12000_mlp_crossfit.json`):**
+MAE PROBE 0.085 (mean 0.93, sd 0.08, down from sd 0.14 without cross-fitting), oracle 0.016, $(X,W)$ 0.289;
+PROBE minus $(X,W)$ = $-0.20$ [$-0.23$, $-0.18$]; PROBE minus oracle = $+0.07$ [$+0.04$, $+0.10$] (upper limit
+0.1005, at the margin). Cross-fitting removes the variance part of the gap; the remaining $-0.07$ is bias from
+the representation at proxy strength 1.5. A run at strength 2.0 tests whether both conditions hold at once
+(`results/probe_e1_s9_n12000_mlp_crossfit_strength2.json`). Cross-fitting is the recipe for every paper result.
+
+**First cell meeting both conditions against strong baselines: s9 at proxy strength 2.0, $n = 12000$,
+cross-fitting, MLP nuisances** (`results/probe_e1_s9_n12000_mlp_crossfit_strength2.json`, 20 replicates):
+MAE PROBE 0.055 (mean 1.011, sd 0.074), oracle 0.016, $(X,W)$ 0.172; PROBE minus oracle = $+0.04$
+[$+0.02$, $+0.06$] (matches); PROBE minus $(X,W)$ = $-0.12$ [$-0.15$, $-0.09$] (beats). Proposed s9 default:
+proxy strength 2.0 (instrument coefficient 2.0 unchanged); the recipe `--crossfit --nuisance mlp` for all runs.
+
 For every main SCM at the largest sample size, over the 20 replicates, with paired differences of absolute
 error (PROBE minus comparator) and t-based 95% intervals (`paired_criterion` in the pipeline, stored under
 `summary[n]["criterion"]`):
