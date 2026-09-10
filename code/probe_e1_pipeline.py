@@ -126,6 +126,26 @@ class Encoder(torch.nn.Module):
         return torch.cat([v[:, : self.d_x], z], 1) if self.keep_x else z
 
 
+class SetEncoder(torch.nn.Module):
+    """Z = head(X, mean_k g(W_k)) with one shared block map g: the natural encoder when the remaining blocks are
+    exchangeable measurements of U (equal widths).  Mean pooling of per-block embeddings reproduces sufficient
+    statistics such as per-position counts of noisy codes or averaged image features."""
+
+    def __init__(self, d_x: int, d_v: int, d_z: int, keep_x: bool, hidden: int, block_width: int):
+        super().__init__()
+        assert (d_v - d_x) % block_width == 0, "set encoder needs equal block widths"
+        self.d_x, self.keep_x, self.w = d_x, keep_x, block_width
+        self.n_blocks = (d_v - d_x) // block_width
+        self.g = MLP(block_width, hidden, hidden)
+        self.head = MLP(d_x + hidden, d_z, hidden)
+
+    def forward(self, v):
+        x = v[:, : self.d_x]
+        wb = v[:, self.d_x:].reshape(v.shape[0], self.n_blocks, self.w)
+        z = self.head(torch.cat([x, self.g(wb).mean(1)], 1))
+        return torch.cat([x, z], 1) if self.keep_x else z
+
+
 class RFF:
     """Random Fourier features of a standardized input; standardization statistics are taken from the fitting
     sample and detached, so fitting and evaluation share one feature map and the encoder cannot exploit it."""
@@ -209,7 +229,7 @@ def empirical_discrepancy(z: torch.Tensor, t: torch.Tensor, a: torch.Tensor, m_r
             "null_floor": float(ctrl.mean()), "D2": max(float(corrected.mean()), 0.0)}
 
 
-def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: int, keep_x: bool, steps: int, m_rff: int, seed: int, lr: float = 3e-3, lam: float = 1e-2, val_frac: float = 0.25, eval_every: int = 10, hidden: int = 32, pretrain_steps: int = 0) -> Encoder:
+def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: int, keep_x: bool, steps: int, m_rff: int, seed: int, lr: float = 3e-3, lam: float = 1e-2, val_frac: float = 0.25, eval_every: int = 10, hidden: int = 32, pretrain_steps: int = 0, arch: str = "mlp", block_width: int = 0):
     """Minimize the in-sample nested Brier gap on a training part of the discrepancy sample, with early stopping
     on the held-out gap of a validation part (critics fitted on the training part, losses on the validation
     part).  Critic weights are detached at every step (envelope gradient); a variance floor prevents collapse."""
@@ -218,7 +238,7 @@ def train_encoder(v: np.ndarray, t: np.ndarray, a: np.ndarray, d_x: int, d_z: in
     V, T, A = map(lambda x: torch.tensor(x, dtype=torch.float32), (v, t, a))
     n = len(A); g = torch.Generator().manual_seed(seed + 5); perm = torch.randperm(n, generator=g)
     n_tr = int(round((1 - val_frac) * n)); tr, va = perm[:n_tr], perm[n_tr:]
-    enc = Encoder(d_x, V.shape[1], d_z, keep_x, hidden)
+    enc = SetEncoder(d_x, V.shape[1], d_z, keep_x, hidden, block_width) if arch == "set" else Encoder(d_x, V.shape[1], d_z, keep_x, hidden)
     d_zfull = (d_x if keep_x else 0) + d_z
     if pretrain_steps > 0:
         # warm start: a treatment-predictive representation (Brier loss of A given phi(V)) on the training part;
@@ -294,7 +314,7 @@ def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[
     mean_t, sd_t = T[iD].mean(0), T[iD].std(0) + 1e-8
     Vs, Ts = (V - mean_v) / sd_v, (T - mean_t) / sd_t
     sid = int("".join(str(b) for b in S))
-    enc = train_encoder(Vs[iD], Ts[iD], A[iD], X.shape[1], args.d_z, args.keep_x, args.enc_steps, args.m_rff, torch_seed(*seed_key("encoder", rep, n_index, sid)), lr=args.lr, lam=args.lam, hidden=getattr(args, "enc_hidden", 32), pretrain_steps=getattr(args, "pretrain_steps", 0))
+    enc = train_encoder(Vs[iD], Ts[iD], A[iD], X.shape[1], args.d_z, args.keep_x, args.enc_steps, args.m_rff, torch_seed(*seed_key("encoder", rep, n_index, sid)), lr=args.lr, lam=args.lam, hidden=getattr(args, "enc_hidden", 32), pretrain_steps=getattr(args, "pretrain_steps", 0), arch=getattr(args, "enc_arch", "mlp"), block_width=len(rem) // max(1, len(blk) - len(S)))
     Z = encode(enc, Vs)
     zD = torch.tensor(Z[iD], dtype=torch.float32); tD = torch.tensor(Ts[iD], dtype=torch.float32); aD = torch.tensor(A[iD], dtype=torch.float32)
     disc = empirical_discrepancy(zD, tD, aD, args.m_rff, torch_seed(*seed_key("critic", rep, n_index, sid)), X.shape[1])
@@ -447,6 +467,7 @@ def main() -> None:
     ap.add_argument("--d-z", type=int, default=3, help="representation dimension")
     ap.add_argument("--enc-steps", type=int, default=300)
     ap.add_argument("--enc-hidden", type=int, default=32, help="hidden width of the encoder MLP")
+    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set"], help="encoder architecture: plain MLP on (X, W_{-S}) or a shared per-block map with mean pooling")
     ap.add_argument("--pretrain-steps", type=int, default=0, help="warm-start steps of treatment-predictive encoder training before the balance objective")
     ap.add_argument("--m-rff", type=int, default=128, help="random Fourier features per critic")
     ap.add_argument("--lr", type=float, default=3e-3)

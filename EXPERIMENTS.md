@@ -212,14 +212,26 @@ Per-split estimates $\theta_S$ (three fixed sets, $n = 3000$; oracle about 0.98)
 | $n = 6000$, flip 0.15, default encoder | 0.53, 0.29, 0.52 | +0.30 | larger $n$ alone does not help |
 | $n = 6000$, hidden 64, 1000 steps, lr 0.001 | 0.49, 0.60, 0.19 | | larger encoder does not help |
 | `--pretrain-steps 300` (treatment-predictive warm start) | -1.04, -0.66, -0.96 | | harmful: the warm start overfits $A$ on 1000 units |
+| $d_z = 8$ | 0.66, 0.27, 0.55 | | $R^2$ of $\mu(U)$ given $Z$ on fresh units rises from 0.75 to 0.91 (block 1 held out) but the estimates do not follow |
+| $d_z = 16$ | 0.63, 0.43, 0.55 | | $R^2$ 0.88 to 0.92; same conclusion |
+| set encoder (`--enc-arch set`), $d_z = 3$ | 0.20, 0.35, 0.12 | | worse: the architecture can represent the counts, but the balance objective does not train it to |
+| set encoder, $d_z = 8$ | 0.28, 0.31, 0.26 | | same |
 
-Next steps, in order: (a) representation dimension $d_z \in \{8, 16\}$ so that the count vector fits
-linearly and the nuisance learners do the argmax (test running when this document was written; result goes
-into the log); (b) a set encoder with a shared per-block map and sum pooling (`DeepSets`), which yields the
-count vector by construction and is the natural architecture when blocks are exchangeable given $U$; (c) an
-unsupervised warm start of the encoder body (autoencoder or cross-block prediction, which extracts exactly the
-shared latent because blocks are conditionally independent given $U$), instead of the treatment-predictive
-warm start. Acceptance: at $n = 12000$ the valid-split $\theta_S$ within 0.1 of the oracle, and at smaller
+Why every change so far failed: the encoder's only training signal is the audit gap, and the audit block
+is one weak code (8 bits with flip probability 0.15 to 0.25). Once $Z$ carries the linear part of $U$, the
+information left in a single held-out block about $A$ given $Z$ is small, the ridge critics barely detect it,
+and the gradient toward the missing nonlinear part (the argmax over eight position counts) vanishes. Enlarging
+the representation or giving the encoder the right architecture does not create a signal that is not there.
+
+Next steps, in order: (a) learn the representation body from the proxy structure itself, without the audit
+block: an unsupervised warm start such as cross-block prediction (predict one remaining block from the others;
+because blocks are conditionally independent given $U$, the shared information is exactly $U$) or an
+autoencoder of $W_{-S}$, followed by the balance objective for fine-tuning and by the audit for screening.
+This is consistent with the manuscript: $\phi$ may be any learner, the theory concerns the audited $Z$. Do not
+use a treatment-predictive warm start (row above) or any use of $Y$. (b) If (a) works on s3, apply the same
+recipe to E4 (Section 7.2) with a shared per-image map. (c) Report the $U$ content of $Z$ ($R^2$ of $\mu(U)$
+given $Z$ on fresh units, as in the table) next to the estimates in every s3 experiment; it separates
+representation failures from estimation failures. Acceptance: at $n = 12000$ the valid-split $\theta_S$ within 0.1 of the oracle, and at smaller
 $n$ the screen rejecting splits whose $\theta_S$ is off by more than $2\rho$.
 
 ### 7.2 E4: the same failure with MNIST proxies through PCA features
