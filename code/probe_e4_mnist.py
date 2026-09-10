@@ -24,6 +24,7 @@ import torch
 from sklearn.decomposition import PCA
 
 import probe_scms as scms
+import probe_e1_pipeline as P
 from probe_e1_pipeline import (TRUE_ATE, aggregate, all_splits, baseline_aipw, linking_radius, rng, run_split, seed_key, summarize, torch_seed)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -123,6 +124,8 @@ def main() -> None:
     ap.add_argument("--d-z", type=int, default=3)
     ap.add_argument("--enc-steps", type=int, default=300)
     ap.add_argument("--enc-hidden", type=int, default=32)
+    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set", "index", "index2", "prog"], help="representation: audit-gap MLP, or one built by a strong learner (prog)")
+    ap.add_argument("--nuisance", default="gbm", choices=["gbm", "mlp"], help="nuisance learners for every AIPW")
     ap.add_argument("--pretrain-steps", type=int, default=0, help="treatment-predictive warm start of the encoder")
     ap.add_argument("--m-rff", type=int, default=128)
     ap.add_argument("--lr", type=float, default=3e-3)
@@ -138,6 +141,7 @@ def main() -> None:
     ap.add_argument("--out", type=str, default=None)
     args = ap.parse_args(); args.diagnostics = False; args.n_diag = 0
     torch.set_num_threads(args.threads)
+    P.NUISANCE_LEARNER["kind"] = args.nuisance
     pool = load_pool()
     g = np.random.default_rng(np.random.SeedSequence(seed_key("coef")))
     coef = {k: (lambda v: v / np.linalg.norm(v))(g.standard_normal(args.d_x)) for k in ("b_x", "a_x", "y_x", "yt_x")}

@@ -250,7 +250,33 @@ given $Z$ on fresh units, as in the table) next to the estimates in every s3 exp
 representation failures from estimation failures. Acceptance: at $n = 12000$ the valid-split $\theta_S$ within 0.1 of the oracle, and at smaller
 $n$ the screen rejecting splits whose $\theta_S$ is off by more than $2\rho$.
 
-### 7.2 E4: the same failure with MNIST proxies through PCA features
+### 7.2 E4: the MNIST setting was too degraded, and the ceiling diagnostic shows it
+
+Ceiling diagnostic ($n = 12000$, PCA-50 features, the latent score regressed on $X$ and three images with an
+MLP fitted on 24000 units, then adjustment on the fitted score; oracle 1.04):
+
+| degradation | $R^2$(score) | ceiling | raw four-image | X-only | room |
+|---|---|---|---|---|---|
+| none | 0.943 | +0.885 | +0.716 | $-0.336$ | +0.17 |
+| $\sigma = 0.5$ | 0.907 | +0.782 | +0.472 | $-0.336$ | +0.31 |
+| $\sigma = 0.5$, 10 px occlusion | 0.821 | +0.462 | +0.311 | $-0.336$ | +0.15 |
+| $\sigma = 1$ | 0.817 | +0.540 | +0.285 | $-0.336$ | +0.26 |
+| $\sigma = 1$, 10 px occlusion (the chosen main setting) | 0.715 | +0.209 | +0.113 | $-0.336$ | +0.10 |
+
+The main setting has a ceiling of 0.21: with the digit recovered only to $R^2 = 0.72$ and a confounding
+coefficient of $-3$, no method that sees the proxy through PCA-50 features can do better. That, not PROBE, is
+why the pilot failed. PROBE with the prognostic representation and MLP nuisances over five replicates returns
+$-0.15$, $-0.13$, $-0.01$, $-0.04$, $-0.27$ against a raw four-image adjustment of $+0.21$ to $+0.33$
+(`results/probe_e4_mnist_prog_sigma1.0_occ10.json`); the audit-gap encoder returned $-0.49$
+(`results/probe_e4_mnist_pilot_sigma1.0_occ10.json`).
+
+Redesign, in order: run clean or mildly degraded images ($\sigma \le 0.5$, no occlusion), replace PCA-50 by
+CNN features so that the digit is recovered to $R^2$ near 0.99, and lower the confounding coefficient from
+$-3$ to about $-1.5$ so that a residual of a few percent does not translate into a bias of 0.15. Only then does
+the question the experiment is meant to answer, whether PROBE matches the proxy ceiling on image proxies,
+become answerable.
+
+### 7.2.1 Original note: the same failure with MNIST proxies through PCA features
 
 Pilot replicate ($n = 6000$, $\sigma = 1$, occlusion 10 px, 50 principal components per image): Algorithm 1
 output -0.48, X-only -0.42, raw feature adjustment -0.17, oracle +0.91. The digit identity has to be decoded
