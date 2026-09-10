@@ -36,6 +36,20 @@ which the naive and the X-adjusted contrasts have the wrong sign while the oracl
       noise B_j N_j + sigma*eps_j is Gaussian and independent of (X, W_{-j}, U), so the block is an injective
       decoder with additive noise (Proposition 1(b)); nuis_mode="shared" reproduces the earlier construction
       W = A2' tanh(A1 [U, N] + b1) + noise with one nuisance vector shared by all blocks.
+  s14 collider block: two latent factors L1 and L2 are independent; L1 enters the treatment index only and L2
+      enters the outcome only.  Block 0 measures their sum, W_0 = L1 + L2 + noise, and is therefore a collider
+      of a treatment cause and an outcome cause; the other blocks are linear proxies of U as in s1.  Adjusting
+      for the whole proxy conditions on the collider, which creates an association between L1 and L2 and biases
+      the estimate no matter which learner is used (collider or M-bias).  Block 0 is an invalid held-out block
+      (Assumption 2 fails, since L1 makes W_0 depend on A given (U, V_0)) and an invalid representation input
+      (the first clause of Assumption 2 fails, since conditioning on it opens the L1-L2 path), so the valid
+      configuration keeps block 0 out of both roles.
+  s13 nonlinear frequency codes: W_k = a_k sin(f_k U + p_k) + sigma eps_k with coordinate-specific frequencies
+      and phases.  The map u -> (g_1(u), ..., g_d(u)) is injective on the range of U (a random Fourier code),
+      so Proposition 1(b) applies, yet E[U | X, W] is a strongly nonlinear function of hundreds of coordinates:
+      gradient boosting and a plain MLP on the raw (X, W) recover only part of it, while a three-dimensional
+      learned representation does.  This is the regime where PROBE beats the raw proxy adjustment for
+      statistical rather than structural reasons.
   s12 mixed-modality proxy: four blocks of block_size coordinates each; continuous linear (Prop. 1(b)),
       Poisson counts with a log-linear rate in U (Prop. 1(c)), binary codes with a logistic link (not covered:
       a finite-valued block of a continuous U is not complete on its own), and a nonlinear tanh channel
@@ -55,7 +69,7 @@ import numpy as np
 D_X = 20  # default covariate dimension (override with the d_x parameter)
 TRUE_ATE = 1.0
 
-SCM_NAMES = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12"]
+SCM_NAMES = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12", "s13", "s14"]
 MAIN_SCMS = ["s10", "s12", "s3", "s9", "s11"]  # paper order; the decoder SCM comes last
 
 SIMPSON = dict(u_treat=1.2, u_out=-3.0, prop_floor=0.05)
@@ -73,6 +87,8 @@ DEFAULTS = {
     "s10": dict(d_w=200, n_blocks=10, proxy_strength=0.35, **SIMPSON),
     "s11": dict(d_w=300, n_blocks=10, d_nuis=20, hidden=32, sigma=1.5, nuis_scale=2.0, nuis_mode="block", **SIMPSON),
     "s12": dict(d_w=160, n_blocks=4, proxy_strength=0.35, **SIMPSON),
+    "s13": dict(d_w=600, n_blocks=6, sigma=1.0, f_lo=0.5, f_hi=4.0, **SIMPSON),
+    "s14": dict(d_w=20, n_blocks=5, proxy_strength=2.5, treat_coef=1.5, out_coef=2.0, sigma=0.5, **SIMPSON),
 }
 
 DESCRIPTIONS = {
@@ -88,6 +104,8 @@ DESCRIPTIONS = {
     "s10": "many weak proxies: small loadings spread over many coordinates",
     "s11": "nonlinear decoder of U with block-specific nuisance factors: image-like proxy",
     "s12": "mixed-modality proxy: continuous, Poisson counts, binary codes, nonlinear channel",
+    "s13": "nonlinear frequency codes: W_k = a_k sin(f_k U + p_k) + noise, injective jointly but hard to decode",
+    "s14": "collider block: block 0 measures L1 + L2 where L1 drives treatment and L2 drives the outcome",
 }
 
 
@@ -175,6 +193,14 @@ def coefficients(name: str, coef_key: tuple[int, ...], **params) -> dict[str, np
         g5 = _rng(coef_key + (5,))
         c["dec_a1"] = g5.standard_normal(H)
         c["nuis_B"] = g5.standard_normal((p["n_blocks"], d_nuis, d_w // p["n_blocks"])) / math.sqrt(d_nuis)
+    if name == "s14":
+        d_w = p["d_w"]
+        c["b_w"] = p["proxy_strength"] * g.choice(np.array([-1.0, 1.0]), size=d_w) * g.uniform(0.35, 1.0, size=d_w)
+    if name == "s13":
+        g6 = _rng(coef_key + (6,)); d_w = p["d_w"]
+        c["freq"] = g6.uniform(p["f_lo"], p["f_hi"], size=d_w)
+        c["phase"] = g6.uniform(0.0, 2.0 * math.pi, size=d_w)
+        c["amp"] = g6.uniform(0.7, 1.3, size=d_w) * g6.choice(np.array([-1.0, 1.0]), size=d_w)
     if name == "s12":
         g4 = _rng(coef_key + (4,)); m = p["block_size"]
         c["m_lin"] = p["proxy_strength"] * g4.choice(np.array([-1.0, 1.0]), size=m) * g4.uniform(0.6, 1.4, size=m)
@@ -186,7 +212,7 @@ def coefficients(name: str, coef_key: tuple[int, ...], **params) -> dict[str, np
 
 def invalid_heldout_blocks(name: str, **params) -> set[int]:
     """Blocks whose inclusion in the held-out set violates the common held-out channel condition (Assumption 2)."""
-    return {0} if name in ("s6", "s9") else set()
+    return {0} if name in ("s6", "s9", "s14") else set()
 
 
 def heldout_set_valid(name: str, S, **params) -> bool:
@@ -217,7 +243,9 @@ def decoder_mean(name: str, coef: dict[str, np.ndarray], u: np.ndarray, **params
     u = np.asarray(u, dtype=float)
     if name == "s11" and p["nuis_mode"] == "block":
         return np.tanh(u[:, None] * coef["dec_a1"] + coef["dec_b1"]) @ coef["dec_A2"]
-    if name in ("s1", "s5", "s6", "s7", "s8", "s9", "s10"):
+    if name == "s13":
+        return coef["amp"] * np.sin(coef["freq"] * u[:, None] + coef["phase"])
+    if name in ("s1", "s5", "s6", "s7", "s8", "s9", "s10", "s14"):
         return u[:, None] * coef["b_w"]
     if name == "s4":
         return coef["alpha"][None, :] * u[:, None] + coef["beta"][None, :] * np.tanh(u)[:, None]
@@ -255,7 +283,7 @@ def check_orc(name: str, coef: dict[str, np.ndarray], **params) -> dict:
     G = decoder_mean(name, coef, grid, **params)
     ratios = {}
     for j, cols in enumerate(blk):
-        if name in ("s6", "s9") and j == 0:
+        if name in ("s6", "s9", "s14") and j == 0:
             ratios[j] = None
             continue
         gj = G[:, cols]
@@ -304,6 +332,21 @@ def generate(name: str, n: int, key: tuple[int, ...], coef: dict[str, np.ndarray
             for j, cols in enumerate(blk):
                 w[:, cols] += p["nuis_scale"] * (nuis[:, j, :] @ coef["nuis_B"][j])
             out["N"] = nuis.reshape(n, -1)
+        index = p["u_treat"] * u + 0.6 * (x @ coef["a_x"])
+        y0 = 0.7 * (x @ coef["y_x"]) + 0.3 * (x @ coef["yt_x"]) ** 2 + p["u_out"] * u + eps_y
+    elif name == "s14":
+        u = ru.standard_normal(n)
+        x = u[:, None] * coef["b_x"] + eps_x
+        w = u[:, None] * coef["b_w"] + rw.standard_normal((n, p["d_w"]))
+        l1 = r2.standard_normal(n); l2 = r2.standard_normal(n)
+        w[:, blk[0]] = (l1 + l2)[:, None] + p["sigma"] * r2.standard_normal((n, len(blk[0])))
+        index = p["u_treat"] * u + 0.6 * (x @ coef["a_x"]) + p["treat_coef"] * l1
+        y0 = 0.7 * (x @ coef["y_x"]) + 0.3 * (x @ coef["yt_x"]) ** 2 + p["u_out"] * u + p["out_coef"] * l2 + eps_y
+        out.update({"L1": l1, "L2": l2})
+    elif name == "s13":
+        u = ru.standard_normal(n)
+        x = u[:, None] * coef["b_x"] + eps_x
+        w = decoder_mean(name, coef, u, **params) + p["sigma"] * rw.standard_normal((n, p["d_w"]))
         index = p["u_treat"] * u + 0.6 * (x @ coef["a_x"])
         y0 = 0.7 * (x @ coef["y_x"]) + 0.3 * (x @ coef["yt_x"]) ** 2 + p["u_out"] * u + eps_y
     elif name == "s12":

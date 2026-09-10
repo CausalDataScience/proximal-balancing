@@ -64,12 +64,28 @@ def unit_vector(g: np.random.Generator, d: int) -> np.ndarray:
 
 
 def all_splits(n_blocks: int, max_held: int | None = None) -> list[tuple[int, ...]]:
-    """Split family: held-out sets of 1..max_held blocks (default: at most half of the blocks, so that the
-    remaining blocks keep a majority of the proxy information for the representation)."""
+    """Held-out sets of 1..max_held blocks (default: at most half of the blocks, so that the remaining blocks
+    keep a majority of the proxy information for the representation)."""
     top = max_held if max_held is not None else max(1, n_blocks // 2)
     out = []
     for r in range(1, min(top, n_blocks - 1) + 1):
         out.extend(itertools.combinations(range(n_blocks), r))
+    return out
+
+
+def all_configs(n_blocks: int, max_held: int | None = None, max_excluded: int = 0) -> list[tuple[tuple[int, ...], tuple[int, ...]]]:
+    """Candidate configurations (S, E): S is audited, E is used in neither role, the rest feed the
+    representation.  With max_excluded = 0 this is the plain split family.  Assumption 2 refers to the blocks
+    that actually enter the representation, so a block may be dropped from both roles; enlarging the family
+    only changes the counts T and L in Theorem 6.  Configurations that leave no block for the representation
+    are excluded."""
+    out = []
+    for S in all_splits(n_blocks, max_held):
+        rest = [b for b in range(n_blocks) if b not in S]
+        for k in range(0, max_excluded + 1):
+            for E in itertools.combinations(rest, k):
+                if len(rest) - len(E) >= 1:
+                    out.append((S, E))
     return out
 
 
@@ -342,8 +358,11 @@ def aipw(z: np.ndarray, a: np.ndarray, y: np.ndarray, nuis, eta: float) -> dict[
 
 
 # ----------------------------------------------------------------------------- one proxy split
-def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[int, ...], args, rep: int, n_index: int, diag: dict[str, np.ndarray] | None, blk: list[np.ndarray]) -> dict:
-    held = np.concatenate([blk[b] for b in S]); rem = np.concatenate([blk[b] for b in range(len(blk)) if b not in S])
+def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[int, ...], args, rep: int, n_index: int, diag: dict[str, np.ndarray] | None, blk: list[np.ndarray], E: tuple[int, ...] = ()) -> dict:
+    """One configuration: S is the held-out (audited) block set, E the blocks used in neither role, and the rest
+    feed the representation.  Assumption 2 is a statement about V_j = (X, W_{used}); it does not require every
+    remaining block to be used, so excluding blocks is inside the theory and only changes the candidate family."""
+    held = np.concatenate([blk[b] for b in S]); rem = np.concatenate([blk[b] for b in range(len(blk)) if b not in S and b not in E])
     X, W, A, Y = data["X"], data["W"], data["A"], data["Y"]
     v_blocks, off = [], X.shape[1]
     for b in range(len(blk)):
@@ -356,7 +375,21 @@ def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[
     Vs, Ts = (V - mean_v) / sd_v, (T - mean_t) / sd_t
     sid = int("".join(str(b) for b in S))
     arch = getattr(args, "enc_arch", "mlp")
-    if arch in ("index", "index2"):
+    if arch == "prog":
+        # prognostic representation: Z = predicted outcomes under both arms, from nonlinear regressions of Y on V
+        # fitted within each arm on the discrepancy sample.  The audit then only certifies balance, which is what
+        # Theorem 1 needs; the representation itself is built by a strong learner rather than by the audit gap.
+        from sklearn.neural_network import MLPRegressor
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.pipeline import make_pipeline
+        cols = []
+        for arm in (1, 0):
+            sel = iD[A[iD] == arm]
+            m = make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(64, 64), max_iter=400, random_state=rep * 7 + arm, early_stopping=True))
+            cols.append(m.fit(Vs[sel], Y[sel]).predict(Vs))
+        Z = np.column_stack(cols).astype(np.float32)
+        enc = type("PrognosticEncoder", (), {"best_step": 0, "best_val_gap": float("nan")})()
+    elif arch in ("index", "index2"):
         # linear representation fitted on the discrepancy sample: ridge-logistic propensity index of V and, for
         # index2, ridge outcome indices of V within each arm.  No audit-gap training; the audit only screens.
         from sklearn.linear_model import LogisticRegression, Ridge
@@ -374,14 +407,14 @@ def run_split(data: dict[str, np.ndarray], idx: dict[str, np.ndarray], S: tuple[
     disc = empirical_discrepancy(zD, tD, aD, args.m_rff, torch_seed(*seed_key("critic", rep, n_index, sid)), X.shape[1])
     nuis = fit_nuisances(Z[iN], A[iN], Y[iN], torch_seed(*seed_key("nuisance", rep, n_index, sid)) % (2 ** 31))
     est = aipw(Z[iE], A[iE], Y[iE], nuis, args.eta)
-    rec = {"S": list(S), "D2_hat": disc["D2"], "D2_in": disc["D2_in"], "gap_in": disc["gap_in"], "gap_cf": disc["gap_cf"], "gap_se": disc["se"], "null_floor": disc["null_floor"], "best_step": int(enc.best_step), "best_val_gap": float(enc.best_val_gap), **est}
+    rec = {"S": list(S), "E": list(E), "D2_hat": disc["D2"], "D2_in": disc["D2_in"], "gap_in": disc["gap_in"], "gap_cf": disc["gap_cf"], "gap_se": disc["se"], "null_floor": disc["null_floor"], "best_step": int(enc.best_step), "best_val_gap": float(enc.best_val_gap), **est}
     thr = args.t if args.t is not None else 2.0 * disc["se"]  # D2 is already floor-corrected
     rec["threshold"] = thr
     rec["screen_pass"] = bool(disc["D2"] <= thr and est["overlap_frac"] >= args.overlap_min)
     if diag is not None:
         Vd = (np.column_stack([diag["X"], diag["W"][:, rem]]) - mean_v) / sd_v
         Td = (np.column_stack([diag["X"], diag["W"][:, held]]) - mean_t) / sd_t
-        if arch in ("index", "index2"):
+        if arch in ("index", "index2", "prog"):
             raise NotImplementedError("oracle diagnostics are not implemented for index representations")
         Zd = encode(enc, Vd)
         half = len(Zd) // 2
@@ -451,6 +484,7 @@ def merge_rotations(recs: list[dict]) -> dict:
     m["gap_se"] = float(np.sqrt(np.sum([r["gap_se"] ** 2 for r in recs])) / k)
     m["threshold"] = float(np.mean([r["threshold"] for r in recs])) if recs[0].get("threshold_fixed") else 2.0 * m["gap_se"]
     m["screen_pass"] = bool(m["D2_hat"] <= m["threshold"] and m["overlap_frac"] >= recs[0]["overlap_min"])
+    m["E"] = list(recs[0]["E"])
     m["rotations"] = [{"theta": r["theta"], "D2_hat": r["D2_hat"], "gap_se": r["gap_se"], "overlap_frac": r["overlap_frac"], "screen_pass": r["screen_pass"]} for r in recs]
     return m
 
@@ -464,19 +498,19 @@ def run_replicate(args, coef, scm: str, params: dict, rep: int, n: int, n_index:
     crossfit = getattr(args, "crossfit", False)
     rotations = [{"D": folds[i], "N": folds[(i + 1) % 3], "E": folds[(i + 2) % 3]} for i in (range(3) if crossfit else [0])]
     diag = generate(args.n_diag, seed_key("diag", rep), coef, scm, params) if args.diagnostics else None
-    splits = all_splits(len(blk), args.max_held)
+    splits = all_configs(len(blk), args.max_held, getattr(args, "max_excluded", 0))
     g = rng(*seed_key("sample_splits", rep, n_index))
     chosen = [splits[i] for i in sorted(g.choice(len(splits), size=min(args.m, len(splits)), replace=False))]
     records = []
-    for S in chosen:
+    for S, E in chosen:
         recs = []
         for r_i, idx in enumerate(rotations):
-            rec = run_split(data, idx, S, args, rep, n_index * 10 + r_i, diag, blk)
+            rec = run_split(data, idx, S, args, rep, n_index * 10 + r_i, diag, blk, E)
             rec["overlap_min"] = args.overlap_min; rec["threshold_fixed"] = args.t is not None
             recs.append(rec)
         records.append(merge_rotations(recs) if crossfit else recs[0])
     for r in records:
-        r["valid_heldout"] = scms.heldout_set_valid(scm, r["S"], **params)
+        r["valid_heldout"] = scms.heldout_set_valid(scm, r["S"], **params) and not (set(scms.invalid_heldout_blocks(scm, **params)) - set(r["S"]) - set(r["E"]))
     retained = [r for r in records if r["screen_pass"]]
     out = {"scm": scm, "params": params, "rep": rep, "n": n, "T": len(splits), "m": len(chosen), "crossfit": crossfit, "splits": records,
            "invalid_heldout_blocks": sorted(scms.invalid_heldout_blocks(scm, **params))}
@@ -567,10 +601,11 @@ def main() -> None:
     ap.add_argument("--m", type=int, default=10, help="budget: number of sampled proxy splits")
     ap.add_argument("--max-held", type=int, default=None, help="largest number of blocks in a held-out set (default: half of the blocks)")
     ap.add_argument("--crossfit", action="store_true", help="rotate the discrepancy, nuisance, and evaluation folds three ways and average (PROBE and baselines)")
+    ap.add_argument("--max-excluded", type=int, default=0, help="largest number of blocks a configuration may leave out of both roles (0 keeps the plain split family)")
     ap.add_argument("--d-z", type=int, default=3, help="representation dimension")
     ap.add_argument("--enc-steps", type=int, default=300)
     ap.add_argument("--enc-hidden", type=int, default=32, help="hidden width of the encoder MLP")
-    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set", "index", "index2"], help="representation: MLP trained on the audit gap, shared per-block map, ridge-logistic propensity index, or propensity plus outcome indices")
+    ap.add_argument("--enc-arch", default="mlp", choices=["mlp", "set", "index", "index2", "prog"], help="representation: MLP trained on the audit gap, shared per-block map, ridge-logistic propensity index, or propensity plus outcome indices")
     ap.add_argument("--nuisance", default="gbm", choices=["gbm", "mlp"], help="nuisance learners for every AIPW (gradient boosting, or L2 logistic propensity with MLP outcomes)")
     ap.add_argument("--pretrain-steps", type=int, default=0, help="warm-start steps before the balance objective (see --pretrain-mode)")
     ap.add_argument("--pretrain-mode", default="none", choices=["none", "treat", "mask"], help="warm start: none, treatment-predictive (harmful), or unsupervised masked-block prediction")

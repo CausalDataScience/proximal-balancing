@@ -397,7 +397,57 @@ s10, s11, s12 once the baseline uses a strong learner. PROBE can win only throug
 4. **The certificate.** The audit reports whether the adjustment set is adequate; the raw adjustment offers no
    such check. This is a claim about knowledge, not about error, and it needs the audit-power experiment (E1c).
 
-New DGPs must therefore be designed on channels 2 and 3, or on richer versions of channel 1.
+### 8.3 Design scan for DGPs that beat the raw proxy adjustment (2026-09-10)
+
+Each candidate is measured by its **room**: the accuracy of adjusting for $(X, E[U \mid X, W_{-S}])$, the proxy
+information ceiling, minus the accuracy of adjusting for the raw $(X, W)$ with strong learners. Room is what a
+representation could win. All numbers at $n = 12000$, one replicate, MLP nuisances, $\tau = 1$.
+
+| Candidate | mechanism | ceiling | raw $(X,W)$ | room | PROBE |
+|---|---|---|---|---|---|
+| instrument block, extreme propensity ($P(A \mid X, W) \in [0.001, 0.999]$, 63% outside $[0.05, 0.95]$) | positivity | 1.00 | 1.00 | +0.01 | not run |
+| instrument block, sweet spot (s9, strength 2.0, coefficient 2.0) | amplification | 1.00 | 0.84 | +0.16 | 0.98 |
+| instrument block, coefficient 3, 4, 6 | amplification | 1.01 | 0.94, 0.98, 1.02 | 0 | 0.89 to 0.98 |
+| near-instrument block (weak proxy that also drives treatment) | amplification | 0.98 | 1.01 | 0 | not run |
+| two instrument blocks | amplification | 0.96 | 0.89 | +0.07 | not run |
+| **s13 nonlinear frequency codes** ($W_k = a_k \sin(f_k U + p_k) + \epsilon$, $d_w = 600$ to 1200) | statistical | 0.95 | 0.63 to 0.85 | **+0.15 to +0.32** | 0.55 to 0.90 |
+| **s14 collider block** ($W_0 = L_1 + L_2$, $L_1 \to A$, $L_2 \to Y$) | structural | 0.97 | $-0.05$ | **+1.0** | 0.19 to 0.89, see below |
+
+Findings.
+
+1. **Positivity is not a channel.** Augmented IPW with a good outcome model is insensitive to a propensity
+   pushed to 0.001, so destroying overlap in $(X, W)$ does not create room.
+2. **Instrument amplification has a sweet spot and it is already used.** A stronger instrument makes treatment
+   more random with respect to $U$, so the confounding available for amplification shrinks: raw $(X,W)$ improves
+   from 0.84 to 1.02 as the coefficient goes from 2 to 6. The s9 default (strength 2.0, coefficient 2.0) is
+   near the maximum of the win, and there PROBE passes both conditions (8.1).
+3. **s13 has real room but the current representation cannot take it.** The audit-gap encoder recovers $U$ with
+   $R^2$ of 0.87 to 0.95 and lands at 0.55 to 0.90, below the raw adjustment. A prognostic representation
+   ($Z$ = predicted outcomes under both arms from MLP regressions on $W_{-S}$, `--enc-arch prog`) improves this
+   to 0.81 to 0.90, still at or below the raw adjustment and far from the 0.95 ceiling. The bottleneck is the
+   representation learner, not the DGP: PROBE trains it on one third of the sample from a weak signal, while
+   the baseline nuisances get two thirds and a direct signal.
+4. **s14 breaks the raw adjustment and PROBE alike.** Adjusting for the whole proxy is inconsistent
+   ($-0.05$ against $\tau = 1$, identically for trees and MLPs), because conditioning on the collider block
+   creates an association between a treatment cause and an outcome cause. PROBE's behaviour by role of the
+   contaminated block: held out, the audit rejects it ($\widehat D^2$ 0.018 to 0.024 against a threshold of
+   0.003, the correct refusal); inside the representation, the estimate is 0.19 to 0.56 and **the audit
+   passes**, because the audit tests balance with respect to the held-out block and not the exchangeability
+   clause that the collider violates; excluded from both roles, the estimate is 0.83 to 0.89. A three-role
+   search over (audited, representation, excluded) is implemented (`--max-excluded`, `all_configs`) and is
+   inside the theory, since Assumption 2 refers to the blocks that actually enter the representation. It does
+   not rescue s14: the candidate family is dominated by configurations that keep the collider in the
+   representation and pass the audit, and the correct configurations disagree among themselves depending on how
+   much valid proxy is left, so Algorithm 1 returns 0.15 to 0.19. This is a limitation to state in the paper,
+   not a win: **the audit certifies balance, it does not certify that the representation input is admissible.**
+
+Consequences for the paper. The demonstrable claim is the s9 family: proxies contaminated by treatment-only
+variation, where the raw adjustment amplifies the residual confounding while the balance objective purges the
+contamination from $Z$ (the representation ablation in 7.6 is the direct evidence: the propensity-index
+representation keeps the instrument and loses overlap, the audit-gap encoder does not). In valid SCMs the honest
+claim is equivalence with the proxy ceiling plus the audit certificate. Two open leads: a representation learner
+strong enough to claim the s13 room, and an admissibility check that would close the s14 gap.
+
 
 ## 9. Reporting conventions
 
