@@ -1,0 +1,90 @@
+{
+ "experiment": "E9",
+ "protocol": "results/probe_e9_sample_use_noise_protocol_v1.json",
+ "cells": {
+  "noise_1.0_hard4": {
+   "mae": 0.11387525874343532,
+   "p90": 0.2551743670530042,
+   "return_rate": 1.0,
+   "rho_mean": 0.23161737977128388,
+   "learned_r_sd_mean": 0.4878621519512577,
+   "baseline_mae": {},
+   "gate_pass": false
+  },
+  "noise_1.0_rotate4": {
+   "mae": 0.030155468757177634,
+   "p90": 0.06374998754512667,
+   "return_rate": 1.0,
+   "rho_mean": 0.0993580285344345,
+   "learned_r_sd_mean": 0.4875694282542228,
+   "baseline_mae": {
+    "X": 0.9259462206837952,
+    "naive": 1.1432427775805614,
+    "oracle": 0.025105397664866913,
+    "raw_XW": 0.17763626604645602
+   },
+   "gate_pass": true
+  },
+  "noise_0.3_hard4": {
+   "mae": 0.0988336775749305,
+   "p90": 0.19757488078983368,
+   "return_rate": 1.0,
+   "rho_mean": 0.19562965863111312,
+   "learned_r_sd_mean": 0.4878621519512577,
+   "baseline_mae": {},
+   "gate_pass": false
+  },
+  "noise_0.3_rotate4": {
+   "mae": 0.020115435540649162,
+   "p90": 0.04090599905145144,
+   "return_rate": 1.0,
+   "rho_mean": 0.08040848345073717,
+   "learned_r_sd_mean": 0.4875694282542228,
+   "baseline_mae": {
+    "X": 0.9272276904414885,
+    "naive": 1.1455837699055667,
+    "oracle": 0.007531619299460052,
+    "raw_XW": 0.17552509432143432
+   },
+   "gate_pass": true
+  }
+ },
+ "paired": {
+  "noise_effect_at_hard4": {
+   "mean": -0.015041581168504809,
+   "lo": -0.027077507158559742,
+   "hi": -0.0030056551784498776,
+   "n": 20
+  },
+  "noise_effect_at_rotate4": {
+   "mean": -0.01004003321652847,
+   "lo": -0.01722024032278936,
+   "hi": -0.0028598261102675817,
+   "n": 20
+  },
+  "sample_use_at_noise_1.0": {
+   "mean": -0.08371978998625768,
+   "lo": -0.12474996148366843,
+   "hi": -0.04268961848884692,
+   "n": 20
+  },
+  "sample_use_at_noise_0.3": {
+   "mean": -0.07871824203428134,
+   "lo": -0.11825882901513132,
+   "hi": -0.03917765505343134,
+   "n": 20
+  },
+  "interaction": {
+   "mean": 0.0050015479519763375,
+   "lo": -0.006629741134217216,
+   "hi": 0.016632837038169892,
+   "n": 20
+  }
+ },
+ "gates": {
+  "mae": 0.05,
+  "p90": 0.1,
+  "return": 0.95
+ },
+ "reading": "sample use dominates: the rotate-four effect is five to eight times the outcome noise effect, and rotate-four at the original noise SD of 1.0 already clears every gate, so the noise reduction was not necessary for the pass"
+}

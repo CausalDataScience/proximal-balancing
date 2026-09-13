@@ -1,0 +1,12 @@
+{
+  "protocol_id":"restricted-brier-rotate4-analytic-gradient-parity-v1",
+  "frozen_at_runtime_utc":"2026-09-12T19:14:40Z",
+  "allowed_phases":["dev"],"allowed_modes":["rotate4"],"total_n":6000,
+  "specs":{"g1_low_noise":{"name":"g1_low_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"constant_small"}},
+  "runs":[{"phase":"dev","mode":"rotate4","learner":"brier","replicates":2,"seed_start":2100000,"settings":["g1_low_noise"]}],
+  "objective":"Unchanged same-D approximate empirical Brier inf-risk gap on fixed101 r grid; q1 multistart includes the unoptimized lifted q0. This run changes only evaluation of the exact analytic gradient and caches the design matrix.",
+  "parity_reference":"probe_structured_scm_brier_rotate4_dev_v1.json",
+  "parity_tolerance":{"aggregate_estimate_abs":1e-6,"selected_r_abs":1e-6,"empirical_objective_abs":1e-9},
+  "source_sha256":{"probe_structured_scm.py":"874effb0aa74e927577ae51149dc997cbec24121719a97f4907168b7ccec7c28","run_probe_structured_scm.py":"bbc29f8be7a8cf125082307eef9363a70809a5ec55dd7a5ec3d46d1d949c0f99","test_probe_structured_scm.py":"336350ba0f7f9a9d0ea8a21b367fe6532b54b47b9e58e69bae3da278868dee45"},
+  "claim_boundary":"Exact fixed-seed implementation parity check only; not new scientific evidence."
+}

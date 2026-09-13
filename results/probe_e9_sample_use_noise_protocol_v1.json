@@ -1,0 +1,117 @@
+{
+ "protocol_id": "e9-sample-use-by-outcome-noise-2x2-v1",
+ "frozen_at_runtime_utc": "2026-09-13T02:10:55Z",
+ "experiment": "E9 of memo/2026-09-12-scm-family-and-experiment-plan.md section 2.9",
+ "question": "how much of the current success is explained by rotate-four sample reuse and how much by the small outcome noise, at a fixed total sample of 6000",
+ "design": {
+  "factors": {
+   "outcome_noise_sd": [
+    1.0,
+    0.3
+   ],
+   "sample_use": [
+    "hard4",
+    "rotate4"
+   ]
+  },
+  "cells": 4,
+  "independent_base_seeds_per_cell": 20,
+  "seed_start": 9100000,
+  "shared_across_cells": "the same 20 base seeds, and within a seed the same latent draw, the same treatment, the same X, I, C and the same standard normal eps_Y; only the outcome noise scale and the sample-use regime change",
+  "held_fixed": "restricted Brier critic, 101-point r grid, screen threshold, nuisance class, Algorithm 1 aggregation and every baseline"
+ },
+ "allowed_phases": [
+  "dev"
+ ],
+ "allowed_modes": [
+  "hard4",
+  "rotate4"
+ ],
+ "total_n": 6000,
+ "fold_n": 1500,
+ "specs": {
+  "scm1_noise_10": {
+   "name": "scm1_noise_10",
+   "treatment_i": 2.5,
+   "proxy_sd": 0.85,
+   "outcome_u": 2.5,
+   "bad_i": -0.6,
+   "effect_u": 0.0,
+   "observation": "linear",
+   "treatment_link": "probit",
+   "outcome_noise": "standard"
+  },
+  "scm1_noise_03": {
+   "name": "scm1_noise_03",
+   "treatment_i": 2.5,
+   "proxy_sd": 0.85,
+   "outcome_u": 2.5,
+   "bad_i": -0.6,
+   "effect_u": 0.0,
+   "observation": "linear",
+   "treatment_link": "probit",
+   "outcome_noise": "constant_small"
+  }
+ },
+ "runs": [
+  {
+   "phase": "dev",
+   "mode": "hard4",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9100000,
+   "settings": [
+    "scm1_noise_10"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9100000,
+   "settings": [
+    "scm1_noise_10"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "hard4",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9100000,
+   "settings": [
+    "scm1_noise_03"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9100000,
+   "settings": [
+    "scm1_noise_03"
+   ]
+  }
+ ],
+ "reporting": [
+  "mae",
+  "p90_abs_error",
+  "return_rate",
+  "common_radius",
+  "learned_r_spread",
+  "nuisance_remainder",
+  "wall_clock_seconds",
+  "paired noise main effect",
+  "paired sample-use main effect",
+  "paired interaction"
+ ],
+ "interpretation_guard": "rotate-four is a bundled intervention over representation, screen, nuisance and evaluation across rotations. A sample-use effect must not be read as an evaluation-sample-size effect alone.",
+ "source_sha256": {
+  "probe_structured_scm.py": "052c8faa75ba674202b2f03989f37fb28985ab422b8e464d1b2bf8d48f4ecffe",
+  "run_probe_structured_scm.py": "a5006e92ece02d4e9e47e525d08dca7988c430c41af5be8fcce8eed50861b46a",
+  "test_probe_structured_scm.py": "336350ba0f7f9a9d0ea8a21b367fe6532b54b47b9e58e69bae3da278868dee45"
+ },
+ "claim_boundary": "A 2x2 ablation on SCM-1 with the restricted parametric Brier learner. It attributes the existing finite-sample result to two design choices; it certifies nothing about neural encoders, global ERM or asymptotics."
+}

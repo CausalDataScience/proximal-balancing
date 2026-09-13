@@ -1,0 +1,183 @@
+design F coefficient probe | n=24000 | mode manuscript | run r11pM | grid 21 points on [-0.5, 1.5] | r_init +0.000 | 5 data seed(s) x 5 optimizer seed(s) | roots 0.085786, 2.914214 | code a2b3fc07b856c059
+the roots and the true probabilities are diagnostics; the learner never receives them
+per-row gaps will be written under ../results/dgp_f_coefficient_probe_manuscript_r11/rows
+
+--- data seed 20260912: 9600 train, 4800 stop, 4800 select, 4800 audit
+
+[probe] one grid, three objectives (selection on `select`)
+       r  population D2  |tau_Z-1|  oracle gap (select)  oracle se  common gap (select)  common se  common gap (audit)
+  -0.500       1.09e-02     1.9992            +9.92e-03    1.4e-03            +9.22e-03    1.3e-03           +8.93e-03
+  -0.400       8.39e-03     1.7127            +7.48e-03    1.2e-03            +7.62e-03    1.1e-03           +6.89e-03
+  -0.300       5.74e-03     1.3934            +4.99e-03    1.0e-03            +5.37e-03    1.0e-03           +4.11e-03
+  -0.200       3.30e-03     1.0471            +2.75e-03    7.8e-04            +2.36e-03    7.4e-04           +1.64e-03
+  -0.100       1.40e-03     0.6827            +1.05e-03    5.1e-04            +1.56e-03    4.7e-04           +7.68e-04
+  +0.000       2.87e-04     0.3122            +1.25e-04    2.3e-04            +9.07e-04    4.0e-04           +6.69e-04
+  +0.100       7.21e-06     0.0505            +3.37e-05    3.7e-05            +8.82e-04    2.7e-04           +4.60e-04
+  +0.200       4.07e-04     0.3910            +6.13e-04    2.7e-04            +3.83e-04    4.0e-04           -4.46e-04
+  +0.300       1.21e-03     0.6954            +1.56e-03    4.7e-04            +5.23e-04    3.3e-04           +2.01e-04
+  +0.400       2.12e-03     0.9530            +2.57e-03    6.1e-04            +2.83e-03    6.7e-04           +2.74e-03
+  +0.500       2.92e-03     1.1570            +3.42e-03    7.1e-04            +3.25e-03    7.6e-04           +3.20e-03
+  +0.600       3.51e-03     1.3053            +4.00e-03    7.8e-04            +3.25e-03    8.2e-04           +3.55e-03
+  +0.700       3.85e-03     1.4005            +4.30e-03    8.1e-04            +3.56e-03    8.2e-04           +3.82e-03
+  +0.800       3.95e-03     1.4484            +4.34e-03    8.1e-04            +3.59e-03    8.2e-04           +3.95e-03
+  +0.900       3.87e-03     1.4565            +4.19e-03    8.0e-04            +3.92e-03    8.8e-04           +4.47e-03
+  +1.000       3.66e-03     1.4328            +3.91e-03    7.8e-04            +3.59e-03    6.9e-04           +3.81e-03
+  +1.100       3.36e-03     1.3849            +3.56e-03    7.4e-04            +2.69e-03    7.6e-04           +3.30e-03
+  +1.200       3.01e-03     1.3195            +3.17e-03    7.0e-04            +2.33e-03    7.7e-04           +2.83e-03
+  +1.300       2.64e-03     1.2421            +2.78e-03    6.6e-04            +2.07e-03    7.2e-04           +2.52e-03
+  +1.400       2.27e-03     1.1569            +2.39e-03    6.1e-04            +1.85e-03    7.6e-04           +2.46e-03
+  +1.500       1.93e-03     1.0675            +2.04e-03    5.6e-04            +1.42e-03    6.5e-04           +1.84e-03
+[probe] grid minimiser of population_D2                   : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of finite_sample_oracle_gap_select : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of common_gap_select               : 1 tied point(s) at r in ['+0.200'], representation bias 0.3910 to 0.3910; operational r +0.200, success=False
+[probe] learner ds20260912 os0: 1 learnable parameter, r_init +0.000 -> r_hat +0.00358, val objective 0.00e+00, population D2 2.63e-04, |tau_Z-1| 0.2990, restart 0
+[probe] learner ds20260912 os1: 1 learnable parameter, r_init +0.000 -> r_hat +0.01297, val objective 0.00e+00, population D2 2.05e-04, |tau_Z-1| 0.2644, restart 1
+[probe] learner ds20260912 os2: 1 learnable parameter, r_init +0.000 -> r_hat +0.05289, val objective 0.00e+00, population D2 4.05e-05, |tau_Z-1| 0.1185, restart 2
+[probe] learner ds20260912 os3: 1 learnable parameter, r_init +0.000 -> r_hat +0.00885, val objective 4.40e-06, population D2 2.29e-04, |tau_Z-1| 0.2796, restart 2
+[probe] learner ds20260912 os4: 1 learnable parameter, r_init +0.000 -> r_hat +0.04084, val objective 5.86e-06, population D2 7.64e-05, |tau_Z-1| 0.1623, restart 1
+
+--- data seed 20260913: 9600 train, 4800 stop, 4800 select, 4800 audit
+
+[probe] one grid, three objectives (selection on `select`)
+       r  population D2  |tau_Z-1|  oracle gap (select)  oracle se  common gap (select)  common se  common gap (audit)
+  -0.500       1.09e-02     1.9992            +1.22e-02    1.4e-03            +1.15e-02    1.6e-03           +1.09e-02
+  -0.400       8.39e-03     1.7127            +9.72e-03    1.2e-03            +9.29e-03    1.5e-03           +8.00e-03
+  -0.300       5.74e-03     1.3934            +7.02e-03    1.0e-03            +6.70e-03    1.3e-03           +4.87e-03
+  -0.200       3.30e-03     1.0471            +4.40e-03    7.9e-04            +3.98e-03    7.2e-04           +3.01e-03
+  -0.100       1.40e-03     0.6827            +2.18e-03    5.2e-04            +2.15e-03    5.4e-04           +1.06e-03
+  +0.000       2.87e-04     0.3122            +6.59e-04    2.3e-04            +9.88e-04    3.6e-04           -2.86e-04
+  +0.100       7.21e-06     0.0505            -5.24e-05    3.7e-05            +6.66e-05    2.4e-04           -5.81e-04
+  +0.200       4.07e-04     0.3910            -3.15e-05    2.7e-04            -4.21e-04    3.3e-04           -5.11e-04
+  +0.300       1.21e-03     0.6954            +4.77e-04    4.7e-04            +3.32e-04    3.7e-04           +6.29e-04
+  +0.400       2.12e-03     0.9530            +1.18e-03    6.1e-04            +1.07e-03    5.3e-04           +2.08e-03
+  +0.500       2.92e-03     1.1570            +1.83e-03    7.1e-04            +1.60e-03    6.7e-04           +3.29e-03
+  +0.600       3.51e-03     1.3053            +2.31e-03    7.8e-04            +1.79e-03    7.9e-04           +4.06e-03
+  +0.700       3.85e-03     1.4005            +2.57e-03    8.1e-04            +1.92e-03    8.4e-04           +4.56e-03
+  +0.800       3.95e-03     1.4484            +2.64e-03    8.2e-04            +2.04e-03    8.6e-04           +4.64e-03
+  +0.900       3.87e-03     1.4565            +2.57e-03    8.1e-04            +1.96e-03    8.4e-04           +4.39e-03
+  +1.000       3.66e-03     1.4328            +2.41e-03    7.9e-04            +1.90e-03    8.1e-04           +4.05e-03
+  +1.100       3.36e-03     1.3849            +2.19e-03    7.6e-04            +1.81e-03    7.7e-04           +3.62e-03
+  +1.200       3.01e-03     1.3195            +1.93e-03    7.2e-04            +1.63e-03    7.3e-04           +3.02e-03
+  +1.300       2.64e-03     1.2421            +1.66e-03    6.7e-04            +1.66e-03    6.8e-04           +2.48e-03
+  +1.400       2.27e-03     1.1569            +1.39e-03    6.2e-04            +1.59e-03    6.1e-04           +1.96e-03
+  +1.500       1.93e-03     1.0675            +1.13e-03    5.7e-04            +1.36e-03    5.5e-04           +1.48e-03
+[probe] grid minimiser of population_D2                   : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of finite_sample_oracle_gap_select : 2 tied point(s) at r in ['+0.100', '+0.200'], representation bias 0.0505 to 0.3910; operational r +0.100, success=True
+[probe] grid minimiser of common_gap_select               : 1 tied point(s) at r in ['+0.200'], representation bias 0.3910 to 0.3910; operational r +0.200, success=False
+[probe] learner ds20260913 os0: 1 learnable parameter, r_init +0.000 -> r_hat +0.02620, val objective 1.63e-06, population D2 1.36e-04, |tau_Z-1| 0.2158, restart 0
+[probe] learner ds20260913 os1: 1 learnable parameter, r_init +0.000 -> r_hat +0.02873, val objective 0.00e+00, population D2 1.24e-04, |tau_Z-1| 0.2066, restart 1
+[probe] learner ds20260913 os2: 1 learnable parameter, r_init +0.000 -> r_hat +0.00070, val objective 0.00e+00, population D2 2.82e-04, |tau_Z-1| 0.3097, restart 1
+[probe] learner ds20260913 os3: 1 learnable parameter, r_init +0.000 -> r_hat +0.05325, val objective 4.13e-06, population D2 3.96e-05, |tau_Z-1| 0.1172, restart 2
+[probe] learner ds20260913 os4: 1 learnable parameter, r_init +0.000 -> r_hat +0.03358, val objective 0.00e+00, population D2 1.04e-04, |tau_Z-1| 0.1888, restart 0
+
+--- data seed 20260914: 9600 train, 4800 stop, 4800 select, 4800 audit
+
+[probe] one grid, three objectives (selection on `select`)
+       r  population D2  |tau_Z-1|  oracle gap (select)  oracle se  common gap (select)  common se  common gap (audit)
+  -0.500       1.09e-02     1.9992            +1.01e-02    1.4e-03            +8.65e-03    1.6e-03           +8.30e-03
+  -0.400       8.39e-03     1.7127            +7.65e-03    1.3e-03            +6.84e-03    1.4e-03           +6.28e-03
+  -0.300       5.74e-03     1.3934            +5.16e-03    1.1e-03            +4.64e-03    1.3e-03           +3.93e-03
+  -0.200       3.30e-03     1.0471            +2.88e-03    8.1e-04            +2.74e-03    9.6e-04           +2.32e-03
+  -0.100       1.40e-03     0.6827            +1.14e-03    5.3e-04            +8.71e-04    6.3e-04           +4.59e-04
+  +0.000       2.87e-04     0.3122            +1.74e-04    2.4e-04            -2.51e-04    4.1e-04           -4.71e-04
+  +0.100       7.21e-06     0.0505            +2.50e-05    3.8e-05            +1.38e-04    2.2e-04           +1.18e-04
+  +0.200       4.07e-04     0.3910            +5.46e-04    2.9e-04            +1.95e-04    4.4e-04           +3.99e-05
+  +0.300       1.21e-03     0.6954            +1.47e-03    4.9e-04            +1.05e-03    6.5e-04           +9.13e-04
+  +0.400       2.12e-03     0.9530            +2.50e-03    6.4e-04            +2.15e-03    7.1e-04           +1.88e-03
+  +0.500       2.92e-03     1.1570            +3.43e-03    7.5e-04            +3.13e-03    8.4e-04           +2.58e-03
+  +0.600       3.51e-03     1.3053            +4.14e-03    8.1e-04            +3.90e-03    9.4e-04           +3.69e-03
+  +0.700       3.85e-03     1.4005            +4.57e-03    8.5e-04            +4.21e-03    9.8e-04           +3.68e-03
+  +0.800       3.95e-03     1.4484            +4.74e-03    8.6e-04            +3.95e-03    1.1e-03           +3.47e-03
+  +0.900       3.87e-03     1.4565            +4.69e-03    8.5e-04            +4.61e-03    1.0e-03           +3.85e-03
+  +1.000       3.66e-03     1.4328            +4.47e-03    8.3e-04            +4.08e-03    1.0e-03           +3.53e-03
+  +1.100       3.36e-03     1.3849            +4.14e-03    7.9e-04            +3.46e-03    8.2e-04           +2.62e-03
+  +1.200       3.01e-03     1.3195            +3.73e-03    7.5e-04            +3.07e-03    7.9e-04           +2.35e-03
+  +1.300       2.64e-03     1.2421            +3.29e-03    7.0e-04            +2.98e-03    6.7e-04           +2.96e-03
+  +1.400       2.27e-03     1.1569            +2.85e-03    6.5e-04            +2.57e-03    6.3e-04           +2.63e-03
+  +1.500       1.93e-03     1.0675            +2.42e-03    6.0e-04            +1.80e-03    6.0e-04           +1.81e-03
+[probe] grid minimiser of population_D2                   : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of finite_sample_oracle_gap_select : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of common_gap_select               : 1 tied point(s) at r in ['+0.000'], representation bias 0.3122 to 0.3122; operational r +0.000, success=False
+[probe] learner ds20260914 os0: 1 learnable parameter, r_init +0.000 -> r_hat +0.00534, val objective 0.00e+00, population D2 2.51e-04, |tau_Z-1| 0.2925, restart 0
+[probe] learner ds20260914 os1: 1 learnable parameter, r_init +0.000 -> r_hat +0.05345, val objective 0.00e+00, population D2 3.91e-05, |tau_Z-1| 0.1164, restart 1
+[probe] learner ds20260914 os2: 1 learnable parameter, r_init +0.000 -> r_hat +0.01843, val objective 0.00e+00, population D2 1.75e-04, |tau_Z-1| 0.2443, restart 0
+[probe] learner ds20260914 os3: 1 learnable parameter, r_init +0.000 -> r_hat +0.04604, val objective 7.60e-06, population D2 5.95e-05, |tau_Z-1| 0.1434, restart 0
+[probe] learner ds20260914 os4: 1 learnable parameter, r_init +0.000 -> r_hat +0.02329, val objective 0.00e+00, population D2 1.50e-04, |tau_Z-1| 0.2265, restart 1
+
+--- data seed 20260915: 9600 train, 4800 stop, 4800 select, 4800 audit
+
+[probe] one grid, three objectives (selection on `select`)
+       r  population D2  |tau_Z-1|  oracle gap (select)  oracle se  common gap (select)  common se  common gap (audit)
+  -0.500       1.09e-02     1.9992            +1.09e-02    1.4e-03            +9.08e-03    1.2e-03           +1.06e-02
+  -0.400       8.39e-03     1.7127            +8.32e-03    1.3e-03            +6.90e-03    1.1e-03           +8.05e-03
+  -0.300       5.74e-03     1.3934            +5.71e-03    1.1e-03            +4.34e-03    9.4e-04           +5.39e-03
+  -0.200       3.30e-03     1.0471            +3.31e-03    8.2e-04            +2.05e-03    7.4e-04           +3.06e-03
+  -0.100       1.40e-03     0.6827            +1.44e-03    5.4e-04            +6.54e-04    4.6e-04           +9.87e-04
+  +0.000       2.87e-04     0.3122            +3.23e-04    2.4e-04            +3.06e-04    3.2e-04           -1.33e-04
+  +0.100       7.21e-06     0.0505            -5.75e-07    3.8e-05            -3.78e-04    3.5e-04           -1.01e-03
+  +0.200       4.07e-04     0.3910            +3.43e-04    2.9e-04            -1.35e-03    6.9e-04           -1.51e-03
+  +0.300       1.21e-03     0.6954            +1.10e-03    4.9e-04            +5.87e-04    6.0e-04           +3.22e-05
+  +0.400       2.12e-03     0.9530            +2.01e-03    6.4e-04            +1.60e-03    7.1e-04           +1.05e-03
+  +0.500       2.92e-03     1.1570            +2.86e-03    7.5e-04            +3.07e-03    1.0e-03           +2.93e-03
+  +0.600       3.51e-03     1.3053            +3.53e-03    8.1e-04            +3.45e-03    8.6e-04           +2.72e-03
+  +0.700       3.85e-03     1.4005            +3.98e-03    8.4e-04            +2.96e-03    9.3e-04           +2.82e-03
+  +0.800       3.95e-03     1.4484            +4.20e-03    8.5e-04            +3.39e-03    9.3e-04           +3.05e-03
+  +0.900       3.87e-03     1.4565            +4.22e-03    8.4e-04            +3.88e-03    8.2e-04           +3.37e-03
+  +1.000       3.66e-03     1.4328            +4.07e-03    8.1e-04            +3.78e-03    9.9e-04           +3.49e-03
+  +1.100       3.36e-03     1.3849            +3.80e-03    7.8e-04            +3.68e-03    9.4e-04           +3.25e-03
+  +1.200       3.01e-03     1.3195            +3.46e-03    7.3e-04            +3.30e-03    8.4e-04           +2.51e-03
+  +1.300       2.64e-03     1.2421            +3.07e-03    6.9e-04            +2.98e-03    7.5e-04           +2.22e-03
+  +1.400       2.27e-03     1.1569            +2.68e-03    6.4e-04            +2.64e-03    6.8e-04           +1.94e-03
+  +1.500       1.93e-03     1.0675            +2.29e-03    5.9e-04            +2.30e-03    6.2e-04           +1.64e-03
+[probe] grid minimiser of population_D2                   : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of finite_sample_oracle_gap_select : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of common_gap_select               : 2 tied point(s) at r in ['+0.100', '+0.200'], representation bias 0.0505 to 0.3910; operational r +0.100, success=True
+[probe] learner ds20260915 os0: 1 learnable parameter, r_init +0.000 -> r_hat +0.00563, val objective 0.00e+00, population D2 2.50e-04, |tau_Z-1| 0.2915, restart 1
+[probe] learner ds20260915 os1: 1 learnable parameter, r_init +0.000 -> r_hat +0.05480, val objective 2.98e-06, population D2 3.58e-05, |tau_Z-1| 0.1115, restart 1
+[probe] learner ds20260915 os2: 1 learnable parameter, r_init +0.000 -> r_hat +0.05924, val objective 0.00e+00, population D2 2.62e-05, |tau_Z-1| 0.0954, restart 0
+[probe] learner ds20260915 os3: 1 learnable parameter, r_init +0.000 -> r_hat +0.02672, val objective 0.00e+00, population D2 1.33e-04, |tau_Z-1| 0.2139, restart 2
+[probe] learner ds20260915 os4: 1 learnable parameter, r_init +0.000 -> r_hat +0.00252, val objective 0.00e+00, population D2 2.70e-04, |tau_Z-1| 0.3029, restart 0
+
+--- data seed 20260916: 9600 train, 4800 stop, 4800 select, 4800 audit
+
+[probe] one grid, three objectives (selection on `select`)
+       r  population D2  |tau_Z-1|  oracle gap (select)  oracle se  common gap (select)  common se  common gap (audit)
+  -0.500       1.09e-02     1.9992            +1.17e-02    1.4e-03            +1.15e-02    1.3e-03           +1.12e-02
+  -0.400       8.39e-03     1.7127            +9.05e-03    1.2e-03            +8.81e-03    1.2e-03           +8.40e-03
+  -0.300       5.74e-03     1.3934            +6.26e-03    1.0e-03            +5.95e-03    1.1e-03           +5.63e-03
+  -0.200       3.30e-03     1.0471            +3.67e-03    7.9e-04            +3.28e-03    8.4e-04           +3.08e-03
+  -0.100       1.40e-03     0.6827            +1.63e-03    5.2e-04            +1.03e-03    6.4e-04           +7.89e-04
+  +0.000       2.87e-04     0.3122            +3.87e-04    2.3e-04            -4.61e-04    4.0e-04           -9.30e-04
+  +0.100       7.21e-06     0.0505            -8.08e-06    3.7e-05            +9.23e-05    2.9e-04           +3.27e-04
+  +0.200       4.07e-04     0.3910            +2.97e-04    2.7e-04            -3.56e-04    4.8e-04           -6.89e-04
+  +0.300       1.21e-03     0.6954            +1.03e-03    4.7e-04            +1.08e-03    4.2e-04           +1.44e-03
+  +0.400       2.12e-03     0.9530            +1.89e-03    6.1e-04            +1.13e-03    6.6e-04           +1.86e-03
+  +0.500       2.92e-03     1.1570            +2.68e-03    7.1e-04            +2.83e-03    8.5e-04           +2.91e-03
+  +0.600       3.51e-03     1.3053            +3.28e-03    7.7e-04            +2.86e-03    7.0e-04           +3.71e-03
+  +0.700       3.85e-03     1.4005            +3.65e-03    8.1e-04            +3.26e-03    7.3e-04           +3.75e-03
+  +0.800       3.95e-03     1.4484            +3.80e-03    8.1e-04            +3.54e-03    7.4e-04           +3.61e-03
+  +0.900       3.87e-03     1.4565            +3.78e-03    8.0e-04            +3.55e-03    7.4e-04           +3.43e-03
+  +1.000       3.66e-03     1.4328            +3.60e-03    7.8e-04            +3.55e-03    7.6e-04           +3.14e-03
+  +1.100       3.36e-03     1.3849            +3.33e-03    7.4e-04            +3.20e-03    7.5e-04           +2.84e-03
+  +1.200       3.01e-03     1.3195            +2.99e-03    7.0e-04            +2.68e-03    6.9e-04           +1.94e-03
+  +1.300       2.64e-03     1.2421            +2.62e-03    6.6e-04            +2.16e-03    6.5e-04           +1.64e-03
+  +1.400       2.27e-03     1.1569            +2.24e-03    6.1e-04            +1.71e-03    6.1e-04           +1.32e-03
+  +1.500       1.93e-03     1.0675            +1.88e-03    5.6e-04            +1.03e-03    5.9e-04           +9.39e-04
+[probe] grid minimiser of population_D2                   : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of finite_sample_oracle_gap_select : 1 tied point(s) at r in ['+0.100'], representation bias 0.0505 to 0.0505; operational r +0.100, success=True
+[probe] grid minimiser of common_gap_select               : 2 tied point(s) at r in ['+0.000', '+0.200'], representation bias 0.3122 to 0.3910; operational r +0.000, success=False
+[probe] learner ds20260916 os0: 1 learnable parameter, r_init +0.000 -> r_hat +0.01999, val objective 0.00e+00, population D2 1.66e-04, |tau_Z-1| 0.2386, restart 0
+[probe] learner ds20260916 os1: 1 learnable parameter, r_init +0.000 -> r_hat +0.09140, val objective 0.00e+00, population D2 1.14e-06, |tau_Z-1| 0.0200, restart 1
+[probe] learner ds20260916 os2: 1 learnable parameter, r_init +0.000 -> r_hat +0.00364, val objective 0.00e+00, population D2 2.62e-04, |tau_Z-1| 0.2988, restart 0
+[probe] learner ds20260916 os3: 1 learnable parameter, r_init +0.000 -> r_hat +0.03482, val objective 0.00e+00, population D2 9.87e-05, |tau_Z-1| 0.1843, restart 1
+[probe] learner ds20260916 os4: 1 learnable parameter, r_init +0.000 -> r_hat +0.00924, val objective 0.00e+00, population D2 2.27e-04, |tau_Z-1| 0.2782, restart 0
+
+[probe] representation bias by what selected r, over 5 dataset(s)
+                           selected by  median bias     min     max      tied minima  picks near the root
+                  population objective       0.0505  0.0505  0.0505  [1, 1, 1, 1, 1]                  5/5
+     finite sample, true probabilities       0.0505  0.0505  0.0505  [1, 2, 1, 1, 1]                  5/5
+  finite sample, common fitted critics       0.3122  0.0505  0.3910  [1, 1, 1, 2, 2]                  1/5
+           the one-parameter optimizer       0.2158  0.0200  0.3097              n/a                 2/25
+
+[probe] finite-candidate empirical regret over grid union learned r_hat: median select 0.000168541, median untouched-audit 0; these are not global encoder optimisation bounds
+[probe] written to ../results/dgp_f_coefficient_probe_manuscript_r11.json

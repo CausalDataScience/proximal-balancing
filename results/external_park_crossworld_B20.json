@@ -1,0 +1,861 @@
+{
+ "provenance": {
+  "script": "code/external_park_crossworld.py",
+  "registration": "memo/2026-08-19-rerun-registration-v5-external.md",
+  "registration_sha256": "3f7fa8eb550c3e4df076ed4e1eda85cb826bd8db0b2c97b9028c6792867ec6eb",
+  "seed_base": 2026081908,
+  "d": 20,
+  "n": 2000,
+  "reps": 20,
+  "steps": 120,
+  "strata": 5,
+  "park_estimator": "linear bridge GMM, Result 3 of arXiv:2302.06054",
+  "amendment_sha256": "07afaa9863bcdb5158037b8d8fa2c326a6bbf0c8dd6289fe2faa7fefb355bd60"
+ },
+ "park": {
+  "aggregates": {
+   "park": {
+    "mean_abs_bias": 0.03155047070710128,
+    "rmse": 0.039403431438500884
+   },
+   "joint": {
+    "mean_abs_bias": 0.10124120652837261,
+    "rmse": 0.13616623389041663
+   },
+   "constrained": {
+    "mean_abs_bias": 0.09522943832533226,
+    "rmse": 0.1332515382643147
+   },
+   "x_only": {
+    "mean_abs_bias": 0.3025615685842514,
+    "rmse": 0.3329491724456096
+   }
+  },
+  "wilcoxon_constrained_beats_park_p": 0.9923439025878906,
+  "wilcoxon_park_beats_constrained_p": 0.0085906982421875
+ },
+ "ours": {
+  "aggregates": {
+   "park": {
+    "mean_abs_bias": 0.3708494938698299,
+    "rmse": 0.12921224094891556
+   },
+   "joint": {
+    "mean_abs_bias": 0.714773029592779,
+    "rmse": 0.7628682788059745
+   },
+   "constrained": {
+    "mean_abs_bias": 0.5844521222087972,
+    "rmse": 0.627502908673266
+   },
+   "x_only": {
+    "mean_abs_bias": 1.131552068347459,
+    "rmse": 1.140228068142881
+   }
+  },
+  "wilcoxon_constrained_beats_park_p": 0.9993953704833984,
+  "wilcoxon_park_beats_constrained_p": 0.0007162094116210938
+ },
+ "runs": [
+  {
+   "world": "park",
+   "rep": 0,
+   "park": {
+    "ett_error": -0.03238512451072806,
+    "oracle_error": -0.03238512451072806
+   },
+   "x_only": {
+    "ett_error": 0.29193589843070145,
+    "oracle_error": 0.29193589843070145
+   },
+   "joint": {
+    "ett_error": 0.03269547936176154,
+    "oracle_error": 0.03269547936176154
+   },
+   "constrained": {
+    "ett_error": 0.013266599861077921,
+    "oracle_error": 0.013266599861077921
+   }
+  },
+  {
+   "world": "park",
+   "rep": 1,
+   "park": {
+    "ett_error": 0.012341618385426578,
+    "oracle_error": 0.012341618385426578
+   },
+   "x_only": {
+    "ett_error": 0.4120873581250917,
+    "oracle_error": 0.4120873581250917
+   },
+   "joint": {
+    "ett_error": 0.29716494335925825,
+    "oracle_error": 0.29716494335925825
+   },
+   "constrained": {
+    "ett_error": 0.04156094355984097,
+    "oracle_error": 0.04156094355984097
+   }
+  },
+  {
+   "world": "park",
+   "rep": 2,
+   "park": {
+    "ett_error": -0.03347527317179089,
+    "oracle_error": -0.03347527317179089
+   },
+   "x_only": {
+    "ett_error": 0.13677184127679531,
+    "oracle_error": 0.13677184127679531
+   },
+   "joint": {
+    "ett_error": -0.02701301357968,
+    "oracle_error": -0.02701301357968
+   },
+   "constrained": {
+    "ett_error": -0.0020732747206092528,
+    "oracle_error": -0.0020732747206092528
+   }
+  },
+  {
+   "world": "park",
+   "rep": 3,
+   "park": {
+    "ett_error": 0.04764708620849101,
+    "oracle_error": 0.04764708620849101
+   },
+   "x_only": {
+    "ett_error": 0.15998880817689876,
+    "oracle_error": 0.15998880817689876
+   },
+   "joint": {
+    "ett_error": -0.05375496951275349,
+    "oracle_error": -0.05375496951275349
+   },
+   "constrained": {
+    "ett_error": -0.03299196861237108,
+    "oracle_error": -0.03299196861237108
+   }
+  },
+  {
+   "world": "park",
+   "rep": 4,
+   "park": {
+    "ett_error": -0.019666593365280094,
+    "oracle_error": -0.019666593365280094
+   },
+   "x_only": {
+    "ett_error": 0.30547931546257523,
+    "oracle_error": 0.30547931546257523
+   },
+   "joint": {
+    "ett_error": 0.056688460569045196,
+    "oracle_error": 0.056688460569045196
+   },
+   "constrained": {
+    "ett_error": -0.01447725405644762,
+    "oracle_error": -0.01447725405644762
+   }
+  },
+  {
+   "world": "park",
+   "rep": 5,
+   "park": {
+    "ett_error": 0.0033806046654467625,
+    "oracle_error": 0.0033806046654467625
+   },
+   "x_only": {
+    "ett_error": 0.42856924452197775,
+    "oracle_error": 0.42856924452197775
+   },
+   "joint": {
+    "ett_error": 0.22043660402621157,
+    "oracle_error": 0.22043660402621157
+   },
+   "constrained": {
+    "ett_error": 0.12600127382897952,
+    "oracle_error": 0.12600127382897952
+   }
+  },
+  {
+   "world": "park",
+   "rep": 6,
+   "park": {
+    "ett_error": 0.05449085296076328,
+    "oracle_error": 0.05449085296076328
+   },
+   "x_only": {
+    "ett_error": 0.5226367441132338,
+    "oracle_error": 0.5226367441132338
+   },
+   "joint": {
+    "ett_error": 0.09424525304843634,
+    "oracle_error": 0.09424525304843634
+   },
+   "constrained": {
+    "ett_error": 0.3132812156404561,
+    "oracle_error": 0.3132812156404561
+   }
+  },
+  {
+   "world": "park",
+   "rep": 7,
+   "park": {
+    "ett_error": -0.02354041903730497,
+    "oracle_error": -0.02354041903730497
+   },
+   "x_only": {
+    "ett_error": 0.05480766825675243,
+    "oracle_error": 0.05480766825675243
+   },
+   "joint": {
+    "ett_error": -0.15702626918507845,
+    "oracle_error": -0.15702626918507845
+   },
+   "constrained": {
+    "ett_error": -0.19678964571390445,
+    "oracle_error": -0.19678964571390445
+   }
+  },
+  {
+   "world": "park",
+   "rep": 8,
+   "park": {
+    "ett_error": 0.04959556043119662,
+    "oracle_error": 0.04959556043119662
+   },
+   "x_only": {
+    "ett_error": 0.2142665616752666,
+    "oracle_error": 0.2142665616752666
+   },
+   "joint": {
+    "ett_error": 0.05699492840154585,
+    "oracle_error": 0.05699492840154585
+   },
+   "constrained": {
+    "ett_error": 0.12605365965635862,
+    "oracle_error": 0.12605365965635862
+   }
+  },
+  {
+   "world": "park",
+   "rep": 9,
+   "park": {
+    "ett_error": -0.009271441273009828,
+    "oracle_error": -0.009271441273009828
+   },
+   "x_only": {
+    "ett_error": 0.3156694374316693,
+    "oracle_error": 0.3156694374316693
+   },
+   "joint": {
+    "ett_error": 0.03627182618184621,
+    "oracle_error": 0.03627182618184621
+   },
+   "constrained": {
+    "ett_error": 0.10526692844789443,
+    "oracle_error": 0.10526692844789443
+   }
+  },
+  {
+   "world": "park",
+   "rep": 10,
+   "park": {
+    "ett_error": 0.07499737660038419,
+    "oracle_error": 0.07499737660038419
+   },
+   "x_only": {
+    "ett_error": 0.5872789548792141,
+    "oracle_error": 0.5872789548792141
+   },
+   "joint": {
+    "ett_error": 0.32584421494647153,
+    "oracle_error": 0.32584421494647153
+   },
+   "constrained": {
+    "ett_error": 0.31658619956032963,
+    "oracle_error": 0.31658619956032963
+   }
+  },
+  {
+   "world": "park",
+   "rep": 11,
+   "park": {
+    "ett_error": 0.003305926402684234,
+    "oracle_error": 0.003305926402684234
+   },
+   "x_only": {
+    "ett_error": 0.19639747019611886,
+    "oracle_error": 0.19639747019611886
+   },
+   "joint": {
+    "ett_error": 0.026933322135023197,
+    "oracle_error": 0.026933322135023197
+   },
+   "constrained": {
+    "ett_error": -0.07910969097218334,
+    "oracle_error": -0.07910969097218334
+   }
+  },
+  {
+   "world": "park",
+   "rep": 12,
+   "park": {
+    "ett_error": 0.013306267491183021,
+    "oracle_error": 0.013306267491183021
+   },
+   "x_only": {
+    "ett_error": 0.31261603510482994,
+    "oracle_error": 0.31261603510482994
+   },
+   "joint": {
+    "ett_error": 0.17999806268163132,
+    "oracle_error": 0.17999806268163132
+   },
+   "constrained": {
+    "ett_error": 0.04174270092549892,
+    "oracle_error": 0.04174270092549892
+   }
+  },
+  {
+   "world": "park",
+   "rep": 13,
+   "park": {
+    "ett_error": 0.0077197958079424644,
+    "oracle_error": 0.0077197958079424644
+   },
+   "x_only": {
+    "ett_error": 0.49028610322266153,
+    "oracle_error": 0.49028610322266153
+   },
+   "joint": {
+    "ett_error": 0.07173418082430083,
+    "oracle_error": 0.07173418082430083
+   },
+   "constrained": {
+    "ett_error": -0.006709779203629029,
+    "oracle_error": -0.006709779203629029
+   }
+  },
+  {
+   "world": "park",
+   "rep": 14,
+   "park": {
+    "ett_error": -0.05983800513694015,
+    "oracle_error": -0.05983800513694015
+   },
+   "x_only": {
+    "ett_error": 0.3056144806576395,
+    "oracle_error": 0.3056144806576395
+   },
+   "joint": {
+    "ett_error": 0.006653267123051032,
+    "oracle_error": 0.006653267123051032
+   },
+   "constrained": {
+    "ett_error": 0.03054150862539684,
+    "oracle_error": 0.03054150862539684
+   }
+  },
+  {
+   "world": "park",
+   "rep": 15,
+   "park": {
+    "ett_error": 0.07857882636498781,
+    "oracle_error": 0.07857882636498781
+   },
+   "x_only": {
+    "ett_error": 0.1797699483800248,
+    "oracle_error": 0.1797699483800248
+   },
+   "joint": {
+    "ett_error": -0.011234772785812086,
+    "oracle_error": -0.011234772785812086
+   },
+   "constrained": {
+    "ett_error": -0.056332812859428594,
+    "oracle_error": -0.056332812859428594
+   }
+  },
+  {
+   "world": "park",
+   "rep": 16,
+   "park": {
+    "ett_error": -0.017425675099587368,
+    "oracle_error": -0.017425675099587368
+   },
+   "x_only": {
+    "ett_error": 0.2624202487591143,
+    "oracle_error": 0.2624202487591143
+   },
+   "joint": {
+    "ett_error": 0.015294304416808346,
+    "oracle_error": 0.015294304416808346
+   },
+   "constrained": {
+    "ett_error": 0.08344066319094678,
+    "oracle_error": 0.08344066319094678
+   }
+  },
+  {
+   "world": "park",
+   "rep": 17,
+   "park": {
+    "ett_error": 0.01756936209797022,
+    "oracle_error": 0.01756936209797022
+   },
+   "x_only": {
+    "ett_error": 0.4177977786941198,
+    "oracle_error": 0.4177977786941198
+   },
+   "joint": {
+    "ett_error": 0.09343002844607495,
+    "oracle_error": 0.09343002844607495
+   },
+   "constrained": {
+    "ett_error": 0.20003513483043256,
+    "oracle_error": 0.20003513483043256
+   }
+  },
+  {
+   "world": "park",
+   "rep": 18,
+   "park": {
+    "ett_error": 0.05997933600275429,
+    "oracle_error": 0.05997933600275429
+   },
+   "x_only": {
+    "ett_error": 0.33794741790666216,
+    "oracle_error": 0.33794741790666216
+   },
+   "joint": {
+    "ett_error": 0.14003323340120177,
+    "oracle_error": 0.14003323340120177
+   },
+   "constrained": {
+    "ett_error": 0.005128537858765991,
+    "oracle_error": 0.005128537858765991
+   }
+  },
+  {
+   "world": "park",
+   "rep": 19,
+   "park": {
+    "ett_error": -0.012494269128153768,
+    "oracle_error": -0.012494269128153768
+   },
+   "x_only": {
+    "ett_error": 0.11889005641367922,
+    "oracle_error": 0.11889005641367922
+   },
+   "joint": {
+    "ett_error": -0.12137699658146006,
+    "oracle_error": -0.12137699658146006
+   },
+   "constrained": {
+    "ett_error": -0.1131989743820937,
+    "oracle_error": -0.1131989743820937
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 0,
+   "park": {
+    "ett_error": 0.04992752716432802,
+    "oracle_error": 0.37088209199977173
+   },
+   "x_only": {
+    "ett_error": 0.8955105480227716,
+    "oracle_error": 0.9691958878283464
+   },
+   "joint": {
+    "ett_error": 0.34629480085073694,
+    "oracle_error": 0.42981272049026753
+   },
+   "constrained": {
+    "ett_error": 0.22636288756625644,
+    "oracle_error": 0.3192071985097962
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 1,
+   "park": {
+    "ett_error": 0.015048352737588644,
+    "oracle_error": 0.25309727166463936
+   },
+   "x_only": {
+    "ett_error": 1.098980535860874,
+    "oracle_error": 1.1041528453392706
+   },
+   "joint": {
+    "ett_error": 0.6285648176365344,
+    "oracle_error": 0.6655819046943781
+   },
+   "constrained": {
+    "ett_error": 0.7034102740980783,
+    "oracle_error": 0.743027258991033
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 2,
+   "park": {
+    "ett_error": 0.04086449289241045,
+    "oracle_error": 0.42738599309398007
+   },
+   "x_only": {
+    "ett_error": 1.0741083989157305,
+    "oracle_error": 1.1425886188731513
+   },
+   "joint": {
+    "ett_error": 0.8649755211071541,
+    "oracle_error": 0.9708987819956281
+   },
+   "constrained": {
+    "ett_error": 0.6432751576145797,
+    "oracle_error": 0.7505615030967618
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 3,
+   "park": {
+    "ett_error": 0.12801452566397353,
+    "oracle_error": 0.4103865717847648
+   },
+   "x_only": {
+    "ett_error": 0.95401993735119,
+    "oracle_error": 0.961107907283234
+   },
+   "joint": {
+    "ett_error": 0.5750054900706949,
+    "oracle_error": 0.566646665416555
+   },
+   "constrained": {
+    "ett_error": 0.42299579642246377,
+    "oracle_error": 0.4319367103614631
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 4,
+   "park": {
+    "ett_error": 0.051404554601922836,
+    "oracle_error": 0.368103408706393
+   },
+   "x_only": {
+    "ett_error": 1.5956294826203026,
+    "oracle_error": 1.521032382011135
+   },
+   "joint": {
+    "ett_error": 1.2192364596574725,
+    "oracle_error": 1.1367430554611526
+   },
+   "constrained": {
+    "ett_error": 0.897715110865982,
+    "oracle_error": 0.7561657956504297
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 5,
+   "park": {
+    "ett_error": 0.12644063949325512,
+    "oracle_error": 0.5160129618406231
+   },
+   "x_only": {
+    "ett_error": 1.2207358863314228,
+    "oracle_error": 1.3961706802192282
+   },
+   "joint": {
+    "ett_error": 0.8431876381592713,
+    "oracle_error": 0.9929435604936043
+   },
+   "constrained": {
+    "ett_error": 0.4135900115389246,
+    "oracle_error": 0.5126237352456222
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 6,
+   "park": {
+    "ett_error": 0.07404699658716085,
+    "oracle_error": 0.3622038106487324
+   },
+   "x_only": {
+    "ett_error": 1.2993068556477945,
+    "oracle_error": 1.3034548841146307
+   },
+   "joint": {
+    "ett_error": 0.6781459487079116,
+    "oracle_error": 0.642029904523036
+   },
+   "constrained": {
+    "ett_error": 1.0156932250905228,
+    "oracle_error": 0.9939576280804052
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 7,
+   "park": {
+    "ett_error": 0.155334017437176,
+    "oracle_error": 0.3682214538205515
+   },
+   "x_only": {
+    "ett_error": 1.067955361585685,
+    "oracle_error": 1.0137494181583873
+   },
+   "joint": {
+    "ett_error": 0.764454991886701,
+    "oracle_error": 0.7192195403480102
+   },
+   "constrained": {
+    "ett_error": 0.6067850085146249,
+    "oracle_error": 0.5420276156472326
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 8,
+   "park": {
+    "ett_error": 0.1101054575245699,
+    "oracle_error": 0.3925678204108307
+   },
+   "x_only": {
+    "ett_error": 0.9364572640040536,
+    "oracle_error": 0.9135466487409305
+   },
+   "joint": {
+    "ett_error": 0.3648213754579648,
+    "oracle_error": 0.32970355714263944
+   },
+   "constrained": {
+    "ett_error": 0.19223155794550184,
+    "oracle_error": 0.14387338401505145
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 9,
+   "park": {
+    "ett_error": 0.07361581889080204,
+    "oracle_error": 0.411346053476888
+   },
+   "x_only": {
+    "ett_error": 1.5083255711568149,
+    "oracle_error": 1.5290307103992213
+   },
+   "joint": {
+    "ett_error": 0.5506690859394054,
+    "oracle_error": 0.594046254946011
+   },
+   "constrained": {
+    "ett_error": 0.9281299886727736,
+    "oracle_error": 0.9470735345785302
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 10,
+   "park": {
+    "ett_error": -0.17029607577605188,
+    "oracle_error": 0.2598010914175175
+   },
+   "x_only": {
+    "ett_error": 1.1811589454582512,
+    "oracle_error": 1.2535047487373636
+   },
+   "joint": {
+    "ett_error": 1.4491860238647738,
+    "oracle_error": 1.4794535281120993
+   },
+   "constrained": {
+    "ett_error": 0.7533453846507163,
+    "oracle_error": 0.8051036735154746
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 11,
+   "park": {
+    "ett_error": 0.21567206786661774,
+    "oracle_error": 0.3412127714516793
+   },
+   "x_only": {
+    "ett_error": 1.057833820144403,
+    "oracle_error": 0.9859272367774896
+   },
+   "joint": {
+    "ett_error": 0.36496460800631914,
+    "oracle_error": 0.25356100125723025
+   },
+   "constrained": {
+    "ett_error": 0.39889921356259883,
+    "oracle_error": 0.3175350029181805
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 12,
+   "park": {
+    "ett_error": 0.14625202604608512,
+    "oracle_error": 0.47033672790288783
+   },
+   "x_only": {
+    "ett_error": 1.3495181060539778,
+    "oracle_error": 1.424652331170977
+   },
+   "joint": {
+    "ett_error": 0.702026854920802,
+    "oracle_error": 0.7027192982454336
+   },
+   "constrained": {
+    "ett_error": 0.7884801394337857,
+    "oracle_error": 0.7984782596904456
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 13,
+   "park": {
+    "ett_error": 0.020220938935326727,
+    "oracle_error": 0.3100496492240188
+   },
+   "x_only": {
+    "ett_error": 1.5061387329362752,
+    "oracle_error": 1.432724104004615
+   },
+   "joint": {
+    "ett_error": 0.8797724625385595,
+    "oracle_error": 0.803756410149334
+   },
+   "constrained": {
+    "ett_error": 0.5585860770068432,
+    "oracle_error": 0.49756936817784925
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 14,
+   "park": {
+    "ett_error": 0.29665557253029373,
+    "oracle_error": 0.38730042910219353
+   },
+   "x_only": {
+    "ett_error": 1.2378830550330528,
+    "oracle_error": 1.108385997035445
+   },
+   "joint": {
+    "ett_error": 1.102507447617604,
+    "oracle_error": 0.9845153212847175
+   },
+   "constrained": {
+    "ett_error": 0.8349474962320855,
+    "oracle_error": 0.6804505976486721
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 15,
+   "park": {
+    "ett_error": -0.08504567777123218,
+    "oracle_error": 0.26929183168170834
+   },
+   "x_only": {
+    "ett_error": 0.9336717576732836,
+    "oracle_error": 1.0609229185382958
+   },
+   "joint": {
+    "ett_error": 0.8015785793776535,
+    "oracle_error": 0.9383247760373179
+   },
+   "constrained": {
+    "ett_error": 0.3170506995862872,
+    "oracle_error": 0.4347025064634531
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 16,
+   "park": {
+    "ett_error": -0.01166576762944782,
+    "oracle_error": 0.29593895237894285
+   },
+   "x_only": {
+    "ett_error": 0.8463495342210785,
+    "oracle_error": 0.8734450965455172
+   },
+   "joint": {
+    "ett_error": 0.5025934074459968,
+    "oracle_error": 0.5701524494399495
+   },
+   "constrained": {
+    "ett_error": 0.33529234136086705,
+    "oracle_error": 0.3631266764684493
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 17,
+   "park": {
+    "ett_error": 0.09170982963817176,
+    "oracle_error": 0.3033245380392606
+   },
+   "x_only": {
+    "ett_error": 0.5907355513508998,
+    "oracle_error": 0.6305265167155216
+   },
+   "joint": {
+    "ett_error": 0.32008383811894014,
+    "oracle_error": 0.2753487430650572
+   },
+   "constrained": {
+    "ett_error": 0.2629430642155264,
+    "oracle_error": 0.25242694911357244
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 18,
+   "park": {
+    "ett_error": 0.1866404863580613,
+    "oracle_error": 0.4912125684320392
+   },
+   "x_only": {
+    "ett_error": 0.7344401235436324,
+    "oracle_error": 0.848261109241025
+   },
+   "joint": {
+    "ett_error": 0.2235993282681732,
+    "oracle_error": 0.37824265578234484
+   },
+   "constrained": {
+    "ett_error": 0.5243807886766616,
+    "oracle_error": 0.6546107063679911
+   }
+  },
+  {
+   "world": "ours",
+   "rep": 19,
+   "park": {
+    "ett_error": 0.10687826273788947,
+    "oracle_error": 0.4083138803191757
+   },
+   "x_only": {
+    "ett_error": 1.1398720859178355,
+    "oracle_error": 1.1586613252153857
+   },
+   "joint": {
+    "ett_error": 0.7772664396233109,
+    "oracle_error": 0.8617604629708155
+   },
+   "constrained": {
+    "ett_error": 0.7394135853618555,
+    "oracle_error": 0.7445843396355274
+   }
+  }
+ ]
+}

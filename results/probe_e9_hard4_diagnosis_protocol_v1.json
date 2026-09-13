@@ -1,0 +1,56 @@
+{
+  "protocol_id": "e9-hard4-component-ablation-v1",
+  "frozen_at_runtime_utc": "2026-09-13T03:17:43Z",
+  "plan_path": "memo/2026-09-12-e9-hard4-root-cause-fix-plan.md",
+  "plan_sha256": "b4f0f30370c19c4b379adf3912837ae4f11ce08a72c893e4d84a9af7adca69dd",
+  "question": "separate D/S ensemble reuse from N/E cross-fitting at fixed total n=6000",
+  "total_n": 6000,
+  "fold_n": 1500,
+  "spec": {
+    "name": "scm1_noise_10",
+    "treatment_i": 2.5,
+    "proxy_sd": 0.85,
+    "outcome_u": 2.5,
+    "bad_i": -0.6,
+    "effect_u": 0.0,
+    "observation": "linear",
+    "treatment_link": "probit",
+    "outcome_noise": "standard"
+  },
+  "run": {
+    "phase": "paired_old_seed_diagnosis",
+    "replicates": 20,
+    "seed_start": 9100000,
+    "arms": ["H11", "H12", "H21", "H22"],
+    "candidate_count": 30,
+    "r_grid": [-1.0, 1.0, 101],
+    "screen_t": 3.5,
+    "bootstrap_draws": 5000
+  },
+  "reference_results": {
+    "hard4": {
+      "path": "results/probe_e9_scm1_noise_10_hard4.json",
+      "sha256": "d4e80740bbd4b8bb726677e6be7c3716faffb138e2252de74549a7a99c537700"
+    },
+    "rotate4": {
+      "path": "results/probe_e9_scm1_noise_10_rotate4.json",
+      "sha256": "4147b0c147cfdd48af2dfd06fba69a6398e067d9d196a793fbe026934a727ab2"
+    }
+  },
+  "source_sha256": {
+    "probe_structured_scm.py": "50f5f8c6e7c3aed813bd0adf42461d1f11dbe49e747b04bd57c1d4dba9a1b6dd",
+    "run_e9_component_ablation.py": "fc0b5e1a5851bbacaee88984d5b44945ded0a04f2894f62cd2eb8e6708a06f0e",
+    "test_probe_structured_scm.py": "f1a52bebca29c7d6bda1ffd531a2cddf4051ea29bdf0caa7ec9470452b06c232",
+    "e8_population.py": "e19edbc14d4d8a301dd784426e55981309f18090bcc4cc1d33ca3deaff6df461"
+  },
+  "frozen_empirical_benchmark_gates": {
+    "mae_at_most": 0.05,
+    "p90_at_most": 0.10,
+    "unique_return_rate_at_least": 0.95,
+    "paired_x_upper_below": 0.0,
+    "paired_raw_upper_below": 0.0,
+    "oracle_excess_upper_at_most": 0.05
+  },
+  "inference_unit": "independent base data seed; folds, rotations and optimizer calls are not replicates",
+  "claim_boundary": "paired operational component diagnosis; not a joint 95% population certificate and not the manuscript one-shot conditional theorem"
+}

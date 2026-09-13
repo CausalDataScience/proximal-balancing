@@ -1,0 +1,116 @@
+{
+ "gates": {
+  "return_rate_min": 0.95,
+  "aggregate_mae_max": 0.05,
+  "aggregate_p90_abs_error_max": 0.1,
+  "paired_abs_error_ci_upper_vs_X": 0.0,
+  "paired_abs_error_ci_upper_vs_raw_XW": 0.0,
+  "paired_oracle_excess_ci_upper": 0.05,
+  "ci": "paired replicate absolute-error t95, no multiplicity"
+ },
+ "settings": {
+  "SCM-1": {
+   "source": "results/probe_e10_g1_low_noise_noise10.json",
+   "mae": 0.03478529292113471,
+   "p90": 0.06279519437808555,
+   "return_rate": 1.0,
+   "paired_upper_vs_X": -0.8953639883471587,
+   "paired_upper_vs_raw_XW": -0.12816574878817186,
+   "oracle_excess_upper": 0.015889651324716876,
+   "baseline_mae": {
+    "X": 0.9646528358746759,
+    "naive": 1.1838581505010324,
+    "oracle": 0.025828388736701534,
+    "raw_XW": 0.18483770728232587
+   },
+   "checks": {
+    "mae": true,
+    "p90": true,
+    "return_rate": true,
+    "beats_X": true,
+    "beats_raw_XW": true,
+    "oracle_excess": true
+   },
+   "all_gates_pass": true,
+   "mae_at_outcome_noise_0.3": 0.02801829484000329
+  },
+  "SCM-3": {
+   "source": "results/probe_e10_g3_heterogeneous_low_noise_noise10.json",
+   "mae": 0.035183075533944695,
+   "p90": 0.060609903739175595,
+   "return_rate": 1.0,
+   "paired_upper_vs_X": -0.912211543260891,
+   "paired_upper_vs_raw_XW": -0.13077294567050532,
+   "oracle_excess_upper": 0.016836141970760797,
+   "baseline_mae": {
+    "X": 0.9826984908447857,
+    "naive": 1.2098281012459378,
+    "oracle": 0.02578750253367615,
+    "raw_XW": 0.18830311899001811
+   },
+   "checks": {
+    "mae": true,
+    "p90": true,
+    "return_rate": true,
+    "beats_X": true,
+    "beats_raw_XW": true,
+    "oracle_excess": true
+   },
+   "all_gates_pass": true,
+   "mae_at_outcome_noise_0.3": 0.029402536021441623
+  },
+  "SCM-4": {
+   "source": "results/probe_e10_g4_proxy_heteroscedastic_low_noise_noise10.json",
+   "mae": 0.03635380755462579,
+   "p90": 0.05569327675622299,
+   "return_rate": 1.0,
+   "paired_upper_vs_X": -0.894312367789291,
+   "paired_upper_vs_raw_XW": -0.14095678920988106,
+   "oracle_excess_upper": 0.01864917283058891,
+   "baseline_mae": {
+    "X": 0.9646528358746759,
+    "naive": 1.1838581505010324,
+    "oracle": 0.025828388736701534,
+    "raw_XW": 0.19895846323726488
+   },
+   "checks": {
+    "mae": true,
+    "p90": true,
+    "return_rate": true,
+    "beats_X": true,
+    "beats_raw_XW": true,
+    "oracle_excess": true
+   },
+   "all_gates_pass": true,
+   "mae_at_outcome_noise_0.3": 0.02978453523614824
+  },
+  "SCM-5": {
+   "source": "results/probe_e10_g5_sinh_low_noise_noise10.json",
+   "mae": 0.03665807612037021,
+   "p90": 0.061615840086522315,
+   "return_rate": 1.0,
+   "paired_upper_vs_X": -0.8933091232075626,
+   "paired_upper_vs_raw_XW": -0.12510800828784396,
+   "oracle_excess_upper": 0.017451578960371073,
+   "baseline_mae": {
+    "X": 0.9646528358746759,
+    "naive": 1.1838581505010324,
+    "oracle": 0.025828388736701534,
+    "raw_XW": 0.18398424099552335
+   },
+   "checks": {
+    "mae": true,
+    "p90": true,
+    "return_rate": true,
+    "beats_X": true,
+    "beats_raw_XW": true,
+    "oracle_excess": true
+   },
+   "all_gates_pass": true,
+   "mae_at_outcome_noise_0.3": 0.028479927306716946
+  }
+ },
+ "overall": "PASS_4_OF_4",
+ "reading": "at the original outcome noise SD of 1.0 the family still clears every frozen gate, so the low-noise variant was a convenience rather than a requirement",
+ "claim_boundary": "20-seed empirical benchmark with the restricted parametric Brier learner and the operational rotate-four regime; not a certification of the manuscript's one-shot theorem, which covers a single fixed D and N with an independent E"
+}

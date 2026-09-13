@@ -1,0 +1,38 @@
+design F staged study | linear encoder, Z in R^3 | propensity bound (0.05, 0.95) | training mode manuscript | run r10s4M | code 8aabe48f34420fce
+[stage 4] ds0 n_rep=  3000 (1500 train rows) os0: audit gap +0.00656, pop D2 5.9e-03, |tau_Z-1| 0.5101, |theta-tau_Z| 0.0229, |theta-1| 0.4872 (raw 0.3877)
+[stage 4] ds0 n_rep=  3000 (1500 train rows) os1: audit gap +0.00480, pop D2 6.7e-03, |tau_Z-1| 0.6275, |theta-tau_Z| 0.0145, |theta-1| 0.6420 (raw 0.3877)
+[stage 4] ds0 n_rep=  3000 (1500 train rows) os2: audit gap +0.00323, pop D2 3.7e-03, |tau_Z-1| 0.0051, |theta-tau_Z| 0.0761, |theta-1| 0.0709 (raw 0.3877)
+[stage 4] ds0 n_rep= 12000 (6000 train rows) os0: audit gap +0.00025, pop D2 5.7e-04, |tau_Z-1| 0.1786, |theta-tau_Z| 0.0193, |theta-1| 0.1592 (raw 0.3877)
+[stage 4] ds0 n_rep= 12000 (6000 train rows) os1: audit gap -0.00001, pop D2 5.2e-04, |tau_Z-1| 0.2899, |theta-tau_Z| 0.0058, |theta-1| 0.2841 (raw 0.3877)
+[stage 4] ds0 n_rep= 12000 (6000 train rows) os2: audit gap -0.00015, pop D2 2.9e-04, |tau_Z-1| 0.2209, |theta-tau_Z| 0.0019, |theta-1| 0.2228 (raw 0.3877)
+[stage 4] ds0 n_rep= 48000 (24000 train rows) os0: audit gap -0.00005, pop D2 1.7e-05, |tau_Z-1| 0.0633, |theta-tau_Z| 0.0155, |theta-1| 0.0477 (raw 0.3877)
+[stage 4] ds0 n_rep= 48000 (24000 train rows) os1: audit gap -0.00023, pop D2 1.1e-04, |tau_Z-1| 0.1145, |theta-tau_Z| 0.0126, |theta-1| 0.1271 (raw 0.3877)
+[stage 4] ds0 n_rep= 48000 (24000 train rows) os2: audit gap -0.00024, pop D2 2.7e-04, |tau_Z-1| 0.2419, |theta-tau_Z| 0.0000, |theta-1| 0.2419 (raw 0.3877)
+[stage 4] ds1 n_rep=  3000 (1500 train rows) os0: audit gap +0.00118, pop D2 1.6e-03, |tau_Z-1| 0.6365, |theta-tau_Z| 0.0520, |theta-1| 0.6885 (raw 0.3459)
+[stage 4] ds1 n_rep=  3000 (1500 train rows) os1: audit gap +0.00818, pop D2 1.0e-02, |tau_Z-1| 1.6946, |theta-tau_Z| 0.0013, |theta-1| 1.6960 (raw 0.3459)
+[stage 4] ds1 n_rep=  3000 (1500 train rows) os2: audit gap +0.00298, pop D2 5.4e-03, |tau_Z-1| 0.1492, |theta-tau_Z| 0.0017, |theta-1| 0.1476 (raw 0.3459)
+[stage 4] ds1 n_rep= 12000 (6000 train rows) os0: audit gap +0.00090, pop D2 7.8e-04, |tau_Z-1| 0.0882, |theta-tau_Z| 0.0156, |theta-1| 0.0726 (raw 0.3459)
+[stage 4] ds1 n_rep= 12000 (6000 train rows) os1: audit gap +0.00021, pop D2 8.0e-04, |tau_Z-1| 0.5226, |theta-tau_Z| 0.0017, |theta-1| 0.5243 (raw 0.3459)
+[stage 4] ds1 n_rep= 12000 (6000 train rows) os2: audit gap +0.00037, pop D2 6.9e-04, |tau_Z-1| 0.2784, |theta-tau_Z| 0.0120, |theta-1| 0.2905 (raw 0.3459)
+[stage 4] ds1 n_rep= 48000 (24000 train rows) os0: audit gap +0.00001, pop D2 7.5e-05, |tau_Z-1| 0.0906, |theta-tau_Z| 0.0198, |theta-1| 0.1104 (raw 0.3459)
+[stage 4] ds1 n_rep= 48000 (24000 train rows) os1: audit gap +0.00023, pop D2 8.3e-05, |tau_Z-1| 0.0867, |theta-tau_Z| 0.0122, |theta-1| 0.0989 (raw 0.3459)
+[stage 4] ds1 n_rep= 48000 (24000 train rows) os2: audit gap +0.00088, pop D2 8.8e-04, |tau_Z-1| 0.1649, |theta-tau_Z| 0.0005, |theta-1| 0.1644 (raw 0.3459)
+[stage 4] ds2 n_rep=  3000 (1500 train rows) os0: audit gap +0.00699, pop D2 8.8e-03, |tau_Z-1| 0.7191, |theta-tau_Z| 0.0066, |theta-1| 0.7257 (raw 0.3992)
+[stage 4] ds2 n_rep=  3000 (1500 train rows) os1: audit gap +0.00386, pop D2 7.0e-03, |tau_Z-1| 1.6475, |theta-tau_Z| 0.0111, |theta-1| 1.6586 (raw 0.3992)
+[stage 4] ds2 n_rep=  3000 (1500 train rows) os2: audit gap +0.00294, pop D2 7.9e-03, |tau_Z-1| 1.0437, |theta-tau_Z| 0.0076, |theta-1| 1.0361 (raw 0.3992)
+[stage 4] ds2 n_rep= 12000 (6000 train rows) os0: audit gap +0.00042, pop D2 1.4e-03, |tau_Z-1| 0.6147, |theta-tau_Z| 0.0382, |theta-1| 0.6529 (raw 0.3992)
+[stage 4] ds2 n_rep= 12000 (6000 train rows) os1: audit gap +0.00054, pop D2 8.0e-04, |tau_Z-1| 0.6019, |theta-tau_Z| 0.0124, |theta-1| 0.5895 (raw 0.3992)
+[stage 4] ds2 n_rep= 12000 (6000 train rows) os2: audit gap +0.00057, pop D2 1.6e-03, |tau_Z-1| 0.7432, |theta-tau_Z| 0.0127, |theta-1| 0.7305 (raw 0.3992)
+[stage 4] ds2 n_rep= 48000 (24000 train rows) os0: audit gap -0.00024, pop D2 4.1e-05, |tau_Z-1| 0.0120, |theta-tau_Z| 0.0227, |theta-1| 0.0347 (raw 0.3992)
+[stage 4] ds2 n_rep= 48000 (24000 train rows) os1: audit gap -0.00011, pop D2 1.1e-04, |tau_Z-1| 0.1001, |theta-tau_Z| 0.0338, |theta-1| 0.1340 (raw 0.3992)
+[stage 4] ds2 n_rep= 48000 (24000 train rows) os2: audit gap +0.00078, pop D2 9.6e-04, |tau_Z-1| 0.1574, |theta-tau_Z| 0.0004, |theta-1| 0.1570 (raw 0.3992)
+
+[stage 4] controls: identical initial weights across sizes for a fixed seed: True; validation rows fixed: True; audit rows fixed: True; estimation rows fixed: True; preprocessing: shared from the largest fit pool
+
+[stage 4] 3 data seeds x 3 optimizer seeds, estimation rows fixed at 32000
+  n_rep  train rows  cells  median |theta-1|     p90  median |tau_Z-1|  p90 |tau_Z-1|  pooled-cell p90 |tau_Z-1| (diagnostic)  median |theta-tau_Z|  median pop D2  sd of |tau_Z-1| within data seed  sd between data seeds       beats raw  raw median
+   3000        1500      9            0.6885  0.9666            0.6365         0.9622                                  1.6570                0.0111        6.7e-03                            0.5644                 0.1954  0/3 data seeds      0.3877
+  12000        6000      9            0.2905  0.5804            0.2784         0.5475                                  0.6404                0.0124        7.8e-04                            0.1374                 0.2134  2/3 data seeds      0.3877
+  48000       24000      9            0.1271  0.1326            0.1001         0.1116                                  0.1803                0.0126        1.1e-04                            0.0725                 0.0000  3/3 data seeds      0.3877
+[stage 4] the two spread columns are for |tau_Z - 1|, which involves no nuisance randomness; the between-seed column subtracts the within-seed component and is a moment estimate, not a test.
+[stage 4] done at 2782s, written to ../results/dgp_f_staged_r10_s4_manuscript.json

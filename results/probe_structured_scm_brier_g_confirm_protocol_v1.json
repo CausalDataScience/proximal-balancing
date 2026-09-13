@@ -1,0 +1,25 @@
+{
+  "protocol_id":"restricted-brier-rotate4-g-confirm-v1",
+  "frozen_at_runtime_utc":"2026-09-12T19:17:11Z",
+  "source_snapshot":"results/probe_structured_scm_brier_g_confirm_v1_source",
+  "allowed_phases":["confirm"],"allowed_modes":["rotate4"],"total_n":6000,"fold_n":1500,
+  "specs":{
+    "g1_low_noise":{"name":"g1_low_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"constant_small"},
+    "g2_heteroscedastic_noise":{"name":"g2_heteroscedastic_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"heteroscedastic_small"},
+    "g3_heterogeneous_low_noise":{"name":"g3_heterogeneous_low_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.7,"bad_i":-0.6,"effect_u":0.3,"observation":"linear","treatment_link":"probit","outcome_noise":"constant_small"},
+    "g4_proxy_heteroscedastic_low_noise":{"name":"g4_proxy_heteroscedastic_low_noise","treatment_i":2.5,"proxy_sd":[0.8,0.9,1.0,0.85,0.95],"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"constant_small"},
+    "g5_sinh_low_noise":{"name":"g5_sinh_low_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"sinh","treatment_link":"probit","outcome_noise":"constant_small"}
+  },
+  "runs":[
+    {"phase":"confirm","mode":"rotate4","learner":"brier","replicates":20,"seed_start":2400000,"settings":["g1_low_noise"]},
+    {"phase":"confirm","mode":"rotate4","learner":"brier","replicates":20,"seed_start":2400000,"settings":["g2_heteroscedastic_noise"]},
+    {"phase":"confirm","mode":"rotate4","learner":"brier","replicates":20,"seed_start":2400000,"settings":["g3_heterogeneous_low_noise"]},
+    {"phase":"confirm","mode":"rotate4","learner":"brier","replicates":20,"seed_start":2400000,"settings":["g4_proxy_heteroscedastic_low_noise"]},
+    {"phase":"confirm","mode":"rotate4","learner":"brier","replicates":20,"seed_start":2400000,"settings":["g5_sinh_low_noise"]}
+  ],
+  "gates":{"return_rate_min":0.95,"aggregate_mae_max":0.05,"aggregate_p90_abs_error_max":0.10,"paired_abs_error_ci_upper_vs_X":0.0,"paired_abs_error_ci_upper_vs_raw_XW":0.0,"paired_oracle_excess_ci_upper":0.05,"ci":"paired replicate absolute-error t95, no multiplicity"},
+  "objective":"Same-D approximate empirical bounded-probit Brier inf-risk gap on a fixed 101-point r grid. q0 and q1 are approximately minimized by multistart BFGS with an exact analytic gradient; q1 starts include the unoptimized lifted q0 and every stored empirical gap must be at least -1e-10.",
+  "selection":"All-four rotation screen, pooled disjoint E-score construction, frozen tie rule, common-rho Algorithm 1 aggregation; unchanged from the parity run.",
+  "source_sha256":{"probe_structured_scm.py":"874effb0aa74e927577ae51149dc997cbec24121719a97f4907168b7ccec7c28","run_probe_structured_scm.py":"bbc29f8be7a8cf125082307eef9363a70809a5ec55dd7a5ec3d46d1d949c0f99","test_probe_structured_scm.py":"336350ba0f7f9a9d0ea8a21b367fe6532b54b47b9e58e69bae3da278868dee45"},
+  "claim_boundary":"Restricted parametric Brier critic confirmation, not a neural representation experiment and not a global-ERM certificate. The 20 independent base seeds are the inference units; rotations are not replicates."
+}

@@ -1,0 +1,133 @@
+{
+ "protocol_id": "e10-family-at-original-outcome-noise-v1",
+ "frozen_at_runtime_utc": "2026-09-13T04:11:40Z",
+ "experiment": "E10, the direct extension of E9 from SCM-1 to the rest of the family",
+ "question": "E9 found that rotate-four clears every gate for SCM-1 at the original outcome noise SD of 1.0, so the low-noise variant was not needed. Does the same hold for SCM-3, SCM-4 and SCM-5, and does SCM-1 reproduce on fresh seeds?",
+ "changes_from_the_confirmed_family": "outcome noise SD only, from 0.3 back to 1.0; every other coefficient, the treatment equation, the proxy blocks, the screen threshold, the 101-point r grid, the nuisance class, Algorithm 1 and the baselines are unchanged",
+ "scm_2_excluded_because": "SCM-2 is defined by heteroscedastic noise 0.3 + 0.2|U|. An original-scale analogue would need a new option in the generator, which is a DGP change and is not made here",
+ "mode": "rotate4, the production operational cross-fitted regime",
+ "allowed_phases": [
+  "dev"
+ ],
+ "allowed_modes": [
+  "rotate4"
+ ],
+ "total_n": 6000,
+ "fold_n": 1500,
+ "independent_base_seeds_per_setting": 20,
+ "seed_start": 9200000,
+ "specs": {
+  "g1_low_noise_noise10": {
+   "name": "g1_low_noise_noise10",
+   "treatment_i": 2.5,
+   "proxy_sd": 0.85,
+   "outcome_u": 2.5,
+   "bad_i": -0.6,
+   "effect_u": 0.0,
+   "observation": "linear",
+   "treatment_link": "probit",
+   "outcome_noise": "standard"
+  },
+  "g3_heterogeneous_low_noise_noise10": {
+   "name": "g3_heterogeneous_low_noise_noise10",
+   "treatment_i": 2.5,
+   "proxy_sd": 0.85,
+   "outcome_u": 2.7,
+   "bad_i": -0.6,
+   "effect_u": 0.3,
+   "observation": "linear",
+   "treatment_link": "probit",
+   "outcome_noise": "standard"
+  },
+  "g4_proxy_heteroscedastic_low_noise_noise10": {
+   "name": "g4_proxy_heteroscedastic_low_noise_noise10",
+   "treatment_i": 2.5,
+   "proxy_sd": [
+    0.8,
+    0.9,
+    1.0,
+    0.85,
+    0.95
+   ],
+   "outcome_u": 2.5,
+   "bad_i": -0.6,
+   "effect_u": 0.0,
+   "observation": "linear",
+   "treatment_link": "probit",
+   "outcome_noise": "standard"
+  },
+  "g5_sinh_low_noise_noise10": {
+   "name": "g5_sinh_low_noise_noise10",
+   "treatment_i": 2.5,
+   "proxy_sd": 0.85,
+   "outcome_u": 2.5,
+   "bad_i": -0.6,
+   "effect_u": 0.0,
+   "observation": "sinh",
+   "treatment_link": "probit",
+   "outcome_noise": "standard"
+  }
+ },
+ "runs": [
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "mode_scope": "production_operational_crossfit",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9200000,
+   "settings": [
+    "g1_low_noise_noise10"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "mode_scope": "production_operational_crossfit",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9200000,
+   "settings": [
+    "g3_heterogeneous_low_noise_noise10"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "mode_scope": "production_operational_crossfit",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9200000,
+   "settings": [
+    "g4_proxy_heteroscedastic_low_noise_noise10"
+   ]
+  },
+  {
+   "phase": "dev",
+   "mode": "rotate4",
+   "mode_scope": "production_operational_crossfit",
+   "learner": "brier",
+   "replicates": 20,
+   "seed_start": 9200000,
+   "settings": [
+    "g5_sinh_low_noise_noise10"
+   ]
+  }
+ ],
+ "gates": {
+  "return_rate_min": 0.95,
+  "aggregate_mae_max": 0.05,
+  "aggregate_p90_abs_error_max": 0.1,
+  "paired_abs_error_ci_upper_vs_X": 0.0,
+  "paired_abs_error_ci_upper_vs_raw_XW": 0.0,
+  "paired_oracle_excess_ci_upper": 0.05,
+  "ci": "paired replicate absolute-error t95, no multiplicity"
+ },
+ "source_sha256": {
+  "probe_structured_scm.py": "50f5f8c6e7c3aed813bd0adf42461d1f11dbe49e747b04bd57c1d4dba9a1b6dd",
+  "run_probe_structured_scm.py": "9e29af14aff7426b2fa11faa17afe007c05bb6c3d7c53cdf90c3065bf0bdc2d6",
+  "test_probe_structured_scm.py": "f1a52bebca29c7d6bda1ffd531a2cddf4051ea29bdf0caa7ec9470452b06c232"
+ },
+ "claim_boundary": "A 20-seed empirical benchmark on four members of the family with the restricted parametric Brier learner and the operational rotate-four regime. It does not certify neural encoders, global ERM, or the manuscript's one-shot theorem, which covers a single fixed D and N with an independent E.",
+ "note_on_refreeze": "the first freeze predated the mode_scope field the fixed runner now requires; the protocol was reissued with that field before any cell executed, so no result was produced under the earlier version"
+}

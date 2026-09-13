@@ -1,0 +1,13 @@
+{
+  "protocol_id":"structured-scm-restricted-brier-end-to-end-dev-v2",
+  "frozen_at_runtime_utc":"2026-09-12T18:59:37Z",
+  "supersedes":"v1 used an independent signed validation gap and is diagnostic history, not the manuscript empirical objective",
+  "allowed_phases":["dev"],"allowed_modes":["hard4"],"total_n":6000,
+  "specs":{"g1_low_noise":{"name":"g1_low_noise","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"constant_small"}},
+  "runs":[{"phase":"dev","mode":"hard4","learner":"brier","replicates":2,"seed_start":2000000,"settings":["g1_low_noise"]}],
+  "empirical_objective":"For each of 101 fixed r values, q0 and nested q1 independently minimise Brier risk on the same D rows. q1 candidates include the fitted q0 lifted with zero held-out coefficients and a zero start. Select minimum nonnegative empirical inf-risk gap; tie1e-12 then min abs r then r.",
+  "screen":"Independent S clipped gap <=2SE, zero-null nonrejection; not an equivalence certificate.",
+  "end_to_end":"Survivors receive the same N/E AIPW, common rho and exact largest-component aggregation as the moment hard4 arm.",
+  "source_sha256":{"probe_structured_scm.py":"fc321d339eefd01d2bc8d0232f0a8ec997d911554ca22d9f0a11b4375e9f30c5","run_probe_structured_scm.py":"d675242eaa624f92f1eebbfc377a097db7aa0eb7be6b40755502120d201ed70c","test_probe_structured_scm.py":"20829a0fefa579267cff82c08f850165794d52ee15b8bdf4434865086c082f76"},
+  "claim_boundary":"restricted linear bounded-probit critic, two development seeds, hard4; neither neural nor confirmatory"
+}

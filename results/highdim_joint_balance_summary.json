@@ -1,0 +1,286 @@
+{
+  "provenance": {
+    "script": "code/highdim_joint_balance_experiment.py",
+    "base_seed": 2026081801,
+    "seed_formula": "2026081801 + 7919*rep + 101*d + 100003*regime_code",
+    "n": 2000,
+    "reps": 8,
+    "steps": 150,
+    "strata": 5,
+    "train_evaluation_split": "50/50",
+    "dimensions": [
+      10,
+      30
+    ],
+    "controls_at_dimension": 30,
+    "true_tau": 1.0,
+    "joint_kernel": "k_XW=k_X*k_W; separate train-median RBF bandwidths",
+    "matched_learner_contract": "only the balancing kernel differs",
+    "h_input": "X only",
+    "w_used_by_effect_estimator": false,
+    "post_result_tuning": false
+  },
+  "configs": {
+    "regime=primary|d=10": {
+      "representations": {
+        "joint": {
+          "tau_error": {
+            "mean": 0.33203137514079173,
+            "mean_abs": 0.33203137514079173,
+            "rmse": 0.44859321708239713,
+            "se": 0.11401192940994599
+          },
+          "oracle_bias": {
+            "mean": 0.2806187568104289,
+            "mean_abs": 0.2806187568104289,
+            "rmse": 0.40018046158287135,
+            "se": 0.10783420816820695
+          },
+          "mean_d_joint": 0.032419280257125274,
+          "mean_d_x": 0.03041861858158277,
+          "mean_d_w": 0.027114784459321,
+          "mean_dropped_mass": 0.0015000000000000152
+        },
+        "x_only": {
+          "tau_error": {
+            "mean": 0.675042420963984,
+            "mean_abs": 0.675042420963984,
+            "rmse": 0.7002213830075972,
+            "se": 0.07033360822349778
+          },
+          "oracle_bias": {
+            "mean": 0.6160963762519662,
+            "mean_abs": 0.6160963762519662,
+            "rmse": 0.6526638054087032,
+            "se": 0.08141191388748703
+          },
+          "mean_d_joint": 0.03346332255044287,
+          "mean_d_x": 0.027356279062898357,
+          "mean_d_w": 0.03391218163896059,
+          "mean_dropped_mass": 0.0005000000000000143
+        }
+      },
+      "baselines": {
+        "naive": {
+          "mean": 1.783709563917076,
+          "mean_abs": 1.783709563917076,
+          "rmse": 1.7887428810241435,
+          "se": 0.050682888074925096
+        },
+        "full_x": {
+          "mean": 0.6534700237299339,
+          "mean_abs": 0.6534700237299339,
+          "rmse": 0.6650190360400565,
+          "se": 0.046640335673328856
+        },
+        "oracle_xu": {
+          "mean": 0.05900695821346262,
+          "mean_abs": 0.08681305773171706,
+          "rmse": 0.11259697299683531,
+          "se": 0.036245703608338654
+        }
+      },
+      "paired_all_three_win_rate": 0.75,
+      "config_pass": true,
+      "negative_control_sanity_pass": null
+    },
+    "regime=primary|d=30": {
+      "representations": {
+        "joint": {
+          "tau_error": {
+            "mean": 0.6858909530582012,
+            "mean_abs": 0.6858909530582012,
+            "rmse": 0.7152220155038703,
+            "se": 0.07662164182744313
+          },
+          "oracle_bias": {
+            "mean": 0.6933123937229174,
+            "mean_abs": 0.6933123937229174,
+            "rmse": 0.7145693381662841,
+            "se": 0.06538595716163223
+          },
+          "mean_d_joint": 0.0350736259110805,
+          "mean_d_x": 0.028476794881346627,
+          "mean_d_w": 0.03668629952413914,
+          "mean_dropped_mass": 0.0028750000000000026
+        },
+        "x_only": {
+          "tau_error": {
+            "mean": 0.9704587717585446,
+            "mean_abs": 0.9704587717585446,
+            "rmse": 0.9909735740796535,
+            "se": 0.07581782380068254
+          },
+          "oracle_bias": {
+            "mean": 0.9811568711269283,
+            "mean_abs": 0.9811568711269283,
+            "rmse": 0.998205336358113,
+            "se": 0.06943145414644536
+          },
+          "mean_d_joint": 0.034761256034764876,
+          "mean_d_x": 0.026444363731792785,
+          "mean_d_w": 0.03965521930395856,
+          "mean_dropped_mass": 0.0003750000000000142
+        }
+      },
+      "baselines": {
+        "naive": {
+          "mean": 1.8619780101826922,
+          "mean_abs": 1.8619780101826922,
+          "rmse": 1.863914772974522,
+          "se": 0.03210734341630235
+        },
+        "full_x": {
+          "mean": 1.081563726029692,
+          "mean_abs": 1.081563726029692,
+          "rmse": 1.0866152791881212,
+          "se": 0.03955587639538449
+        },
+        "oracle_xu": {
+          "mean": 0.059985522873448646,
+          "mean_abs": 0.07534167152359457,
+          "rmse": 0.08471735446369046,
+          "se": 0.02261089242228666
+        }
+      },
+      "paired_all_three_win_rate": 0.5,
+      "config_pass": false,
+      "negative_control_sanity_pass": null
+    },
+    "regime=proxy_null|d=30": {
+      "representations": {
+        "joint": {
+          "tau_error": {
+            "mean": 1.2543352398710608,
+            "mean_abs": 1.2543352398710608,
+            "rmse": 1.2748769899422727,
+            "se": 0.08615139954246492
+          },
+          "oracle_bias": {
+            "mean": 1.263390390921907,
+            "mean_abs": 1.263390390921907,
+            "rmse": 1.2839721286086845,
+            "se": 0.08654408221916826
+          },
+          "mean_d_joint": 0.027371309894868655,
+          "mean_d_x": 0.02676131253580574,
+          "mean_d_w": 0.02082102051475364,
+          "mean_dropped_mass": 0.0016249999999999876
+        },
+        "x_only": {
+          "tau_error": {
+            "mean": 1.1278809994377719,
+            "mean_abs": 1.1278809994377719,
+            "rmse": 1.1575877650614828,
+            "se": 0.09848414297837271
+          },
+          "oracle_bias": {
+            "mean": 1.1443020910468193,
+            "mean_abs": 1.1443020910468193,
+            "rmse": 1.173800930706024,
+            "se": 0.09883705880474254
+          },
+          "mean_d_joint": 0.025080860589365303,
+          "mean_d_x": 0.024824145673169085,
+          "mean_d_w": 0.01675633849267819,
+          "mean_dropped_mass": 0.004250000000000004
+        }
+      },
+      "baselines": {
+        "naive": {
+          "mean": 1.8976459599926392,
+          "mean_abs": 1.8976459599926392,
+          "rmse": 1.9015236168866565,
+          "se": 0.045875415297967556
+        },
+        "full_x": {
+          "mean": 0.9815739599457679,
+          "mean_abs": 0.9815739599457679,
+          "rmse": 0.9863744101456159,
+          "se": 0.0367365877303653
+        },
+        "oracle_xu": {
+          "mean": 0.05299549881349523,
+          "mean_abs": 0.08430208140882058,
+          "rmse": 0.0921992580919711,
+          "se": 0.028516111481603625
+        }
+      },
+      "paired_all_three_win_rate": 0.0,
+      "config_pass": null,
+      "negative_control_sanity_pass": true
+    },
+    "regime=x_signal_null|d=30": {
+      "representations": {
+        "joint": {
+          "tau_error": {
+            "mean": 1.0692279551859407,
+            "mean_abs": 1.0692279551859407,
+            "rmse": 1.0741807442593843,
+            "se": 0.03894290910429292
+          },
+          "oracle_bias": {
+            "mean": 1.063905236725948,
+            "mean_abs": 1.063905236725948,
+            "rmse": 1.0698941445226224,
+            "se": 0.04272691983632564
+          },
+          "mean_d_joint": 0.04010504263415847,
+          "mean_d_x": 0.027446824791854826,
+          "mean_d_w": 0.05143478867831201,
+          "mean_dropped_mass": 0.0017500000000000016
+        },
+        "x_only": {
+          "tau_error": {
+            "mean": 1.0628920751490862,
+            "mean_abs": 1.0628920751490862,
+            "rmse": 1.0668305195719046,
+            "se": 0.03461583880935924
+          },
+          "oracle_bias": {
+            "mean": 1.0544167169446572,
+            "mean_abs": 1.0544167169446572,
+            "rmse": 1.05871694028124,
+            "se": 0.03602964387858002
+          },
+          "mean_d_joint": 0.03907201747958166,
+          "mean_d_x": 0.02611577550114782,
+          "mean_d_w": 0.05046639990347998,
+          "mean_dropped_mass": 0.0017500000000000016
+        }
+      },
+      "baselines": {
+        "naive": {
+          "mean": 0.9487418162998119,
+          "mean_abs": 0.9487418162998119,
+          "rmse": 0.9538789213440236,
+          "se": 0.037366835158947995
+        },
+        "full_x": {
+          "mean": 1.0715475520277291,
+          "mean_abs": 1.0715475520277291,
+          "rmse": 1.0780097090263585,
+          "se": 0.04454656712519297
+        },
+        "oracle_xu": {
+          "mean": 0.07795801704640623,
+          "mean_abs": 0.08454305254174024,
+          "rmse": 0.1010180754606641,
+          "se": 0.024281677830850924
+        }
+      },
+      "paired_all_three_win_rate": 0.0,
+      "config_pass": null,
+      "negative_control_sanity_pass": true
+    }
+  },
+  "predeclared_success": {
+    "primary_criterion": "both primary d configs have lower mean held-out D_XW, lower mean oracle absolute bias, lower noisy RMSE, and paired all-three win rate >=0.625",
+    "negative_control_criterion": "neither control has paired all-three win rate >=0.625",
+    "primary_configs_passed": 1,
+    "primary_configs_total": 2,
+    "negative_controls_passed": 2,
+    "negative_controls_total": 2,
+    "passed": false
+  }
+}

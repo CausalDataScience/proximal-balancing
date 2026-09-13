@@ -1,0 +1,27 @@
+{
+  "protocol_id":"structured-scm-small-n-confirm-v1",
+  "frozen_at_runtime_utc":"2026-09-12T18:49:50Z",
+  "claim_scope":"Five prespecified stress-test settings sharing one identification topology; not five independent causal families and not neural PROBE.",
+  "allowed_phases":["confirm"],
+  "allowed_modes":["rotate4"],
+  "total_n":6000,
+  "fold_n":1500,
+  "specs":{
+    "f1_probit_linear":{"name":"f1_probit_linear","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"standard"},
+    "f2_outcome_variance":{"name":"f2_outcome_variance","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"heteroscedastic_small"},
+    "f3_heterogeneous":{"name":"f3_heterogeneous","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.7,"bad_i":-0.6,"effect_u":0.3,"observation":"linear","treatment_link":"probit","outcome_noise":"standard"},
+    "f4_heteroscedastic":{"name":"f4_heteroscedastic","treatment_i":2.5,"proxy_sd":[0.8,0.9,1.0,0.85,0.95],"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"standard"},
+    "f5_sinh":{"name":"f5_sinh","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"sinh","treatment_link":"probit","outcome_noise":"standard"}
+  },
+  "runs":[
+    {"phase":"confirm","mode":"rotate4","learner":"moment","replicates":20,"seed_start":1500000,"settings":["f1_probit_linear","f2_outcome_variance","f3_heterogeneous","f4_heteroscedastic","f5_sinh"]}
+  ],
+  "rotation_rule":"Four fixed folds. In rotation r, folds r,r+1,r+2,r+3 modulo four are D,S,N,E. Retain a split iff it passes all four screens. Concatenate disjoint E-fold scores per split.",
+  "learner":{"objective":"symmetric sum of squared observed partial correlations","r_interval":[-1,1],"grid_points":201,"local_minimization":"bounded around every grid local minimum","tie_tolerance":1e-12,"tie_rule":["minimum objective within tolerance","smallest absolute r","smallest r"],"validity_labels_used":false},
+  "screen":{"statistic":"maximum absolute studentized residual covariance over every held-out coordinate","threshold":3.5,"interpretation":"zero-null nonrejection gate, not equivalence or validity test"},
+  "aggregation":{"splits":30,"edge":"absolute candidate difference <= 2 common rho","output":"median of every largest connected component; tied largest remains set-valued","rho":"5000-draw Gaussian multiplier equivalent from pooled E-score Gram covariance; operational linking heuristic only"},
+  "baselines":{"X":"scaled-probit plus arm inverse-Mills AIPW","raw_XW":"same nuisance family and N/E folds on X,I,C,all transformed proxies","oracle":"same nuisance family and N/E folds on X,U,C","naive":"evaluation-fold mean difference"},
+  "gates":{"return_rate_min":0.95,"aggregate_mae_max":0.05,"aggregate_p90_abs_error_max":0.10,"paired_abs_error_ci_upper_vs_X":0.0,"paired_abs_error_ci_upper_vs_raw_XW":0.0,"paired_oracle_excess_ci_upper":0.05,"ci":"paired replicate-level absolute-error difference, two-sided t95; no multiplicity adjustment"},
+  "source_sha256":{"probe_structured_scm.py":"c98151db85bfccebd9310b6c52b0faf3098acc55fb819c6a1dd956e1f8a21dfe","run_probe_structured_scm.py":"d675242eaa624f92f1eebbfc377a097db7aa0eb7be6b40755502120d201ed70c","test_probe_structured_scm.py":"bad21cc54ead5c5a84f6dc67ec9b3e118e94d1d88200f819264588e39d15ae25"},
+  "theory_scope":"rotate4 is an operational cross-fitted extension because observations used as E in one rotation enter D/S/N in others; no one-shot conditional finite-sample guarantee is claimed"
+}

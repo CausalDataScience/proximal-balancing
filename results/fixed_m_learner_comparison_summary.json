@@ -1,0 +1,42 @@
+{
+  "provenance": {
+    "script": "code/fixed_m_learner_comparison.py",
+    "plan": "memo/2026-08-18-finite-state-experiment-plan.md",
+    "date": "2026-08-18",
+    "seed": 20260819,
+    "S": 20,
+    "M": 3,
+    "n": 20000,
+    "reps": 10,
+    "gamma_true": 2.7629298353284764,
+    "tau": 0.10853023824439115
+  },
+  "methods": {
+    "w_supervised": {
+      "mean_abs_pop_bias": 0.07863493405712164,
+      "mean_pop_D": 0.07418606140951478,
+      "mean_certificate": 0.20497088243385891,
+      "tau_rmse": 0.07592146495766287,
+      "n_reps_used": 10
+    },
+    "x_only": {
+      "mean_abs_pop_bias": 0.08023182108428853,
+      "mean_pop_D": 0.08105433413236596,
+      "mean_certificate": 0.22394743805699718,
+      "tau_rmse": 0.07780763270530838,
+      "n_reps_used": 10
+    },
+    "random": {
+      "mean_abs_pop_bias": 0.07194447671328144,
+      "mean_pop_D": 0.22223424772736422,
+      "mean_certificate": 0.6140176334777142,
+      "tau_rmse": 0.07091373860995463,
+      "n_reps_used": 10
+    }
+  },
+  "full_x_reference": {
+    "pop_bias": -0.08653561492887304,
+    "pop_D": 0.29188025075324325,
+    "certificate": 0.8064446531492928
+  }
+}

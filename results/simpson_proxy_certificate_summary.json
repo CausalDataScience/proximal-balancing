@@ -1,0 +1,95 @@
+{
+  "provenance": {
+    "script": "code/simpson_proxy_certificate_experiment.py",
+    "date": "2026-08-18",
+    "seed": 20260821,
+    "S": 20,
+    "M": 3,
+    "n": 20000,
+    "reps": 10,
+    "tau_true": -1.0,
+    "beta": 3.0,
+    "rho": 0.6,
+    "design": "Simpson reversal world vs safe world; Y = tau A + beta U"
+  },
+  "worlds": [
+    {
+      "world": "CONF",
+      "b_sel": 1.5,
+      "gamma_true": 8.188813376575412,
+      "tau_true": -1.0,
+      "naive_pop": 0.9182610031672758,
+      "full_x": {
+        "pop_bias": 1.869311211591495,
+        "pop_D": 0.4916436939576949,
+        "certificate": 4.02597845758972
+      },
+      "methods": {
+        "w_supervised": {
+          "mean_abs_pop_bias": 1.906129599993949,
+          "mean_pop_D": 0.40730277793334696,
+          "mean_certificate": 3.335326436256916,
+          "mean_tau_hat": 0.905612749961796
+        },
+        "x_only": {
+          "mean_abs_pop_bias": 1.8785566079446276,
+          "mean_pop_D": 0.45165597030790783,
+          "mean_certificate": 3.6985264512675426,
+          "mean_tau_hat": 0.8795826376230702
+        },
+        "random": {
+          "mean_abs_pop_bias": 1.9140339448583386,
+          "mean_pop_D": 0.4224336785814871,
+          "mean_certificate": 3.45923055788404,
+          "mean_tau_hat": 0.9142628066964493
+        }
+      },
+      "mean_D_hat_selected": 0.40375399626174113,
+      "mean_breakdown_gamma": 2.243089459986795,
+      "coverage": {
+        "naive_ci": 0.0,
+        "full_x_ci": 0.0,
+        "certificate_interval": 1.0
+      }
+    },
+    {
+      "world": "SAFE",
+      "b_sel": 0.0,
+      "gamma_true": 8.188813376575412,
+      "tau_true": -1.0,
+      "naive_pop": -0.7902432486934422,
+      "full_x": {
+        "pop_bias": 0.0,
+        "pop_D": 5.380036862390361e-17,
+        "certificate": 4.4056117825211e-16
+      },
+      "methods": {
+        "w_supervised": {
+          "mean_abs_pop_bias": 0.025501069125835652,
+          "mean_pop_D": 0.06256208502193812,
+          "mean_certificate": 0.5123092386940952,
+          "mean_tau_hat": -0.9870146098677367
+        },
+        "x_only": {
+          "mean_abs_pop_bias": 0.0260693717381828,
+          "mean_pop_D": 0.06339929712711224,
+          "mean_certificate": 0.5191650123799758,
+          "mean_tau_hat": -0.9875075245942135
+        },
+        "random": {
+          "mean_abs_pop_bias": 0.18202610165006564,
+          "mean_pop_D": 0.2184227555848061,
+          "mean_certificate": 1.788623182681322,
+          "mean_tau_hat": -0.8295543182729466
+        }
+      },
+      "mean_D_hat_selected": 0.059261578557612625,
+      "mean_breakdown_gamma": 16.70504596536589,
+      "coverage": {
+        "naive_ci": 0.0,
+        "full_x_ci": 1.0,
+        "certificate_interval": 1.0
+      }
+    }
+  ]
+}

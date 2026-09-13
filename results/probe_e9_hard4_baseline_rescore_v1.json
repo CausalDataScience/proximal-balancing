@@ -1,0 +1,672 @@
+{
+  "cells": {
+    "noise_0.3_hard4": [
+      {
+        "baseline_estimates": {
+          "X": 0.14303474883281614,
+          "naive": -0.0689181009589237,
+          "oracle": 0.9938854242530009,
+          "raw_XW": 0.8496576360402932
+        },
+        "fold_sha256": [
+          "32b696c44b439302e8b0386ece29374fe07df4d73a61793b16e288f111ba8a3b",
+          "c52f56a5903095c5886a55cf3ddf0efd8268de96aa58a51516a1fab13097992a",
+          "015e48c56fffb2cafa1f128bbf75d718eaf3d8498598d927ed336af83187c31b",
+          "9c9a69ddfa6cf3af6ac0a582471ef6c98c4007ff4b066debe1305b11399a3182"
+        ],
+        "replicate": 0,
+        "seed_base": 9100000
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.29736602191725464,
+          "naive": -0.045602307575636325,
+          "oracle": 1.0059969379810139,
+          "raw_XW": 0.7628145794493951
+        },
+        "fold_sha256": [
+          "a556ef10de0bcf50164f669b8baafd3da062d9615041503f61078e9e90f0641e",
+          "adba436aff63bd73cbd0c34a4ac1a71e7837817182cc5de90eabb57bcf7b652e",
+          "69d45992001ec8db3fb5eb9ddece0a4175427600c16b91005c77413abb42e323",
+          "f19f1c77f4097c046eae69420406e22f1c3967eb811082546e4e0cfbef78af46"
+        ],
+        "replicate": 1,
+        "seed_base": 9100010
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.0499616373779232,
+          "naive": -0.16979952205439897,
+          "oracle": 1.007730917813758,
+          "raw_XW": 0.8550839017907859
+        },
+        "fold_sha256": [
+          "47b1d31656c57e0238f098f9d6731f694ee6fea4848ecacfa616bd052df9966c",
+          "e5b8d5c24e44448bed513389001b7bf4ee15cdd27bafe570f85c4883ec838522",
+          "a7d2bfef4ee1b87f899e24ab177511e8fc2ebd99b181cc0f6b8a2c7f4c6be84a",
+          "552476e297b8833830c48d0d17d2475b242c1d7c13613da41485987e79fdfc51"
+        ],
+        "replicate": 2,
+        "seed_base": 9100020
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.09998947968211082,
+          "naive": -0.1363444724405926,
+          "oracle": 1.0186369112047695,
+          "raw_XW": 0.833368608966692
+        },
+        "fold_sha256": [
+          "b15334ca842cd618d7a9ffd57a6751e49befc3a678a2646fa4a871d08d043a9b",
+          "176d99f6568a24542271be723cb0eff4eb6c439ed6f4f90d969fdfbc024d2c23",
+          "198125143ea05dc98298d425df5dab9f80410f9692f562c9f70dcce23634d093",
+          "ad62778592def91980658b091e0dac9d9c8f4b81a18b8b8f4634071035dc895f"
+        ],
+        "replicate": 3,
+        "seed_base": 9100030
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.07249533022579223,
+          "naive": -0.1668310335954049,
+          "oracle": 1.0013798426920268,
+          "raw_XW": 0.9647015250824634
+        },
+        "fold_sha256": [
+          "ad99523ddb22e33a2140caaaa5abf88f7784d43fd2219d3f2a8f18e33015bae1",
+          "1479f20564d74f60ae680f0dbe6f7d5bb8336f20c8efc844432eadf91e4ba25a",
+          "e30cf2ff2aa0f839fbdfe32617421a798aa6119e4a128c1fa0125370e6ad6c2e",
+          "7767bc0a8b550303514b1069fc97030676a7c7f3dcc1848c8118255a210b8a3f"
+        ],
+        "replicate": 4,
+        "seed_base": 9100040
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.07651588206243748,
+          "naive": -0.14966845161233538,
+          "oracle": 1.0047787993402983,
+          "raw_XW": 0.8320169070111699
+        },
+        "fold_sha256": [
+          "6eed58e0f2d11690c24050800e15e25e03373eb4b3314fe675e65c0eada4b9e2",
+          "c36c7ffc3b5f254e6d75f1dcc6ffbf4d74263d4ca53940726bcf7dcf0d0253ea",
+          "11d1d44abe727cd9b835cd3d1b1ceffd051e2749f6b0cfd687b1b429cdcb57a6",
+          "cc52dfef740741fdfaa99973cf222f61793bc7073e7c660f90ad087c91619815"
+        ],
+        "replicate": 5,
+        "seed_base": 9100050
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.30303806702227143,
+          "naive": 0.07272147198144058,
+          "oracle": 1.0177827356901223,
+          "raw_XW": 0.8512220535853743
+        },
+        "fold_sha256": [
+          "66234b26f4a398ba1fac7daba47edae45fa055e7a3e7065f92031e386f239609",
+          "eb8577c54ffb07b1cd48becd632989bcdef5d7650e0b8d35a343d4dfb2da1511",
+          "e45cda32b47aab20b05f042fd4700d785799599b87f42c0774ea30208579c765",
+          "03fe7e0581588b1268354f1f075bffb0e46345d162d641198a35c6456a9b0aa7"
+        ],
+        "replicate": 6,
+        "seed_base": 9100060
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.13611970593869244,
+          "naive": -0.11693448107560706,
+          "oracle": 1.0294296272286059,
+          "raw_XW": 0.9173423490743391
+        },
+        "fold_sha256": [
+          "4ef7ec71bc50e97ad6e23da23f9b098bbd3205ad0b1c23e4d81435fe31df3029",
+          "66be480306402ef31848f15e13080b0c0061d548bef34d74c941c1f67de2397d",
+          "bea257adfcbc1aad14abb66ed1c40fb25e97a5027a0db4f90a77bff3952bde62",
+          "10326a3d10a1f5785d7617432e929124302c68c64c43a33c0b06d04536d0f8f5"
+        ],
+        "replicate": 7,
+        "seed_base": 9100070
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.0896718438693576,
+          "naive": -0.25797902289450536,
+          "oracle": 0.9807087761214319,
+          "raw_XW": 0.8392819400292619
+        },
+        "fold_sha256": [
+          "ce04834eb19182d64cb7f323282b0718d8ba793fc638f135c093f3b428dbc826",
+          "838a735c899db8bffa72ccdc36d9aabcb6abd1e33a78026f0834a7e1245c8690",
+          "99b67d5211d279d4e496d9fbe4282830ab92543f01baa01a797409762a033b26",
+          "8a7f5a7f6089ca3e22e69e2787d04533c7024849f9b0076a6d54b6bcbf9b483f"
+        ],
+        "replicate": 8,
+        "seed_base": 9100080
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.06237487533248424,
+          "naive": -0.2824288617735062,
+          "oracle": 0.9906445444807532,
+          "raw_XW": 0.8322356498020809
+        },
+        "fold_sha256": [
+          "0936bf93581d812fe0c87cedc2c89f0ac6dcda11378b889eb940f611d90ee999",
+          "09845a9336a1f09b3e30d6f10b7c61650aca0671d21d0d1b59755ce2ec2ffc84",
+          "d05f43a33535704799bab78d46783ba431eaa30180ea34e713cada4a2d43fe44",
+          "72f99bd7177eeabab11b76ad6ea3ca4f43d2618e33c3ce216d4e1e43d9b0def1"
+        ],
+        "replicate": 9,
+        "seed_base": 9100090
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.23505641658419218,
+          "naive": 0.01728116688346437,
+          "oracle": 1.0196374162291906,
+          "raw_XW": 0.8465978666513383
+        },
+        "fold_sha256": [
+          "6268e004cb10ed1a2366a7a63b66b1e1c51b967c6b07981a0840f008cc35655e",
+          "541a20c4d0cc131f1beeae1b5cdc7ef49564ad2766d6a9e7f1abfee44b65c44b",
+          "139b4539f529c31a6f602fabb9fb91919624239b7361846612573a42490e82f2",
+          "015aa7fdb122fca09d6a7844b3ef68f949102cd2ee6c488136f0c2af67910069"
+        ],
+        "replicate": 10,
+        "seed_base": 9100100
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.09570150079946459,
+          "naive": -0.11289270507531102,
+          "oracle": 1.0046572550717237,
+          "raw_XW": 0.7802519894162324
+        },
+        "fold_sha256": [
+          "4f0b413a877cb6e9167f9299a6ba74252e7b819230851f673811af5695e8b88e",
+          "a8e05a6676d0986205898cfcb65dbcdba1d0bbd2ae131b1c9b308b73859fa178",
+          "04643ac8c83ad00a28352d7f9c10fd65bbd779476bd217fd4f2ad80a7b2473c5",
+          "d76f73e5fa49505c07c24e3bdb78d150b76351ade03d795729ef2c03a0b69d3b"
+        ],
+        "replicate": 11,
+        "seed_base": 9100110
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.0850043316193043,
+          "naive": -0.089730780362405,
+          "oracle": 0.9894974252191202,
+          "raw_XW": 0.7559359813485591
+        },
+        "fold_sha256": [
+          "ec2f0e0b41556b19d5900afccef3b5437b4ba774d9949c3eeecb92e94ae38325",
+          "7c138cbd865a900a28ec64af2d2e6906e62932b054050969eac157c9e6457742",
+          "7297460e401ea40c427776f0f0fd35b7f580325792476eb175c2a6827c838dbc",
+          "2d350887f867479cd9bb5125beaf1d5f3475e06de0a1a1ffdc3c5f693fd63fb2"
+        ],
+        "replicate": 12,
+        "seed_base": 9100120
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.06819411330645744,
+          "naive": -0.1865617628902665,
+          "oracle": 0.9865279830959759,
+          "raw_XW": 0.8318790776394605
+        },
+        "fold_sha256": [
+          "c249885008c4a29298483db948f1b177ade87b257bd90b96766915a007516714",
+          "86c7cd43fa8844576da2e2925b59c548139b054e4d0aca204489a2a602aec164",
+          "3d2c6f06f657a73d8bd31dedf8589be3608e6b88af47cb6589e344ea0d2868f2",
+          "0dae82aa1900d6a46b582544e3e79d33e6b2f3aa1317e591f023d0d5b75b3c8d"
+        ],
+        "replicate": 13,
+        "seed_base": 9100130
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.07655275028912494,
+          "naive": -0.10627889745939323,
+          "oracle": 0.9990139466781732,
+          "raw_XW": 0.8829107977817375
+        },
+        "fold_sha256": [
+          "68b8602bdaf3011b5f86ecb5689508b6a1effe4b4bd32ff4ed8135db467947e2",
+          "a48eb86cf10d2e7365a8b4d60ad1523e1b77f87aa283e33a7bbf1346927ae2af",
+          "133ec0e592a14d7f641142adc69cadda545b68d6fc0919618bd1509df131affc",
+          "997926beed7f54d76b04685541465bdf0f4e658efd78ba78e96baae8c87b39cd"
+        ],
+        "replicate": 14,
+        "seed_base": 9100140
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.051289898399505755,
+          "naive": -0.16114254849281218,
+          "oracle": 0.9950750481218708,
+          "raw_XW": 0.9265394159687388
+        },
+        "fold_sha256": [
+          "f6d2e52db4e0ba98bad59b47121fb24281d5e8b7bcb12ab42d1071e5e76acf3f",
+          "6b827b04dce80410059ae083a24d739e4f45bad09bc3a1134e338718e94daf1f",
+          "f4a2b20b9f93e551b4730b5db6622aac3b42710b2c8f9c2428cac96efa346163",
+          "df52e54f63d7ecbe37ded8dbf036a0f678dc1921983a3dc311ea8183e17dee02"
+        ],
+        "replicate": 15,
+        "seed_base": 9100150
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.10375160232312575,
+          "naive": -0.1085374619175376,
+          "oracle": 1.011150812045841,
+          "raw_XW": 0.944127554485287
+        },
+        "fold_sha256": [
+          "8d28882dc1d1d3fdad5a1df1f26cf39d81c2dc299f23387769549ad7e68ed931",
+          "7bc818c11426842bef8c2407994546da6de49c623b4666629c442402c716180d",
+          "4316c024e2db194412c5d65db3ef0f91b479ff50f89adabf62cd3aff76422c86",
+          "dd2d3900c156b86fd58d2f4d6f520db32e91759ce3f9c9d6932c55972769b1e4"
+        ],
+        "replicate": 16,
+        "seed_base": 9100160
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.007916865235238182,
+          "naive": -0.16186779804082013,
+          "oracle": 0.9804618320258224,
+          "raw_XW": 0.7590460236880929
+        },
+        "fold_sha256": [
+          "b8a0a9eb72f02d4bcb7805bef43b34daf22d69115443c76b9b2b477dffe4ac7a",
+          "54ee45a7bd6f782c671a8847ab33c97b0167fa8cb1fd5fd3f98e0a37c6f0f5d9",
+          "ecfb011683579877343c9138e37e86c538bc1a1a4bcde94bc92926b36cd6075b",
+          "e0421fb9f7e817f6a57ee6bfbe0a6a44057557711081a9d985b0542fe0187496"
+        ],
+        "replicate": 17,
+        "seed_base": 9100170
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.22897436990910722,
+          "naive": -0.5430419313846315,
+          "oracle": 0.9726040275822572,
+          "raw_XW": 0.7788296310504731
+        },
+        "fold_sha256": [
+          "204e0af8c583277773e7de4bd232124a726a7aa6702b0e36c3b6765be24a65bf",
+          "b915beb37808cc83dfbada3d2b37d74cc726fd85b8f8e95f414bb34bd3ac68a8",
+          "2b7e181eb5a6651cb126eede732e991703952ce61cfc306a3276c4d5be157703",
+          "7222efdd5b732b20d4e50ef1df451dad53a357ff0639708caff1edf30c3d5f28"
+        ],
+        "replicate": 18,
+        "seed_base": 9100180
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.00823009376545563,
+          "naive": -0.19153074409773357,
+          "oracle": 1.008856210788007,
+          "raw_XW": 0.7172810024526993
+        },
+        "fold_sha256": [
+          "a761eaf1ac4425c97d11814b352fc801ecd19787aa888a688ea2af4ba921610b",
+          "d802ad59c781bfed76041f47ca97b6847723eb1d53a09a88e1cad15ab9eda31f",
+          "8db9e68638c1c2f44f9d4cc0c716216f9810a4c7e071ec0e2bc20cfac305c335",
+          "fa19cc4ba6ee68abb5e6982cef17b4f5707ba01a67d576b939cdfb632a63a4dc"
+        ],
+        "replicate": 19,
+        "seed_base": 9100190
+      }
+    ],
+    "noise_1.0_hard4": [
+      {
+        "baseline_estimates": {
+          "X": 0.1366073410095998,
+          "naive": -0.09221276748092222,
+          "oracle": 0.9796180808433358,
+          "raw_XW": 0.880430484446126
+        },
+        "fold_sha256": [
+          "32862094ac78c130248b5486c10327ddfc7ba66521aafa6bcd802337161e800d",
+          "a48020676db661e4741a0bacb08ec48068b8116e1d2c1307cff1ac473db5b2db",
+          "40b91ca2628ed4743416d9d2906bfa1923e16e0e567747607c2780728842d46d",
+          "57f39c58ce66ad10c129cd35ae082375fa3857531e075412d9c091b94c4e1074"
+        ],
+        "replicate": 0,
+        "seed_base": 9100000
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.3080446836856328,
+          "naive": -0.033398845294779156,
+          "oracle": 1.019989793270047,
+          "raw_XW": 0.7659711522205958
+        },
+        "fold_sha256": [
+          "b08bf48d00ea886550e74cd7a75a02b25155916b6986c7bcb5c5215f6b5e7c06",
+          "b791543311aa9743dc7ae2f12508de71d720e813e709b1910daa5759c2c5fda4",
+          "0699adc7304392d7548d1ca51e4b0e28363adbd50eefd27dde2c25ab563e5c8e",
+          "6c1a1a8e5c020a3c934b41d5c894fd88fafb095788129c54c13cdef622471649"
+        ],
+        "replicate": 1,
+        "seed_base": 9100010
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.06305883639453431,
+          "naive": -0.16144590014956695,
+          "oracle": 1.0257697260458598,
+          "raw_XW": 0.9001642652137104
+        },
+        "fold_sha256": [
+          "b43e6e57f0e99b533d992d83b70c0451c6f775f1e6f1f2a49552134107d71218",
+          "19511e4d6a0c600a0eaa0c84a9fa4998ed5479baf98fe83e1d646b67f4824d08",
+          "35d74a5bb8dd98534982e4252c593d5b3d4024cbe6a652a82bf0e4aba15bc53d",
+          "82d3b364894ad659c933de0e56f5773776ce6cb4a284abc9556945f5115e2381"
+        ],
+        "replicate": 2,
+        "seed_base": 9100020
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.14422672622003702,
+          "naive": -0.10166323981575043,
+          "oracle": 1.0621230373492307,
+          "raw_XW": 0.8808850678358949
+        },
+        "fold_sha256": [
+          "d33904a59172d0263f9859e4d629ed95111ee263c473bbd54535e20b85d1e6a1",
+          "5fc3f4c46e3da003d4e8fd3461f8bc5ed0bd55328b049ec77a8ee2876c95319a",
+          "83912610ce1e9056ec585c00bdb11bcfd57449df4ea4c0e22de4f88f47731708",
+          "8beef0445761b20fec16903db632353aeed9839142c1562fd8353ce6be320710"
+        ],
+        "replicate": 3,
+        "seed_base": 9100030
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.07233675998898106,
+          "naive": -0.16531440842738793,
+          "oracle": 1.00459947564009,
+          "raw_XW": 0.9852854666994126
+        },
+        "fold_sha256": [
+          "b3c3739239cd2916972dea0fe02c5afe28fd72f780338fdca99f32c497f92831",
+          "74f5b0e3c0930e850c1f15a74527feb05396e83e68f78a2b766cb02372d62c5d",
+          "db36d301effdd654ae77c0319fb43ddd0753391cfa9a87d4a854d3ab4348cdda",
+          "aa66effb25fcf8b011a826ba1791f42340f435ed04c5fdef05142186de052c3d"
+        ],
+        "replicate": 4,
+        "seed_base": 9100040
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.09355347943565848,
+          "naive": -0.13510452587184207,
+          "oracle": 1.0159293311343265,
+          "raw_XW": 0.8312821148612205
+        },
+        "fold_sha256": [
+          "a1b189b74fef7d19d49e6c981eab9f3b3851c14b1242a88462893563d747dbcf",
+          "e363d806a37a69f8d54dc6fe5cd6448cb001f51d2b6771967bea1a513b7f9fe8",
+          "daf50fff4e4300a985fd37b968778d9d6f6eeaa6a616ca912e11fff35a5d1eaa",
+          "cf97bf0990ec1d129d0246db8b4aff86bfd3dc08255dd5a5f6e6ddd47a804a2d"
+        ],
+        "replicate": 5,
+        "seed_base": 9100050
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.35011806083448943,
+          "naive": 0.1192520641569011,
+          "oracle": 1.0592757856337416,
+          "raw_XW": 0.8751863654453561
+        },
+        "fold_sha256": [
+          "c37555a827016ec6db01bca9c67ebd21c24803a298b10ed7e788e30986440df3",
+          "93d904241d42cda718d140b8dca8167223b5810b61cbb25912ffc997b0715a7e",
+          "42605b273b51f7ec482d74369bd961c4f0103067cc06be9271b27089c8ecda6e",
+          "c5ae51cfaf05bd6d2b87aa77ca1ec84c2445e26efac4efcbe6463f8a91851f37"
+        ],
+        "replicate": 6,
+        "seed_base": 9100060
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.19805614436798177,
+          "naive": -0.06221212412420235,
+          "oracle": 1.0980987574286858,
+          "raw_XW": 0.9730700132577933
+        },
+        "fold_sha256": [
+          "df9c5f6549e8c82042d16ec2ae20f735dc632a381bd317f26ef9054c75dfab9e",
+          "7f71cbef50158ecf733236c08fc3bc16c70ab3bfb6d3241526d01db7d92813aa",
+          "51a60fa82723d9724849d0ea71ca9e4fe0564bfd6ce8958b248edda905278f60",
+          "3f137ee50657419a73b6534178e1a7b19886d9541e3a2ae839d70bef6801943a"
+        ],
+        "replicate": 7,
+        "seed_base": 9100070
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.14338760094522432,
+          "naive": -0.3114653210073621,
+          "oracle": 0.9356959204047735,
+          "raw_XW": 0.7265594298249631
+        },
+        "fold_sha256": [
+          "5e1aaf572c38d765a3fb4dab92e455b45edc410e08275f690d74f80954805b6c",
+          "75c6ea0d580b2a11acd5321e5f0738a4499afad0fb497daaf0dfb889dbed9dc9",
+          "15f87fb9be6466994146565c680080d9f5682c389977eb733995a4a96c9602a4",
+          "0f820e033a981ebde773798377eceeaa19ea187ed606cefcf90325f02dbee2ce"
+        ],
+        "replicate": 8,
+        "seed_base": 9100080
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.09395620028253883,
+          "naive": -0.3072075773480005,
+          "oracle": 0.9688151482691774,
+          "raw_XW": 0.7813463351003841
+        },
+        "fold_sha256": [
+          "e6049cdde1d9a030197a665b7b269bf7d43b0e1fc8e5536ac71071acdbd5d2a0",
+          "f2de810214357a78cfbf8dfa180add91d88f9c4adf50b1ae3d53f07914a15bb8",
+          "c508ec3ef703019be4ed713cba8a966c997c003884915b23952d6f335eeb96d4",
+          "84a48ddfb2f06bfcdb50f403baa667fb1fa2be42c6f4f9c377ef084fb205b72f"
+        ],
+        "replicate": 9,
+        "seed_base": 9100090
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.2575457052243347,
+          "naive": 0.029552199676998625,
+          "oracle": 1.0654580540973018,
+          "raw_XW": 0.8970374780781168
+        },
+        "fold_sha256": [
+          "86c4ad6babbf0fdb73ad65d76062eb1791643ca54b44eafd6a2d53c2a4e759cb",
+          "ce3a37ee0037103d139bacd61317fe6bba7832648d2dda2728032528eadce343",
+          "989f07641928d4aed99676c57d01dce9ad49e399c3ab86a28c6f9a2d9344a2c3",
+          "52f37a73123697a0ae18aace9ec109c8e45003060fb6ff50739a4f0d137b36ae"
+        ],
+        "replicate": 10,
+        "seed_base": 9100100
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.1080969946150804,
+          "naive": -0.09441671150217334,
+          "oracle": 1.0155241835724123,
+          "raw_XW": 0.8101638566933058
+        },
+        "fold_sha256": [
+          "b8de697ad25a6674584bfb49acd59b714b5a3f2d99f708b2b7682693c57c9a08",
+          "a6e246e1f799aa14ae4d55c56c136a939ceae749d76f61fe0aa40041ba8a1539",
+          "7e2ddd59feb305ff66abd0d6209ef550b914eebc90c92444bf203f4ace542bed",
+          "f0942cc6a1faa720a49a29f9b6ab46c5ee7246171430491f0435110512ef95ea"
+        ],
+        "replicate": 11,
+        "seed_base": 9100110
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.053005050292795536,
+          "naive": -0.11742934308299136,
+          "oracle": 0.9649914173970667,
+          "raw_XW": 0.6483302977771341
+        },
+        "fold_sha256": [
+          "3a8c3c675681a7896e512698362d98cce8127d4cb268110066552f6164e7b013",
+          "1fa90a2d183e56045fb94d4e695065d6889e647df4c3e14573e62b2c21e959e9",
+          "8851ea7fa8765fdcc9b748a54c2f19e2ba72a338eae88cd609e0ac820f2aa6d9",
+          "585bd30c3c0f3f88b48995cc29c1e04cb251f35360ceff571c621e876adc0f83"
+        ],
+        "replicate": 12,
+        "seed_base": 9100120
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.04823925683132836,
+          "naive": -0.19005296940258326,
+          "oracle": 0.9550932769865859,
+          "raw_XW": 0.8314795575802552
+        },
+        "fold_sha256": [
+          "173953f0866946ecaa510ce44c23a1976cee7ad4dbe46fa845c1606ef9a11f3f",
+          "ca387e1904a5bbaa0472205a56530aab93d2f542b7bb79cb11340a50788c4cf5",
+          "2c0269b9d2b88eae3c456708d8add5d10f4af51133d02b30bf6f4e46a413ffaa",
+          "43dd643d2a71429d121fddc1e5bfc65dcec536dd82d9bbe010663c2bb2c5be19"
+        ],
+        "replicate": 13,
+        "seed_base": 9100130
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.0770736557816302,
+          "naive": -0.10017727675145083,
+          "oracle": 0.9967131555939104,
+          "raw_XW": 0.921809143038767
+        },
+        "fold_sha256": [
+          "8d9b1c37d6cb380bf46ddc858b3e2176c18472c9095e37e60e38938aa72d692a",
+          "7a659395a1f65053a76411efc600dfee98cadeca4891e358156ca8c04642002f",
+          "297944f9b1678f5abcd7a4b753f91f35dec322fda7ca69714ab8477dda320f28",
+          "c59e7464916477777e675acda6d51a4c3dd569e459ac53f981a6cfcd11e065f1"
+        ],
+        "replicate": 14,
+        "seed_base": 9100140
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.04781558958297715,
+          "naive": -0.1585511636210652,
+          "oracle": 0.9835834937395692,
+          "raw_XW": 1.0027421057190402
+        },
+        "fold_sha256": [
+          "8e7fd97fd028c7f10bb01430635336320adb549e9178ce4af7795f16ee41fdb2",
+          "80b080c04a415a598d69a1bd197199d11c135cb9c3b0c9c655c4f757eddb7153",
+          "71940fbaa97934bf22ab1cf0aa46bc43ab2c7140e0a5d50ffa1035e8a631a58c",
+          "8d51bdd8e5dc813aab6b98e07eae0eae8f9f5c0d8e54ff89bb3e148c9e4c7466"
+        ],
+        "replicate": 15,
+        "seed_base": 9100150
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.13120411045993016,
+          "naive": -0.0847154473653352,
+          "oracle": 1.0371693734861382,
+          "raw_XW": 0.9969822771235881
+        },
+        "fold_sha256": [
+          "c0e7fd08cbee4f8fb14ca0b4f5de8a96dccbc5e0184bf0a1d49a97e53555ca35",
+          "cdc11685d5927588a7fff12dfe945bbe303e1ecc05ae2aaac0a330fa7eebccae",
+          "86ec1655e01ab69e8999195999dbd3c84bfa1180a76566808b1585fb74cbf49d",
+          "f17e4ba003ce77d3b70c72d0079a33b86ac12a1ad7704d7ad014a375058a806b"
+        ],
+        "replicate": 16,
+        "seed_base": 9100160
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.05762091244481053,
+          "naive": -0.20259077861589164,
+          "oracle": 0.9348727734194081,
+          "raw_XW": 0.7312418130586344
+        },
+        "fold_sha256": [
+          "0c85386db7e3aecf88c2f116f34a65cd01e8bfa96237fbfa4363d9f8e8646ae4",
+          "0a1db8918d7ac74e8d71b97d6b17d9b0117412826e74db3f572123d0ec97862f",
+          "93a1135de380affaa53596283f1d687fba881e1c06a4275bc0d0b1cc93df422b",
+          "a307f09fd8ec3e99ebf7205af0a477d1f15d79ad13160fdc274f6800d8226d3c"
+        ],
+        "replicate": 17,
+        "seed_base": 9100170
+      },
+      {
+        "baseline_estimates": {
+          "X": -0.2779862208101103,
+          "naive": -0.6024870418191511,
+          "oracle": 0.9086800919408566,
+          "raw_XW": 0.6978600718432683
+        },
+        "fold_sha256": [
+          "82f33a626e93af8d5f8cac3844f457b0d1e3de93677539b53216a46e4c5662d6",
+          "cabf5c58baef30a2f3b348da8485b61a00dc9efe73a088e462fdd1440d34704e",
+          "9d52c6ed29981b2f7e2d26f65add3ac0a6885777dbf78fb33deb4df1bcedb931",
+          "fb81e5bcadfb72064e9f1f439ee542555149bb508f0306f6739a70361bcf19ff"
+        ],
+        "replicate": 18,
+        "seed_base": 9100180
+      },
+      {
+        "baseline_estimates": {
+          "X": 0.0194407827976585,
+          "naive": -0.1783301596739581,
+          "oracle": 1.0295207026266897,
+          "raw_XW": 0.734058751990405
+        },
+        "fold_sha256": [
+          "19a3529628b5ea53183496770e69a029e0a8fc8ae810a4317bdc7e7b340722bd",
+          "7cdc29478781ec977f80ab8fe86a5f6634d57e3943edb998ae86b819afe37988",
+          "16431c10cf59b060abce661758d799ea6966d651bde033ea9646c4709cb0ca1f",
+          "b50a251557a57aef5f7fcde08d6f4d102dfefd2c9b9bac42e7a6bfa8ee9843fa"
+        ],
+        "replicate": 19,
+        "seed_base": 9100190
+      }
+    ]
+  },
+  "complete": true,
+  "generated_at": "2026-09-13T03:29:08.794602+00:00",
+  "inputs": {
+    "noise_0.3_hard4": {
+      "path": "results/probe_e9_scm1_noise_03_hard4.json",
+      "sha256": "660ad04fdf76761ba328e8a5754834cc3b647d68d278510f4c6574ebd4fb5f95"
+    },
+    "noise_0.3_rotate4": {
+      "path": "results/probe_e9_scm1_noise_03_rotate4.json",
+      "sha256": "088c32222660f7cbf8b97d89e234b6828f80a5f917a55007de6c1fed674cd953"
+    },
+    "noise_1.0_hard4": {
+      "path": "results/probe_e9_scm1_noise_10_hard4.json",
+      "sha256": "d4e80740bbd4b8bb726677e6be7c3716faffb138e2252de74549a7a99c537700"
+    },
+    "noise_1.0_rotate4": {
+      "path": "results/probe_e9_scm1_noise_10_rotate4.json",
+      "sha256": "4147b0c147cfdd48af2dfd06fba69a6398e067d9d196a793fbe026934a727ab2"
+    }
+  },
+  "source_sha256": {
+    "analyze_e9.py": "c86785762e3a7f1c8d74694b3796b64c52e5b9ef326b1b53b103c6080097f94e",
+    "probe_structured_scm.py": "50f5f8c6e7c3aed813bd0adf42461d1f11dbe49e747b04bd57c1d4dba9a1b6dd"
+  }
+}

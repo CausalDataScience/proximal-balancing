@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-09-12T18:46:13Z",
+  "status": "provenance_correction_non_destructive",
+  "original_protocol": {
+    "path": "results/probe_structured_scm_diagnostic_protocol_v1.json",
+    "sha256": "eeb76f42029c1e397eb9d3bf4a26dd9c398bdc36713a246599cc2c7ed84fbdfb",
+    "filesystem_mtime_utc": "2026-09-12T18:44:10.369827+00:00",
+    "incorrect_embedded_frozen_at": "2026-09-12T18:46:00Z"
+  },
+  "results": [
+    {
+      "path": "results/probe_structured_scm_q2_diagnostic_v1.json",
+      "sha256": "4d9a41bcefdbdf08bf99c2302320140b59f37289ee4b7362b34d3e3ad8afb364",
+      "filesystem_mtime_utc": "2026-09-12T18:44:15.862689+00:00"
+    },
+    {
+      "path": "results/probe_structured_scm_f1_diagnostic_v1.json",
+      "sha256": "f7e0b85959243597c65b2f08a26c3814257fd71b3ee57323415559eb547b337e",
+      "filesystem_mtime_utc": "2026-09-12T18:44:27.839379+00:00"
+    }
+  ],
+  "correction": "The embedded frozen_at was manually entered and is later than both the actual protocol creation and the two result timestamps. It must not be used as evidence of preregistration. File ordering and exact hashes show that the protocol bytes preceded both diagnostic outputs, but this was a three-replicate development diagnostic, not confirmation.",
+  "future_rule": "All new protocol timestamps are generated from the runtime UTC clock before execution; source/spec/criteria hashes and a unique output path are mandatory."
+}

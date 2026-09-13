@@ -1,0 +1,25 @@
+{
+  "protocol_id": "structured-scm-rotate4-dev-v1",
+  "frozen_at_runtime_utc": "2026-09-12T18:46:39Z",
+  "purpose": "Pre-confirmation comparison of the fixed all-four-rotations screen rule; not confirmatory evidence.",
+  "allowed_phases": ["dev"],
+  "allowed_modes": ["rotate4"],
+  "total_n": 6000,
+  "fold_n": 1500,
+  "rotation_rule": "For rotation r, folds r,r+1,r+2,r+3 modulo four are D,S,N,E. Retain a split iff it passes S in all four rotations. Concatenate its four disjoint E-fold score vectors before aggregation.",
+  "specs": {
+    "q2_linear": {"name":"q2_linear","treatment_i":1.5,"proxy_sd":0.9,"outcome_u":2.7,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"standard"},
+    "f1_probit_linear": {"name":"f1_probit_linear","treatment_i":2.5,"proxy_sd":0.85,"outcome_u":2.5,"bad_i":-0.6,"effect_u":0.0,"observation":"linear","treatment_link":"probit","outcome_noise":"standard"}
+  },
+  "seed_namespaces": {"q2_linear":1402000,"f1_probit_linear":1401000},
+  "replicates_each": 3,
+  "source_sha256": {
+    "probe_structured_scm.py":"71fdb17a0581a82f2cb3c1332085e24b0cfb86c4785334d616be2c0937ccf605",
+    "run_probe_structured_scm.py":"865d06d7eb1c369d73d4d4f4cf83f5a91fbf15fb694bc57425ae01aa9185453e",
+    "test_probe_structured_scm.py":"170fd1ed9005362c982af48373a7511058db2719b3480b41bd444f046b5b5594"
+  },
+  "screen_rule":"all_four_rotations_pass_max_abs_t_le_3.5",
+  "rho_scope":"E-score sampling linking heuristic only; not a bound on learned representation, screen, or nuisance error",
+  "ablation":"pooled median of every retained candidate before graph clustering",
+  "later_confirmation_gates":{"return_rate_min":0.95,"mae_max":0.05,"p90_abs_error_max":0.10,"paired_X_upper":0.0,"paired_raw_upper":0.0,"oracle_excess_upper":0.05}
+}

@@ -1,0 +1,207 @@
+{
+ "note": "Recompute every round 6 population quantity under the corrected definitions, without retraining.\n\nTwo things changed in round 7 and neither of them touches a learned weight:\n  R1  the benchmark now holds out T = (X, W_S), as the manuscript's Section 3 defines it, instead of W_S\n      alone, and conditions through an orthonormal basis so that repeating X in (Z, T) is harmless;\n  R3  every comparator gets its own population adjusted effect instead of being assigned 1.\n\nSo the round 6 checkpoints are reloaded, their representations are rebuilt exactly, and the population\nnumbers are recomputed.  Old and new values are written side by side so the change is auditable.\n",
+ "representations": [
+  {
+   "run": "stage 2, n=4000",
+   "checkpoint": "stage2_n4000",
+   "D2_round6": 0.0040024,
+   "D2_corrected": 0.00454672387373577,
+   "tau_Z": -0.1720483883295323,
+   "representation_bias": 1.1720483883295323
+  },
+  {
+   "run": "stage 2, n=16000",
+   "checkpoint": "stage2_n16000",
+   "D2_round6": 0.0014776,
+   "D2_corrected": 0.0015365467720732699,
+   "tau_Z": 0.2934617551933836,
+   "representation_bias": 0.7065382448066164
+  },
+  {
+   "run": "stage 2, n=48000",
+   "checkpoint": "stage2_n48000",
+   "D2_round6": 8.76e-05,
+   "D2_corrected": 0.0001441344436409201,
+   "tau_Z": 1.1836627038863128,
+   "representation_bias": 0.18366270388631278
+  },
+  {
+   "run": "stage 3",
+   "checkpoint": "stage3_rep24000",
+   "D2_round6": 0.0002938,
+   "D2_corrected": 0.00032693011989536503,
+   "tau_Z": 1.398054127457082,
+   "representation_bias": 0.3980541274570819
+  }
+ ],
+ "comparators": {
+  "raw (X, W)": {
+   "tau_Z": 0.6357292336915461,
+   "adjustment_bias": 0.3642707663084539
+  },
+  "X only": {
+   "tau_Z": -0.3359672568343355,
+   "adjustment_bias": 1.3359672568343355
+  },
+  "oracle (X, U, C)": {
+   "tau_Z": 1.0,
+   "adjustment_bias": 0.0
+  },
+  "PROBE, exact representation": {
+   "tau_Z": 0.9999999999999999,
+   "adjustment_bias": 1.1102230246251565e-16
+  }
+ },
+ "stage3_recomputed": [
+  {
+   "n_est": 2000,
+   "adjustment": "PROBE, exact representation",
+   "theta": 1.0702,
+   "tau_Z": 0.9999999999999999,
+   "err_total": 0.07020000000000004,
+   "err_adjustment": 1.1102230246251565e-16,
+   "err_estimation": 0.07020000000000015,
+   "err_estimation_round6": 0.0702
+  },
+  {
+   "n_est": 2000,
+   "adjustment": "PROBE, learned representation",
+   "theta": 1.2484,
+   "tau_Z": 1.398054127457082,
+   "err_total": 0.24839999999999995,
+   "err_adjustment": 0.3980541274570819,
+   "err_estimation": 0.14965412745708195,
+   "err_estimation_round6": 0.1497
+  },
+  {
+   "n_est": 2000,
+   "adjustment": "raw (X, W)",
+   "theta": 0.6619,
+   "tau_Z": 0.6357292336915461,
+   "err_total": 0.33809999999999996,
+   "err_adjustment": 0.3642707663084539,
+   "err_estimation": 0.02617076630845394,
+   "err_estimation_round6": 0.3381
+  },
+  {
+   "n_est": 2000,
+   "adjustment": "oracle (X, U, C)",
+   "theta": 1.0513,
+   "tau_Z": 1.0,
+   "err_total": 0.0512999999999999,
+   "err_adjustment": 0.0,
+   "err_estimation": 0.0512999999999999,
+   "err_estimation_round6": 0.0513
+  },
+  {
+   "n_est": 2000,
+   "adjustment": "X only",
+   "theta": -0.7004,
+   "tau_Z": -0.3359672568343355,
+   "err_total": 1.7004000000000001,
+   "err_adjustment": 1.3359672568343355,
+   "err_estimation": 0.36443274316566454,
+   "err_estimation_round6": 1.7004
+  },
+  {
+   "n_est": 8000,
+   "adjustment": "PROBE, exact representation",
+   "theta": 1.0163,
+   "tau_Z": 0.9999999999999999,
+   "err_total": 0.01629999999999998,
+   "err_adjustment": 1.1102230246251565e-16,
+   "err_estimation": 0.016300000000000092,
+   "err_estimation_round6": 0.0163
+  },
+  {
+   "n_est": 8000,
+   "adjustment": "PROBE, learned representation",
+   "theta": 1.3409,
+   "tau_Z": 1.398054127457082,
+   "err_total": 0.3409,
+   "err_adjustment": 0.3980541274570819,
+   "err_estimation": 0.05715412745708193,
+   "err_estimation_round6": 0.0572
+  },
+  {
+   "n_est": 8000,
+   "adjustment": "raw (X, W)",
+   "theta": 0.6355,
+   "tau_Z": 0.6357292336915461,
+   "err_total": 0.36450000000000005,
+   "err_adjustment": 0.3642707663084539,
+   "err_estimation": 0.00022923369154614903,
+   "err_estimation_round6": 0.3645
+  },
+  {
+   "n_est": 8000,
+   "adjustment": "oracle (X, U, C)",
+   "theta": 1.0332,
+   "tau_Z": 1.0,
+   "err_total": 0.033199999999999896,
+   "err_adjustment": 0.0,
+   "err_estimation": 0.033199999999999896,
+   "err_estimation_round6": 0.0332
+  },
+  {
+   "n_est": 8000,
+   "adjustment": "X only",
+   "theta": -0.4294,
+   "tau_Z": -0.3359672568343355,
+   "err_total": 1.4294,
+   "err_adjustment": 1.3359672568343355,
+   "err_estimation": 0.09343274316566452,
+   "err_estimation_round6": 1.4294
+  },
+  {
+   "n_est": 32000,
+   "adjustment": "PROBE, exact representation",
+   "theta": 0.9868,
+   "tau_Z": 0.9999999999999999,
+   "err_total": 0.01319999999999999,
+   "err_adjustment": 1.1102230246251565e-16,
+   "err_estimation": 0.013199999999999878,
+   "err_estimation_round6": 0.0132
+  },
+  {
+   "n_est": 32000,
+   "adjustment": "PROBE, learned representation",
+   "theta": 1.3647,
+   "tau_Z": 1.398054127457082,
+   "err_total": 0.3647,
+   "err_adjustment": 0.3980541274570819,
+   "err_estimation": 0.033354127457081884,
+   "err_estimation_round6": 0.0334
+  },
+  {
+   "n_est": 32000,
+   "adjustment": "raw (X, W)",
+   "theta": 0.6588,
+   "tau_Z": 0.6357292336915461,
+   "err_total": 0.34119999999999995,
+   "err_adjustment": 0.3642707663084539,
+   "err_estimation": 0.02307076630845395,
+   "err_estimation_round6": 0.3412
+  },
+  {
+   "n_est": 32000,
+   "adjustment": "oracle (X, U, C)",
+   "theta": 1.009,
+   "tau_Z": 1.0,
+   "err_total": 0.008999999999999897,
+   "err_adjustment": 0.0,
+   "err_estimation": 0.008999999999999897,
+   "err_estimation_round6": 0.009
+  },
+  {
+   "n_est": 32000,
+   "adjustment": "X only",
+   "theta": -0.4205,
+   "tau_Z": -0.3359672568343355,
+   "err_total": 1.4205,
+   "err_adjustment": 1.3359672568343355,
+   "err_estimation": 0.0845327431656645,
+   "err_estimation_round6": 1.4205
+  }
+ ]
+}

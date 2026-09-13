@@ -1,0 +1,214 @@
+{
+ "args": {
+  "stages": "1",
+  "stage1_S": [
+   1
+  ],
+  "stage1_n": [
+   48000
+  ],
+  "pop_n": 300000,
+  "stage2_n": [
+   4000,
+   16000
+  ],
+  "stage3_rep": 12000,
+  "stage3_est": [
+   2000,
+   8000,
+   32000
+  ],
+  "stage4_rep": [
+   3000,
+   12000,
+   48000
+  ],
+  "stage4_est": 32000,
+  "threads": 8,
+  "out": "../results/dgp_f_staged_s1.json"
+ },
+ "stage1": {
+  "S": [
+   1
+  ],
+  "r_star": 0.08578643762690485,
+  "population": {
+   "exact r*": {
+    "D2": 1.0176795714204862e-07,
+    "D2_se": 2.691474389233719e-10,
+    "p_range": [
+     0.0795840381856919,
+     0.9187770227318658
+    ]
+   },
+   "second root": {
+    "D2": 3.780343560172406e-08,
+    "D2_se": 1.612966714080541e-10,
+    "p_range": [
+     0.050000785951648946,
+     0.9499994767253919
+    ]
+   },
+   "no I correction": {
+    "D2": 0.00029570724745077263,
+    "D2_se": 7.703901928804656e-07,
+    "p_range": [
+     0.1044389457574178,
+     0.8941222596009423
+    ]
+   },
+   "r* doubled": {
+    "D2": 0.00023620285542152043,
+    "D2_se": 6.308464817676051e-07,
+    "p_range": [
+     0.062067993063945386,
+     0.9340095067769909
+    ]
+   },
+   "r = 1": {
+    "D2": 0.003676430139575997,
+    "D2_se": 1.2418432644067504e-05,
+    "p_range": [
+     0.05000616168968338,
+     0.9499905702006244
+    ]
+   },
+   "no measurement channel": {
+    "D2": 0.00502681799400796,
+    "D2_se": 1.9748055551295875e-05,
+    "p_range": [
+     0.050000292272384825,
+     0.9499997164272954
+    ]
+   },
+   "C dropped": {
+    "D2": 0.000717816695203427,
+    "D2_se": 1.8834296741759553e-06,
+    "p_range": [
+     0.07721231344416948,
+     0.91495725335853
+    ]
+   },
+   "X and C only": {
+    "D2": 0.0033802140711755623,
+    "D2_se": 8.592107101759886e-06,
+    "p_range": [
+     0.16047487027172203,
+     0.8536335637839617
+    ]
+   }
+  },
+  "rows": [
+   {
+    "n": 48000,
+    "representation": "exact r*",
+    "population D^2": "0.000000",
+    "estimated gap": "+0.000018",
+    "se": "0.000008"
+   },
+   {
+    "n": 48000,
+    "representation": "second root",
+    "population D^2": "0.000000",
+    "estimated gap": "+0.000034",
+    "se": "0.000023"
+   },
+   {
+    "n": 48000,
+    "representation": "no I correction",
+    "population D^2": "0.000296",
+    "estimated gap": "+0.000148",
+    "se": "0.000090"
+   },
+   {
+    "n": 48000,
+    "representation": "r* doubled",
+    "population D^2": "0.000236",
+    "estimated gap": "-0.000026",
+    "se": "0.000012"
+   },
+   {
+    "n": 48000,
+    "representation": "r = 1",
+    "population D^2": "0.003676",
+    "estimated gap": "+0.003169",
+    "se": "0.000539"
+   },
+   {
+    "n": 48000,
+    "representation": "no measurement channel",
+    "population D^2": "0.005027",
+    "estimated gap": "+0.004742",
+    "se": "0.000482"
+   },
+   {
+    "n": 48000,
+    "representation": "C dropped",
+    "population D^2": "0.000718",
+    "estimated gap": "+0.000721",
+    "se": "0.000204"
+   },
+   {
+    "n": 48000,
+    "representation": "X and C only",
+    "population D^2": "0.003380",
+    "estimated gap": "+0.002691",
+    "se": "0.000446"
+   }
+  ],
+  "separation": [
+   {
+    "n": 48000,
+    "control": "no I correction",
+    "population D^2": "0.000296",
+    "difference": "+0.000130",
+    "se": "0.000090",
+    "separated": "no"
+   },
+   {
+    "n": 48000,
+    "control": "r* doubled",
+    "population D^2": "0.000236",
+    "difference": "-0.000044",
+    "se": "0.000015",
+    "separated": "no"
+   },
+   {
+    "n": 48000,
+    "control": "r = 1",
+    "population D^2": "0.003676",
+    "difference": "+0.003151",
+    "se": "0.000539",
+    "separated": "yes"
+   },
+   {
+    "n": 48000,
+    "control": "no measurement channel",
+    "population D^2": "0.005027",
+    "difference": "+0.004724",
+    "se": "0.000482",
+    "separated": "yes"
+   },
+   {
+    "n": 48000,
+    "control": "C dropped",
+    "population D^2": "0.000718",
+    "difference": "+0.000702",
+    "se": "0.000205",
+    "separated": "yes"
+   },
+   {
+    "n": 48000,
+    "control": "X and C only",
+    "population D^2": "0.003380",
+    "difference": "+0.002673",
+    "se": "0.000447",
+    "separated": "yes"
+   }
+  ],
+  "resolution": 0.000718,
+  "design_ceiling": 0.00502681799400796,
+  "screen_const": 0.02,
+  "passed": true
+ }
+}

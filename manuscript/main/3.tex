@@ -90,15 +90,16 @@ Fix a block $j$ and a representation $\phi_j$. Suppose that
 \item $W_j\perp\!\!\!\perp W_{-j}\mid(X,U)$ and, for each $a\in\{0,1\}$, $Y(a)\perp\!\!\!\perp W_{-j}\mid(X,U,Z_j)$, so that $K_j(\cdot\mid v,u)$ and $\mu_{a,j,z}(v,u)$ depend on $v=(x,w_{-j})$ only through $x$;
 \item for every $x$, the map $\pi\mapsto\int K_j(\cdot\mid x,u)\,\pi(du)$ from probability laws of $U$ to laws of $W_j$ is injective.
 \end{enumerate}
-Then Assumption~\ref{ass:outcome-relevant-completeness} holds. Condition (ii) holds in the following two specializations, which are not exhaustive.
+Then Assumption~\ref{ass:outcome-relevant-completeness} holds. Condition (ii) holds \textcolor{red}{\sout{in each of the following cases}} \textcolor{blue}{in the following two specializations, which are not exhaustive}.
 \begin{enumerate}[label=(\alph*),leftmargin=*]
-\item \textit{Finite latent state.} $U$ takes values in $\{u_1,\ldots,u_K\}$, $W_j$ takes values in $\{w_1,\ldots,w_M\}$, and for every $x$ the $M\times K$ matrix with entries $K_j(w_m\mid x,u_k)$ has rank $K$.
-\item \textit{Injective decoder with additive noise.} $W_j=g(X,U)+\epsilon_j$, where $\epsilon_j$ is independent of $(X,W_{-j},U)$ and has a characteristic function without zeros, as Gaussian noise does, and $u\mapsto g(x,u)$ is injective for every $x$.
+\item \textcolor{red}{\sout{\textit{Finite latent state.} $U$ takes values in $\{u_1,\ldots,u_K\}$, $W_j$ takes values in $\{w_1,\ldots,w_M\}$, and for every $x$ the $M\times K$ matrix with entries $K_j(w_m\mid x,u_k)$ has rank $K$.}}
+\item \textcolor{red}{\sout{\textit{Additive Gaussian channel.}}} \textcolor{blue}{\textit{Injective decoder with additive noise.}} $W_j=g(X,U)+\epsilon_j$, where $\epsilon_j$ \textcolor{red}{\sout{is a Gaussian vector with positive definite covariance, independent of $(X,W_{-j},U)$}} \textcolor{blue}{is independent of $(X,W_{-j},U)$ and has a characteristic function without zeros, as Gaussian noise does}, and $u\mapsto g(x,u)$ is injective for every $x$.
+\item \textcolor{blue}{\textit{Count channel with an injective rate.} $W_j$ is a vector of counts whose coordinates are conditionally independent given $(X,U)$, with $W_{j,\ell}\mid(X=x,U=u)\sim\operatorname{Poisson}\{\lambda_\ell(x,u)\}$ for each coordinate $\ell$, and $u\mapsto\lambda(x,u)\triangleq(\lambda_1(x,u),\ldots,\lambda_{d}(x,u))$ is injective for every $x$.}
 \end{enumerate}
 
 \end{proposition}
 
-Condition (i) lets the remaining blocks influence the outcome only through $(X,U)$ and through components retained in $Z_j$; Theorem~\ref{thm:exact-proxy-identification} below uses the more general Assumption~\ref{ass:outcome-relevant-completeness}. Case (a) requires the held-out block to have at least as many support points as the latent state. Case (a) covers a categorical latent state observed through a noisy code, and case (b) covers latent-variable generative models in which the held-out block is a decoded image or embedding of $(X,U)$ plus independent noise.
+Condition (i) lets the remaining blocks influence the outcome only through $(X,U)$ and through components retained in $Z_j$; Theorem~\ref{thm:exact-proxy-identification} below uses the more general Assumption~\ref{ass:outcome-relevant-completeness}. \textcolor{red}{\sout{Case (a) requires the held-out block to have at least as many support points as the latent state, and case (b) extends to any noise law whose characteristic function has no zeros.}} \textcolor{blue}{The first specialization covers latent-variable generative models in which the held-out block is a decoded image or embedding of $(X,U)$ plus independent noise, and the second covers count-valued proxies such as event, word, or sequencing-read counts. When the latent state takes finitely many values and both proxy blocks are pure measurements, the matrix restoration of \citet{kuroki2014measurement} identifies $\tau$ directly, as discussed in Section~\ref{sec:related-work}.}
 
 \subsubsection{Exact Identification for a Fixed Block}
 \label{sec:exact-proxy-identification}
