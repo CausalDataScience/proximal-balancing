@@ -1,0 +1,198 @@
+{
+ "protocol_id": "scm6-v3-full-target-confirmation",
+ "experiment_id": "SCM-6-v3",
+ "mode": "operational_rotate4",
+ "arms": {
+  "confirmation": {
+   "n": 12000,
+   "seeds": [
+    94200000,
+    94201000,
+    94202000,
+    94203000,
+    94204000,
+    94205000,
+    94206000,
+    94207000,
+    94208000,
+    94209000,
+    94210000,
+    94211000,
+    94212000,
+    94213000,
+    94214000,
+    94215000,
+    94216000,
+    94217000,
+    94218000,
+    94219000,
+    94220000,
+    94221000,
+    94222000,
+    94223000,
+    94224000,
+    94225000,
+    94226000,
+    94227000,
+    94228000,
+    94229000
+   ]
+  },
+  "larger_n": {
+   "n": 24000,
+   "seeds": [
+    94200000,
+    94201000,
+    94202000,
+    94203000,
+    94204000,
+    94205000,
+    94206000,
+    94207000,
+    94208000,
+    94209000
+   ]
+  }
+ },
+ "sampling": "one draw per seed at n = 24,000; the n = 12,000 arm is its fold-wise prefix",
+ "d_fold_rows_at_12000": {
+  "encoder_fit": 1200,
+  "encoder_cal": 300,
+  "search_and_critics": 1500
+ },
+ "selection": "cross-fitted nested Brier gap over the frozen r grid, ridge-probit critics, compressed one-component target; the v2 development selector, unchanged",
+ "screen": {
+  "critics": "base MLP on Z; augmented = base + residual MLP on (Z, full 256-dim W_S), hidden 64, SiLU, output in [0.05, 0.95], 2 restarts, early stopping on validation Brier, lifted base always a checkpoint candidate",
+  "statistic": "held-out Brier risk difference on the S fold",
+  "rule": "max(gap, 0) + z_{1 - alpha/N} SE < tolerance, and no saturation",
+  "tolerance": 0.002,
+  "alpha": 0.05,
+  "N": 30,
+  "population_window": [
+   2.99e-05,
+   0.00772
+  ],
+  "retention": "pass in all four rotations"
+ },
+ "aggregation": "common radius from the evaluation scores, link within 2 rho, median of the unique largest component; a tie is no_return",
+ "comparators": [
+  "naive",
+  "X",
+  "raw_ridge",
+  "learned_projection",
+  "blockwise_pca",
+  "oracle"
+ ],
+ "learned_target_evaluator": {
+  "n": 200000,
+  "seed_rule": "424242 + data seed"
+ },
+ "decision_record": {
+  "screen_tolerance": "2e-3, set after one development seed (94000000) showed the one-sided bound's slack z*SE reaches 2e-3 to 4e-3 whenever the residual branch moves at all, so the earlier 1e-3 retained only 2 of 8 balance-feasible splits across four rotations. From the recorded U values, 2e-3 retains 4 of 8 and passes no infeasible row (their minimum U was 3.36e-3). Inside the population window (2.99e-5, 7.72e-3). Chosen by the user on 2026-09-14 from options 1e-3, 2e-3, 2.5e-3 before any confirmation seed was opened.",
+  "learned_target_gate": "median 0.10, p90 0.15, relaxed from the reviewer's 0.05 / 0.10 by the user's decision on 2026-09-14 after the same development seed gave 0.076 / 0.122 over the splits that target 1 (encoder error 0.040 at the exact root with 1,200 encoder rows, plus selection error). This is a threshold set with knowledge of one development value; it is recorded here so the sealed protocol cannot be read as pre-specified in the stricter sense. No confirmation seed had been run."
+ },
+ "gates": {
+  "performance": {
+   "return_rate_min": 0.95,
+   "mae_max": 0.05,
+   "p90_max": 0.1,
+   "oracle_excess_upper_max": 0.05,
+   "beats": [
+    "X",
+    "raw_ridge",
+    "best_no_balance"
+   ],
+   "alpha": 0.05,
+   "bonferroni_contrasts": 4
+  },
+  "mechanism": {
+   "screen_tpr_min": 0.8,
+   "screen_fpr_max": 0.2,
+   "unique_largest_rate_min": 0.9,
+   "component_purity_min": 0.8,
+   "learned_target_error_median_max": 0.1,
+   "learned_target_error_p90_max": 0.15
+  },
+  "secondary_only": [
+   "root_recovery",
+   "median_root_error",
+   "channel_correlation",
+   "selected_r_by_component",
+   "runtime"
+  ]
+ },
+ "source_snapshot": {
+  "bundle_sha256": "4704b90c3ce820452c0a61d9280ad7e7706cf17438e420fd497b175430530055",
+  "files": {
+   "learned_target.py": "ec9713c708a9a2da26b2dbc6b8878e403612c16f87b160a0cff5bbbd3781b7c9",
+   "minimal_suite_common.py": "18e8e54d68c7e01f5563d85a9d93318692a490dddab949a99a0a134f19e74786",
+   "probe_full_target.py": "bf54653980e0ebfea699ac666f8813b9136f0222cd67b30816203d4ddf1a696a",
+   "probe_highdim_w.py": "3a8ad034d10dbef608449718e0bf758ef9a16dec0600dcb91599bfcb8e853e9b",
+   "probe_highdim_w_v2.py": "005c5f2a959552e7ddb68fbab84f88e32c1934943e300cc40d3920deced61fcf",
+   "run_scm6_v3.py": "44f31f2d131c279069552b472ef7e76b5bb82d22fc88e9979561407b903ccb83",
+   "scm6_population.py": "1ac9108c1dca01fae749a7e7a497992a4910656abd9e5c3eda3e09ba4ff71585"
+  }
+ },
+ "frozen_at_utc": "2026-09-14T17:29:08Z",
+ "runs": [
+  {
+   "experiment_id": "SCM-6-v3",
+   "mode": "operational_rotate4",
+   "phase": "confirmation",
+   "arm": "confirmation",
+   "n": 12000,
+   "seeds": [
+    94200000,
+    94201000,
+    94202000,
+    94203000,
+    94204000,
+    94205000,
+    94206000,
+    94207000,
+    94208000,
+    94209000,
+    94210000,
+    94211000,
+    94212000,
+    94213000,
+    94214000,
+    94215000,
+    94216000,
+    94217000,
+    94218000,
+    94219000,
+    94220000,
+    94221000,
+    94222000,
+    94223000,
+    94224000,
+    94225000,
+    94226000,
+    94227000,
+    94228000,
+    94229000
+   ]
+  },
+  {
+   "experiment_id": "SCM-6-v3",
+   "mode": "operational_rotate4",
+   "phase": "confirmation",
+   "arm": "larger_n",
+   "n": 24000,
+   "seeds": [
+    94200000,
+    94201000,
+    94202000,
+    94203000,
+    94204000,
+    94205000,
+    94206000,
+    94207000,
+    94208000,
+    94209000
+   ]
+  }
+ ],
+ "payload_sha256": "de470c752ecb9d421ba8c27aca80a459f32ceb3060b688d1ffb951bc610ceb70"
+}

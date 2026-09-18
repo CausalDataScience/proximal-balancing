@@ -1,0 +1,202 @@
+{
+ "protocol_id": "e11-v2-exact-finite-state-audit-v2",
+ "experiment_id": "E11-v2",
+ "mode": "literal_one_shot",
+ "phase": "confirmation",
+ "n_D": 20000,
+ "n_N": 20000,
+ "n_E": 20000,
+ "t": 0.02,
+ "eta": "1/10",
+ "delta": "5/100",
+ "m": 8,
+ "T": 14,
+ "outer_seeds": [
+  92000000,
+  92001000,
+  92002000,
+  92003000,
+  92004000
+ ],
+ "inner_reps": 5000,
+ "success_event": "a unique output with |tau_hat - 1| <= rho; candidate sets, ties and no-return fail",
+ "equality_rule": "candidate values are equal when their encoder map ids are equal, never by tolerance",
+ "radius_rule": "exact rational sigma and nuisance errors over the eight states; the variance term is one upward-rounded root of sigma^2 N / (n_E delta) and each root is verified to be an upper bound before it is used",
+ "supersedes": "e11-v2-exact-finite-state-audit-v1",
+ "supersede_reason": "v1 rounded the numerator and the denominator of the variance term upward separately, which can shrink the quotient, and _sqrt_up floored the scaled value before taking the integer root, which fails when that floor is a perfect square. Neither is one sided, so v1 could not certify the radius. Both are fixed here; the radius is unchanged to twelve decimals.",
+ "simultaneous_level": "one-sided Clopper-Pearson at 1 - 0.05/5 = 0.99 across the five states",
+ "gates": {
+  "Delta_positive": true,
+  "separation_4rho_lt_g": true,
+  "B_min": 0.8,
+  "uniform_radius_lower": 0.95,
+  "success_lower_at_least_B": true
+ },
+ "design_table": [
+  {
+   "split": [
+    1
+   ],
+   "split_id": "S1",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    2
+   ],
+   "split_id": "S2",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    3
+   ],
+   "split_id": "S3",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    4
+   ],
+   "split_id": "S4",
+   "map_id": "CONST_BAD_BALANCED",
+   "theta_S": "0",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    1,
+    2
+   ],
+   "split_id": "S12",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    1,
+    3
+   ],
+   "split_id": "S13",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    1,
+    4
+   ],
+   "split_id": "S14",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    2,
+    3
+   ],
+   "split_id": "S23",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    2,
+    4
+   ],
+   "split_id": "S24",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    3,
+    4
+   ],
+   "split_id": "S34",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    1,
+    2,
+    3
+   ],
+   "split_id": "S123",
+   "map_id": "CONST_UNBALANCED",
+   "theta_S": "0",
+   "population_gap": "1/16"
+  },
+  {
+   "split": [
+    1,
+    2,
+    4
+   ],
+   "split_id": "S124",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    1,
+    3,
+    4
+   ],
+   "split_id": "S134",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  },
+  {
+   "split": [
+    2,
+    3,
+    4
+   ],
+   "split_id": "S234",
+   "map_id": "U",
+   "theta_S": "1",
+   "population_gap": "0"
+  }
+ ],
+ "source_snapshot": {
+  "bundle_sha256": "d6425aadce5ba8d6ff1928eac5942e4b04602f369c8b2a72feb20ccf388099f6",
+  "files": {
+   "e11_v2_exact_theorem.py": "6c2c58fa08e5debc40b5feb0c1dce9d6d1d0112eea30c1a9ef01fa3eee893254",
+   "minimal_suite_common.py": "18e8e54d68c7e01f5563d85a9d93318692a490dddab949a99a0a134f19e74786",
+   "run_e11_v2.py": "e224547348721194d211673d3f6c267f1998c596308e1ac019ef6c94af6875d9"
+  }
+ },
+ "frozen_at_utc": "2026-09-14T00:44:53Z",
+ "runs": [
+  {
+   "experiment_id": "E11-v2",
+   "mode": "literal_one_shot",
+   "phase": "confirmation",
+   "outer_seeds": [
+    92000000,
+    92001000,
+    92002000,
+    92003000,
+    92004000
+   ],
+   "inner_reps": 5000
+  }
+ ],
+ "payload_sha256": "29a26be7e0bbec9cf122ccb2939b9502e595f4e401c3d1a14f13ae9e8fb2c03f"
+}

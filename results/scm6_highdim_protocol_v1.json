@@ -1,0 +1,118 @@
+{
+ "protocol_id": "scm6-highdim-w-v1",
+ "experiment_id": "SCM-6",
+ "mode": "operational_rotate4",
+ "total_n": 12000,
+ "rows_per_fold": 3000,
+ "emb_fit": 1200,
+ "emb_cal": 300,
+ "d_phi": 1500,
+ "dim": 256,
+ "raw_w_dim": 1282,
+ "nuisance_amplitude": 0.5,
+ "r_grid_points": 101,
+ "penalty_grid": [
+  0.0001,
+  0.001,
+  0.01,
+  0.1,
+  1.0
+ ],
+ "screen_rule": "clipped gap at most twice its standard error, and fitted propensity inside [0.1, 0.9]",
+ "retention": "a split is retained only if it passes in all four rotations",
+ "dev_seeds": [
+  94000000,
+  94001000,
+  94002000,
+  94003000,
+  94004000
+ ],
+ "confirm_seeds": [
+  94100000,
+  94101000,
+  94102000,
+  94103000,
+  94104000,
+  94105000,
+  94106000,
+  94107000,
+  94108000,
+  94109000,
+  94110000,
+  94111000,
+  94112000,
+  94113000,
+  94114000,
+  94115000,
+  94116000,
+  94117000,
+  94118000,
+  94119000
+ ],
+ "q_digests": {
+  "0": "f92dd188f56c8b17597de78e4e6cd9a3ab77bd0b5fb46a42933c3cfba2bab0f1",
+  "1": "5d90411c56f26c6a83e29a2236b95143301d5aae32363e920d42edfa4d66a624",
+  "2": "b25a03a6890651ff47f8c3e448be4be5df5d0c08ffc6ad4c1996ce73ef89dcfe",
+  "3": "717ce50ab510f86dc86163012a99d952ecebee88b19235588bae3552bdc095e3",
+  "4": "ef97b3508ac9d8d2775fba885359b1457b2c6ec327fe54141827fd63f860e4a0"
+ },
+ "gates": {
+  "return_rate_min": 0.95,
+  "mae_max": 0.05,
+  "p90_max": 0.1,
+  "oracle_excess_upper_max": 0.05,
+  "channel_corr_median_min": 0.9,
+  "bonferroni_contrasts": 8,
+  "alpha": 0.05
+ },
+ "source_snapshot": {
+  "bundle_sha256": "10d8d7a6ddbdb1ef9964eba9dc114a6d369213c7a694696c53f119a6cc26dfd4",
+  "files": {
+   "minimal_suite_common.py": "b8854b671ce95c3cbcc8f650690ab696b6e6e4e8dcc05215ae3e3b4455ff2930",
+   "probe_highdim_w.py": "3a8ad034d10dbef608449718e0bf758ef9a16dec0600dcb91599bfcb8e853e9b",
+   "run_scm6_highdim_w.py": "b5db43bbdc577a25cae53c00105d7ebdb875cf4091ce37679aa3132a4dcd0db5"
+  }
+ },
+ "frozen_at_utc": "2026-09-13T20:51:58Z",
+ "runs": [
+  {
+   "experiment_id": "SCM-6",
+   "mode": "operational_rotate4",
+   "phase": "development",
+   "seeds": [
+    94000000,
+    94001000,
+    94002000,
+    94003000,
+    94004000
+   ]
+  },
+  {
+   "experiment_id": "SCM-6",
+   "mode": "operational_rotate4",
+   "phase": "confirmation",
+   "seeds": [
+    94100000,
+    94101000,
+    94102000,
+    94103000,
+    94104000,
+    94105000,
+    94106000,
+    94107000,
+    94108000,
+    94109000,
+    94110000,
+    94111000,
+    94112000,
+    94113000,
+    94114000,
+    94115000,
+    94116000,
+    94117000,
+    94118000,
+    94119000
+   ]
+  }
+ ]
+}

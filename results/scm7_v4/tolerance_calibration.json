@@ -1,0 +1,330 @@
+{
+ "artifact": "scm7_v4_tolerance_calibration",
+ "development_source": "SCM-7-v3 confirmation shards, protocol 2ae2898a60ee",
+ "rule": "Image-specific screen tolerance for SCM-7-v4, set on development data only.\n\nProvenance of the development data.  The SCM-7-v3 confirmation (protocol 2ae2898a60ee, 20 data sets)\nfailed five of its thirteen frozen gates.  Its shards are reclassified here as development data for a new\nprotocol.  The v4 confirmation will use fresh seeds that no step of this calibration has seen.\n\nThe rule is fixed in this docstring before any number below is computed.\n\n  1. Calibration half: data sets 95200000..95209000.  Check half: 95210000..95219000.\n  2. Clean rows: per-rotation screen records of choices that are balance-feasible and target tau, with the\n     overlap condition met.\n  3. t0 = 95th percentile of the one-sided upper bound U over clean rows of the calibration half.  A\n     per-rotation pass rate of 0.95 makes the four-rotation retention of one clean choice about 0.95^4 = 0.81.\n  4. t must lie inside the population separation window (2.983e-5, 7.711e-3) of the image design.\n  5. The infeasible-row pass rate at t on the calibration half must be at most 0.10.  If it is not, t is\n     lowered to the largest value that meets it.\n  6. t is rounded down to two significant figures.\nEverything is then reported on both halves, together with a replay of which choices four-rotation retention\nwould keep at t.  Candidate estimates exist only for choices that were retained under the old tolerance,\nso the replay counts retained choices by class; it cannot recompute returned estimates.\n",
+ "population_window": [
+  2.983e-05,
+  0.007711
+ ],
+ "t0": 0.004251367094378936,
+ "tolerance": 0.004200000000000001,
+ "adjustments": [],
+ "report": {
+  "old_tolerance": {
+   "t": 0.002,
+   "calibration": {
+    "clean_pass": 0.7107142857142857,
+    "contaminated_pass": 0.65,
+    "infeasible_pass": 0.019318181818181818,
+    "scorer_tpr": 0.703125,
+    "scorer_fpr": 0.019318181818181818
+   },
+   "check": {
+    "clean_pass": 0.6857142857142857,
+    "contaminated_pass": 0.675,
+    "infeasible_pass": 0.00909090909090909,
+    "scorer_tpr": 0.684375,
+    "scorer_fpr": 0.00909090909090909
+   },
+   "replay_calibration": {
+    "per_seed": [
+     {
+      "seed": 95200000,
+      "clean": 3,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95201000,
+      "clean": 1,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95202000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95203000,
+      "clean": 3,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95204000,
+      "clean": 3,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95205000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95206000,
+      "clean": 2,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95207000,
+      "clean": 3,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95208000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95209000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     }
+    ],
+    "mean_clean_retained": 1.9,
+    "seeds_with_at_least_2_clean": 5,
+    "seeds_with_clean_plurality": 9,
+    "seeds_with_nothing_retained": 0,
+    "seeds_retaining_an_infeasible_choice": 0
+   },
+   "replay_check": {
+    "per_seed": [
+     {
+      "seed": 95210000,
+      "clean": 2,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95211000,
+      "clean": 0,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95212000,
+      "clean": 3,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95213000,
+      "clean": 2,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95214000,
+      "clean": 3,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95215000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95216000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95217000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95218000,
+      "clean": 0,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95219000,
+      "clean": 1,
+      "contaminated": 0,
+      "infeasible": 0
+     }
+    ],
+    "mean_clean_retained": 1.4,
+    "seeds_with_at_least_2_clean": 4,
+    "seeds_with_clean_plurality": 8,
+    "seeds_with_nothing_retained": 2,
+    "seeds_retaining_an_infeasible_choice": 0
+   }
+  },
+  "new_tolerance": {
+   "t": 0.004200000000000001,
+   "calibration": {
+    "clean_pass": 0.9464285714285714,
+    "contaminated_pass": 0.95,
+    "infeasible_pass": 0.03295454545454545,
+    "scorer_tpr": 0.946875,
+    "scorer_fpr": 0.03295454545454545
+   },
+   "check": {
+    "clean_pass": 0.9214285714285714,
+    "contaminated_pass": 1.0,
+    "infeasible_pass": 0.029545454545454545,
+    "scorer_tpr": 0.93125,
+    "scorer_fpr": 0.029545454545454545
+   },
+   "replay_calibration": {
+    "per_seed": [
+     {
+      "seed": 95200000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95201000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95202000,
+      "clean": 5,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95203000,
+      "clean": 7,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95204000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95205000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95206000,
+      "clean": 7,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95207000,
+      "clean": 4,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95208000,
+      "clean": 5,
+      "contaminated": 0,
+      "infeasible": 0
+     },
+     {
+      "seed": 95209000,
+      "clean": 5,
+      "contaminated": 0,
+      "infeasible": 0
+     }
+    ],
+    "mean_clean_retained": 5.7,
+    "seeds_with_at_least_2_clean": 10,
+    "seeds_with_clean_plurality": 10,
+    "seeds_with_nothing_retained": 0,
+    "seeds_retaining_an_infeasible_choice": 0
+   },
+   "replay_check": {
+    "per_seed": [
+     {
+      "seed": 95210000,
+      "clean": 5,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95211000,
+      "clean": 3,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95212000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95213000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95214000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95215000,
+      "clean": 4,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95216000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95217000,
+      "clean": 6,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95218000,
+      "clean": 4,
+      "contaminated": 1,
+      "infeasible": 0
+     },
+     {
+      "seed": 95219000,
+      "clean": 5,
+      "contaminated": 1,
+      "infeasible": 0
+     }
+    ],
+    "mean_clean_retained": 5.1,
+    "seeds_with_at_least_2_clean": 10,
+    "seeds_with_clean_plurality": 10,
+    "seeds_with_nothing_retained": 0,
+    "seeds_retaining_an_infeasible_choice": 0
+   }
+  }
+ },
+ "source_snapshot": {
+  "bundle_sha256": "e0bcbb55d2403d8548f4f3d15495af3bdd4223b5c890f360d5a9babf5446c64a",
+  "files": {
+   "calibrate_scm7_tolerance.py": "47536d7975362a3934f2e8882da94c1e9de470670b5c5d44986f9129efde478e"
+  }
+ }
+}

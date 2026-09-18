@@ -1,0 +1,118 @@
+{
+ "protocol_id": "e12-scm1-sample-size-curve-v1",
+ "experiment_id": "E12",
+ "mode": "operational_rotate4",
+ "phase": "confirmation",
+ "scm": "SCM-1",
+ "learner": "restricted_parametric_same_D_brier_rotate4",
+ "sample_sizes": [
+  1500,
+  3000,
+  6000,
+  12000
+ ],
+ "rows_per_fold": {
+  "1500": 375,
+  "3000": 750,
+  "6000": 1500,
+  "12000": 3000
+ },
+ "data_seeds": [
+  91000000,
+  91001000,
+  91002000,
+  91003000,
+  91004000,
+  91005000,
+  91006000,
+  91007000,
+  91008000,
+  91009000,
+  91010000,
+  91011000,
+  91012000,
+  91013000,
+  91014000,
+  91015000,
+  91016000,
+  91017000,
+  91018000,
+  91019000
+ ],
+ "baselines": [
+  "naive",
+  "X",
+  "raw_XW",
+  "oracle"
+ ],
+ "gates": {
+  "return_rate_min": 0.95,
+  "mae_max": 0.05,
+  "p90_max": 0.1,
+  "oracle_excess_upper_max": 0.05,
+  "bonferroni_families": 4,
+  "alpha": 0.05
+ },
+ "note": "the existing n = 6000 confirmation is external corroboration only; this curve computes its own n = 6000 cell on fresh seeds",
+ "dgp": {
+  "name": "g1_low_noise",
+  "treatment_i": 2.5,
+  "proxy_sd": 0.85,
+  "outcome_u": 2.5,
+  "bad_i": -0.6,
+  "effect_u": 0.0,
+  "observation": "linear",
+  "treatment_link": "probit",
+  "outcome_noise": "constant_small"
+ },
+ "source_snapshot": {
+  "bundle_sha256": "25ffc9eb837f083b231c1ba11884bebc2e326f571e78a13564b895b6aec8a275",
+  "files": {
+   "e8_population.py": "11dac35e93533bc16a80be93d6e4c563a6a9081003a7ff4ee49be434e929ad96",
+   "minimal_suite_common.py": "b8854b671ce95c3cbcc8f650690ab696b6e6e4e8dcc05215ae3e3b4455ff2930",
+   "probe_structured_scm.py": "50f5f8c6e7c3aed813bd0adf42461d1f11dbe49e747b04bd57c1d4dba9a1b6dd",
+   "run_e12_scm1_ncurve.py": "5636359e9e98c53e1e36c213c8be6df267e3b27eec383c60841b3e8792f2fda8"
+  }
+ },
+ "frozen_at_utc": "2026-09-13T18:10:35Z",
+ "runs": [
+  {
+   "experiment_id": "E12",
+   "mode": "operational_rotate4",
+   "phase": "confirmation",
+   "sample_sizes": [
+    1500,
+    3000,
+    6000,
+    12000
+   ],
+   "data_seeds": [
+    91000000,
+    91001000,
+    91002000,
+    91003000,
+    91004000,
+    91005000,
+    91006000,
+    91007000,
+    91008000,
+    91009000,
+    91010000,
+    91011000,
+    91012000,
+    91013000,
+    91014000,
+    91015000,
+    91016000,
+    91017000,
+    91018000,
+    91019000
+   ]
+  }
+ ],
+ "superseded": {
+  "reason": "each sample size regenerated its roles, so the curve compared independent datasets rather than one growing sample. U, X, I, C and the proxies agree on the prefix at a fixed seed, but A and Y do not, which is verified directly. Replaced by the v2 nested-prefix protocol.",
+  "replacement": "e12_scm1_ncurve_protocol_v2.json",
+  "superseded_on": "2026-09-13"
+ }
+}

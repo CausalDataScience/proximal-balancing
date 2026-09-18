@@ -83,7 +83,7 @@ Each encoder $\phi$ and critic $h$ give a squared-loss function of one observati
 
 This radius controls sampling fluctuation uniformly over the encoder--critic choices. The complexity terms account for the flexibility of the two loss classes, and the last term sets the failure-probability level $\delta_{\mathrm D}$.
 
-\textcolor{blue}{Throughout, the loss classes are taken pointwise measurable and separable, so that the suprema below are measurable, and the selected encoders and critics are measurable functions of the training observations and the algorithmic seed; every statement otherwise holds with outer probability.}
+Throughout, the loss classes are taken pointwise measurable and separable, so that the suprema below are measurable, and the selected encoders and critics are measurable functions of the training observations and the algorithmic seed; every statement otherwise holds with outer probability.
 
 \begin{proposition}[Uniform residual-discrepancy deviation]
 \label{prop:uniform-discrepancy-deviation}
@@ -107,7 +107,7 @@ For each $\phi\in\mathcal F_{j,n_{\mathrm D}}$, define
 	\label{eq:critic-approximation-error}
 \end{align}
 
-\textcolor{red}{\sout{Under the measurability conditions stated in Assumption~\ref{ass:learning-measurability-old}, with}} \textcolor{blue}{With} probability at least $1-\delta_{\mathrm D}$,
+With probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
 	\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
 	|\widetilde D_{j,n_{\mathrm D}}^2(\phi)-D_{\mathrm{res},j}^2(\phi)|
@@ -137,7 +137,7 @@ An exact empirical minimizer has $\varepsilon_{\mathrm{enc},j}=0$.
 \begin{proposition}[Residual-discrepancy oracle inequality]
 \label{thm:representation-oracle}
 \normalfont
- Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} \textcolor{red}{\sout{and Assumption~\ref{ass:learning-measurability-old}}} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
+ Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
  D_{\mathrm{res},j}^2(\widehat\phi_j)
  &\le
@@ -171,7 +171,7 @@ The adjustment functional is used whenever its two conditional means are absolut
 \label{cor:representation-causal}
 \normalfont
 
-Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} \textcolor{red}{\sout{and Assumption~\ref{ass:learning-measurability-old}}} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
+Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Proposition~\ref{prop:uniform-discrepancy-deviation} hold, and $\widehat\phi_j$ satisfies Equation~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
 \begin{align}
 	|\tau_{\widehat Z_j}-\tau|
 	\le

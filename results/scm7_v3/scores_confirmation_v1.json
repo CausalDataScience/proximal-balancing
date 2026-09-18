@@ -1,0 +1,143 @@
+{
+ "artifact": "v3_scores",
+ "scored_at_utc": "2026-09-15T08:32:48Z",
+ "protocol_path": "../results/scm7_v3/protocol.json",
+ "protocol_payload_sha256": "2ae2898a60eeec0278e08fb9b6687c1f229c46ace624c6b501403270a85cc62c",
+ "shard_sha256": {
+  "../results/scm7_v3/shards/confirmation_seed95200000_n12000.json": "94d5d8b3f8ad53b51d1d07f860dcd296ba583699812a92470112a3e4c99037d1",
+  "../results/scm7_v3/shards/confirmation_seed95201000_n12000.json": "4f53aa161283ca9660b5dd8c524efaf240922a8502b332ba90bd927d80dd412c",
+  "../results/scm7_v3/shards/confirmation_seed95202000_n12000.json": "b1b1050b8669c1192acef3167e82c4c5fed9c961ca6fbca991bfd9701aa145ba",
+  "../results/scm7_v3/shards/confirmation_seed95203000_n12000.json": "afa22d79cdc5a3c3bedec24e16396fcefc621cb7910cf661ea86d26b58885f73",
+  "../results/scm7_v3/shards/confirmation_seed95204000_n12000.json": "2c6a5240402ff01b67e990fb97b700fcd18f24867e448a51607e3471d2f12842",
+  "../results/scm7_v3/shards/confirmation_seed95205000_n12000.json": "375997bbbd64f407d9d9788f7024ce5148bc47ae0d81101570052a182d009bba",
+  "../results/scm7_v3/shards/confirmation_seed95206000_n12000.json": "2d533762424d49942a668fb1351c03974bfe044a3a728d77d81b4265e7ee0275",
+  "../results/scm7_v3/shards/confirmation_seed95207000_n12000.json": "6f60cb82b75b1af11612d739c38ef917a22a9ce99cf4d2ae7fb0ebd5df3caf91",
+  "../results/scm7_v3/shards/confirmation_seed95208000_n12000.json": "21c4a76fbe88f728b19555c0b3e33611b768e90ef019941a906ccb38c686d18f",
+  "../results/scm7_v3/shards/confirmation_seed95209000_n12000.json": "b39801886cabf0b9130297718e612a387af8e28f04ad01fd30df3232184ec0a2",
+  "../results/scm7_v3/shards/confirmation_seed95210000_n12000.json": "7944da0333cd80059932545f7aafe4d66b2b75e11db1aabdb638860f1675f438",
+  "../results/scm7_v3/shards/confirmation_seed95211000_n12000.json": "8194f25b0d29e0a4f44bc19c283e2e1d36cb724e27a46ea1ffdc8f5af6d27498",
+  "../results/scm7_v3/shards/confirmation_seed95212000_n12000.json": "4c9adb1cf42e54d56e5d591375675d18680c82e0f01a46f7831fafeb5074f4d2",
+  "../results/scm7_v3/shards/confirmation_seed95213000_n12000.json": "97eeb8642baa30ed3ed059eb4bb650195918d5c4c5a31bc36d24bbfdcdd9ba12",
+  "../results/scm7_v3/shards/confirmation_seed95214000_n12000.json": "a26fc5a5e25d216d9968a869011a7ee070b9d1e2a13ed445e93cab1df3c39e5a",
+  "../results/scm7_v3/shards/confirmation_seed95215000_n12000.json": "7298c65c863a7d3647fd3ef2b798276cf7dc5d45917c1b7ca0ad8c66c2daf46a",
+  "../results/scm7_v3/shards/confirmation_seed95216000_n12000.json": "4820fc007f733feb8cf0a7962d55248d7ea5db57781a68d557d9ce2a52e21de4",
+  "../results/scm7_v3/shards/confirmation_seed95217000_n12000.json": "6de8def01f76fe55338e87c24b07f694023c7edeb1d66c787ed0eac8281e940f",
+  "../results/scm7_v3/shards/confirmation_seed95218000_n12000.json": "1eb5e0b952d8b5cbcefb55d8a2af861f684e496d5a830c1b5b3e512fc1e03dac",
+  "../results/scm7_v3/shards/confirmation_seed95219000_n12000.json": "18e426d9fa1b934a656e7152ad904ec55df9c14bcf8caf346f1c6761143ef079"
+ },
+ "scorer_snapshot": {
+  "bundle_sha256": "0e0329ce66487eb48526b371a932ff1929f3a7e151028f2ba537ef88f43fa1d7",
+  "files": {
+   "score_v3.py": "197e5205bca1bc60e048480a2f4fe57909095043cea494fbe585390f6e110263"
+  }
+ },
+ "result": {
+  "arm": "confirmation",
+  "n": 12000,
+  "cells": 20,
+  "returned": 16,
+  "return_rate": 0.8,
+  "mean_abs_error": 0.0483448269418534,
+  "median_abs_error": 0.0300513440635351,
+  "p90_abs_error": 0.09409303077471753,
+  "estimates": [
+   1.0321991523157439,
+   0.9728121778612149,
+   0.9245357865371624,
+   1.0112382869255518,
+   0.9720964641886737,
+   1.0221618495622016,
+   1.0460674215114283,
+   1.0223107563872949,
+   0.9943068152688412,
+   1.0176238086924807,
+   1.0927531720973023,
+   1.0272651521723226,
+   1.0818178290332552,
+   1.0954328894521328,
+   0.8704303114241589,
+   1.0588284681999915
+  ],
+  "comparators": {
+   "X": {
+    "mean_abs_error": 0.9628799092649201,
+    "median_abs_error": 0.9659359323384544,
+    "n": 16
+   },
+   "cnn_channels": {
+    "mean_abs_error": 0.39948641219291237,
+    "median_abs_error": 0.3965002564214158,
+    "n": 16
+   },
+   "naive": {
+    "mean_abs_error": 1.186405151177984,
+    "median_abs_error": 1.1914751024304235,
+    "n": 16
+   },
+   "oracle": {
+    "mean_abs_error": 0.004593813086887159,
+    "median_abs_error": 0.0032581001963524203,
+    "n": 16
+   },
+   "pca_channels": {
+    "mean_abs_error": 0.891102259246271,
+    "median_abs_error": 0.8963098250058115,
+    "n": 16
+   },
+   "raw_cnn": {
+    "mean_abs_error": 0.8908134490646973,
+    "median_abs_error": 0.896594816696179,
+    "n": 16
+   },
+   "statistics_channels": {
+    "mean_abs_error": 0.35827003926829026,
+    "median_abs_error": 0.37381742947635893,
+    "n": 16
+   }
+  },
+  "best_no_balance": "statistics_channels",
+  "paired_upper": {
+   "X": -0.8792585038301669,
+   "raw": -0.7090947930078761,
+   "best_no_balance": -0.24217649607433991,
+   "oracle": 0.0660428610205617
+  },
+  "mechanism": {
+   "screen_tpr": 0.69375,
+   "screen_fpr": 0.014204545454545454,
+   "screen_pass_via_lifted_base_fraction": 0.5309168443496801,
+   "nesting_violations": 0,
+   "unique_largest_rate": 0.8,
+   "component_purity_mean": 0.9444444444444444,
+   "component_purity_min": 0.0,
+   "learned_target_error_median": 0.06137974411994218,
+   "learned_target_error_p90": 0.16667063603582982,
+   "learned_target_values": 140,
+   "learned_target_error_other_target_median": 0.032587798284366726
+  },
+  "secondary": {
+   "root_recovery_rate": 0.596875,
+   "median_root_error": 0.07963762406536234,
+   "channel_correlation_median": 0.9497565073180424,
+   "seconds_per_seed_median": 693.4513674974442,
+   "peak_gpu_gb_max": 1.335732224
+  },
+  "gates": {
+   "return_rate": false,
+   "mae": true,
+   "p90": true,
+   "oracle_excess": false,
+   "beats_X": true,
+   "beats_raw": true,
+   "beats_best_no_balance": true,
+   "screen_tpr": false,
+   "screen_fpr": true,
+   "unique_largest": false,
+   "component_purity": true,
+   "learned_target_median": true,
+   "learned_target_p90": false
+  },
+  "verdict": "FAIL"
+ },
+ "payload_sha256": "34a5c8ec8a957e5e339c6efe77cb318ed9ee442bcba6efe1b91eff9a739009f4"
+}

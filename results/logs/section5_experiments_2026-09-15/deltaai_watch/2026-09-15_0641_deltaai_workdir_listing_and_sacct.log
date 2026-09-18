@@ -1,0 +1,33 @@
+total 76
+drwxr-xr-x+ 7 yjung6 delta_bgtp  4096 Sep 14 22:59 .
+drwxrws---+ 4 yjung6 delta_bgtp 16384 Sep 14 17:53 ..
+drwxr-xr-x+ 4 yjung6 grp_202    12288 Sep 14 23:06 code
+drwxr-xr-x+ 2 yjung6 grp_202     4096 Sep 14 23:03 logs
+-rw-r--r--+ 1 yjung6 grp_202    10801 Sep 14 22:59 MANIFEST.sha256
+drwxr-xr-x+ 3 yjung6 grp_202     4096 Sep 14 22:59 materials
+-rw-r--r--+ 1 yjung6 grp_202      268 Sep 14 22:59 README.txt
+-rw-r--r--+ 1 yjung6 grp_202       18 Sep 14 22:59 requirements.txt
+drwxr-xr-x+ 3 yjung6 grp_202     4096 Sep 14 22:59 results
+-rw-r--r--+ 1 yjung6 grp_202     1102 Sep 14 22:59 scm7_v3_largen.sbatch
+-rw-r--r--+ 1 yjung6 grp_202     1292 Sep 14 22:59 scm7_v3.sbatch
+drwxrwx---+ 6 yjung6 grp_202     4096 Sep 14 17:55 .venv
+--- results ---
+scm7_v3
+--- v3 shards ---
+22
+results/scm7_v3/superseded_7e730dc0
+--- logs ---
+scm7v3_main_3152513.err
+scm7v3_main_3152513.out
+scm7v3_main_3153894.err
+scm7v3_main_3153894.out
+--- venv ---
+.venv/bin/python3
+2.14.0+cu130 2.4.6 1.17.1
+--- sacct today ---
+JobID           JobName      State    Elapsed                                                    AllocTRES 
+------------ ---------- ---------- ---------- ------------------------------------------------------------ 
+3152513      scm7v3_ma+     FAILED   01:46:07               billing=1082,cpu=18,gres/gpu=1,mem=120G,node=1 
+3153894      scm7v3_ma+  COMPLETED   04:24:43               billing=1082,cpu=18,gres/gpu=1,mem=120G,node=1 
+
+[exited with code 0]

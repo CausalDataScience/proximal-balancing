@@ -1,0 +1,13 @@
+=== PCA cache check ===
+Traceback (most recent call last):
+  File "/private/tmp/claude-502/-Users-yonghanjung-paios/02dd4dd4-bfd1-480e-aa31-8cff60aa41a1/scratchpad/check_pca_cache.py", line 39, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/claude-502/-Users-yonghanjung-paios/02dd4dd4-bfd1-480e-aa31-8cff60aa41a1/scratchpad/check_pca_cache.py", line 16, in main
+    k_all = im.apply_encoder(enc, lat, np.arange(12000))
+  File "/Users/yonghanjung/paios/research/papers/single_proxy_balancing/code/probe_image_w.py", line 310, in apply_encoder
+    dev = next(enc["model"].parameters()).device
+          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'list' object is not an iterator
+
+[exited with code 0]

@@ -1,0 +1,61 @@
+\documentclass[tikz,border=7pt]{standalone}
+
+\usepackage{amsmath}
+\usepackage{sansmath}
+\usepackage{xcolor}
+\usetikzlibrary{arrows.meta}
+
+\definecolor{coltreat}{HTML}{0066CC}
+\definecolor{colout}{HTML}{D62828}
+\definecolor{collatent}{HTML}{A6A6A6}
+\definecolor{filllatent}{HTML}{F2F2F2}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1.25cm,
+  y=0.95cm,
+  >={Latex[width=1.45mm,length=1.8mm]},
+  font=\sffamily\sansmath\scriptsize,
+  varnode/.style={draw,circle,inner sep=0mm,minimum size=8mm,
+    line width=0.5pt,font=\sffamily\sansmath\footnotesize},
+  observed/.style={varnode,draw=black,text=black,fill=white},
+  latent/.style={varnode,draw=collatent,text=collatent,fill=filllatent},
+  treatment/.style={varnode,draw=coltreat,text=coltreat,fill=white},
+  outcome/.style={varnode,draw=colout,text=colout,fill=white},
+  observed edge/.style={->,draw=black,line width=0.48pt},
+  latent edge/.style={->,draw=collatent,opacity=0.72,line width=0.48pt}
+]
+
+\node[latent] (U) at (0,3.05) {$U$};
+\node[observed] (Wm) at (-1.85,1.55) {$W_{-j}$};
+\node[observed] (X) at (0,1.55) {$X$};
+\node[observed] (Wj) at (1.85,1.55) {$W_j$};
+\node[treatment] (A) at (-0.95,-0.45) {$A$};
+\node[outcome] (Y) at (0.95,-0.45) {$Y$};
+
+% Latent arrows are drawn first and softly recede behind observed relations.
+\draw[latent edge] (U) -- (X);
+\draw[latent edge] (U) -- (Wm);
+\draw[latent edge] (U) -- (Wj);
+\draw[latent edge] (U) to[out=220,in=105,looseness=0.90] (A);
+\draw[latent edge] (U) to[out=320,in=75,looseness=0.90] (Y);
+
+% Covariate relations.
+\draw[observed edge] (X) -- (Wm);
+\draw[observed edge] (X) -- (Wj);
+\draw[observed edge] (X) -- (A);
+\draw[observed edge] (X) -- (Y);
+
+% Representation-side and held-out proxy relations.
+\draw[observed edge] (Wm) to[out=-82,in=168,looseness=0.92] (A);
+\draw[observed edge] (Wm) to[out=-18,in=148,looseness=0.90] (Y);
+\draw[observed edge] (Wj) to[out=-98,in=32,looseness=0.92] (Y);
+
+% Treatment effect.
+\draw[observed edge] (A) -- (Y);
+
+\node[align=center,font=\sffamily\sansmath\footnotesize]
+  at (0,-1.22) {Maximal allowed example for the broad cross-view setup; not an assumption.};
+
+\end{tikzpicture}
+\end{document}

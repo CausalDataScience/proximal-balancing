@@ -1,0 +1,115 @@
+{
+ "protocol_id": "e12-scm1-sample-size-curve-v1",
+ "experiment_id": "E12",
+ "mode": "operational_rotate4",
+ "phase": "confirmation",
+ "scm": "SCM-1",
+ "learner": "restricted_parametric_same_D_brier_rotate4",
+ "sample_sizes": [
+  1500,
+  3000,
+  6000,
+  12000
+ ],
+ "rows_per_fold": {
+  "1500": 375,
+  "3000": 750,
+  "6000": 1500,
+  "12000": 3000
+ },
+ "data_seeds": [
+  91000000,
+  91001000,
+  91002000,
+  91003000,
+  91004000,
+  91005000,
+  91006000,
+  91007000,
+  91008000,
+  91009000,
+  91010000,
+  91011000,
+  91012000,
+  91013000,
+  91014000,
+  91015000,
+  91016000,
+  91017000,
+  91018000,
+  91019000
+ ],
+ "baselines": [
+  "naive",
+  "X",
+  "raw_XW",
+  "oracle"
+ ],
+ "gates": {
+  "return_rate_min": 0.95,
+  "mae_max": 0.05,
+  "p90_max": 0.1,
+  "oracle_excess_upper_max": 0.05,
+  "bonferroni_families": 4,
+  "alpha": 0.05
+ },
+ "note": "the existing n = 6000 confirmation is external corroboration only; this curve computes its own n = 6000 cell on fresh seeds",
+ "dgp": {
+  "name": "g1_low_noise",
+  "treatment_i": 2.5,
+  "proxy_sd": 0.85,
+  "outcome_u": 2.5,
+  "bad_i": -0.6,
+  "effect_u": 0.0,
+  "observation": "linear",
+  "treatment_link": "probit",
+  "outcome_noise": "constant_small"
+ },
+ "source_snapshot": {
+  "bundle_sha256": "4b770796e6209ee000d0bd6a785dcfff7db7627abf4ac8b414f8ba4f3380e154",
+  "files": {
+   "e8_population.py": "11dac35e93533bc16a80be93d6e4c563a6a9081003a7ff4ee49be434e929ad96",
+   "minimal_suite_common.py": "b8854b671ce95c3cbcc8f650690ab696b6e6e4e8dcc05215ae3e3b4455ff2930",
+   "probe_structured_scm.py": "50f5f8c6e7c3aed813bd0adf42461d1f11dbe49e747b04bd57c1d4dba9a1b6dd",
+   "run_e12_scm1_ncurve.py": "e4a07863a6a49fd2bdd6f99682e753a07fc357c0ee02d859344a7a2ef50b66e7"
+  }
+ },
+ "frozen_at_utc": "2026-09-13T18:07:38Z",
+ "runs": [
+  {
+   "experiment_id": "E12",
+   "mode": "operational_rotate4",
+   "phase": "confirmation",
+   "sample_sizes": [
+    1500,
+    3000,
+    6000,
+    12000
+   ],
+   "data_seeds": [
+    91000000,
+    91001000,
+    91002000,
+    91003000,
+    91004000,
+    91005000,
+    91006000,
+    91007000,
+    91008000,
+    91009000,
+    91010000,
+    91011000,
+    91012000,
+    91013000,
+    91014000,
+    91015000,
+    91016000,
+    91017000,
+    91018000,
+    91019000
+   ]
+  }
+ ],
+ "superseded_reason": "frozen before a defect was found in the runner: it called the replicate helper without naming the learner, so the module default was used instead of the restricted parametric Brier learner the protocol specifies, and the population error decomposition came back empty. No confirmatory cell was produced under this version; the corrected protocol was frozen before any run.",
+ "superseded_at_utc": "2026-09-13T18:10:34Z"
+}

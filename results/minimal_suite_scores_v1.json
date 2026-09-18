@@ -1,0 +1,191 @@
+{
+ "artifact": "minimal_suite_scores",
+ "schema_version": 1,
+ "scored_at_utc": "2026-09-14T00:46:39Z",
+ "location_statistic": "the gate on location is the mean absolute error; the median is reported alongside because the absolute error is right skewed",
+ "verdict_authority": "this artifact. A verdict field inside a result file is recorded here for comparison and is not used by anything.",
+ "scorer_snapshot": {
+  "bundle_sha256": "373f372c8a2ce50ae97a49f6155ef45d04a12e6e4706f4e88f36b8227ccf51e6",
+  "files": {
+   "summarize_minimal_suite.py": "c3249d20918f4b59cc7035c964e1d2f99a1aa0aca89b6a8cc494e71ec229513f"
+  }
+ },
+ "environment": {
+  "python": "3.14.7",
+  "numpy": "2.4.6",
+  "torch": "2.13.0",
+  "platform": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
+  "git_commit": "e2808b0c1"
+ },
+ "entries": [
+  {
+   "kind": "scm6",
+   "experiment_id": "SCM-6",
+   "phase": "development",
+   "result_path": "../results/scm6_highdim_dev_v1.json",
+   "result_sha256": "710ca058042a3538de0662cfa6777a24536f16246e0dbe51a562cf84b5eff7e7",
+   "protocol_path": "../results/scm6_highdim_protocol_v1.json",
+   "protocol_payload_sha256": null,
+   "protocol_sealed": false,
+   "cells": 5,
+   "verdict": "FAIL",
+   "verdict_stored_in_result": "NOT_EVALUATED",
+   "verdicts_agree": true,
+   "stored_verdict_usable": false,
+   "statistics": {
+    "cells": 5,
+    "returned": 5,
+    "return_rate": 1.0,
+    "mean_abs_error": 0.6563347453104819,
+    "median_abs_error": 0.6431533227024242,
+    "p90_abs_error": 0.6906694078642693,
+    "mean_estimate": 1.6563347453104817,
+    "baseline_mean_abs_error": {
+     "X": 0.9539532665534747,
+     "blockwise_pca": 0.19552193981641836,
+     "learned_projection": 0.20789896626877863,
+     "naive": 1.1699148115472073,
+     "oracle": 0.0049541659585570445,
+     "raw_ridge": 0.3319012576038564
+    },
+    "baseline_median_abs_error": {
+     "X": 0.9517848469485047,
+     "blockwise_pca": 0.1999279733542353,
+     "learned_projection": 0.2151687560904414,
+     "naive": 1.1791273094965404,
+     "oracle": 0.004127513410001837,
+     "raw_ridge": 0.3493952849119364
+    },
+    "paired_upper_vs_baseline": {
+     "X": -0.1771689247903558,
+     "blockwise_pca": 0.5684976450486564,
+     "learned_projection": 0.5553256629805319,
+     "naive": -0.3906623427229208,
+     "oracle": 0.7168556142378244,
+     "raw_ridge": 0.48269929803664124
+    },
+    "channel_correlation_median": 0.9821463864282539,
+    "retained_splits_median": 19.0,
+    "selected_r_values": [
+     -1.0,
+     -0.98,
+     -0.94,
+     -0.9,
+     -0.86,
+     -0.84,
+     0.9,
+     0.96,
+     0.98,
+     1.0
+    ],
+    "verdict": "FAIL"
+   },
+   "gates": {
+    "return_rate": true,
+    "mae": false,
+    "p90": false,
+    "channel_corr": true,
+    "oracle_excess": false,
+    "beats_X": true,
+    "beats_raw_ridge": false,
+    "beats_learned_projection": false,
+    "beats_blockwise_pca": false
+   }
+  },
+  {
+   "kind": "scm6",
+   "experiment_id": "SCM-6",
+   "phase": "confirmation",
+   "result_path": "../results/scm6_highdim_confirm_v1.json",
+   "result_sha256": "372d250198430cf6f36934f9617cf3ba19129d005e1ed6d95c136f51a3056b68",
+   "protocol_path": "../results/scm6_highdim_protocol_v1.json",
+   "protocol_payload_sha256": null,
+   "protocol_sealed": false,
+   "cells": 20,
+   "verdict": "FAIL",
+   "verdict_stored_in_result": "NOT_EVALUATED",
+   "verdicts_agree": true,
+   "stored_verdict_usable": false,
+   "statistics": {
+    "cells": 20,
+    "returned": 20,
+    "return_rate": 1.0,
+    "mean_abs_error": 0.6467135715710536,
+    "median_abs_error": 0.6406817050490343,
+    "p90_abs_error": 0.6988532560153236,
+    "mean_estimate": 1.6467135715710532,
+    "baseline_mean_abs_error": {
+     "X": 0.9563982678971078,
+     "blockwise_pca": 0.1833132259278768,
+     "learned_projection": 0.19503758157586099,
+     "naive": 1.1764426173861022,
+     "oracle": 0.005467930316923308,
+     "raw_ridge": 0.23867550063374798
+    },
+    "baseline_median_abs_error": {
+     "X": 0.9520866105738856,
+     "blockwise_pca": 0.185342481906003,
+     "learned_projection": 0.1942873933324733,
+     "naive": 1.1749808809567432,
+     "oracle": 0.005290488998988874,
+     "raw_ridge": 0.2365629114255806
+    },
+    "paired_upper_vs_baseline": {
+     "X": -0.26156931191001936,
+     "blockwise_pca": 0.4978048173833074,
+     "learned_projection": 0.4859900833569497,
+     "naive": -0.48210131990298805,
+     "oracle": 0.6649634506936934,
+     "raw_ridge": 0.4879951570601603
+    },
+    "channel_correlation_median": 0.9815170499078282,
+    "retained_splits_median": 18.0,
+    "selected_r_values": [
+     -1.0,
+     -0.98,
+     -0.96,
+     -0.94,
+     -0.92,
+     -0.9,
+     -0.86,
+     -0.84,
+     -0.82,
+     -0.8,
+     -0.78,
+     -0.76,
+     0.26,
+     0.54,
+     0.6,
+     0.76,
+     0.9,
+     0.94,
+     0.96,
+     0.98,
+     1.0
+    ],
+    "verdict": "FAIL"
+   },
+   "gates": {
+    "return_rate": true,
+    "mae": false,
+    "p90": false,
+    "channel_corr": true,
+    "oracle_excess": false,
+    "beats_X": true,
+    "beats_raw_ridge": false,
+    "beats_learned_projection": false,
+    "beats_blockwise_pca": false
+   }
+  }
+ ],
+ "verdicts_disagreeing": [],
+ "protocols_not_sealed": [
+  "../results/scm6_highdim_protocol_v1.json",
+  "../results/scm6_highdim_protocol_v1.json"
+ ],
+ "summary": {
+  "SCM-6 development": "FAIL",
+  "SCM-6 confirmation": "FAIL"
+ },
+ "payload_sha256": "27f8e3f502a6dc3a7355b8bcebe9384ff056b0a558992486c7ee5532ac61ee16"
+}

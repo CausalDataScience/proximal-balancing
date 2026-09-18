@@ -1,0 +1,37 @@
+syntax ok
+T1 fixed-block replay | SCM-1 | n = 12000 | 20 sealed E12 seeds | E12 protocol cf8ba759a0bf | source drift since seal: ['probe_structured_scm.py']
+  seed 91002000: replay diff 0.0e+00/0.0e+00 | W1 +1.019 W4 -0.472 X +0.026 | 106.1s | 1/20 at 107s
+  seed 91000000: replay diff 0.0e+00/0.0e+00 | W1 +1.055 W4 -0.440 X +0.054 | 108.3s | 2/20 at 110s
+  seed 91005000: replay diff 0.0e+00/0.0e+00 | W1 +0.950 W4 -0.423 X +0.010 | 108.4s | 3/20 at 110s
+  seed 91001000: replay diff 0.0e+00/0.0e+00 | W1 +1.073 W4 -0.403 X +0.011 | 110.5s | 4/20 at 112s
+  seed 91003000: replay diff 0.0e+00/0.0e+00 | W1 +0.987 W4 -0.466 X +0.072 | 111.0s | 5/20 at 112s
+  seed 91004000: replay diff 0.0e+00/0.0e+00 | W1 +0.983 W4 -0.480 X +0.034 | 112.4s | 6/20 at 114s
+  seed 91006000: replay diff 0.0e+00/0.0e+00 | W1 +0.959 W4 -0.497 X +0.025 | 153.8s | 7/20 at 261s
+  seed 91007000: replay diff 0.0e+00/0.0e+00 | W1 +1.065 W4 -0.452 X +0.044 | 151.8s | 8/20 at 261s
+  seed 91008000: replay diff 0.0e+00/0.0e+00 | W1 +1.046 W4 -0.470 X +0.082 | 154.3s | 9/20 at 264s
+  seed 91009000: replay diff 0.0e+00/0.0e+00 | W1 +1.035 W4 -0.401 X +0.032 | 154.7s | 10/20 at 266s
+  seed 91010000: replay diff 0.0e+00/0.0e+00 | W1 +0.967 W4 -0.417 X +0.020 | 155.1s | 11/20 at 267s
+  seed 91011000: replay diff 0.0e+00/0.0e+00 | W1 +1.026 W4 -0.427 X +0.053 | 154.1s | 12/20 at 268s
+  seed 91012000: replay diff 0.0e+00/0.0e+00 | W1 +1.073 W4 -0.444 X +0.036 | 155.3s | 13/20 at 417s
+  seed 91013000: replay diff 0.0e+00/0.0e+00 | W1 +0.993 W4 -0.455 X +0.025 | 158.8s | 14/20 at 420s
+  seed 91014000: replay diff 0.0e+00/0.0e+00 | W1 +1.013 W4 -0.423 X -0.004 | 157.4s | 15/20 at 421s
+  seed 91016000: replay diff 0.0e+00/0.0e+00 | W1 +0.936 W4 -0.419 X +0.055 | 154.9s | 16/20 at 422s
+  seed 91015000: replay diff 0.0e+00/0.0e+00 | W1 +0.969 W4 -0.464 X -0.008 | 157.3s | 17/20 at 424s
+  seed 91017000: replay diff 0.0e+00/0.0e+00 | W1 +1.002 W4 -0.455 X +0.056 | 157.0s | 18/20 at 425s
+  seed 91018000: replay diff 0.0e+00/0.0e+00 | W1 +0.965 W4 -0.447 X +0.036 | 90.1s | 19/20 at 507s
+  seed 91019000: replay diff 0.0e+00/0.0e+00 | W1 +1.054 W4 -0.464 X +0.034 | 88.4s | 20/20 at 509s
+  W1               mean +1.0085  sd 0.0436  MAE vs tau 0.0377  population ['+1.0000']  screen 4/4 in 15
+  W2               mean +1.0055  sd 0.0429  MAE vs tau 0.0334  population ['+1.0000']  screen 4/4 in 14
+  W3               mean +1.0149  sd 0.0585  MAE vs tau 0.0458  population ['+1.0000']  screen 4/4 in 14
+  W4               mean -0.4460  sd 0.0263  MAE vs tau 1.4460  population ['-0.4432']  screen 4/4 in 15
+  W1W2             mean +1.0097  sd 0.0328  MAE vs tau 0.0281  population ['+1.0000']  screen 4/4 in 19
+  W1W3             mean +1.0110  sd 0.0302  MAE vs tau 0.0273  population ['+1.0000']  screen 4/4 in 16
+  W2W3             mean +1.0105  sd 0.0372  MAE vs tau 0.0314  population ['+1.0000']  screen 4/4 in 19
+  W1W2W3           mean +1.0110  sd 0.0287  MAE vs tau 0.0240  population ['+1.0000']  screen 4/4 in 19
+  baseline_X       mean +0.0347  sd 0.0234  MAE vs tau 0.9653
+  baseline_raw_XW  mean +0.8181  sd 0.0242  MAE vs tau 0.1819
+  baseline_oracle  mean +1.0000  sd 0.0049  MAE vs tau 0.0039
+  baseline_naive   mean -0.1888  sd 0.0293  MAE vs tau 1.1888
+written to ../results/t1_fixed_block_scm1_v1.json (514s)
+
+[exited with code 0]

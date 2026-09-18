@@ -1,0 +1,16 @@
+=== job 3153894 reached a checkpoint ===
+state: RUNNING 32:15
+--- out ---
+device NVIDIA GH200 120GB | torch 2.14.0+cu130
+== 1. qualification: function and runtime only, two development seeds ==
+SCM-7-v3 | qualification | n=12000 | 2 seeds | device cuda | protocol 2ae2898a60ee
+  seed 95000000: unique_largest est=1.0330081241280122 retained=4 purity=1.0 corr=0.9437540821889068 gpu=1.334849024 (846s {'render': 4, 'encoder': 151, 'trunk': 26, 'encode': 22, 'selection': 146, 'screen': 162, 'raw_cnn': 91, 'comparators': 108, 'learned_target': 131})
+  seed 95001000: unique_largest est=1.0566156089687389 retained=3 purity=1.0 corr=0.9524290605119338 gpu=1.336305664 (698s {'render': 5, 'encoder': 18, 'trunk': 27, 'encode': 21, 'selection': 148, 'screen': 157, 'raw_cnn': 85, 'comparators': 107, 'learned_target': 125})
+seed 95000000: 846s, peak GPU 1.334849024, timing { render: 4, encoder: 151, trunk: 26, encode: 22, selection: 146, screen: 162, raw_cnn: 91, comparators: 108, learned_target: 131 }
+seed 95001000: 698s, peak GPU 1.336305664, timing { render: 5, encoder: 18, trunk: 27, encode: 21, selection: 148, screen: 157, raw_cnn: 85, comparators: 107, learned_target: 125 }
+runtime gate passed; confirmation may open
+== 2. confirmation: 20 fresh seeds at n = 12,000 ==
+SCM-7-v3 | confirmation | n=12000 | 20 seeds | device cuda | protocol 2ae2898a60ee
+--- err ---
+
+[exited with code 0]

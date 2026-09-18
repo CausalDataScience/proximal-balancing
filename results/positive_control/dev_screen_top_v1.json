@@ -1,0 +1,389 @@
+{
+ "complete": true,
+ "generated_utc": "2026-09-16T21:10:46.941409Z",
+ "purpose": "development only: choose n_D and the screen threshold t",
+ "preflight": "/Users/yonghanjung/paios/research/papers/single_proxy_balancing/results/positive_control/preflight_v1.json",
+ "dev_seed_start": 8200000,
+ "replicates": 5,
+ "thresholds": [
+  5e-05,
+  0.0001,
+  0.0002,
+  0.0005,
+  0.001,
+  0.002,
+  0.005
+ ],
+ "rungs": [
+  {
+   "n_D": 100000,
+   "replicates": [
+    {
+     "seed": 8200000,
+     "beta_recovered": 9,
+     "intended": 9,
+     "theta_gap_when_missed": 0.0,
+     "objective_intended_max": 9.258999063843643e-07,
+     "objective_other_min": 0.005626137786692215,
+     "thresholds": {
+      "5e-05": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      }
+     }
+    },
+    {
+     "seed": 8201000,
+     "beta_recovered": 9,
+     "intended": 9,
+     "theta_gap_when_missed": 0.0,
+     "objective_intended_max": 1.975655187974601e-06,
+     "objective_other_min": 0.00520144954679308,
+     "thresholds": {
+      "5e-05": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      }
+     }
+    },
+    {
+     "seed": 8202000,
+     "beta_recovered": 9,
+     "intended": 9,
+     "theta_gap_when_missed": 0.0,
+     "objective_intended_max": 1.043646752391103e-05,
+     "objective_other_min": 0.004733273063012355,
+     "thresholds": {
+      "5e-05": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.005": {
+       "retained": 17,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 8,
+       "p_tau": 0.4117647058823529,
+       "p_star": 0.11764705882352941,
+       "delta": 0.2941176470588235
+      }
+     }
+    },
+    {
+     "seed": 8203000,
+     "beta_recovered": 9,
+     "intended": 9,
+     "theta_gap_when_missed": 0.0,
+     "objective_intended_max": 3.2393514137474266e-06,
+     "objective_other_min": 0.005130200757003656,
+     "thresholds": {
+      "5e-05": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      }
+     }
+    },
+    {
+     "seed": 8204000,
+     "beta_recovered": 8,
+     "intended": 9,
+     "theta_gap_when_missed": 0.028522818622733474,
+     "objective_intended_max": 2.4561176908410864e-06,
+     "objective_other_min": 0.005174276694896479,
+     "thresholds": {
+      "5e-05": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.0005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.001": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.002": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      },
+      "0.005": {
+       "retained": 9,
+       "target": 7,
+       "wrong": 2,
+       "unintended": 0,
+       "p_tau": 0.7777777777777778,
+       "p_star": 0.2222222222222222,
+       "delta": 0.5555555555555556
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,4462 @@
+{
+ "data_seed": 94205000,
+ "n_total": 24000,
+ "rows": [
+  {
+   "rotation": 0,
+   "split_id": "S0",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.08924741818117059,
+   "screen": {
+    "gap": 0.0440037885257517,
+    "se": 0.0033522649785985613,
+    "z": 2.935199468866699,
+    "upper": 0.05384335491043463,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.09705102443695068
+   },
+   "nesting": {
+    "val_risk_base": 0.2412869930267334,
+    "val_risk_augmented": 0.20553672313690186,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2412869930267334,
+    "augmented_val": 0.20553672313690186,
+    "base_epochs": 42,
+    "augmented_epochs": 33
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S1",
+   "r": 0.22,
+   "penalty": 0.01,
+   "selection_objective": -0.0001573639735466428,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2345293015241623,
+    "val_risk_augmented": 0.2345293015241623,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2345293015241623,
+    "augmented_val": 0.2345293015241623,
+    "base_epochs": 23,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.0044682054491421985,
+    "learned_target": 0.9784164082443714,
+    "learned_target_linear": 1.0018915199678466
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S2",
+   "r": 0.22,
+   "penalty": 0.01,
+   "selection_objective": -0.00012726056015150547,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.225147545337677,
+    "val_risk_augmented": 0.225147545337677,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.225147545337677,
+    "augmented_val": 0.225147545337677,
+    "base_epochs": 31,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.0044682054491421985,
+    "learned_target": 1.019870639936626,
+    "learned_target_linear": 1.0066411117339724
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S3",
+   "r": 0.3,
+   "penalty": 0.01,
+   "selection_objective": -9.360900183297155e-05,
+   "screen": {
+    "gap": 0.0004684483041505629,
+    "se": 9.393635151319849e-05,
+    "z": 2.935199468866699,
+    "upper": 0.0007441702332193786,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 5.932230851612985e-05
+   },
+   "nesting": {
+    "val_risk_base": 0.21516123414039612,
+    "val_risk_augmented": 0.2148355096578598,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.21516123414039612,
+    "augmented_val": 0.2148355096578598,
+    "base_epochs": 25,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.07553179455085779,
+    "learned_target": 1.1710540926045179,
+    "learned_target_linear": 1.176676701227526
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S4",
+   "r": -0.68,
+   "penalty": 0.001,
+   "selection_objective": -0.00013916745633639875,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.23287831246852875,
+    "val_risk_augmented": 0.23287831246852875,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23287831246852875,
+    "augmented_val": 0.23287831246852875,
+    "base_epochs": 26,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": -0.6501708893114988,
+    "feasible": true,
+    "targets_truth": false,
+    "tau_at_root": -0.4431992000329794,
+    "root_error": 0.029829110688501248,
+    "learned_target": -0.47766411849305035,
+    "learned_target_linear": -0.4879035225497751
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S01",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.09087691072354989,
+   "screen": {
+    "gap": 0.01156316059063791,
+    "se": 0.001321034567921991,
+    "z": 2.935199468866699,
+    "upper": 0.015440660552757087,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.012453551404178143
+   },
+   "nesting": {
+    "val_risk_base": 0.24622172117233276,
+    "val_risk_augmented": 0.24466940760612488,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24622172117233276,
+    "augmented_val": 0.24466940760612488,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S02",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.0908522616261546,
+   "screen": {
+    "gap": 0.007218028111984885,
+    "se": 0.0009541081912530532,
+    "z": 2.935199468866699,
+    "upper": 0.010018525968192214,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.006009954959154129
+   },
+   "nesting": {
+    "val_risk_base": 0.23609435558319092,
+    "val_risk_augmented": 0.22745634615421295,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23609435558319092,
+    "augmented_val": 0.22745634615421295,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S03",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.0912593695358527,
+   "screen": {
+    "gap": 0.013629006461928054,
+    "se": 0.001418053169064904,
+    "z": 2.935199468866699,
+    "upper": 0.0177912753705921,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.014636889100074768
+   },
+   "nesting": {
+    "val_risk_base": 0.24569272994995117,
+    "val_risk_augmented": 0.23918843269348145,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24569272994995117,
+    "augmented_val": 0.23918843269348145,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S04",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09290707169196474,
+   "screen": {
+    "gap": 0.015659246067669552,
+    "se": 0.0018111070504337923,
+    "z": 2.935199468866699,
+    "upper": 0.020975206520163554,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022619672119617462
+   },
+   "nesting": {
+    "val_risk_base": 0.23586857318878174,
+    "val_risk_augmented": 0.2179703712463379,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23586857318878174,
+    "augmented_val": 0.2179703712463379,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S12",
+   "r": 0.28,
+   "penalty": 0.01,
+   "selection_objective": -0.0003343799747400656,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22498050332069397,
+    "val_risk_augmented": 0.22498050332069397,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22498050332069397,
+    "augmented_val": 0.22498050332069397,
+    "base_epochs": 24,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.020362375934637633,
+    "learned_target": 0.9887279911980033,
+    "learned_target_linear": 0.9764123650362079
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S13",
+   "r": 0.32,
+   "penalty": 0.001,
+   "selection_objective": -0.00022097750608393945,
+   "screen": {
+    "gap": -0.0013655448285598431,
+    "se": 0.000598895761125867,
+    "z": 2.935199468866699,
+    "upper": 0.0017578785199631622,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.002344097476452589
+   },
+   "nesting": {
+    "val_risk_base": 0.2252833992242813,
+    "val_risk_augmented": 0.22507043182849884,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2252833992242813,
+    "augmented_val": 0.22507043182849884,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.019637624065362347,
+    "learned_target": 1.0294942992073297,
+    "learned_target_linear": 1.0532404943491172
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S14",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.00981249168726076,
+   "screen": {
+    "gap": 0.005455033405588651,
+    "se": 0.0007450687776887864,
+    "z": 2.935199468866699,
+    "upper": 0.007641958886129938,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.001,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.004087032284587622
+   },
+   "nesting": {
+    "val_risk_base": 0.17313708364963531,
+    "val_risk_augmented": 0.16754524409770966,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17313708364963531,
+    "augmented_val": 0.16754524409770966,
+    "base_epochs": 27,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S23",
+   "r": 0.34,
+   "penalty": 0.01,
+   "selection_objective": -0.0005269123463959523,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2380606234073639,
+    "val_risk_augmented": 0.2380606234073639,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2380606234073639,
+    "augmented_val": 0.2380606234073639,
+    "base_epochs": 23,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.039637624065362365,
+    "learned_target": 1.1056872534939646,
+    "learned_target_linear": 1.1009712660320663
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S24",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.009538792508134216,
+   "screen": {
+    "gap": 0.00504434422915044,
+    "se": 0.0005998392062594208,
+    "z": 2.935199468866699,
+    "upper": 0.006804991948768514,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0018333333333333333,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0024590950924903154
+   },
+   "nesting": {
+    "val_risk_base": 0.1686110496520996,
+    "val_risk_augmented": 0.1630469709634781,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.1686110496520996,
+    "augmented_val": 0.1630469709634781,
+    "base_epochs": 45,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S34",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.009017170639009241,
+   "screen": {
+    "gap": 0.005723803313231569,
+    "se": 0.0011359337706652332,
+    "z": 2.935199468866699,
+    "upper": 0.009057995513555909,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.009637885726988316
+   },
+   "nesting": {
+    "val_risk_base": 0.17982974648475647,
+    "val_risk_augmented": 0.1675335019826889,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17982974648475647,
+    "augmented_val": 0.1675335019826889,
+    "base_epochs": 27,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S012",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.09177956744222956,
+   "screen": {
+    "gap": 0.011248222067105138,
+    "se": 0.0013154452730990771,
+    "z": 2.935199468866699,
+    "upper": 0.015109316334028759,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.012020078487694263
+   },
+   "nesting": {
+    "val_risk_base": 0.24133972823619843,
+    "val_risk_augmented": 0.23010437190532684,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24133972823619843,
+    "augmented_val": 0.23010437190532684,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S013",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09935930030042553,
+   "screen": {
+    "gap": 0.012802147127763983,
+    "se": 0.0016625614088240028,
+    "z": 2.935199468866699,
+    "upper": 0.017682096491902468,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01952645555138588
+   },
+   "nesting": {
+    "val_risk_base": 0.2442089021205902,
+    "val_risk_augmented": 0.23238322138786316,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2442089021205902,
+    "augmented_val": 0.23238322138786316,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S014",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09299068794154297,
+   "screen": {
+    "gap": 0.017674848743290863,
+    "se": 0.0017874694073575748,
+    "z": 2.935199468866699,
+    "upper": 0.02292142799838229,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022276662290096283
+   },
+   "nesting": {
+    "val_risk_base": 0.23303772509098053,
+    "val_risk_augmented": 0.21296758949756622,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23303772509098053,
+    "augmented_val": 0.21296758949756622,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S023",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09990343693494555,
+   "screen": {
+    "gap": 0.012671938057101527,
+    "se": 0.0016245192855384334,
+    "z": 2.935199468866699,
+    "upper": 0.017440226201177647,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.018941817805171013
+   },
+   "nesting": {
+    "val_risk_base": 0.24465112388134003,
+    "val_risk_augmented": 0.23320849239826202,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24465112388134003,
+    "augmented_val": 0.23320849239826202,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S024",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.08554987875338874,
+   "screen": {
+    "gap": 0.01338245196126876,
+    "se": 0.0017734561927429853,
+    "z": 2.935199468866699,
+    "upper": 0.01858789963626633,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02207164093852043
+   },
+   "nesting": {
+    "val_risk_base": 0.2390623539686203,
+    "val_risk_augmented": 0.22775952517986298,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2390623539686203,
+    "augmented_val": 0.22775952517986298,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S034",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09430249951564268,
+   "screen": {
+    "gap": 0.014294063200713806,
+    "se": 0.0017920177353601037,
+    "z": 2.935199468866699,
+    "upper": 0.019553992705742488,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022263554856181145
+   },
+   "nesting": {
+    "val_risk_base": 0.2322782725095749,
+    "val_risk_augmented": 0.2246808111667633,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2322782725095749,
+    "augmented_val": 0.2246808111667633,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S123",
+   "r": 0.48,
+   "penalty": 0.01,
+   "selection_objective": -0.00029955330718353933,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2276908904314041,
+    "val_risk_augmented": 0.2276908904314041,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2276908904314041,
+    "augmented_val": 0.2276908904314041,
+    "base_epochs": 23,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.45398448916085166,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000004,
+    "root_error": 0.026015510839148326,
+    "learned_target": 1.0832190261527896,
+    "learned_target_linear": 1.0686413085078328
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S124",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.008966469597869424,
+   "screen": {
+    "gap": 0.005527514959390975,
+    "se": 0.000948683728921667,
+    "z": 2.935199468866699,
+    "upper": 0.008312090936644333,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0006666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.006324718706309795
+   },
+   "nesting": {
+    "val_risk_base": 0.17095781862735748,
+    "val_risk_augmented": 0.16715261340141296,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17095781862735748,
+    "augmented_val": 0.16715261340141296,
+    "base_epochs": 29,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S134",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.008759604827055076,
+   "screen": {
+    "gap": 0.002838678340066938,
+    "se": 0.001347897761480184,
+    "z": 2.935199468866699,
+    "upper": 0.006795027133650187,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01284737791866064
+   },
+   "nesting": {
+    "val_risk_base": 0.18339428305625916,
+    "val_risk_augmented": 0.17365193367004395,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18339428305625916,
+    "augmented_val": 0.17365193367004395,
+    "base_epochs": 33,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.00835065500751525,
+   "screen": {
+    "gap": 0.005433428987000801,
+    "se": 0.000803480033145538,
+    "z": 2.935199468866699,
+    "upper": 0.0077918031535345825,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0003333333333333333,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.004552912898361683
+   },
+   "nesting": {
+    "val_risk_base": 0.17398913204669952,
+    "val_risk_augmented": 0.1673538237810135,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17398913204669952,
+    "augmented_val": 0.1673538237810135,
+    "base_epochs": 73,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S0123",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09617514741393095,
+   "screen": {
+    "gap": 0.018731353603197245,
+    "se": 0.001490833084302924,
+    "z": 2.935199468866699,
+    "upper": 0.02310724608041209,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.016096239909529686
+   },
+   "nesting": {
+    "val_risk_base": 0.24071826040744781,
+    "val_risk_augmented": 0.22423292696475983,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24071826040744781,
+    "augmented_val": 0.22423292696475983,
+    "base_epochs": 42,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S0124",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09379403371508452,
+   "screen": {
+    "gap": 0.015546582087507772,
+    "se": 0.0017589851850136778,
+    "z": 2.935199468866699,
+    "upper": 0.02070955446830431,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02158384770154953
+   },
+   "nesting": {
+    "val_risk_base": 0.23373369872570038,
+    "val_risk_augmented": 0.21908758580684662,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23373369872570038,
+    "augmented_val": 0.21908758580684662,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S0134",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.08771312734598287,
+   "screen": {
+    "gap": 0.0189610742363387,
+    "se": 0.001697662811199776,
+    "z": 2.935199468866699,
+    "upper": 0.023944053218087027,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02142062969505787
+   },
+   "nesting": {
+    "val_risk_base": 0.24528442323207855,
+    "val_risk_augmented": 0.22550652921199799,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24528442323207855,
+    "augmented_val": 0.22550652921199799,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S0234",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09566164271775504,
+   "screen": {
+    "gap": 0.013736494366760908,
+    "se": 0.001693084132529643,
+    "z": 2.935199468866699,
+    "upper": 0.018706034013308552,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.019812649115920067
+   },
+   "nesting": {
+    "val_risk_base": 0.23516309261322021,
+    "val_risk_augmented": 0.21838541328907013,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23516309261322021,
+    "augmented_val": 0.21838541328907013,
+    "base_epochs": 42,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 0,
+   "split_id": "S1234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.008151684303496201,
+   "screen": {
+    "gap": 0.0034096478184505903,
+    "se": 0.0006129556435110239,
+    "z": 2.935199468866699,
+    "upper": 0.005208794897722993,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0025965527165681124
+   },
+   "nesting": {
+    "val_risk_base": 0.18900656700134277,
+    "val_risk_augmented": 0.18564896285533905,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18900656700134277,
+    "augmented_val": 0.18564896285533905,
+    "base_epochs": 113,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S0",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.08216965347244595,
+   "screen": {
+    "gap": 0.03157687320453236,
+    "se": 0.003660012457613598,
+    "z": 2.935199468866699,
+    "upper": 0.0423197398261653,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.1092592179775238
+   },
+   "nesting": {
+    "val_risk_base": 0.23794028162956238,
+    "val_risk_augmented": 0.19854524731636047,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23794028162956238,
+    "augmented_val": 0.19854524731636047,
+    "base_epochs": 49,
+    "augmented_epochs": 35
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S1",
+   "r": 0.22,
+   "penalty": 0.001,
+   "selection_objective": -0.00013168584964205946,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2276364117860794,
+    "val_risk_augmented": 0.2276364117860794,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2276364117860794,
+    "augmented_val": 0.2276364117860794,
+    "base_epochs": 23,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.0044682054491421985,
+    "learned_target": 0.9799963694575429,
+    "learned_target_linear": 0.975085104367537
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S2",
+   "r": 0.16,
+   "penalty": 0.001,
+   "selection_objective": -0.0001918927346475236,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22268909215927124,
+    "val_risk_augmented": 0.22268909215927124,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22268909215927124,
+    "augmented_val": 0.22268909215927124,
+    "base_epochs": 25,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.0644682054491422,
+    "learned_target": 0.8450840139257908,
+    "learned_target_linear": 0.8393061324490894
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S3",
+   "r": 0.24,
+   "penalty": 0.001,
+   "selection_objective": -0.00013898587584637952,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22758331894874573,
+    "val_risk_augmented": 0.22758331894874573,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22758331894874573,
+    "augmented_val": 0.22758331894874573,
+    "base_epochs": 29,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.015531794550857791,
+    "learned_target": 1.0124783393168448,
+    "learned_target_linear": 1.0188654908223718
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S4",
+   "r": -0.66,
+   "penalty": 0.001,
+   "selection_objective": -0.00023271506718688446,
+   "screen": {
+    "gap": -1.7793316397946197e-05,
+    "se": 8.772495410279364e-05,
+    "z": 2.935199468866699,
+    "upper": 0.00025749023868887544,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 4.8320183850592e-05
+   },
+   "nesting": {
+    "val_risk_base": 0.22831349074840546,
+    "val_risk_augmented": 0.22813861072063446,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22831349074840546,
+    "augmented_val": 0.22813861072063446,
+    "base_epochs": 93,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": -0.6501708893114988,
+    "feasible": true,
+    "targets_truth": false,
+    "tau_at_root": -0.4431992000329794,
+    "root_error": 0.00982911068850123,
+    "learned_target": -0.4777625973625481,
+    "learned_target_linear": -0.4771269757954556
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S01",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09042788482173786,
+   "screen": {
+    "gap": 0.009130291642134544,
+    "se": 0.0013550088372010674,
+    "z": 2.935199468866699,
+    "upper": 0.0131075128613968,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.012544795870780945
+   },
+   "nesting": {
+    "val_risk_base": 0.237558513879776,
+    "val_risk_augmented": 0.22788004577159882,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.237558513879776,
+    "augmented_val": 0.22788004577159882,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S02",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08994007242109273,
+   "screen": {
+    "gap": 0.006297750990167792,
+    "se": 0.0012727675379325771,
+    "z": 2.935199468866699,
+    "upper": 0.010033577591498269,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.010861619375646114
+   },
+   "nesting": {
+    "val_risk_base": 0.2373955249786377,
+    "val_risk_augmented": 0.23373490571975708,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2373955249786377,
+    "augmented_val": 0.23373490571975708,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S03",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.0905256650071529,
+   "screen": {
+    "gap": 0.009030145359860142,
+    "se": 0.0013959597363739818,
+    "z": 2.935199468866699,
+    "upper": 0.013127565636624351,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.013473925180733204
+   },
+   "nesting": {
+    "val_risk_base": 0.23915240168571472,
+    "val_risk_augmented": 0.23518705368041992,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23915240168571472,
+    "augmented_val": 0.23518705368041992,
+    "base_epochs": 36,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S04",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.0845200072556846,
+   "screen": {
+    "gap": 0.015937152714431482,
+    "se": 0.0016631005129393377,
+    "z": 2.935199468866699,
+    "upper": 0.02081868445668296,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.018994176760315895
+   },
+   "nesting": {
+    "val_risk_base": 0.2344532608985901,
+    "val_risk_augmented": 0.22144998610019684,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2344532608985901,
+    "augmented_val": 0.22144998610019684,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S12",
+   "r": 0.26,
+   "penalty": 0.001,
+   "selection_objective": -0.00042325335887712117,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22226059436798096,
+    "val_risk_augmented": 0.22226059436798096,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22226059436798096,
+    "augmented_val": 0.22226059436798096,
+    "base_epochs": 44,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.04036237593463765,
+    "learned_target": 0.9080005616551637,
+    "learned_target_linear": 0.8965541381526778
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S13",
+   "r": 0.3,
+   "penalty": 0.001,
+   "selection_objective": -0.000854311788533892,
+   "screen": {
+    "gap": -7.765495149903615e-05,
+    "se": 4.0263932899234226e-05,
+    "z": 2.935199468866699,
+    "upper": 0.00011818267446031671,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 1.1145042662974447e-05
+   },
+   "nesting": {
+    "val_risk_base": 0.23159140348434448,
+    "val_risk_augmented": 0.23156054317951202,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23159140348434448,
+    "augmented_val": 0.23156054317951202,
+    "base_epochs": 30,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.0003623759346376709,
+    "learned_target": 0.9973451561477781,
+    "learned_target_linear": 0.980441586125177
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S14",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.008173947417669155,
+   "screen": {
+    "gap": 0.004317512661963286,
+    "se": 0.0013748638859435545,
+    "z": 2.935199468866699,
+    "upper": 0.008353012409748813,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0005,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.013653159141540527
+   },
+   "nesting": {
+    "val_risk_base": 0.17450307309627533,
+    "val_risk_augmented": 0.16725154221057892,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17450307309627533,
+    "augmented_val": 0.16725154221057892,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S23",
+   "r": 0.3,
+   "penalty": 0.01,
+   "selection_objective": -0.00015240483475539117,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22002024948596954,
+    "val_risk_augmented": 0.22002024948596954,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22002024948596954,
+    "augmented_val": 0.22002024948596954,
+    "base_epochs": 26,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.0003623759346376709,
+    "learned_target": 0.9738739912325144,
+    "learned_target_linear": 0.977116678181763
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S24",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.008799677028368586,
+   "screen": {
+    "gap": 0.004918276848333947,
+    "se": 0.0013858973395844399,
+    "z": 2.935199468866699,
+    "upper": 0.008986161983385966,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.014225340448319912
+   },
+   "nesting": {
+    "val_risk_base": 0.18284595012664795,
+    "val_risk_augmented": 0.17698177695274353,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18284595012664795,
+    "augmented_val": 0.17698177695274353,
+    "base_epochs": 27,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S34",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.00889412249407769,
+   "screen": {
+    "gap": 0.005767562027410159,
+    "se": 0.0013007877648463088,
+    "z": 2.935199468866699,
+    "upper": 0.009585633583895345,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0005,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.012609494850039482
+   },
+   "nesting": {
+    "val_risk_base": 0.18110701441764832,
+    "val_risk_augmented": 0.17374737560749054,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18110701441764832,
+    "augmented_val": 0.17374737560749054,
+    "base_epochs": 27,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S012",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.0905791277844555,
+   "screen": {
+    "gap": 0.004758264488811009,
+    "se": 0.002283036922691673,
+    "z": 2.935199468866699,
+    "upper": 0.01145943325169867,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.036261219531297684
+   },
+   "nesting": {
+    "val_risk_base": 0.24562475085258484,
+    "val_risk_augmented": 0.2416267842054367,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24562475085258484,
+    "augmented_val": 0.2416267842054367,
+    "base_epochs": 21,
+    "augmented_epochs": 25
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S013",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.0904063476798101,
+   "screen": {
+    "gap": 0.011682609391204331,
+    "se": 0.0017573703713062267,
+    "z": 2.935199468866699,
+    "upper": 0.016840841971664442,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02109532244503498
+   },
+   "nesting": {
+    "val_risk_base": 0.23809553682804108,
+    "val_risk_augmented": 0.2206582874059677,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23809553682804108,
+    "augmented_val": 0.2206582874059677,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S014",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08524747527898376,
+   "screen": {
+    "gap": 0.014803562288375843,
+    "se": 0.001653905708924049,
+    "z": 2.935199468866699,
+    "upper": 0.019658105446765314,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.018909558653831482
+   },
+   "nesting": {
+    "val_risk_base": 0.23343779146671295,
+    "val_risk_augmented": 0.2140234410762787,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23343779146671295,
+    "augmented_val": 0.2140234410762787,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S023",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09091445412874444,
+   "screen": {
+    "gap": 0.010609169325160425,
+    "se": 0.0015789116891934687,
+    "z": 2.935199468866699,
+    "upper": 0.015243590076668517,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.016821233555674553
+   },
+   "nesting": {
+    "val_risk_base": 0.23683428764343262,
+    "val_risk_augmented": 0.22427095472812653,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23683428764343262,
+    "augmented_val": 0.22427095472812653,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S024",
+   "r": null,
+   "penalty": 0.0001,
+   "selection_objective": 0.08566532112045934,
+   "screen": {
+    "gap": 0.01448052695960962,
+    "se": 0.0017953759444420251,
+    "z": 2.935199468866699,
+    "upper": 0.0197503134781519,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02215901017189026
+   },
+   "nesting": {
+    "val_risk_base": 0.23326049745082855,
+    "val_risk_augmented": 0.21509310603141785,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23326049745082855,
+    "augmented_val": 0.21509310603141785,
+    "base_epochs": 104,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S034",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08509525418767884,
+   "screen": {
+    "gap": 0.015862873465104472,
+    "se": 0.0016225382040202627,
+    "z": 2.935199468866699,
+    "upper": 0.020625346739760676,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.018895573914051056
+   },
+   "nesting": {
+    "val_risk_base": 0.2381189912557602,
+    "val_risk_augmented": 0.2218681275844574,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2381189912557602,
+    "augmented_val": 0.2218681275844574,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S123",
+   "r": 0.46,
+   "penalty": 0.01,
+   "selection_objective": -0.0005744400068529046,
+   "screen": {
+    "gap": 0.0004673336118085359,
+    "se": 0.0001174616878104847,
+    "z": 2.935199468866699,
+    "upper": 0.0008121070954820566,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 9.063973266165704e-05
+   },
+   "nesting": {
+    "val_risk_base": 0.2253379076719284,
+    "val_risk_augmented": 0.22502154111862183,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2253379076719284,
+    "augmented_val": 0.22502154111862183,
+    "base_epochs": 28,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": 0.45398448916085166,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000004,
+    "root_error": 0.006015510839148364,
+    "learned_target": 0.9754165792521834,
+    "learned_target_linear": 0.9795405898386311
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S124",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.007300886589950002,
+   "screen": {
+    "gap": 0.00484670555254054,
+    "se": 0.0007328079039280607,
+    "z": 2.935199468866699,
+    "upper": 0.006997642922931503,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0003333333333333333,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.003830605186522007
+   },
+   "nesting": {
+    "val_risk_base": 0.1684337705373764,
+    "val_risk_augmented": 0.1662493497133255,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.1684337705373764,
+    "augmented_val": 0.1662493497133255,
+    "base_epochs": 32,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S134",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.007333675468606175,
+   "screen": {
+    "gap": 0.0008626857012500722,
+    "se": 0.00142515435523246,
+    "z": 2.935199468866699,
+    "upper": 0.005045798007781452,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0005,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.014289895072579384
+   },
+   "nesting": {
+    "val_risk_base": 0.17186793684959412,
+    "val_risk_augmented": 0.16525764763355255,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.17186793684959412,
+    "augmented_val": 0.16525764763355255,
+    "base_epochs": 30,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.007937811745861932,
+   "screen": {
+    "gap": 0.005946976030851213,
+    "se": 0.0007889257138409377,
+    "z": 2.935199468866699,
+    "upper": 0.008262630367092415,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0008333333333333334,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.004330696538090706
+   },
+   "nesting": {
+    "val_risk_base": 0.18251049518585205,
+    "val_risk_augmented": 0.17726640403270721,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18251049518585205,
+    "augmented_val": 0.17726640403270721,
+    "base_epochs": 30,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S0123",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.0880420660740858,
+   "screen": {
+    "gap": 0.017020961539533946,
+    "se": 0.0021335262564919116,
+    "z": 2.935199468866699,
+    "upper": 0.023283286674402163,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.03226855769753456
+   },
+   "nesting": {
+    "val_risk_base": 0.23888330161571503,
+    "val_risk_augmented": 0.2197263240814209,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23888330161571503,
+    "augmented_val": 0.2197263240814209,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S0124",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08580446816973009,
+   "screen": {
+    "gap": 0.01567568045251134,
+    "se": 0.0016435279669348183,
+    "z": 2.935199468866699,
+    "upper": 0.020499762868125982,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.019292982295155525
+   },
+   "nesting": {
+    "val_risk_base": 0.23756922781467438,
+    "val_risk_augmented": 0.2140064239501953,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23756922781467438,
+    "augmented_val": 0.2140064239501953,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S0134",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08669536819775372,
+   "screen": {
+    "gap": 0.015078067362797607,
+    "se": 0.0016691855049282955,
+    "z": 2.935199468866699,
+    "upper": 0.019977459770303133,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.019436705857515335
+   },
+   "nesting": {
+    "val_risk_base": 0.23109084367752075,
+    "val_risk_augmented": 0.21527177095413208,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23109084367752075,
+    "augmented_val": 0.21527177095413208,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S0234",
+   "r": null,
+   "penalty": 0.0001,
+   "selection_objective": 0.08630596461302158,
+   "screen": {
+    "gap": 0.013032639593863733,
+    "se": 0.0018668668661253548,
+    "z": 2.935199468866699,
+    "upper": 0.018512266227759713,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02400282770395279
+   },
+   "nesting": {
+    "val_risk_base": 0.2341538518667221,
+    "val_risk_augmented": 0.22652007639408112,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2341538518667221,
+    "augmented_val": 0.22652007639408112,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 1,
+   "split_id": "S1234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.006275725602708393,
+   "screen": {
+    "gap": 0.0034284494115551147,
+    "se": 0.0008097542986927163,
+    "z": 2.935199468866699,
+    "upper": 0.0058052397989905025,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0046328953467309475
+   },
+   "nesting": {
+    "val_risk_base": 0.18205460906028748,
+    "val_risk_augmented": 0.17824889719486237,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18205460906028748,
+    "augmented_val": 0.17824889719486237,
+    "base_epochs": 26,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S0",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.10042880805885646,
+   "screen": {
+    "gap": 0.041097251284122005,
+    "se": 0.003499971358183648,
+    "z": 2.935199468866699,
+    "upper": 0.05137036535571131,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.10473953932523727
+   },
+   "nesting": {
+    "val_risk_base": 0.24133244156837463,
+    "val_risk_augmented": 0.1892920285463333,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24133244156837463,
+    "augmented_val": 0.1892920285463333,
+    "base_epochs": 27,
+    "augmented_epochs": 34
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S1",
+   "r": 0.18,
+   "penalty": 0.001,
+   "selection_objective": -0.00029787507258801694,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2345869392156601,
+    "val_risk_augmented": 0.2345869392156601,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2345869392156601,
+    "augmented_val": 0.2345869392156601,
+    "base_epochs": 44,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.044468205449142206,
+    "learned_target": 0.9024283918452263,
+    "learned_target_linear": 0.8961816892865855
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S2",
+   "r": 0.16,
+   "penalty": 0.001,
+   "selection_objective": -0.0001115204827767096,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22774744033813477,
+    "val_risk_augmented": 0.22774744033813477,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22774744033813477,
+    "augmented_val": 0.22774744033813477,
+    "base_epochs": 24,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.0644682054491422,
+    "learned_target": 0.8801599973103404,
+    "learned_target_linear": 0.8547117358233656
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S3",
+   "r": 0.18,
+   "penalty": 0.001,
+   "selection_objective": -0.00018737542491234044,
+   "screen": {
+    "gap": 0.00026847890964477476,
+    "se": 0.00023393106960542518,
+    "z": 2.935199468866699,
+    "upper": 0.0009551132609020377,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00035516571369953454
+   },
+   "nesting": {
+    "val_risk_base": 0.22993136942386627,
+    "val_risk_augmented": 0.2296832948923111,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22993136942386627,
+    "augmented_val": 0.2296832948923111,
+    "base_epochs": 23,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.044468205449142206,
+    "learned_target": 0.8998287851560116,
+    "learned_target_linear": 0.8948495567775916
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S4",
+   "r": -0.66,
+   "penalty": 0.001,
+   "selection_objective": -0.00026153763124478854,
+   "screen": {
+    "gap": 0.00019295292934293044,
+    "se": 0.00022293465144920991,
+    "z": 2.935199468866699,
+    "upper": 0.000847310599868634,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00031423219479620457
+   },
+   "nesting": {
+    "val_risk_base": 0.23664695024490356,
+    "val_risk_augmented": 0.2363215535879135,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23664695024490356,
+    "augmented_val": 0.2363215535879135,
+    "base_epochs": 25,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": -0.6501708893114988,
+    "feasible": true,
+    "targets_truth": false,
+    "tau_at_root": -0.4431992000329794,
+    "root_error": 0.00982911068850123,
+    "learned_target": -0.4464234097918868,
+    "learned_target_linear": -0.4439508870165355
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S01",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.09246353323196911,
+   "screen": {
+    "gap": 0.007684827298925126,
+    "se": 0.0013768116578469275,
+    "z": 2.935199468866699,
+    "upper": 0.011726044145766907,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.013071553781628609
+   },
+   "nesting": {
+    "val_risk_base": 0.24060961604118347,
+    "val_risk_augmented": 0.2317878156900406,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24060961604118347,
+    "augmented_val": 0.2317878156900406,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S02",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.10117111383326136,
+   "screen": {
+    "gap": 0.0067330926416534495,
+    "se": 0.0013161600502922905,
+    "z": 2.935199468866699,
+    "upper": 0.010596284922214948,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.011767419055104256
+   },
+   "nesting": {
+    "val_risk_base": 0.24225328862667084,
+    "val_risk_augmented": 0.23792214691638947,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24225328862667084,
+    "augmented_val": 0.23792214691638947,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S03",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.10126945351221676,
+   "screen": {
+    "gap": 0.007815744342166843,
+    "se": 0.0012226762181463098,
+    "z": 2.935199468866699,
+    "upper": 0.011404542928265836,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.010002783499658108
+   },
+   "nesting": {
+    "val_risk_base": 0.23356567323207855,
+    "val_risk_augmented": 0.22036828100681305,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23356567323207855,
+    "augmented_val": 0.22036828100681305,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S04",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09593256591386415,
+   "screen": {
+    "gap": 0.015512765510635386,
+    "se": 0.0017473419368568325,
+    "z": 2.935199468866699,
+    "upper": 0.020641562635626068,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.021344009786844254
+   },
+   "nesting": {
+    "val_risk_base": 0.23686100542545319,
+    "val_risk_augmented": 0.2162865847349167,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23686100542545319,
+    "augmented_val": 0.2162865847349167,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S12",
+   "r": 0.24,
+   "penalty": 0.01,
+   "selection_objective": -0.0006367329472614185,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22960661351680756,
+    "val_risk_augmented": 0.22960661351680756,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22960661351680756,
+    "augmented_val": 0.22960661351680756,
+    "base_epochs": 27,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.06036237593463767,
+    "learned_target": 0.8811602473694086,
+    "learned_target_linear": 0.869337444532218
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S13",
+   "r": 0.26,
+   "penalty": 0.001,
+   "selection_objective": -6.60867600713321e-05,
+   "screen": {
+    "gap": -0.0006473023058320737,
+    "se": 0.0006531746515921233,
+    "z": 2.935199468866699,
+    "upper": 0.0019171978904303916,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0028361943550407887
+   },
+   "nesting": {
+    "val_risk_base": 0.2329191267490387,
+    "val_risk_augmented": 0.23196031153202057,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2329191267490387,
+    "augmented_val": 0.23196031153202057,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.04036237593463765,
+    "learned_target": 0.9103827675566077,
+    "learned_target_linear": 0.9022538131622068
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S14",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.01055378698006235,
+   "screen": {
+    "gap": 0.006284579467060364,
+    "se": 0.0007015028331037703,
+    "z": 2.935199468866699,
+    "upper": 0.008343630210195034,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0006666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.003344816155731678
+   },
+   "nesting": {
+    "val_risk_base": 0.16033706068992615,
+    "val_risk_augmented": 0.15461014211177826,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.16033706068992615,
+    "augmented_val": 0.15461014211177826,
+    "base_epochs": 65,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S23",
+   "r": 0.24,
+   "penalty": 0.001,
+   "selection_objective": -0.0008636525364903297,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22684316337108612,
+    "val_risk_augmented": 0.22684316337108612,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22684316337108612,
+    "augmented_val": 0.22684316337108612,
+    "base_epochs": 24,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.06036237593463767,
+    "learned_target": 0.8590786042651534,
+    "learned_target_linear": 0.8675358230369765
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S24",
+   "r": 1.0,
+   "penalty": 0.0001,
+   "selection_objective": 0.010538660520343131,
+   "screen": {
+    "gap": 0.003909949063720782,
+    "se": 0.001441821145845332,
+    "z": 2.935199468866699,
+    "upper": 0.008141981725206776,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.014543253928422928
+   },
+   "nesting": {
+    "val_risk_base": 0.174072727560997,
+    "val_risk_augmented": 0.16358017921447754,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.174072727560997,
+    "augmented_val": 0.16358017921447754,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S34",
+   "r": 1.0,
+   "penalty": 0.01,
+   "selection_objective": 0.009435176450467821,
+   "screen": {
+    "gap": 0.007140463832163976,
+    "se": 0.0007746911478276848,
+    "z": 2.935199468866699,
+    "upper": 0.00941433687780353,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.004047705791890621
+   },
+   "nesting": {
+    "val_risk_base": 0.1664360612630844,
+    "val_risk_augmented": 0.1598261147737503,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.1664360612630844,
+    "augmented_val": 0.1598261147737503,
+    "base_epochs": 30,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S012",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.10113865460682012,
+   "screen": {
+    "gap": 0.010324537594254038,
+    "se": 0.0016600008310868584,
+    "z": 2.935199468866699,
+    "upper": 0.015196971151978465,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01891418732702732
+   },
+   "nesting": {
+    "val_risk_base": 0.24357938766479492,
+    "val_risk_augmented": 0.22032292187213898,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24357938766479492,
+    "augmented_val": 0.22032292187213898,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S013",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.10136997144174761,
+   "screen": {
+    "gap": 0.008089542178795924,
+    "se": 0.001025562268183527,
+    "z": 2.935199468866699,
+    "upper": 0.01109977200365794,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.007034921552985907
+   },
+   "nesting": {
+    "val_risk_base": 0.23802931606769562,
+    "val_risk_augmented": 0.23145289719104767,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23802931606769562,
+    "augmented_val": 0.23145289719104767,
+    "base_epochs": 24,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S014",
+   "r": null,
+   "penalty": 0.0001,
+   "selection_objective": 0.0971348108467116,
+   "screen": {
+    "gap": 0.01510586012572145,
+    "se": 0.0017821114579954383,
+    "z": 2.935199468866699,
+    "upper": 0.020336712730690917,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022141799330711365
+   },
+   "nesting": {
+    "val_risk_base": 0.2376006841659546,
+    "val_risk_augmented": 0.2156042456626892,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2376006841659546,
+    "augmented_val": 0.2156042456626892,
+    "base_epochs": 93,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S023",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.09302333885941803,
+   "screen": {
+    "gap": 0.0091364413189719,
+    "se": 0.0016782732863424305,
+    "z": 2.935199468866699,
+    "upper": 0.014062508177657371,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.019455088302493095
+   },
+   "nesting": {
+    "val_risk_base": 0.23970481753349304,
+    "val_risk_augmented": 0.2315671741962433,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23970481753349304,
+    "augmented_val": 0.2315671741962433,
+    "base_epochs": 25,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S024",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09613610448506874,
+   "screen": {
+    "gap": 0.012212823562355115,
+    "se": 0.0017409750227305569,
+    "z": 2.935199468866699,
+    "upper": 0.017322932524384035,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02072504162788391
+   },
+   "nesting": {
+    "val_risk_base": 0.2356146275997162,
+    "val_risk_augmented": 0.2218940407037735,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2356146275997162,
+    "augmented_val": 0.2218940407037735,
+    "base_epochs": 25,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S034",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09674205306627288,
+   "screen": {
+    "gap": 0.014676689292474952,
+    "se": 0.001783333390367826,
+    "z": 2.935199468866699,
+    "upper": 0.019911128512694845,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022093452513217926
+   },
+   "nesting": {
+    "val_risk_base": 0.23768354952335358,
+    "val_risk_augmented": 0.22321268916130066,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23768354952335358,
+    "augmented_val": 0.22321268916130066,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S123",
+   "r": 0.36,
+   "penalty": 0.001,
+   "selection_objective": -0.0002269666116343228,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.2324730008840561,
+    "val_risk_augmented": 0.2324730008840561,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2324730008840561,
+    "augmented_val": 0.2324730008840561,
+    "base_epochs": 29,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.45398448916085166,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000004,
+    "root_error": 0.09398448916085167,
+    "learned_target": 0.8266962208947539,
+    "learned_target_linear": 0.8141899067846254
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S124",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.00980747974294562,
+   "screen": {
+    "gap": 0.005717301803530283,
+    "se": 0.0009177434240489013,
+    "z": 2.935199468866699,
+    "upper": 0.008411061814354524,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.005731065757572651
+   },
+   "nesting": {
+    "val_risk_base": 0.16930194199085236,
+    "val_risk_augmented": 0.16213645040988922,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.16930194199085236,
+    "augmented_val": 0.16213645040988922,
+    "base_epochs": 31,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S134",
+   "r": 1.0,
+   "penalty": 0.01,
+   "selection_objective": 0.009350564521009293,
+   "screen": {
+    "gap": 0.006749271193448326,
+    "se": 0.001066265065398515,
+    "z": 2.935199468866699,
+    "upper": 0.009878971847077164,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.007678485941141844
+   },
+   "nesting": {
+    "val_risk_base": 0.1691691130399704,
+    "val_risk_augmented": 0.16774404048919678,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.1691691130399704,
+    "augmented_val": 0.16774404048919678,
+    "base_epochs": 50,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.010916971801726802,
+   "screen": {
+    "gap": 0.006411971368809609,
+    "se": 0.0009681834293834942,
+    "z": 2.935199468866699,
+    "upper": 0.00925378285650158,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0003333333333333333,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.006363359279930592
+   },
+   "nesting": {
+    "val_risk_base": 0.18435461819171906,
+    "val_risk_augmented": 0.17677105963230133,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18435461819171906,
+    "augmented_val": 0.17677105963230133,
+    "base_epochs": 30,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S0123",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09869639196155626,
+   "screen": {
+    "gap": 0.016098358173932858,
+    "se": 0.0021166691300675143,
+    "z": 2.935199468866699,
+    "upper": 0.022311204280273562,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.03202119469642639
+   },
+   "nesting": {
+    "val_risk_base": 0.23335550725460052,
+    "val_risk_augmented": 0.2117277979850769,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23335550725460052,
+    "augmented_val": 0.2117277979850769,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S0124",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09744148939600943,
+   "screen": {
+    "gap": 0.01460315691976696,
+    "se": 0.0016967606026388783,
+    "z": 2.935199468866699,
+    "upper": 0.019583487739426537,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.020689750090241432
+   },
+   "nesting": {
+    "val_risk_base": 0.24391832947731018,
+    "val_risk_augmented": 0.23136086761951447,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24391832947731018,
+    "augmented_val": 0.23136086761951447,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S0134",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09838747102517292,
+   "screen": {
+    "gap": 0.014875302666345467,
+    "se": 0.0017805971715559661,
+    "z": 2.935199468866699,
+    "upper": 0.020101710538562086,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022854406386613846
+   },
+   "nesting": {
+    "val_risk_base": 0.24118748307228088,
+    "val_risk_augmented": 0.21477840840816498,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24118748307228088,
+    "augmented_val": 0.21477840840816498,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S0234",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09705390817497221,
+   "screen": {
+    "gap": 0.013316074502453307,
+    "se": 0.0018278597967887832,
+    "z": 2.935199468866699,
+    "upper": 0.018681207607150536,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.022938942536711693
+   },
+   "nesting": {
+    "val_risk_base": 0.23515403270721436,
+    "val_risk_augmented": 0.2145971655845642,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23515403270721436,
+    "augmented_val": 0.2145971655845642,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 2,
+   "split_id": "S1234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.01077559869755865,
+   "screen": {
+    "gap": 0.003393968303375971,
+    "se": 0.000948589115474952,
+    "z": 2.935199468866699,
+    "upper": 0.006178266571290782,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0059930020943284035
+   },
+   "nesting": {
+    "val_risk_base": 0.19497591257095337,
+    "val_risk_augmented": 0.190029576420784,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.19497591257095337,
+    "augmented_val": 0.190029576420784,
+    "base_epochs": 25,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S0",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09157217565367064,
+   "screen": {
+    "gap": 0.04449583491156816,
+    "se": 0.003249733539458548,
+    "z": 2.935199468866699,
+    "upper": 0.05403445107054519,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.09210369735956192
+   },
+   "nesting": {
+    "val_risk_base": 0.2429417371749878,
+    "val_risk_augmented": 0.19242005050182343,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2429417371749878,
+    "augmented_val": 0.19242005050182343,
+    "base_epochs": 22,
+    "augmented_epochs": 33
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S1",
+   "r": 0.34,
+   "penalty": 0.001,
+   "selection_objective": -0.00010370121200091146,
+   "screen": {
+    "gap": -2.9840173253823034e-05,
+    "se": 0.00018776429228759998,
+    "z": 2.935199468866699,
+    "upper": 0.0005511256509946951,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00023210914514493197
+   },
+   "nesting": {
+    "val_risk_base": 0.22695793211460114,
+    "val_risk_augmented": 0.22693456709384918,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22695793211460114,
+    "augmented_val": 0.22693456709384918,
+    "base_epochs": 24,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.11553179455085782,
+    "learned_target": 1.010776621927917,
+    "learned_target_linear": 1.0055865171746614
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S2",
+   "r": 0.38,
+   "penalty": 0.01,
+   "selection_objective": -0.00012940927767808108,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.23269926011562347,
+    "val_risk_augmented": 0.23269926011562347,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23269926011562347,
+    "augmented_val": 0.23269926011562347,
+    "base_epochs": 23,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.1555317945508578,
+    "learned_target": 1.05909214271307,
+    "learned_target_linear": 1.073908322409688
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S3",
+   "r": 0.34,
+   "penalty": 0.001,
+   "selection_objective": -0.0002160118871663202,
+   "screen": {
+    "gap": 0.0,
+    "se": 0.0,
+    "z": 2.935199468866699,
+    "upper": 0.0,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": true,
+    "squared_difference": 0.0
+   },
+   "nesting": {
+    "val_risk_base": 0.22608813643455505,
+    "val_risk_augmented": 0.22608813643455505,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22608813643455505,
+    "augmented_val": 0.22608813643455505,
+    "base_epochs": 25,
+    "augmented_epochs": 20
+   },
+   "evaluator_only": {
+    "balance_root": 0.2244682054491422,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000375,
+    "root_error": 0.11553179455085782,
+    "learned_target": 1.0110199470752477,
+    "learned_target_linear": 1.0075496773994623
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S4",
+   "r": -0.8,
+   "penalty": 0.001,
+   "selection_objective": -0.00011894778425043336,
+   "screen": {
+    "gap": -0.000341544452582709,
+    "se": 0.00015746095332090312,
+    "z": 2.935199468866699,
+    "upper": 0.00046217930655475896,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00015729563892818987
+   },
+   "nesting": {
+    "val_risk_base": 0.2327841818332672,
+    "val_risk_augmented": 0.23273174464702606,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2327841818332672,
+    "augmented_val": 0.23273174464702606,
+    "base_epochs": 35,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": -0.6501708893114988,
+    "feasible": true,
+    "targets_truth": false,
+    "tau_at_root": -0.4431992000329794,
+    "root_error": 0.14982911068850124,
+    "learned_target": -0.4222862830071151,
+    "learned_target_linear": -0.42897830035410894
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S01",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.08393665432137601,
+   "screen": {
+    "gap": 0.00871875800571008,
+    "se": 0.0010775130795504515,
+    "z": 2.935199468866699,
+    "upper": 0.011881473824503486,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.007838143967092037
+   },
+   "nesting": {
+    "val_risk_base": 0.23576462268829346,
+    "val_risk_augmented": 0.2271902710199356,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23576462268829346,
+    "augmented_val": 0.2271902710199356,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S02",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09210631143157227,
+   "screen": {
+    "gap": 0.009016497312860935,
+    "se": 0.0011392569909377541,
+    "z": 2.935199468866699,
+    "upper": 0.012360443827564105,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.008718659169971943
+   },
+   "nesting": {
+    "val_risk_base": 0.24086323380470276,
+    "val_risk_augmented": 0.2316695600748062,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24086323380470276,
+    "augmented_val": 0.2316695600748062,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S03",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09192290313037324,
+   "screen": {
+    "gap": 0.010002585272848736,
+    "se": 0.001072948256539018,
+    "z": 2.935199468866699,
+    "upper": 0.013151902425563512,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.007750589866191149
+   },
+   "nesting": {
+    "val_risk_base": 0.24112072587013245,
+    "val_risk_augmented": 0.23382362723350525,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24112072587013245,
+    "augmented_val": 0.23382362723350525,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S04",
+   "r": null,
+   "penalty": 0.01,
+   "selection_objective": 0.07827204317472754,
+   "screen": {
+    "gap": 0.01664918777464231,
+    "se": 0.0015098902831106411,
+    "z": 2.935199468866699,
+    "upper": 0.021081016931675654,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01580551452934742
+   },
+   "nesting": {
+    "val_risk_base": 0.2331588715314865,
+    "val_risk_augmented": 0.22259576618671417,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2331588715314865,
+    "augmented_val": 0.22259576618671417,
+    "base_epochs": 23,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S12",
+   "r": 0.46,
+   "penalty": 0.001,
+   "selection_objective": -0.00020660307982220202,
+   "screen": {
+    "gap": -0.00014324084721447082,
+    "se": 0.00017722005826188543,
+    "z": 2.935199468866699,
+    "upper": 0.0005201762208828116,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00021848273172508925
+   },
+   "nesting": {
+    "val_risk_base": 0.2291378527879715,
+    "val_risk_augmented": 0.22913344204425812,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2291378527879715,
+    "augmented_val": 0.22913344204425812,
+    "base_epochs": 25,
+    "augmented_epochs": 21
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.15963762406536236,
+    "learned_target": 1.0034622788956762,
+    "learned_target_linear": 1.008985977623222
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S13",
+   "r": 0.48,
+   "penalty": 0.001,
+   "selection_objective": -0.0004090698251239284,
+   "screen": {
+    "gap": -0.00014596366620844408,
+    "se": 0.00020160035281755669,
+    "z": 2.935199468866699,
+    "upper": 0.0005917372485134316,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00026325666112825274
+   },
+   "nesting": {
+    "val_risk_base": 0.22831282019615173,
+    "val_risk_augmented": 0.22817052900791168,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22831282019615173,
+    "augmented_val": 0.22817052900791168,
+    "base_epochs": 45,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.17963762406536232,
+    "learned_target": 1.0555458738291263,
+    "learned_target_linear": 1.0370217265624309
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S14",
+   "r": -0.44,
+   "penalty": 0.001,
+   "selection_objective": 0.012800337891683273,
+   "screen": {
+    "gap": 0.010218984272895908,
+    "se": 0.0011996438099275576,
+    "z": 2.935199468866699,
+    "upper": 0.013740178146624498,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.009710652753710747
+   },
+   "nesting": {
+    "val_risk_base": 0.23914790153503418,
+    "val_risk_augmented": 0.23118703067302704,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23914790153503418,
+    "augmented_val": 0.23118703067302704,
+    "base_epochs": 25,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S23",
+   "r": 0.48,
+   "penalty": 0.001,
+   "selection_objective": -0.0002142693669867414,
+   "screen": {
+    "gap": -0.0003222844294586464,
+    "se": 0.00015744172614153736,
+    "z": 2.935199468866699,
+    "upper": 0.00046212287094809677,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00015977041039150208
+   },
+   "nesting": {
+    "val_risk_base": 0.22691239416599274,
+    "val_risk_augmented": 0.2266179472208023,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22691239416599274,
+    "augmented_val": 0.2266179472208023,
+    "base_epochs": 46,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": 0.30036237593463766,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000135,
+    "root_error": 0.17963762406536232,
+    "learned_target": 1.033608556882143,
+    "learned_target_linear": 1.0413279204569579
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S24",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.011994419822161284,
+   "screen": {
+    "gap": 0.0067945512261173,
+    "se": 0.0015813237554301318,
+    "z": 2.935199468866699,
+    "upper": 0.011436051873162116,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.00016666666666666666,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.017841124907135963
+   },
+   "nesting": {
+    "val_risk_base": 0.18123716115951538,
+    "val_risk_augmented": 0.17077144980430603,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18123716115951538,
+    "augmented_val": 0.17077144980430603,
+    "base_epochs": 28,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S34",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.012444658313214969,
+   "screen": {
+    "gap": 0.006571504347433728,
+    "se": 0.0015381772474033235,
+    "z": 2.935199468866699,
+    "upper": 0.011086361387034805,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.016524270176887512
+   },
+   "nesting": {
+    "val_risk_base": 0.19079004228115082,
+    "val_risk_augmented": 0.1823391169309616,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.19079004228115082,
+    "augmented_val": 0.1823391169309616,
+    "base_epochs": 35,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S012",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09247596466667485,
+   "screen": {
+    "gap": 0.01298714568186077,
+    "se": 0.0015265206364759032,
+    "z": 2.935199468866699,
+    "upper": 0.017467788243258897,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01631789281964302
+   },
+   "nesting": {
+    "val_risk_base": 0.24086894094944,
+    "val_risk_augmented": 0.21922460198402405,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24086894094944,
+    "augmented_val": 0.21922460198402405,
+    "base_epochs": 26,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S013",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09247356172939446,
+   "screen": {
+    "gap": 0.016537473189198768,
+    "se": 0.0016520907301266932,
+    "z": 2.935199468866699,
+    "upper": 0.021386689022786235,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02018098719418049
+   },
+   "nesting": {
+    "val_risk_base": 0.2461548000574112,
+    "val_risk_augmented": 0.23869173228740692,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.2461548000574112,
+    "augmented_val": 0.23869173228740692,
+    "base_epochs": 21,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S014",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08645861816204592,
+   "screen": {
+    "gap": 0.014976520426191539,
+    "se": 0.001681248760845577,
+    "z": 2.935199468866699,
+    "upper": 0.019911320896058272,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.019601641222834587
+   },
+   "nesting": {
+    "val_risk_base": 0.23805879056453705,
+    "val_risk_augmented": 0.22518737614154816,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23805879056453705,
+    "augmented_val": 0.22518737614154816,
+    "base_epochs": 44,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S023",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.09205277109318688,
+   "screen": {
+    "gap": 0.012893768695823326,
+    "se": 0.0015003199935828089,
+    "z": 2.935199468866699,
+    "upper": 0.017297507144117676,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.015526476316154003
+   },
+   "nesting": {
+    "val_risk_base": 0.24016693234443665,
+    "val_risk_augmented": 0.22218535840511322,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24016693234443665,
+    "augmented_val": 0.22218535840511322,
+    "base_epochs": 25,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S024",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08691264689866689,
+   "screen": {
+    "gap": 0.013874398142425328,
+    "se": 0.0016391745297180992,
+    "z": 2.935199468866699,
+    "upper": 0.018685702351433714,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.018521735444664955
+   },
+   "nesting": {
+    "val_risk_base": 0.23621565103530884,
+    "val_risk_augmented": 0.22823071479797363,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23621565103530884,
+    "augmented_val": 0.22823071479797363,
+    "base_epochs": 44,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S034",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08680364778815289,
+   "screen": {
+    "gap": 0.01751299211557596,
+    "se": 0.0015632354561915325,
+    "z": 2.935199468866699,
+    "upper": 0.022101399996302937,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.017197372391819954
+   },
+   "nesting": {
+    "val_risk_base": 0.23671495914459229,
+    "val_risk_augmented": 0.2262841761112213,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23671495914459229,
+    "augmented_val": 0.2262841761112213,
+    "base_epochs": 27,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S123",
+   "r": 0.72,
+   "penalty": 0.001,
+   "selection_objective": -0.0003254000736340884,
+   "screen": {
+    "gap": 7.474309848778271e-05,
+    "se": 0.0001313458716625194,
+    "z": 2.935199468866699,
+    "upper": 0.0004602694312294433,
+    "pass": true,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.00011528890172485262
+   },
+   "nesting": {
+    "val_risk_base": 0.22966614365577698,
+    "val_risk_augmented": 0.22939345240592957,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.22966614365577698,
+    "augmented_val": 0.22939345240592957,
+    "base_epochs": 28,
+    "augmented_epochs": 22
+   },
+   "evaluator_only": {
+    "balance_root": 0.45398448916085166,
+    "feasible": true,
+    "targets_truth": true,
+    "tau_at_root": 1.0000000000000004,
+    "root_error": 0.2660155108391483,
+    "learned_target": 1.0102173972451687,
+    "learned_target_linear": 1.0261376024227746
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S124",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.01169906276195217,
+   "screen": {
+    "gap": 0.005833399751737337,
+    "se": 0.001643050226683495,
+    "z": 2.935199468866699,
+    "upper": 0.010656079904420041,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.01898331381380558
+   },
+   "nesting": {
+    "val_risk_base": 0.19260308146476746,
+    "val_risk_augmented": 0.1834624856710434,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.19260308146476746,
+    "augmented_val": 0.1834624856710434,
+    "base_epochs": 58,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S134",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.012174862784722854,
+   "screen": {
+    "gap": 0.006712416712512177,
+    "se": 0.0008905235338036261,
+    "z": 2.935199468866699,
+    "upper": 0.009326280915945877,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.005499505437910557
+   },
+   "nesting": {
+    "val_risk_base": 0.18972058594226837,
+    "val_risk_augmented": 0.1834414005279541,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18972058594226837,
+    "augmented_val": 0.1834414005279541,
+    "base_epochs": 28,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.011054944056541402,
+   "screen": {
+    "gap": 0.00576667522480048,
+    "se": 0.0007240547025067894,
+    "z": 2.935199468866699,
+    "upper": 0.007891920203028844,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.003586430801078677
+   },
+   "nesting": {
+    "val_risk_base": 0.18653947114944458,
+    "val_risk_augmented": 0.17911775410175323,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.18653947114944458,
+    "augmented_val": 0.17911775410175323,
+    "base_epochs": 30,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S0123",
+   "r": null,
+   "penalty": 0.0001,
+   "selection_objective": 0.09000812893945513,
+   "screen": {
+    "gap": 0.018857955535274935,
+    "se": 0.001932383560494284,
+    "z": 2.935199468866699,
+    "upper": 0.024529886735684497,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02679714933037758
+   },
+   "nesting": {
+    "val_risk_base": 0.23911456763744354,
+    "val_risk_augmented": 0.2117014229297638,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23911456763744354,
+    "augmented_val": 0.2117014229297638,
+    "base_epochs": 24,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S0124",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08877590884866876,
+   "screen": {
+    "gap": 0.01649216919824037,
+    "se": 0.0017018833274899793,
+    "z": 2.935199468866699,
+    "upper": 0.02148753623716205,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.02030322328209877
+   },
+   "nesting": {
+    "val_risk_base": 0.23592272400856018,
+    "val_risk_augmented": 0.22033274173736572,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23592272400856018,
+    "augmented_val": 0.22033274173736572,
+    "base_epochs": 53,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S0134",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08826227258800869,
+   "screen": {
+    "gap": 0.019270153305351374,
+    "se": 0.001674513888289357,
+    "z": 2.935199468866699,
+    "upper": 0.024185185580868206,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.021186094731092453
+   },
+   "nesting": {
+    "val_risk_base": 0.24067850410938263,
+    "val_risk_augmented": 0.23135621845722198,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.24067850410938263,
+    "augmented_val": 0.23135621845722198,
+    "base_epochs": 22,
+    "augmented_epochs": 24
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S0234",
+   "r": null,
+   "penalty": 0.001,
+   "selection_objective": 0.08817743602282774,
+   "screen": {
+    "gap": 0.012552274781753574,
+    "se": 0.0007429660289134908,
+    "z": 2.935199468866699,
+    "upper": 0.014733028275206454,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.0037678112275898457
+   },
+   "nesting": {
+    "val_risk_base": 0.23423005640506744,
+    "val_risk_augmented": 0.22497662901878357,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.23423005640506744,
+    "augmented_val": 0.22497662901878357,
+    "base_epochs": 26,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  },
+  {
+   "rotation": 3,
+   "split_id": "S1234",
+   "r": 1.0,
+   "penalty": 0.001,
+   "selection_objective": 0.011304190588796866,
+   "screen": {
+    "gap": 0.004777283292547619,
+    "se": 0.0007605183341746234,
+    "z": 2.935199468866699,
+    "upper": 0.00700955630308036,
+    "pass": false,
+    "overlap_ok": true,
+    "saturated_fraction": 0.0,
+    "augmented_kept_lifted_base": false,
+    "squared_difference": 0.003898314433172345
+   },
+   "nesting": {
+    "val_risk_base": 0.20320747792720795,
+    "val_risk_augmented": 0.1998617947101593,
+    "nested": true
+   },
+   "critic_fit": {
+    "base_val": 0.20320747792720795,
+    "augmented_val": 0.1998617947101593,
+    "base_epochs": 26,
+    "augmented_epochs": 23
+   },
+   "evaluator_only": {
+    "balance_root": null,
+    "feasible": false,
+    "targets_truth": false,
+    "tau_at_root": null,
+    "root_error": null
+   }
+  }
+ ],
+ "retained_splits": [
+  "S1",
+  "S2",
+  "S3",
+  "S4",
+  "S12",
+  "S13",
+  "S23",
+  "S123"
+ ],
+ "candidate_estimates": {
+  "S1": 0.994374475537199,
+  "S2": 0.9714605956683342,
+  "S3": 1.0514174969261818,
+  "S4": -0.4173186937242103,
+  "S12": 0.9684129338840245,
+  "S13": 1.019640289727647,
+  "S23": 1.0309110794381886,
+  "S123": 1.0088215785122197
+ },
+ "rho": 0.0416584390023277,
+ "return_kind": "unique_largest",
+ "estimate": 1.0088215785122197,
+ "largest_component": [
+  "S1",
+  "S2",
+  "S3",
+  "S12",
+  "S13",
+  "S23",
+  "S123"
+ ],
+ "largest_component_purity": 1.0,
+ "learned_target_by_split": {
+  "S1": 0.9792063888509571,
+  "S2": 0.9500153186234832,
+  "S3": 1.0117491431960461,
+  "S4": -0.4620437641424686,
+  "S12": 0.9483642764265835,
+  "S13": 1.0134197276775538,
+  "S23": 1.0037412740573286,
+  "S123": 0.992816988248676
+ },
+ "baselines": {
+  "X": 0.07111645538408139,
+  "raw_ridge": 0.8657074135238663,
+  "learned_projection": 0.8771472410053245,
+  "blockwise_pca": 0.8848737585385443,
+  "oracle": 1.0063457447276554,
+  "naive": -0.15029822911040103
+ },
+ "representation_diagnostics": {
+  "channel_correlation_median": 0.9907199886115914
+ },
+ "complete": true,
+ "timing_seconds": 1061.4976530075073,
+ "protocol": {
+  "path": "../results/scm6_v3/protocol.json",
+  "payload_sha256": "de470c752ecb9d421ba8c27aca80a459f32ceb3060b688d1ffb951bc610ceb70"
+ },
+ "source_snapshot": {
+  "bundle_sha256": "4704b90c3ce820452c0a61d9280ad7e7706cf17438e420fd497b175430530055",
+  "files": {
+   "learned_target.py": "ec9713c708a9a2da26b2dbc6b8878e403612c16f87b160a0cff5bbbd3781b7c9",
+   "minimal_suite_common.py": "18e8e54d68c7e01f5563d85a9d93318692a490dddab949a99a0a134f19e74786",
+   "probe_full_target.py": "bf54653980e0ebfea699ac666f8813b9136f0222cd67b30816203d4ddf1a696a",
+   "probe_highdim_w.py": "3a8ad034d10dbef608449718e0bf758ef9a16dec0600dcb91599bfcb8e853e9b",
+   "probe_highdim_w_v2.py": "005c5f2a959552e7ddb68fbab84f88e32c1934943e300cc40d3920deced61fcf",
+   "run_scm6_v3.py": "44f31f2d131c279069552b472ef7e76b5bb82d22fc88e9979561407b903ccb83",
+   "scm6_population.py": "1ac9108c1dca01fae749a7e7a497992a4910656abd9e5c3eda3e09ba4ff71585"
+  }
+ }
+}

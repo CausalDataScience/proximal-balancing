@@ -7,9 +7,9 @@
 \begin{proof}[Proof of Proposition~\ref{prop:orc-sufficient}]
 Fix $z$ and $Q,Q'\in\mathcal Q_{j,z}$ with $\mathcal K_jQ=\mathcal K_jQ'$. Write $\pi_Q$ for the law of $(X,U)$ under $Q$, $\pi_{Q,X}$ for its $X$-marginal, and $\pi_Q(\cdot\mid x)$ for its conditional law of $U$ given $X=x$. By condition (i), $K_j(\cdot\mid v,u)=K_j(\cdot\mid x,u)$, so the law $\mathcal K_jQ$ of $(X,W_j)$ has $X$-marginal $\pi_{Q,X}$ and conditional law $\int K_j(\cdot\mid x,u)\,\pi_Q(du\mid x)$ given $X=x$. The equality $\mathcal K_jQ=\mathcal K_jQ'$ therefore gives $\pi_{Q,X}=\pi_{Q',X}$ and, for $\pi_{Q,X}$-almost every $x$, $\int K_j(\cdot\mid x,u)\,\pi_Q(du\mid x)=\int K_j(\cdot\mid x,u)\,\pi_{Q'}(du\mid x)$. Condition (ii) yields $\pi_Q(\cdot\mid x)=\pi_{Q'}(\cdot\mid x)$ for almost every $x$, hence $\pi_Q=\pi_{Q'}$. By condition (i), $\mu_{a,j,z}(v,u)=\bar\mu_{a,z}(x,u)$ for a measurable function $\bar\mu_{a,z}$, so $\mathbb E_Q\{\mu_{a,j,z}(V_j,U)\}=\int\bar\mu_{a,z}\,d\pi_Q=\int\bar\mu_{a,z}\,d\pi_{Q'}=\mathbb E_{Q'}\{\mu_{a,j,z}(V_j,U)\}$, which is Assumption~\ref{ass:outcome-relevant-completeness}.
 
-\textcolor{red}{\sout{For case (a), the law of $W_j$ given $X=x$ under a law $\pi$ of $U$ is the vector $M_x\pi$, where $M_x$ is the $M\times K$ matrix of the statement and $\pi$ is viewed as a probability vector in $\mathbb R^K$. Rank $K$ means that $M_x$ is injective on $\mathbb R^K$, so (ii) holds.}} For case (b), the law of $W_j$ given $X=x$ is the convolution of the pushforward of $\pi$ under $g(x,\cdot)$ with \textcolor{red}{\sout{the Gaussian law of $\epsilon_j$}} \textcolor{blue}{the law of $\epsilon_j$}. Its characteristic function is the product of the characteristic function of the pushforward and that of $\epsilon_j$, and the latter vanishes nowhere \textcolor{red}{\sout{because the covariance is positive definite}} \textcolor{blue}{by assumption}. Two laws $\pi$ and $\pi'$ with equal convolutions therefore have pushforwards with equal characteristic functions, hence equal pushforwards by the uniqueness theorem for characteristic functions, and injectivity of $g(x,\cdot)$ gives $\pi=\pi'$. Thus (ii) holds.
+For case (a), the law of $W_j$ given $X=x$ is the convolution of the pushforward of $\pi$ under $g(x,\cdot)$ with the law of $\epsilon_j$. Its characteristic function is the product of the characteristic function of the pushforward and that of $\epsilon_j$, and the latter vanishes nowhere by assumption. Two laws $\pi$ and $\pi'$ with equal convolutions therefore have pushforwards with equal characteristic functions, hence equal pushforwards by the uniqueness theorem for characteristic functions, and injectivity of $g(x,\cdot)$ gives $\pi=\pi'$. Thus (ii) holds.
 
-\textcolor{blue}{For case (c), the probability generating function of $W_j$ given $X=x$ under a law $\pi$ of $U$ is $\mathbb E(\prod_\ell s_\ell^{W_{j,\ell}})=\int\exp\{-\sum_\ell\lambda_\ell(x,u)(1-s_\ell)\}\,\pi(du)$ for $s\in[0,1]^{d}$, which is the Laplace transform of the pushforward of $\pi$ under $\lambda(x,\cdot)$ evaluated on $[0,1]^{d}$. A finite measure on $[0,\infty)^{d}$ is determined by its Laplace transform on a set with nonempty interior, so two laws with equal mixtures have equal pushforwards, and injectivity of $\lambda(x,\cdot)$ gives $\pi=\pi'$. In the scalar case this is the identifiability of Poisson mixtures of \citet{teicher1961identifiability}. Thus (ii) holds.}
+For case (b), the probability generating function of $W_j$ given $X=x$ under a law $\pi$ of $U$ is $\mathbb E(\prod_\ell s_\ell^{W_{j,\ell}})=\int\exp\{-\sum_\ell\lambda_\ell(x,u)(1-s_\ell)\}\,\pi(du)$ for $s\in[0,1]^{d}$, which is the Laplace transform of the pushforward of $\pi$ under $\lambda(x,\cdot)$ evaluated on $[0,1]^{d}$. A finite measure on $[0,\infty)^{d}$ is determined by its Laplace transform on a set with nonempty interior, so two laws with equal mixtures have equal pushforwards, and injectivity of $\lambda(x,\cdot)$ gives $\pi=\pi'$. In the scalar case this is the identifiability of Poisson mixtures of \citet{teicher1961identifiability}. Thus (ii) holds.
 
 \end{proof}
 
@@ -384,15 +384,7 @@ where $o=(v_j,t_j,a,y)$. For a loss class $\mathcal L$, its expected Rademacher 
 \right],
 \label{eq:expected-rademacher-complexity-app}
 \end{align}
-where the $\sigma_i$ are independent Rademacher signs independent of the observations. \textcolor{blue}{The loss classes are pointwise measurable and separable, so these suprema are measurable.}
-%%DELETE-BEGIN
-\begin{assumption}[\textcolor{red}{\sout{Measurability for representation learning}}]
-\label{ass:learning-measurability-old}
-\normalfont
-\color{red}
-\sout{Assume the two loss classes are pointwise measurable and separable, so the displayed suprema are measurable. Assume also that the selected approximate encoder and critic minimizers are measurable functions of the training observations and algorithmic seed.}
-\end{assumption}
-%%DELETE-END
+where the $\sigma_i$ are independent Rademacher signs independent of the observations. The loss classes are pointwise measurable and separable, so these suprema are measurable.
 The same argument may instead be stated with outer probability and outer expectation.
 
 Every loss in either class lies in $[0,1]$. Standard symmetrization and bounded-difference concentration therefore imply, simultaneously for $b\in\{0,1\}$, that

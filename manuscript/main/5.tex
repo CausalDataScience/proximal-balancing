@@ -1,47 +1,101 @@
 \section{Experiments}
 \label{sec:experiments}
 
-\subsection{Questions, Comparators, and Reporting Rules}
-
-The experiments answer three separate questions. First, does proxy-supervised representation adjustment reduce ATE error relative to adjustment using $X$ alone? Second, do the exact-assumption designs recover the known balancing structure? Third, does the method show a useful descriptive signal in an observational benchmark with a noisy randomized reference? We report mean absolute error, root mean squared error, paired wins, held-out discrepancy, overlap diagnostics, and Monte Carlo uncertainty. Oracle procedures that observe $U$ or the true balancing score are simulation references, not implementable competitors. The theory in Sections~\ref{sec:identification} and \ref{sec:estimation} applies to one prespecified held-out block at a time. Experimental aggregation across several proxy splits is reported as an empirical extension and is not presented as a separate identification theorem.
-
-\subsection{Honest Approximate SCMs}
-
-The primary approximate study fixes the causal order $U\to(X,W)$, $(X,U)\to A$, and $(A,X,U)\to Y$. Both SCMs use $\dim(X)=20$ and $\dim(W)=10$, with twenty independently generated data sets and nested prefixes $n\in\{100,200,500,1000,2000,5000,10000\}$. SCM1 uses linear proxy measurements and a nonlinear outcome component; SCM2 changes the structural equations to nonlinear transformations while preserving the same causal order and an informative monotone proxy channel. The proposed cross-mask method learns a representation from $X$ and all but one proxy coordinate, audits balance with the held-out coordinate, and averages over masks.
-
-At $n=1000$, the mean absolute errors of proposed/$X$-adjustment/full-$(X,W)$/oracle-$(X,U)$ were $0.169/0.601/0.310/0.130$ in SCM1 and $0.112/0.440/0.188/0.107$ in SCM2. At $n=10000$, the corresponding proposed errors were $0.199$ and $0.134$, versus $0.588$ and $0.413$ for $X$ adjustment. These are finite-sample simulation results, not a proof of the audit-view identification theorem. The self-conditioned heuristic remained substantially biased, which is consistent with the self-conditioning warning in Section~\ref{sec:identification}.
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.86\textwidth]{../figures/2026-09-15-scm-family-structure.pdf}
+	\caption{\textcolor{blue}{The structure shared by every simulation in this section. Only $U$ is hidden.}}
+	\label{fig:exp-design}
+\end{figure}
 
 \begin{figure}[!t]
-\centering
-\includegraphics[width=\linewidth]{../figures/final/figure_approximate_scms.pdf}
-\caption{Mean absolute ATE error across twenty data sets; bands show approximate $95\%$ Monte Carlo intervals for the mean.}
-\label{fig:approximate-scms}
+	\centering
+	\includegraphics[width=\linewidth]{../figures/section5/probe-mechanism.pdf}
+	\caption{\textcolor{blue}{Algorithm~\ref{alg:probe-search} in four steps, with the numbers of the positive-control audit.}}
+	\label{fig:mechanism}
 \end{figure}
+
+\textcolor{blue}{We test the theory on data whose causal effect is known. Every simulation in this section shares the causal structure of Figure~\ref{fig:exp-design} and the true effect $\tau=1$. In each of them the hidden confounder $U$ is strong enough to reverse the sign of the naive contrast, and adjustment for the observed covariate $X$ alone leaves the estimate near zero. The proxy has five blocks. Blocks $W_1$, $W_2$, and $W_3$ are noisy measurements of $U$. Block $W_5$ is one more such measurement together with two coordinates that act on their own, one causing treatment without affecting the outcome and one confounding treatment and outcome. Block $W_4$ is a measurement of $U$ shifted by the treatment-causing coordinate of $W_5$. A representation that retains $W_5$ adjusts for both acting coordinates; one that holds $W_5$ out has neither, and that choice does not survive the balance screen. }
+
+\textcolor{blue}{Five simulations carry the section. In Sim-1, the base, each measurement is one number, so the proxy has seven coordinates. Sim-2 lets the treatment effect depend on the hidden confounder, and Sim-3 views the proxy through a nonlinear lens. Sim-4 and Sim-5 keep the base model and render the five measurements as $256$-dimensional vectors or as $96\times96$ images, keeping the two acting coordinates of $W_5$ as numbers, which gives $1{,}282$ or $46{,}082$ coordinates under the same causal structure.}
+
+\textcolor{blue}{Each subsection below pairs one theorem with one figure. For every experiment the seeds, sample sizes, learners, and pass criteria were sealed before its data were generated, and every criterion is reported, including the ones that failed. Figure~\ref{fig:mechanism} shows the algorithm itself, carrying the numbers of the positive-control audit.}
+
+\textcolor{purple}{[Figure~\ref{fig:mechanism}: panels (a) and (b) are schematic, and the blocks are drawn as images only to show that a block may be an image; in the audit each block is one number. Panels (c) and (d) are real, from \texttt{results/positive\_control/screen\_display\_v1.json}, a replay of the sealed \texttt{confirmation\_v1.json} that reproduces its retained set exactly. The seven agreeing groups all select the same channel, so their estimates coincide to the digits shown.]}
+
+\textcolor{purple}{[Two further variants of the base model were run and are not shown here, one changing the outcome noise and one changing the proxy noise. All five synthetic models agree to within $0.002$ in mean estimate and within $0.002$ in mean absolute error, which is why the main figure carries three of them. The other two belong in the appendix table.]}
+
+\textcolor{purple}{[Status, 2026-09-16. Two experiments now exist for this section and they answer different questions. (i) A positive-control audit of Algorithm~\ref{alg:probe-search} and Theorem~\ref{thm:probe-search-error} under a role-blind representation class, sealed in \texttt{results/positive\_control/confirmation\_protocol\_v1.json} and reported in \texttt{confirmation\_v1.json}. It verifies the theorem's own conditions on the realised retained set and passes in all five learning states. (ii) The block-partition stress test of \texttt{probe\_structured\_scm\_blockwise\_j7\_confirm\_protocol\_v1.json}, which fails its sealed gates and belongs in the appendix as a negative control. The family text above and the evidence cited in Sections~\ref{sec:exp-thm1} and~\ref{sec:exp-thm2} still come from the earlier partition, in which one block bundled the two acting coordinates with a measurement and the representation search was written in terms of those roles. That provenance has to be fixed or stated before either subsection is accepted.]}
+
+\subsection{\texorpdfstring{\textcolor{blue}{Theorem~\ref{thm:exact-proxy-identification}: A Prespecified Held-Out Block}}{Theorem 1: A Prespecified Held-Out Block}}
+\label{sec:exp-thm1}
+
+\textcolor{blue}{Theorem~\ref{thm:exact-proxy-identification} fixes the held-out block before the data are seen, so the first experiment holds out one block and balances it. Block $W_1$ satisfies the assumptions of the theorem, with completeness supplied by Proposition~\ref{prop:orc-sufficient}, while $W_4$ satisfies every other condition, including exact balance. If balancing $W_4$ misses $\tau$, the theorem leaves completeness as the condition that fails, and it fails for a concrete reason: $W_4$ mixes $U$ with the treatment-causing coordinate of $W_5$, so a representation can absorb the treatment information carried by $W_4$ while $U$ still carries some. The prespecified contrast is in the estimates: holding out $W_1$ gives $0.999$, $0.999$ and $1.000$ in Sim-1 to Sim-3 of Figure~\ref{fig:exp-thm1}, while holding out $W_4$ gives $-0.442$, $-0.471$ and $-0.440$. The population of the base model agrees: both balancing representations of $W_1$ target $1.0000$, while those of $W_4$ target $-0.4432$ and $0.9530$. Figure~\ref{fig:exp-thm1} then shows what the whole algorithm returns once the block is not named in advance, in those three settings and in the two richer renderings Sim-4 and Sim-5. Adjustment for $X$, adjustment for $X$ with all of $W$, and a learned summary of every block with no balance check all miss $\tau$; the algorithm lands on it.}
+
+\textcolor{purple}{[The third row of Figure~\ref{fig:exp-thm1} summarises every block, holds none of them out, and never tests balance, which separates learning a representation from checking one; the sealed scoring picked that comparator, blockwise principal components for Sim-4 and convolutional channels for Sim-5. Figure~\ref{fig:exp-thm1} replaced the earlier fixed-block panel, which drew one row per held-out choice and is kept at \texttt{figures/section5/section5-thm1-fixed-block.pdf}. The clean-versus-contaminated contrast now lives in the sentence above rather than in a figure; if a reviewer wants to see it, the old panel goes back as a second figure here or in the appendix. Data: \texttt{results/t1\_fixed\_block\_scm\_family\_v1.json}, fits of the sealed family confirmation, $n=6{,}000$, $20$ data sets per simulation, replay exact. Caveat: those fits use the earlier bundled partition and a representation family written in terms of coordinate roles, so they do not show that a role-blind search recovers the balancing representation. The positive-control audit does show the theorem's content directly: with a role-blind class every exactly balancing representation of an outcome-relevant held-out block targets $\tau$ to machine precision, and a block whose held-out coordinates carry no outcome-relevant information balances just as exactly while targeting $0.354$.]}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/section5/section5-five-settings.pdf}
+\caption{\textcolor{blue}{What the algorithm returns in five simulations; each dot is one data set.}}
+\label{fig:exp-thm1}
+\end{figure}
+
+\subsection{\texorpdfstring{\textcolor{blue}{Theorem~\ref{thm:unknown-valid-block-identification}: An Unknown Valid Block}}{Theorem 2: An Unknown Valid Block}}
+\label{sec:exp-thm2}
+
+\textcolor{blue}{Theorem~\ref{thm:unknown-valid-block-identification} drops the requirement that the valid block be named in advance, and Corollary~\ref{cor:target-majority-median} replaces its plurality by the median once the valid choices form a strict majority. In the population of Sim-1, $8$ held-out choices can be balanced and $7$ of them target $\tau$, so both aggregates equal $\tau$ there. Figure~\ref{fig:exp-thm2} compares three ways of combining the retained choices in each simulation. The balance screen also retains $W_4$, which pulls the average away from $\tau$ while the plurality and the median stay on it.}
+
+\textcolor{purple}{[Evidence available now: the positive-control audit retains $10$ of the $126$ proxy splits, $7$ of which target $\tau$ and $3$ of which target $0.354$, so the realised plurality margin is $\Delta=0.400$ and the largest agreeing component is the target one in all $1{,}000$ evaluation draws. The average over retained splits is not the returned quantity there, so the average-versus-plurality contrast this subsection promises still needs its own computation, either from the audit or from a rerun of the family confirmation under the corrected partition.]}
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][1.2in][c]{0.96\linewidth}{\centering\small\textcolor{purple}{Plan, 1$\times$5, one panel per simulation, same layout as Figure~\ref{fig:exp-thm1}. Rows: average over retained held-out choices; median; PROBE plurality output. Dashed line: $\tau=1$.}}}
+\caption{\textcolor{blue}{Plan: three ways to combine the retained held-out choices.}}
+\label{fig:exp-thm2}
+\end{figure}
+
+\subsection{\texorpdfstring{\textcolor{blue}{Theorem~\ref{thm:approximate-proxy-bias-bound}: Approximate Balance}}{Theorem 3: Approximate Balance}}
+\label{sec:exp-thm3}
+
+\textcolor{blue}{Theorem~\ref{thm:approximate-proxy-bias-bound} replaces exact balance by approximate balance. Proposition~\ref{prop:zero-discrepancy} ties zero residual discrepancy to exact balance, and the theorem bounds the bias by $\Gamma_j(\phi)D_{\mathrm{res},j}(\phi)/\{\eta(1-\eta)\}$ under Assumption~\ref{ass:uniform-stability}, which $W_4$ violates. Figure~\ref{fig:exp-thm3} traces the bias against the residual discrepancy over the representation family in the population of Sim-1, with no fitting anywhere in the curve. For clean held-out blocks the bias shrinks with the discrepancy as the bound requires, while the contaminated block keeps a bias of $1.44$ even where its discrepancy reaches zero.}
+
+\textcolor{purple}{[Data ready: \texttt{results/population\_certificate\_curve\_v1.json}. Open: compute $\Gamma_j(\phi)$ so that the bound can be drawn; choose between three panels and a one-panel wrapfigure.]}
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][1.2in][c]{0.96\linewidth}{\centering\small\textcolor{purple}{Plan, 1$\times$3: (a) held-out $W_1$, (b) held-out $W_1W_2W_3$, (c) held-out $W_4$. $x$: residual discrepancy; $y$: bias of adjustment; the bound of Theorem~\ref{thm:approximate-proxy-bias-bound} where it applies.}}}
+\caption{\textcolor{blue}{Plan: bias against residual discrepancy.}}
+\label{fig:exp-thm3}
+\end{figure}
+
+\subsection{\texorpdfstring{\textcolor{blue}{Theorems~\ref{cor:representation-causal} and~\ref{thm:conditional-aipw-error}: Learned Representations}}{Theorems 4 and 5: Learned Representations}}
+\label{sec:exp-thm45}
+
+\textcolor{blue}{Theorems~\ref{cor:representation-causal} and~\ref{thm:conditional-aipw-error} cover representations that are learned rather than given. The first bounds the gap $|\tau_{\widehat Z_j}-\tau|$ left by the learned representation, the second bounds the gap $|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|$ left by estimation, and together they bound the error of the reported estimate. Figure~\ref{fig:exp-thm45} reports both gaps at $n=12{,}000$ in the three renderings of the same proxy, seven numbers, $1{,}282$-dimensional vectors, and five images, where adjustment for $X$ and adjustment for the raw proxy both fail.}
+
+\textcolor{purple}{[Data: Sim-1 to Sim-3 ready (E12); Sim-4 ready (artifacts under \texttt{results/scm6\_v3/}, $30$ data sets; per-block AIPW estimates only where the screen passed); Sim-5 ready (artifacts under \texttt{results/scm7\_v4/}, $15$ fresh data sets, all $13$ sealed gates passed). The earlier image failure and the threshold recalibration that followed it are reported here or in the appendix.]}
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][1.2in][c]{0.96\linewidth}{\centering\small\textcolor{purple}{Plan, 1$\times$3, one panel per rendering. Rows: adjustment for $X$; for the raw proxy; a learned summary without balance; PROBE representation error $|\theta_S-\tau|$; PROBE total error $|\widehat\tau-\tau|$.}}}
+\caption{\textcolor{blue}{Plan: learned representations in three renderings.}}
+\label{fig:exp-thm45}
+\end{figure}
+
+\subsection{\texorpdfstring{\textcolor{blue}{Theorem~\ref{thm:probe-search-error}: The Search Budget}}{Theorem 6: The Search Budget}}
+\label{sec:exp-thm6}
+
+\begin{wrapfigure}{r}{0.40\linewidth}
+\vspace{-1em}
+\centering
+\fbox{\parbox[c][0.95in][c]{0.9\linewidth}{\centering\small\textcolor{purple}{Plan, one panel: $x$ budget $m$; $y$ $P(|\widehat\tau-\tau|\le\rho)$; the bound of Theorem~\ref{thm:probe-search-error} and the observed rate.}}}
+\caption{\textcolor{blue}{Plan: guarantee and observed success against the budget.}}
+\label{fig:exp-thm6}
+\end{wrapfigure}
+
+\textcolor{blue}{Theorem~\ref{thm:probe-search-error} bounds the failure probability of the search by $\delta+P(R=0)+L\,\mathbb E\{e^{-R\Delta^2/2}\}$, and Corollary~\ref{cor:budget-rule} turns a target failure level into a budget $m$. Figure~\ref{fig:exp-thm6} uses an exactly solvable control with $2{,}000$ repetitions and $\rho=0.20$, where the bound can be evaluated and the search can be repeated cheaply. The observed probability that PROBE lands within $\rho$ of $\tau$ stays above the bound at every budget, and both rise with $m$.}
+
+\textcolor{purple}{[Data: \texttt{results/e11\_v2\_mcurve\_v1.json} for the budget curve, and the positive-control audit for the guarantee itself. In the audit every split is drawn, so $R=N$ and the bound closes to $1-\delta-Le^{-N\Delta^2/2}$. With $N=10$, $\Delta=0.400$ and $L=1$ the bound is $0.5007$, the three conditions of the theorem hold on the realised retained set in every learning state, and the observed success rate is $1.000$ over $1{,}000$ draws. The separation condition holds with little room: $4\rho=0.6454$ against $g_{\min}=0.6464$.]}
+
 \FloatBarrier
-
-\subsection{Exact-Assumption Tracks A and B}
-
-Track A uses a finite balancing score, $\dim(X)=20$, nine representation-side proxy coordinates, and one independent audit coordinate. The DGP enforces strict population overlap, exact decoding of the discrete confounding state from the representation-side view, and an injective Gaussian audit channel. At $n=10000$ over twenty replications, mean absolute error was $0.175$ for the learned audit representation, $0.433$ for $X$ adjustment, $0.186$ for direct full-observed adjustment, and $0.033$ for the oracle balancing score. The primary comparison with $X$ passed, while the prespecified secondary superiority criterion against full-observed adjustment failed.
-
-Track B uses a continuous exact balancing score and a linear representation class matched to that score. At $n=10000$, mean absolute error was $0.0748$ for the learned representation, $0.1583$ for fitted $X$ adjustment, and $0.1342$ for fitted full-observed adjustment. The learned method beat $X$ in $20/20$ and full-observed adjustment in $19/20$ paired replications. Its mean rank-recovery Spearman correlation was $0.915$. The held-out conditional-dependence diagnostic used finite random features and is a surrogate, not an exact population KCI test; the design also covers one prespecified scalar-$U$ SCM family.
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\linewidth]{../figures/final/figure_exact_tracks.pdf}
-\caption{Mean absolute ATE error and paired win rates for exact-assumption Tracks A and B over twenty replications.}
-\label{fig:exact-tracks}
-\end{figure}
-\FloatBarrier
-
-\subsection{WSC Observational Benchmark}
-
-The WSC study forms an observational subset of $1{,}105$ participants whose randomized mathematics assignment agrees with pretreatment preference, and targets the population ATE in the original $2{,}200$ randomized participants. The full randomized difference in means is $0.760$ with standard error $0.151$ and serves only as a noisy benchmark. Across ten algorithmic split repetitions on this one fixed data set, the unconstrained cross-mask estimate averaged $1.302$ with split standard deviation $0.065$ and absolute benchmark gap $0.541$, compared with gaps $2.690$ for the naive observational contrast, $1.704$ for direct $X$ adjustment, and $0.672$ for direct $(X,W)$ adjustment. The unconstrained cross-mask method is the proposed WSC method shown in Figure~\ref{fig:wsc-benchmark}. Its practical-overlap gate passed $0/10$ repetitions. The benchmark therefore supplies descriptive evidence only, not a validated causal-performance claim, causal ground truth, or a test of proxy validity.
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\linewidth]{../figures/final/wsc_benchmark.pdf}
-\caption{WSC estimates relative to the randomized reference; error bars show standard deviations across ten algorithmic splits.}
-\label{fig:wsc-benchmark}
-\end{figure}
-
-\clearpage
