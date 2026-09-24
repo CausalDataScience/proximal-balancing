@@ -191,8 +191,8 @@ def fig_estimates() -> None:
                                "kspc_contaminated"))
 
 
-ROWS_B = [("Average of the\nretained choices", "average", m.GRAY),
-          ("Median of the\nretained choices", "median", m.GRAY),
+ROWS_B = [("Average of the\nretained splits", "average", m.GRAY),
+          ("Median of the\nretained splits", "median", m.GRAY),
           ("PROBE: median of the\nlargest agreeing group", "probe", m.BLUE)]
 
 
@@ -207,16 +207,16 @@ def fig_aggregation() -> None:
             probe.append(output)
         columns.append((TITLES[level], {"average": avg, "median": med, "probe": probe}))
     strip_figure(ROWS_B, columns, (0.78, 1.14), [0.8, 0.9, 1.0, 1.1],
-                 "Combined estimate over the retained held-out choices  (dashed line: $\\tau=1$)",
+                 "Combined estimate over the retained splits  (dashed line: $\\tau=1$)",
                  "section5-v2-aggregation", height=1.9)
 
 
 ROWS_C = [("Adjust for $X$", "x", m.GRAY),
           ("Adjust for $X$\nand all of $W$", "raw", m.GRAY),
           ("CNN on all pixels,\nno balance check", "pixel", m.GRAY),
-          ("One held-out choice:\nrepresentation gap $|\\tau_{\\widehat Z}-\\tau|$", "gap", m.BLUE),
-          ("One held-out choice:\nestimation gap $|\\widehat\\theta-\\tau_{\\widehat Z}|$", "est", m.BLUE),
-          ("One held-out choice:\nerror $|\\widehat\\theta-\\tau|$", "one", m.BLUE),
+          ("One split:\nrepresentation gap $|\\tau_{\\widehat Z}-\\tau|$", "gap", m.BLUE),
+          ("One split:\nestimation gap $|\\widehat\\theta-\\tau_{\\widehat Z}|$", "est", m.BLUE),
+          ("One split:\nerror $|\\widehat\\theta-\\tau|$", "one", m.BLUE),
           ("PROBE output:\nerror $|\\widehat\\tau-\\tau|$", "total", m.BLUE)]
 
 
@@ -326,7 +326,7 @@ def coverage(level: str) -> dict[str, list[float] | None]:
 def fig_coverage() -> None:
     columns = [(TITLES[level], coverage(level)) for level in LEVELS]
     strip_figure(ROWS_D, columns, (0.50, 1.07), [0.6, 0.8, 1.0],
-                 "Share of the seven target held-out choices covered  (dashed line: nominal $0.95$)",
+                 "Share of the seven target splits covered  (dashed line: nominal $0.95$)",
                  "section5-v2-coverage", height=1.65, not_applicable="not recorded", reference=NOMINAL)
     for level in LEVELS:
         c = coverage(level)

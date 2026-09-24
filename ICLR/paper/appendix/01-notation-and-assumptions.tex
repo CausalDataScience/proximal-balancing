@@ -12,8 +12,8 @@ Let $U$ denote an unobserved pretreatment variable that may affect both treatmen
 \(W=(W_1,\ldots,W_J).\)
 Each block may be scalar or vector-valued. A block can represent one repeated measurement, sensor channel, laboratory panel, or prespecified region of a larger measurement.
 
-For each block index $j\in\{1,\ldots,J\}$, we call $W_j$ the \emph{held-out proxy block} and let $\mathcal W_j$ denote its value space. We call the combination of all other blocks the \emph{remaining proxy block} and write
+For each block index $j\in\{1,\ldots,J\}$, we call $W_j$ the \emph{held-out proxy block} and let $\mathcal W_j$ denote its value space. We call the combination of all other blocks the \emph{remaining blocks} (Definition~\ref{def:held-out-remaining-blocks}) and write
 \(W_{-j} \triangleq (W_1,\ldots,W_{j-1},W_{j+1},\ldots,W_J)\)
 for the resulting vector of remaining proxy blocks. Let $\mathcal V_j$ denote the value space of the pair $(X,W_{-j})$. Finally, define
 \(V_j\triangleq(X,W_{-j})\in\mathcal V_j.\)
-The variable $V_j$ is the combined vector of the observed covariates $X$ and the remaining proxy blocks $W_{-j}$.
+The variable $V_j$ is the combined vector of the observed covariates $X$ and the remaining proxy blocks $W_{-j}$. We also write $T_j\triangleq(X,W_j)$ for the observed covariates together with the held-out block.

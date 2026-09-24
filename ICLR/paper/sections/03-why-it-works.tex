@@ -8,28 +8,22 @@ We introduce \emph{proximal balancing}, an identification method that brings cov
 
 We first consider a fixed held-out block within the high-dimensional proxy $W=(W_1,\ldots,W_J)$. For $j\in[J]$, Definition~\ref{def:held-out-remaining-blocks} calls $W_j$ the \emph{held-out block} and $W_{-j}$ the \emph{remaining blocks}.
 
-We begin with two structural conditions: $(U,V_j)=(U,X,W_{-j})$ suffices to remove treatment confounding for each potential outcome, and $W_j$ is independent of treatment given $(U,V_j)$.
 \begin{assumption}[Latent exchangeability and held-out treatment independence]
 \label{ass:joint-latent-exchangeability}\label{ass:held-out-separation}
 	For each $a\in\{0,1\}$, $Y(a)\perp\!\!\!\perp A\mid(U,V_j)$ and $W_j\perp\!\!\!\perp A\mid(U,V_j)$.
 \end{assumption}
 Latent exchangeability says that, after $(U,V_j)$ is fixed, treatment carries no further information about $Y(a)$. Held-out treatment independence states that $W_j$ carries no additional treatment information given the latent and retained variables.
 
-Let $\phi_j$ be a measurable encoder and set $Z_j\triangleq\phi_j(V_j)=\phi_j(X,W_{-j})$. Proximal balancing seeks a representation that makes the treatment arms comparable for the potential-outcome means, while $T_j=(X,W_j)$ supplies an observable check of residual treatment information.  For a distribution $Q$ of $(V_j,U)$, let $\mathcal K_jQ$ be the distribution of $T_j$ obtained by drawing $(V_j,U)\sim Q$ and then $W_j\sim P(W_j\mid V_j,U)$. Let $\mu_{a,j,z}(v,u)\triangleq\mathbb E\{Y(a)\mid V_j=v,U=u,Z_j=z\}$ be the mean of $Y(a)$ at a latent state.
+Let $\phi_j$ be a measurable encoder and set $Z_j\triangleq\phi_j(V_j)=\phi_j(X,W_{-j})$. Proximal balancing seeks a representation that makes the treatment arms comparable for the potential-outcome means, while $T_j=(X,W_j)$ supplies an observable check of residual treatment information. For a distribution $Q$ of $(V_j,U)$, let $\mathcal K_jQ$ be the distribution of $T_j$ obtained by drawing $(V_j,U)\sim Q$ and then $W_j\sim P(W_j\mid V_j,U)$. Let $\mu_{a,j,z}(v,u)\triangleq\mathbb E\{Y(a)\mid V_j=v,U=u,Z_j=z\}$ be the mean of $Y(a)$ at a latent state.
 
-
-
-
-Different  distributions $Q,Q'$ of $(V_j,U)$ can induce the same  distribution of $T_j$. The next assumption states when this loss of latent information is harmless for the potential-outcome means needed for identification.
+Different distributions $Q,Q'$ of $(V_j,U)$ can induce the same distribution of $T_j$. The next assumption states when this loss of latent information is harmless for the potential-outcome means needed for identification.
 
 \begin{assumption}[Outcome-relevant completeness]
 \label{ass:outcome-relevant-completeness}
-For  almost every $z$, every  pair of distributions $Q,Q'$ of $(V_j,U)$ that are absolutely continuous with respect to $P(V_j,U\mid Z_j=z)$ and under which $\mu_{0,j,z}$ and $\mu_{1,j,z}$ are integrable, and each $a\in\{0,1\}$, $\mathcal K_jQ=\mathcal K_jQ'$ implies $\mathbb E_Q\mu_{a,j,z}=\mathbb E_{Q'}\mu_{a,j,z}$.
+For almost every $z$, every pair of distributions $Q,Q'$ of $(V_j,U)$ that are absolutely continuous with respect to $P(V_j,U\mid Z_j=z)$ and under which $\mu_{0,j,z}$ and $\mu_{1,j,z}$ are integrable, and each $a\in\{0,1\}$, $\mathcal K_jQ=\mathcal K_jQ'$ implies $\mathbb E_Q\mu_{a,j,z}=\mathbb E_{Q'}\mu_{a,j,z}$.
 \end{assumption}
 
  In words, if two distributions of the latent state $Q,Q'$ give different means of $Y(a)$, they also give different distributions of $T_j=(X,W_j)$.
-
-The following theorem combines these structural conditions with overlap and exact held-out balance to identify the average treatment effect.
 
 \begin{theorem}[Identification from a held-out audit]
 \label{thm:exact-proxy-identification}
@@ -44,8 +38,6 @@ then
 \label{eq:exact-identification}
 \end{align}
 \end{theorem}
-
-Under Assumptions~\ref{ass:consistency}--\ref{ass:outcome-relevant-completeness}, Thm.~\ref{thm:exact-proxy-identification} shows that the average treatment effect is identified by Eq.~\eqref{eq:exact-identification} whenever $Z_j=\phi_j(V_j)$ satisfies the overlap and exact held-out balance conditions in Eq.~\eqref{eq:exact-proxy-balance}.
 
 \subsection{Unknown Valid Block}
 \label{sec:unknown-blocks}
@@ -70,13 +62,10 @@ where the maximum over an empty set is zero.
 \end{definition}
 In words, proximal plurality means that $\tau$ is the most frequent candidate value among the screened splits, even if it is not attained by a majority. For example, let $J=3$, so $\mathfrak S=\{\{1\},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\}\}$. If $\mathcal B=\{\{1\},\{2\},\{1,2\},\{1,3\}\}$, $\tau=1$, $\theta_{\{1\}}=\theta_{\{1,2\}}=1$, $\theta_{\{2\}}=0.5$, and $\theta_{\{1,3\}}=0.3$, then $\tau$ appears twice while each competing value appears once, so the target has a unique proximal plurality.
 
-When $\mathcal B\ne\varnothing$ and proximal plurality holds, the causal effect is identified by the population mode of the candidate values.
 \begin{theorem}[Identification with an unknown valid block]
 \label{thm:unknown-valid-block-identification}
 If $\mathcal B\ne\varnothing$ and the target has a unique proximal plurality, then $\{\tau\}=\operatorname*{arg\,max}_{c\in\mathbb R}|\{S\in\mathcal B:\theta_S=c\}|$.
 \end{theorem}
-
-Invalid passing blocks may remain. Identification requires the correct candidates to form the unique largest equality class in Eq.~\eqref{eq:unique-target-plurality}.
 
 \subsection{Approximate Balance}
 \label{sec:imperfect-balance}
@@ -105,8 +94,6 @@ For each encoder $\phi$, let $\mu^\phi_{a,j,z}$ be $\mu_{a,j,z}$ with $Z_j^\phi 
 \end{assumption}
  If $\mathcal K_jQ=\mathcal K_jQ'$, the right side of Assumption~\ref{ass:uniform-stability} is zero, so Assumption~\ref{ass:uniform-stability} implies Assumption~\ref{ass:outcome-relevant-completeness} for $Z_j^\phi$. It gives additional rate information: when the two distributions of $T_j$ are close, the two means of $Y(a)$ are close, within the unobserved factor $\Gamma_j(\phi)$.
 
-
-
 Under Assumption~\ref{ass:uniform-stability}, imperfect balance yields a quantitative bound on causal bias.
 
 \begin{theorem}[Approximate-balance bias]
@@ -119,4 +106,3 @@ Under Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability},
 \end{align}
 \end{theorem}
 
-Eq.~\eqref{eq:uniform-approximate-proxy-bias-bound} separates observable discrepancy from unobserved sensitivity. A small discrepancy cannot verify assumptions, and $\Gamma_j(\phi)$ requires substantive analysis. Section~\ref{sec:estimation} adds estimation errors.
