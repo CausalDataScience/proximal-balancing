@@ -1,0 +1,20 @@
+
+--- lalonde_cps2: the sample as published  (n = 2554, treated 185)
+    propensity in [0.0002, 0.6730], effective sample size treated 27.5 of 185, control 2264.9 of 2369
+    S1: estimate -2514.2043  gap +0.00132  se 0.00077  gap - z se -0.00020  overlap True
+    S2: estimate -2727.7420  gap -0.00072  se 0.00072  gap - z se -0.00213  overlap True
+    significance  retained ['S1', 'S2'] -> -2620.9732 (unique_largest)
+    noise_floor   retained ['S2'] -> -2727.7420 (unique_largest)
+    both          retained ['S1', 'S2'] -> -2620.9732 (unique_largest)
+    X -2704.571  raw -2517.353  naive -3821.967  p2sls_W1_treats_W2_outcome +1432.336  p2sls_W2_treats_W1_outcome +1602.143  coca_W1_ett +6095.139  coca_W1_ate +206574.900  coca_W2_ett +5624.843  coca_W2_ate +243355.151
+
+--- lalonde_cps2: the units whose propensity lies in [0.05, 0.95]  (n = 482, treated 161)
+    propensity in [0.0382, 0.6771], effective sample size treated 73.5 of 161, control 293.4 of 321
+    S1: estimate +2371.2952  gap +0.00810  se 0.00592  gap - z se -0.00349  overlap True
+    S2: estimate +2225.4584  gap -0.00464  se 0.00409  gap - z se -0.01266  overlap True
+    significance  retained ['S1', 'S2'] -> +2298.3768 (unique_largest)
+    noise_floor   retained ['S2'] -> +2225.4584 (unique_largest)
+    both          retained ['S1', 'S2'] -> +2298.3768 (unique_largest)
+    X +284.473  raw +580.565  naive -520.302  p2sls_W1_treats_W2_outcome +1052.701  p2sls_W2_treats_W1_outcome +1443.063  coca_W1_ett +8742.343  coca_W1_ate -35481.244  coca_W2_ett +7205.212  coca_W2_ate +1537044.288
+
+written /Users/yonghanjung/paios/research/papers/single_proxy_balancing/results/two_proxy/lalonde_cps2_v1.json

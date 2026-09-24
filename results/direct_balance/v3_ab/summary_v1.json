@@ -1,0 +1,194 @@
+{
+ "artifact": "direct_balance_v3_ab_summary",
+ "generated_utc": "2026-09-22T05:13:35.478122Z",
+ "status": "development and diagnosis, not confirmation",
+ "seconds_total": 2567.2,
+ "arms": {
+  "A": {
+   "updates_taken": 24,
+   "updates_planned": 100,
+   "chosen": 40,
+   "audit16": {
+    "initial": {
+     "gap": 0.004235479786992073,
+     "se": 0.0016187953527047763,
+     "upper": 0.008986967046455014
+    },
+    "chosen": {
+     "gap": 0.005749422956413279,
+     "se": 0.0013535414857645627,
+     "upper": 0.009722337206518467
+    },
+    "last": {
+     "gap": 0.005749422956413279,
+     "se": 0.0013535414857645627,
+     "upper": 0.009722337206518467
+    }
+   },
+   "audit64": {
+    "initial": {
+     "gap": 0.005085930639412254,
+     "upper": 0.009383885938457917
+    },
+    "chosen": {
+     "gap": 0.01131848897272721,
+     "upper": 0.015312286318131859
+    },
+    "last": {
+     "gap": 0.01131848897272721,
+     "upper": 0.015312286318131859
+    }
+   },
+   "effect": {
+    "initial": {
+     "theta": -0.47579813191077724,
+     "abs_error": 1.4757981319107771,
+     "u_r2": 0.1991332035229889
+    },
+    "chosen": {
+     "theta": -0.1485200283096277,
+     "abs_error": 1.1485200283096277,
+     "u_r2": 0.2652878398035141
+    },
+    "last": {
+     "theta": -0.1485200283096277,
+     "abs_error": 1.1485200283096277,
+     "u_r2": 0.2652878398035141
+    }
+   },
+   "paired_vs_initial": {
+    "chosen": {
+     "mean_change": 0.0015139431694212058,
+     "se": 0.0008312418230658625,
+     "n": 6000,
+     "one_sided_95_upper": 0.0028812142969648433,
+     "decrease_significant": false
+    },
+    "last": {
+     "mean_change": 0.0015139431694212058,
+     "se": 0.0008312418230658625,
+     "n": 6000,
+     "one_sided_95_upper": 0.0028812142969648433,
+     "decrease_significant": false
+    }
+   },
+   "markers": {
+    "threshold": 0.0015,
+    "effect_tolerance": 0.15,
+    "audit_upper_at_most_t": false,
+    "audit_gap_fell": false,
+    "effect_within_tolerance": false,
+    "error_below_initial": true
+   },
+   "h_scale_last": {
+    "h_sd": [
+     0.10036804527044296,
+     0.138016477227211
+    ],
+    "h_mean": [
+     -0.9744638800621033,
+     1.015814185142517
+    ],
+    "h_absmax": 1.4262908697128296
+   },
+   "refit_diagnostic": {
+    "both_fell": 0,
+    "only_fixed_fell": 1,
+    "of": 5
+   }
+  },
+  "B": {
+   "updates_taken": 7,
+   "updates_planned": 100,
+   "chosen": 10,
+   "audit16": {
+    "initial": {
+     "gap": 0.0055887946744139,
+     "se": 0.0015001165767773274,
+     "upper": 0.009991936053808843
+    },
+    "chosen": {
+     "gap": 0.0007402427522465587,
+     "se": 0.001497207278532115,
+     "upper": 0.005134844760977379
+    },
+    "last": {
+     "gap": 0.0007402427522465587,
+     "se": 0.001497207278532115,
+     "upper": 0.005134844760977379
+    }
+   },
+   "audit64": {
+    "initial": {
+     "gap": 0.004664277139119804,
+     "upper": 0.009129107079452272
+    },
+    "chosen": {
+     "gap": -0.0009299971701887746,
+     "upper": 0.003531874129246504
+    },
+    "last": {
+     "gap": -0.0009299971701887746,
+     "upper": 0.003531874129246504
+    }
+   },
+   "effect": {
+    "initial": {
+     "theta": -0.4757981258603568,
+     "abs_error": 1.4757981258603567,
+     "u_r2": 0.1991332035303005
+    },
+    "chosen": {
+     "theta": -0.2189991493001913,
+     "abs_error": 1.2189991493001913,
+     "u_r2": 0.24586129281918323
+    },
+    "last": {
+     "theta": -0.2189991493001913,
+     "abs_error": 1.2189991493001913,
+     "u_r2": 0.24586129281918323
+    }
+   },
+   "paired_vs_initial": {
+    "chosen": {
+     "mean_change": -0.004848551922167341,
+     "se": 0.0008318491311709714,
+     "n": 6000,
+     "one_sided_95_upper": -0.003480281861684338,
+     "decrease_significant": true
+    },
+    "last": {
+     "mean_change": -0.004848551922167341,
+     "se": 0.0008318491311709714,
+     "n": 6000,
+     "one_sided_95_upper": -0.003480281861684338,
+     "decrease_significant": true
+    }
+   },
+   "markers": {
+    "threshold": 0.0015,
+    "effect_tolerance": 0.15,
+    "audit_upper_at_most_t": false,
+    "audit_gap_fell": true,
+    "effect_within_tolerance": false,
+    "error_below_initial": true
+   },
+   "h_scale_last": {
+    "h_sd": [
+     0.0528072863817215,
+     0.05330878123641014
+    ],
+    "h_mean": [
+     0.08337824791669846,
+     0.026793906465172768
+    ],
+    "h_absmax": 0.27460888028144836
+   },
+   "refit_diagnostic": {
+    "both_fell": 0,
+    "only_fixed_fell": 1,
+    "of": 5
+   }
+  }
+ }
+}

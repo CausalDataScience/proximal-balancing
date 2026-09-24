@@ -1,0 +1,58 @@
+{
+ "task": {
+  "exp": "E3",
+  "name": "rhc",
+  "replicate": 0,
+  "seed": null,
+  "tau": null,
+  "sealed": null
+ },
+ "label": "KSPC with covariates, Appendix A, our implementation; SKPV only, decided after gate 2",
+ "tau": null,
+ "n_full": 5735,
+ "n_used": 3000,
+ "subsample_seed": 99400000,
+ "integrity": {
+  "checked": false,
+  "why": "no sealed shard; the RHC file is checked against its sha256 on load"
+ },
+ "kspc_skpv_with_x": {
+  "W1": {
+   "ate": -1.7790855533004972,
+   "f0": 21.666712588367236,
+   "f1": 19.88762703506674
+  },
+  "W2": {
+   "ate": -2.084444288153641,
+   "f0": 24.43162353914653,
+   "f1": 22.347179250992887
+  },
+  "W3": {
+   "ate": -1.2391111816675817,
+   "f0": 23.233915313521436,
+   "f1": 21.994804131853854
+  },
+  "W4": {
+   "ate": -0.929646197587541,
+   "f0": 23.730467499472155,
+   "f1": 22.800821301884614
+  },
+  "W5": {
+   "ate": -2.1774007112704936,
+   "f0": 23.601236305334353,
+   "f1": 21.42383559406386
+  }
+ },
+ "timing_s": 47.7,
+ "generated_utc": "2026-09-23T05:31:31.312809Z",
+ "source_sha256": {
+  "run_kspc_comparator.py": "68cee71b759224b8859c7367576b6dc635ce08da25ab81a90aa33b68eeea8173",
+  "kspc_wrapper.py": "d591cf459ff099601dbb18156d805b8f9ed8561e0c83b114b214210f32ca6e04",
+  "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "run_scm4.py": "3329b731b3b17f1bcfbdc9c2d5c5d3fb3904626d0902c07e5283394f943a9c60",
+  "family_v2_images.py": "756935af1fd4da30085780f645b5c489837c3f0c4f68f53a967262422c4d0a77",
+  "coca_ate_all.py": "83ed7fcb5f76bc0ad73419567084d4fee2d264c2e2584113b22b3695358dfce4",
+  "rhc_data.py": "bf49c492357e2976234f6c6b7472176c6f75676c1bf1bec7f1d2ea7edc26e0cd"
+ }
+}

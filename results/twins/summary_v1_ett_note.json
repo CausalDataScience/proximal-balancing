@@ -1,0 +1,76 @@
+{
+ "artifact": "twins_ett_scoring_note",
+ "generated_utc": "2026-09-22T14:16:55.896993Z",
+ "why": "park_spc targets the effect on the treated; summary_v1.json scored it against the ATE. Both potential outcomes are observed, so the true ETT is computed here per replicate and Park is rescored against it.",
+ "ate": -0.02520026702269693,
+ "true_ett_mean": -0.023282551564312845,
+ "true_ett_range": [
+  -0.02517241379310345,
+  -0.021112255406797117
+ ],
+ "park_clean_mae_vs_ett": 0.75845301337091,
+ "park_clean_mae_vs_ate": 0.7603707288292941,
+ "diagnosis": "With a binary outcome, the moment E[Y (Y - b) | A = 0] = 0 that identifies the linear bridge reduces to E[b | Y = 1, A = 0] = 1, which a linear b cannot satisfy alongside a control mortality of 0.19; the fitted bridge coefficient on W is about -2 and E[b | A = 1] is negative. Reducing X to four principal components leaves the estimate at +0.69, and the condition number is 4.9e2, so neither dimension nor conditioning is the cause. The sealed comparator is correct for the continuous outcomes of SCM-1 to SCM-4 and misspecified here.",
+ "per_replicate": [
+  {
+   "replicate": 1,
+   "true_ett": -0.024301964839710446,
+   "park_clean": 0.8073227153329336,
+   "park_contaminated": -2.2750182334633258
+  },
+  {
+   "replicate": 2,
+   "true_ett": -0.022561610551891705,
+   "park_clean": 0.7376610862694732,
+   "park_contaminated": -2.1437170403078665
+  },
+  {
+   "replicate": 3,
+   "true_ett": -0.02237403928266439,
+   "park_clean": 0.7380565280177563,
+   "park_contaminated": -2.320633618597747
+  },
+  {
+   "replicate": 4,
+   "true_ett": -0.02295918367346939,
+   "park_clean": 0.7215201058539097,
+   "park_contaminated": -2.216107695399172
+  },
+  {
+   "replicate": 5,
+   "true_ett": -0.021112255406797117,
+   "park_clean": 0.7918463303565888,
+   "park_contaminated": -2.702188786130533
+  },
+  {
+   "replicate": 6,
+   "true_ett": -0.023515479614278464,
+   "park_clean": 0.6735553918000308,
+   "park_contaminated": -2.1618301880806836
+  },
+  {
+   "replicate": 7,
+   "true_ett": -0.024870466321243522,
+   "park_clean": 0.6950557456927239,
+   "park_contaminated": -2.2631610992987006
+  },
+  {
+   "replicate": 8,
+   "true_ett": -0.024260151410874054,
+   "park_clean": 0.6765009790107068,
+   "park_contaminated": -2.136879756989336
+  },
+  {
+   "replicate": 9,
+   "true_ett": -0.02517241379310345,
+   "park_clean": 0.8145641647818314,
+   "park_contaminated": -2.239089609989213
+  },
+  {
+   "replicate": 10,
+   "true_ett": -0.021697950749095918,
+   "park_clean": 0.6956215709500173,
+   "park_contaminated": -2.184783216804604
+  }
+ ]
+}

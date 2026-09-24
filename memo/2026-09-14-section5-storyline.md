@@ -847,3 +847,25 @@ seed 블록 6.1M/6.3M/6.4M은 results, code, memo 어디에도 없음을 단어 
 
 가장 큰 위험 둘을 PRD 12절에 적었다. (R1) 지렛대 $I$가 $Z$에 없으니 정확한 균형은 없고 잔여가 남는다.
 (R2) 전체 이미지 CNN 조정이 PROBE와 비슷하거나 더 좋을 수 있어, Sim-5의 주장은 정확도 우위가 아니라 역할 비인지 실행과 certificate가 된다.
+
+## 11o. 2026-09-18 — Sim5 CNN PRD 착수: 백업, 생성기, P0
+
+미러 스냅샷 `e0ab2de`를 private GitHub에 push했다(기존 코드·결과·원고 전부, 410 파일). PAIOS에는 commit하지 않았다.
+새 PRD(`memo/2026-09-18-sim5-cnn-implementation-prd-v1.md`)의 순서대로 P0부터 했다. 생성기 `code/sim5_cnn_dgp.py`가
+PRD 수치를 재현하고(naive $-0.5$, $\theta_X=-0.53653$, $c=4.29963$), 생성기 검사 8개가 통과한다.
+P0 결과는 `memo/2026-09-18-sim5-cnn-p0-feasibility.md`와 `results/sim5_cnn/p0_ledger_v1.json`에 있다.
+P0-B, C, D는 인증하지 못했고(불가능 증명은 아님), PRD 4.5절대로 literal-theorem run은 시작하지 않았다.
+원고의 충분조건 구성(Chebyshev와 $\delta/N$ union bound)을 $2^{64}-2$개 universe에 걸면 oracle 점수에서도 $\rho\approx10^7$이다.
+균일 split의 96.9%에서 양쪽 조각에 $U$ 복원 정보가 있고, 배경만 빼는 오답 무리의 확률은 $2.77\times10^{-17}$이다.
+학습된 CNN에서 다수결이 일하는지는 실험으로만 안다. 첫 판의 과장된 문장은 P0 메모에서 정정했다.
+다음은 개발 자료 하나에서 raw CNN, 균형 전, 균형 후 세 방법 비교이고 PRD 결정 3 변경에 대한 사용자 승인을 기다린다.
+
+## 11p. 2026-09-18 — Sim5 CNN 개발 실행 결과
+
+operational arm 개발 자료 하나를 돌렸다(`memo/2026-09-18-sim5-cnn-dev-result.md`). 참값 1에 대해 raw CNN 0.989, PROBE 균형 전 0.956,
+균형 후 0.937, $X$만 $-0.504$. 균형 학습은 오차를 줄이지 못했고(0.044에서 0.063), raw가 oracle에 가깝다.
+PRD 결정 15대로 멈췄고 확증은 시작하지 않았다. 심사는 거의 전부 보류, 집계는 성분 하나였다.
+이 DGP에서는 전체 이미지가 $U$를 정확히 복원하므로 raw가 구조적으로 불리하지 않다.
+검토 반영 정정: nuisance seed 효과는 작고(같은 $Z$ 46개에서 평균 $+0.0002$), 추정값 하락은 head 변화에서 왔다. 다만 구현이 제한적이고(몸통 고정, 특징 검사기)
+ORC 해석은 철회했다. 다음은 네 조건을 만족하는 작은 수치 DGP부터다. 봉인된 positive-control SCM이 무조정 $-0.44$, $(X,W)$ 전부 조정 $0.868$,
+목표 표현 1로 네 조건을 이미 만족한다(편향 0.13).

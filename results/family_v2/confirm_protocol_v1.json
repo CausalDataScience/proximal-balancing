@@ -1,0 +1,506 @@
+{
+ "protocol_id": "family-v2-confirm-v1",
+ "stage": "confirm",
+ "frozen_at_utc": "2026-09-19T03:16:18.425788Z",
+ "prd": {
+  "path": "memo/2026-09-18-family-v2-role-blind-dimension-prd-v1.md",
+  "sha256": "38bcec8ec470180ac75a1cfe6a0bf2f3f12537b5c1a132c13eff8a6da11b112f"
+ },
+ "n": 24000,
+ "design": {
+  "coefficients": {
+   "treat": {
+    "U": 1.5,
+    "I": 2.0,
+    "X1": 0.2,
+    "C": 0.3
+   },
+   "bad_i": -3.0,
+   "proxy_sd": 0.85,
+   "noise_sd": 0.5,
+   "outcome": {
+    "U": -2.5,
+    "X1": 0.2,
+    "C": -0.5
+   },
+   "outcome_noise": 0.3,
+   "kappa": 2.0,
+   "tau": 1.0
+  },
+  "levels": {
+   "SCM-1": {
+    "index": 0,
+    "d_x": 2,
+    "d_blocks": [
+     1,
+     1,
+     1,
+     1,
+     2
+    ],
+    "k": 2,
+    "variant": "main",
+    "rotation_sha256": "4583ca406ca790df06dc08768d5be118a62df70f67d7370a9711f52dd111b591"
+   },
+   "SCM-2": {
+    "index": 1,
+    "d_x": 8,
+    "d_blocks": [
+     16,
+     16,
+     16,
+     16,
+     16
+    ],
+    "k": 2,
+    "variant": "main",
+    "rotation_sha256": "58f93817283eef391f080509b330a79abb214bc12f639cb1aa2d8aa02f5e7840"
+   },
+   "SCM-3": {
+    "index": 2,
+    "d_x": 32,
+    "d_blocks": [
+     256,
+     256,
+     256,
+     256,
+     256
+    ],
+    "k": 2,
+    "variant": "main",
+    "rotation_sha256": "0966e0763830998a82c8a93b260cde4450aa11820d3986cb011032b90abffb4b"
+   },
+   "SCM-1c": {
+    "index": 3,
+    "d_x": 3,
+    "d_blocks": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "k": 2,
+    "variant": "1c",
+    "rotation_sha256": "7a4a993e1e175e0d195d7c9a072a1a3e7ea2324ffea52cb82fe38ada0a3c9c35"
+   }
+  },
+  "probe": {
+   "p_features_max": 4,
+   "mp_margin": 1.1,
+   "link": [
+    0.1,
+    0.9
+   ],
+   "ridge": 0.0001,
+   "alpha": 0.05,
+   "n_splits": 30,
+   "outer_iters": 60,
+   "restarts": 2,
+   "clip": [
+    0.05,
+    0.95
+   ],
+   "fold_seed_offset": 7
+  },
+  "competitors": {
+   "ridge_grid": [
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0
+   ],
+   "cevae": {
+    "latent_dim": 20,
+    "hidden_dim": 200,
+    "num_layers": 3,
+    "num_epochs": 30,
+    "batch_size": 100,
+    "learning_rate": 0.001,
+    "learning_rate_decay": 0.1,
+    "weight_decay": 0.0001,
+    "num_samples": 100
+   },
+   "cevae_seed_offset": 11
+  }
+ },
+ "tasks": [
+  {
+   "level": "SCM-1",
+   "rep": 0,
+   "seed": 97200000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 1,
+   "seed": 97201000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 2,
+   "seed": 97202000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 3,
+   "seed": 97203000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 4,
+   "seed": 97204000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 5,
+   "seed": 97205000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 6,
+   "seed": 97206000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 7,
+   "seed": 97207000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 8,
+   "seed": 97208000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 9,
+   "seed": 97209000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 10,
+   "seed": 97210000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 11,
+   "seed": 97211000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 12,
+   "seed": 97212000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 13,
+   "seed": 97213000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 14,
+   "seed": 97214000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 15,
+   "seed": 97215000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 16,
+   "seed": 97216000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 17,
+   "seed": 97217000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 18,
+   "seed": 97218000,
+   "probe": true
+  },
+  {
+   "level": "SCM-1",
+   "rep": 19,
+   "seed": 97219000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 0,
+   "seed": 97210000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 1,
+   "seed": 97211000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 2,
+   "seed": 97212000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 3,
+   "seed": 97213000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 4,
+   "seed": 97214000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 5,
+   "seed": 97215000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 6,
+   "seed": 97216000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 7,
+   "seed": 97217000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 8,
+   "seed": 97218000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 9,
+   "seed": 97219000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 10,
+   "seed": 97220000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 11,
+   "seed": 97221000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 12,
+   "seed": 97222000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 13,
+   "seed": 97223000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 14,
+   "seed": 97224000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 15,
+   "seed": 97225000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 16,
+   "seed": 97226000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 17,
+   "seed": 97227000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 18,
+   "seed": 97228000,
+   "probe": true
+  },
+  {
+   "level": "SCM-2",
+   "rep": 19,
+   "seed": 97229000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 0,
+   "seed": 97220000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 1,
+   "seed": 97221000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 2,
+   "seed": 97222000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 3,
+   "seed": 97223000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 4,
+   "seed": 97224000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 5,
+   "seed": 97225000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 6,
+   "seed": 97226000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 7,
+   "seed": 97227000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 8,
+   "seed": 97228000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 9,
+   "seed": 97229000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 10,
+   "seed": 97230000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 11,
+   "seed": 97231000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 12,
+   "seed": 97232000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 13,
+   "seed": 97233000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 14,
+   "seed": 97234000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 15,
+   "seed": 97235000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 16,
+   "seed": 97236000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 17,
+   "seed": 97237000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 18,
+   "seed": 97238000,
+   "probe": true
+  },
+  {
+   "level": "SCM-3",
+   "rep": 19,
+   "seed": 97239000,
+   "probe": true
+  }
+ ],
+ "source_sha256": {
+  "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+  "family_v2_population.py": "f31281faebd8eab7e77e67ff236b7998291fe0f2b63c2753d74f7ef79a2dbef6",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+  "positive_control_scm.py": "98c96ada29672b1091fb4b39576128da407b043c88c388088b1069127ce41a49",
+  "run_family_v2.py": "24516be0972b8ca510a9b5a4b26f53aa95c2ae7a1450cd74cef1f47b6f30df12"
+ },
+ "screen_thresholds": {
+  "SCM-1": 0.0015,
+  "SCM-2": 0.0018,
+  "SCM-3": 0.0016
+ },
+ "notes": "thresholds, sources and design are frozen; nothing is chosen on these data",
+ "dev_protocol_sha256": "c8a00bd72e25c3edef25663adab6eab7cbcef9d6a0c6d73f31413533ff2b8b6f"
+}

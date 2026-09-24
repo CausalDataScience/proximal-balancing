@@ -1,0 +1,27 @@
+{
+ "artifact": "kspc_benchmark_freeze_addendum",
+ "written": "2026-09-23T00:43:39-05:00",
+ "what_changed": "after the E4 freeze, code/kspc_wrapper.py gained the covariate classes of PRD v2, its gates, and a bandwidth fallback for a constant input; code/test_kspc.py gained a regression test. No E4 result file changed.",
+ "reproduction_with_current_code": {
+  "skpv_W1": {
+   "frozen": 0.9786921309845132,
+   "current_code": 0.9786921309845132,
+   "identical": true
+  },
+  "spmmr_W1": {
+   "frozen": 0.994981796882713,
+   "current_code": 0.994981796882713,
+   "identical": true
+  },
+  "skpv_W2": {
+   "frozen": 1.2751240764587537,
+   "current_code": 1.2751240764587537,
+   "identical": true
+  }
+ },
+ "all_identical": true,
+ "current_sha256": {
+  "kspc_wrapper.py": "d591cf459ff099601dbb18156d805b8f9ed8561e0c83b114b214210f32ca6e04",
+  "test_kspc.py": "ecf968ad5749acfd68221ac804bf6765ed43b5677eff11c8ab9d6dac9cf8463c"
+ }
+}

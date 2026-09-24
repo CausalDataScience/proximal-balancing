@@ -1,0 +1,39 @@
+{
+ "artifact": "kspc_binary_x_diagnostic",
+ "generated_utc": "2026-09-23T05:30:36.106505Z",
+ "status": "post-hoc diagnostic: is the covariate version right with a binary treatment? effect is exactly 1",
+ "design": "U~Unif(-1,1), X~N(0,1), P(A=1)=0.1+0.8(1+erf(U+0.5X))/2, W=exp(U)+N(0,0.01), Y=sin(pi U/2)+A-0.3+0.5X, n=3000",
+ "rows": [
+  {
+   "seed": 0,
+   "with_x": 0.984472233992209,
+   "without_x": 1.0059483421339364,
+   "naive": 1.8173042070814078
+  },
+  {
+   "seed": 1,
+   "with_x": 0.9745263366403454,
+   "without_x": 0.9978092343199244,
+   "naive": 1.817980115476856
+  },
+  {
+   "seed": 2,
+   "with_x": 0.9818294550600399,
+   "without_x": 0.9820536031008783,
+   "naive": 1.8402893698700022
+  },
+  {
+   "seed": 3,
+   "with_x": 0.9713263518921433,
+   "without_x": 0.9827646655036891,
+   "naive": 1.8658786719251204
+  },
+  {
+   "seed": 4,
+   "with_x": 0.9820647825939941,
+   "without_x": 1.0192879173299303,
+   "naive": 1.8739048107128058
+  }
+ ],
+ "mean_abs_error_with_x": 0.02115616796425366
+}

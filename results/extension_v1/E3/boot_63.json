@@ -1,0 +1,43 @@
+{
+ "b": 63,
+ "seed": 99600063,
+ "n": 5735,
+ "probe_v3": {
+  "output": -0.8795506025770912,
+  "return_kind": "unique_largest",
+  "n_retained": 12,
+  "retained": [
+   "S2",
+   "S23",
+   "S235",
+   "S24",
+   "S245",
+   "S25",
+   "S3",
+   "S34",
+   "S345",
+   "S4",
+   "S45",
+   "S5"
+  ]
+ },
+ "comparators": {
+  "naive": -1.0169838518027916,
+  "adjust_X": -0.9323896133189179,
+  "adjust_X_and_all_W": -0.9710547285354492,
+  "p2sls_cui_roles": -1.5364873855230783
+ },
+ "seconds": 223.6,
+ "generated_utc": "2026-09-23T19:15:20.635635Z",
+ "source_sha256": {
+  "rhc_bootstrap.py": "6a1353270495a334bd92807f923f9a94ea256b896ecb5198654352648f3a50e1",
+  "rhc_data.py": "bf49c492357e2976234f6c6b7472176c6f75676c1bf1bec7f1d2ea7edc26e0cd",
+  "run_rhc.py": "0ec65d9995956b746f48fd9251ad060a91eaea708a107c9a46bd50b1da6665c5",
+  "noise_scaled.py": "84f924edf96aba8c1e9457f069df2e0d6606581059d44bd3134adb01327ede72",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "run_two_proxy.py": "a948fbc4b48ad3db06ceb4fb0c342d38a3fa726fd7c45f26aa9090baf1535481",
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895"
+ }
+}

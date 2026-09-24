@@ -1,0 +1,164 @@
+{
+ "artifact": "two_proxy_uncertainty",
+ "generated_utc": "2026-09-22T23:32:50.968038Z",
+ "draws": 20000,
+ "seed": 98900000,
+ "what": "the sampling spread of the median of the largest agreeing group, conditional on the retained set and the linking radius produced on the observed data",
+ "does_not_include": "the uncertainty of the screen",
+ "datasets": {
+  "zika": {
+   "whole_sample": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 0.31336374610252743,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 0.3375827152568409,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 0.31288851729612294,
+     "sd": 0.14001743940026717,
+     "q025": 0.0341458228287575,
+     "q975": 0.5876660451311968,
+     "per_candidate_se": {
+      "S1": 0.13776787430832993,
+      "S2": 0.16579283787250854
+     }
+    },
+    "noise_floor": {
+     "return_kind": "unique_largest",
+     "output": 0.23262869259515503,
+     "retained": [
+      "S2"
+     ],
+     "rho": 0.32656066395117883,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 0.23406340160821154,
+     "sd": 0.164551461527451,
+     "q025": -0.08520614567131678,
+     "q975": 0.5550444804470005,
+     "per_candidate_se": {
+      "S2": 0.16579283787250854
+     }
+    }
+   },
+   "common_support": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": -0.2688001113040502,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 0.8478325357856207,
+     "returned": 19999,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 19999,
+      "tied_largest": 1
+     },
+     "mean": -0.2699900765065637,
+     "sd": 0.33574676574334505,
+     "q025": -0.9384736281132086,
+     "q975": 0.3872498568930284,
+     "per_candidate_se": {
+      "S1": 0.3471794251298897,
+      "S2": 0.4166369929727888
+     }
+    },
+    "noise_floor": {
+     "return_kind": "no_return",
+     "output": null
+    }
+   }
+  },
+  "lalonde": {
+   "whole_sample": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": -5025.266277448658,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 222.54524878359655,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": -5024.740910360097,
+     "sd": 104.78842763527022,
+     "q025": -5233.765580982844,
+     "q975": -4821.4865986832665,
+     "per_candidate_se": {
+      "S1": 108.98886178327713,
+      "S2": 103.13525533287064
+     }
+    },
+    "noise_floor": {
+     "return_kind": "no_return",
+     "output": null
+    }
+   },
+   "common_support": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 1979.3243481629142,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 2126.229724777557,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1984.0291643719274,
+     "sd": 931.9020714441315,
+     "q025": 124.80425531825084,
+     "q975": 3788.8731041238534,
+     "per_candidate_se": {
+      "S1": 1017.7849856623036,
+      "S2": 907.6930598897246
+     }
+    },
+    "noise_floor": {
+     "return_kind": "unique_largest",
+     "output": 1667.3636457510033,
+     "retained": [
+      "S2"
+     ],
+     "rho": 1803.5177819103583,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1664.8570213032813,
+     "sd": 902.5821590747744,
+     "q025": -109.22513474469766,
+     "q975": 3416.5472200534427,
+     "per_candidate_se": {
+      "S2": 907.6930598897246
+     }
+    }
+   }
+  }
+ },
+ "source_sha256": {
+  "two_proxy_uncertainty.py": "efe5aa5c79f5ccad42337a0f5a969f230867cd1c65dc792eee8da0e62f587252",
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a"
+ }
+}

@@ -1,9 +1,21 @@
 # Sim5 단일 MNIST 이미지 CNN 구현 PRD v1
 
 작성일: 2026-09-18 CDT  
-상태: **PROPOSED · UNRUN · BLOCKED AT P0**  
+상태: **REVISION 1.1 · OPERATIONAL ARM · DEV RUN COMPLETE · STOPPED BY DECISION 15** (`memo/2026-09-18-sim5-cnn-dev-result.md`)  
 대상 원고: `manuscript/main/2.tex`, `3.tex`, `4.tex`  
 보존 대상: `memo/2026-09-17-sim5-v2-digit-proxy-prd-v1.md`와 기존 코드·결과 전체
+
+## Revision 1.1 (2026-09-18, 사용자 승인)
+
+- **결정 3 변경.** 이 CNN 실행은 Algorithm 1 절차를 따르되 정리 조건을 인증했다고 주장하지 않는다.
+  정리의 조건과 집계 보증은 positive-control 감사가 맡는다. P0 결과는 `memo/2026-09-18-sim5-cnn-p0-feasibility.md`.
+- **개발 질문.** 같은 warm 표현에서 균형 학습이 $|\widehat\tau-1|$을 줄였는가. 핵심 비교는 raw CNN, 균형 전(warm), 균형 후(final) 셋이며
+  warm과 final은 심사, nuisance, AIPW, 그래프 집계를 똑같이 거친다. $X$-only와 선별 후보의 평균·중앙값은 ablation이다.
+- **6절에서 바꾼 공학 기본값** (dev 결과를 보기 전에 정함, `results/sim5_cnn/dev_protocol_v1.json`에 기록):
+  warm start 하나를 모든 split이 공유하고 trunk를 고정한다. 균형 학습은 split별 head만 갱신한다(100회, lr $10^{-3}$, critic 5회마다 갱신).
+  code는 256개 hard code 대신 연속 16차원이다. augmented critic은 뺀 픽셀을 고정 trunk 특징으로 읽는다. warm start 상한은 60 epoch다.
+- **개발 실행.** 자료 seed 71,000,000, split seed 71,000,001, 알고리즘 seed 71,000,002. 문턱 $t=0.002$. $n_D=6000$, $n_N=6000$, $n_E=20000$, $m=128$.
+  시간 측정(seed 71,800,000, 시간만 출력): 전체 약 40분 CPU, GPU 0분.
 
 ## 0. 문서의 목적과 완료 정의
 

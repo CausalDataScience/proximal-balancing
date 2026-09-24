@@ -1,0 +1,614 @@
+{
+ "artifact": "v3_confirmation_protocol",
+ "frozen_utc": "2026-09-22T21:37:01Z",
+ "prd": "memo/2026-09-22-v3-confirmation-prd-v1.md",
+ "protocol_sha256_of_prd": "fab129a312eb859ad2de404aed345bf19fd84eadf126c29563ed2c3ecdbb9d92",
+ "rule": "v3: threshold = median over the thirty candidates of z * SE; see noise_scaled.py",
+ "z": 2.935199468866699,
+ "gates": {
+  "return_rate_minimum": 8,
+  "conditional_mae_multiple": 1.5,
+  "note": "gate (i) checks a tie in the aggregation, not the power of the screen; the informative gate is (ii)"
+ },
+ "reference_file": {
+  "path": "results/noise_scaled_v3.json",
+  "sha256": "a0565c5f2e07a93baec374e730300f1575c74e94650c9fa61b6b2f9dfe1aeb8d"
+ },
+ "acic": {
+  "status": "excluded from the prospective confirmation",
+  "reason": "the ten distributed realizations were all used; realization 1 was the design check and 2-10 are the data on which the v3 rule was chosen"
+ },
+ "source_sha256": {
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "freeze_v3_protocol.py": "c388c9993227250a9f760f6a0f86afdaa9e86b195a4b9bc96e968b2b62617b14",
+  "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+  "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+  "noise_scaled.py": "84f924edf96aba8c1e9457f069df2e0d6606581059d44bd3134adb01327ede72",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+  "rhc_data.py": "bf49c492357e2976234f6c6b7472176c6f75676c1bf1bec7f1d2ea7edc26e0cd",
+  "rhc_planted_data.py": "723fc059f48fbff521f2d22990b0e76209b8be59188c19fb62e32df0ce8787b7",
+  "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+  "run_family_v2.py": "24516be0972b8ca510a9b5a4b26f53aa95c2ae7a1450cd74cef1f47b6f30df12",
+  "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176",
+  "run_rhc_planted.py": "1395294c8ef5a03c117c3b0244ed2156700ea671359bd3e16768386d09308adc",
+  "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+  "test_noise_scaled.py": "3095818982ea460628182f7b4f797923b1ee65e37536f6f77a3249de6bf24dc0",
+  "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+  "v3_fresh_scorer.py": "24d07e8eff2b0d2229aedf5a25888a4235448e0d5248934460b7f573aa8d445c"
+ },
+ "manifests": {
+  "twins": {
+   "replicates": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "seed_base": 98210000,
+   "fold_seed_offset": 7,
+   "x_coefficient_seed": 98200000,
+   "replicate_unit": "the real X, hidden gestational age and both potential outcomes are fixed; the proxy noise and the treatment assignment are redrawn",
+   "expected": {
+    "11": {
+     "dataset": "twins",
+     "seed": 98221007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "12": {
+     "dataset": "twins",
+     "seed": 98222007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "13": {
+     "dataset": "twins",
+     "seed": 98223007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "14": {
+     "dataset": "twins",
+     "seed": 98224007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "15": {
+     "dataset": "twins",
+     "seed": 98225007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "16": {
+     "dataset": "twins",
+     "seed": 98226007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "17": {
+     "dataset": "twins",
+     "seed": 98227007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "18": {
+     "dataset": "twins",
+     "seed": 98228007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "19": {
+     "dataset": "twins",
+     "seed": 98229007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "20": {
+     "dataset": "twins",
+     "seed": 98230007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    }
+   },
+   "reference_conditional_mae": 0.009557489874420181,
+   "reference_replicates": [
+    1,
+    10,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "gate_limit": 0.014336234811630271,
+   "gate_return_minimum": 8,
+   "tpr_fpr_available": true,
+   "benchmark_input_sha256": {
+    "twins/twin_pairs_X_3years_samesex.csv": "6ec6263e678f67205d584ebda083173c1ec44fb46ea7cfaafe3c87a31f612b86",
+    "twins/twin_pairs_T_3years_samesex.csv": "fbe6eb1cad27794c61cbbd8b11b72a26e96549e59d64fb88b07b30aaf2bae07d",
+    "twins/twin_pairs_Y_3years_samesex.csv": "d03428d23ed308673f9151e3934aa7712df27c1fed244ed44ecc80a98a60836b"
+   }
+  },
+  "rhc_planted": {
+   "replicates": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "seed_base": 98300000,
+   "fold_seed_offset": 7,
+   "x_coefficient_seed": 98300000,
+   "replicate_unit": "the real X, hidden APACHE score, real proxies and the outcome baseline are all fixed; only the treatment assignment is redrawn",
+   "expected": {
+    "11": {
+     "dataset": "rhc_planted",
+     "seed": 98311007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "12": {
+     "dataset": "rhc_planted",
+     "seed": 98312007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "13": {
+     "dataset": "rhc_planted",
+     "seed": 98313007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "14": {
+     "dataset": "rhc_planted",
+     "seed": 98314007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "15": {
+     "dataset": "rhc_planted",
+     "seed": 98315007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "16": {
+     "dataset": "rhc_planted",
+     "seed": 98316007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "17": {
+     "dataset": "rhc_planted",
+     "seed": 98317007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "18": {
+     "dataset": "rhc_planted",
+     "seed": 98318007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "19": {
+     "dataset": "rhc_planted",
+     "seed": 98319007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    },
+    "20": {
+     "dataset": "rhc_planted",
+     "seed": 98320007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "twins_data.py": "3fff1152d4342539fc9342c36e75998e54732051fef4c81ec4006066ffc11510",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167"
+     }
+    }
+   },
+   "reference_conditional_mae": 0.45349871582366097,
+   "reference_replicates": [
+    1,
+    10,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "gate_limit": 0.6802480737354915,
+   "gate_return_minimum": 8,
+   "tpr_fpr_available": false,
+   "benchmark_input_sha256": {
+    "rhc/rhc.csv": "9ef4ab578be4b40ad5d97d3a7e08ffdc1f9f76aeeefee51b4996e4221556f8e8"
+   }
+  },
+  "ihdp": {
+   "replicates": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+   ],
+   "seed_base": 98400000,
+   "fold_seed_offset": 7,
+   "x_coefficient_seed": 98400777,
+   "replicate_unit": "the replicate index selects a different benchmark realization of the potential outcomes as well; the proxies and treatment are then generated on it",
+   "expected": {
+    "12": {
+     "dataset": "ihdp",
+     "seed": 98412007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "13": {
+     "dataset": "ihdp",
+     "seed": 98413007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "14": {
+     "dataset": "ihdp",
+     "seed": 98414007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "15": {
+     "dataset": "ihdp",
+     "seed": 98415007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "16": {
+     "dataset": "ihdp",
+     "seed": 98416007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "17": {
+     "dataset": "ihdp",
+     "seed": 98417007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "18": {
+     "dataset": "ihdp",
+     "seed": 98418007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "19": {
+     "dataset": "ihdp",
+     "seed": 98419007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "20": {
+     "dataset": "ihdp",
+     "seed": 98420007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    },
+    "21": {
+     "dataset": "ihdp",
+     "seed": 98421007,
+     "source_sha256": {
+      "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+      "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+      "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+      "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+      "hidden_proxy_recipe.py": "91302b00b04ce28273a6bce0742d71935f209fa9c8763d0497d20e4232c3c5b4",
+      "ihdp_acic_data.py": "b16e61beb282b92e8cd4ecb22015ad23225ac13660f4581464b1085f4b68fb9b",
+      "rhc_pooled.py": "dee99245e02205a726c75995b6240d79cb89ef836c1223fc312d3eeded7219dc",
+      "run_twins.py": "514b36a3d6f70ec51373903f08667dcce3cfcdc3dc43cbd1a4147b7a35254167",
+      "run_ihdp_acic.py": "b4a4ab48d58488c91edf9214116117a1ea02800083f7103a05abd53b35b19176"
+     }
+    }
+   },
+   "reference_conditional_mae": 0.33618081767248315,
+   "reference_replicates": [
+    10,
+    11,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "gate_limit": 0.5042712265087247,
+   "gate_return_minimum": 8,
+   "tpr_fpr_available": true,
+   "benchmark_input_sha256": {
+    "ihdp/ihdp_npci_1-100.train.npz": "750697c71b4f8d7a3aafff771b56a4ac4cd83ec649bf69afb04f8a5aee41a240",
+    "ihdp/ihdp_npci_1-100.test.npz": "a70a8acbcc4e8deb677cc9bf9e9dabeb17caaa37cdbb1d7ba06be7ffb929c41c"
+   }
+  }
+ },
+ "verified_before_freezing": {
+  "designated_replicates_have_no_prior_shards": true,
+  "checked": {
+   "twins": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "rhc_planted": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "ihdp": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+   ]
+  }
+ }
+}

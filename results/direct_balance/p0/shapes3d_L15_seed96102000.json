@@ -1,0 +1,113 @@
+{
+ "task": {
+  "benchmark": "shapes3d",
+  "levels": 15,
+  "rep": 2,
+  "seed": 96102000
+ },
+ "n": 30000,
+ "true_effect": 1.0,
+ "tolerance": 0.0015,
+ "resolution": {
+  "W1": [
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9844,
+    "share_at_an_end_level": 0.0047
+   }
+  ],
+  "W2": [
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9845,
+    "share_at_an_end_level": 0.0058
+   }
+  ],
+  "W3": [
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9844,
+    "share_at_an_end_level": 0.0059
+   }
+  ],
+  "W4": [
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9846,
+    "share_at_an_end_level": 0.0057
+   }
+  ],
+  "W5": [
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9846,
+    "share_at_an_end_level": 0.0063
+   },
+   {
+    "levels_used": 15,
+    "r2_of_the_exact_coordinate": 0.9845,
+    "share_at_an_end_level": 0.0061
+   }
+  ]
+ },
+ "timing_s": {
+  "baselines": 1.9,
+  "probe": 236.4,
+  "total": 238.3
+ },
+ "baselines": {
+  "X": -0.4158944497727636,
+  "raw": 0.6724663643203019,
+  "summary": 0.6724663643203013,
+  "oracle": 1.00104693748943,
+  "naive": -0.7311588449959036
+ },
+ "probe": {
+  "return_kind": "unique_largest",
+  "estimate": 0.9790490301276666,
+  "retained": [
+   "S1",
+   "S2",
+   "S3",
+   "S4",
+   "S12",
+   "S13",
+   "S23",
+   "S123"
+  ],
+  "members": [
+   "S1",
+   "S2",
+   "S3",
+   "S12",
+   "S13",
+   "S23",
+   "S123"
+  ],
+  "component_sizes": [
+   7,
+   1
+  ],
+  "tpr": 1.0,
+  "fpr": 0.043478260869565216,
+  "purity": 1.0,
+  "candidate_estimates": {
+   "S1": 0.9790490301276666,
+   "S2": 0.9704244478813149,
+   "S3": 0.9868170919267399,
+   "S12": 0.9734539501401596,
+   "S13": 0.9913796046749626,
+   "S23": 0.9887402974254591,
+   "S123": 0.9474145992834508
+  },
+  "max_upper_balanceable": 0.0010616707140630103,
+  "min_upper_other": 0.00033140741513636114
+ },
+ "row_split_check": {
+  "represent": 4800,
+  "select": 1200,
+  "check": 6000,
+  "nuisance": 6000,
+  "evaluate": 12000
+ }
+}

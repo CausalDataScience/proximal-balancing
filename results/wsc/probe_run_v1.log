@@ -1,0 +1,19 @@
+benchmark 0.760 (se 0.151); n 1105, treated 288; blocks {'big5': 44, 'amas': 9, 'bdi': 13, 'gses': 6, 'math_pre': 12, 'vocab_pre': 24, 'mcs_pre': 6}
+
+--- whole_sample: n = 1105, treated ESS 37.7 of 288, control ESS 625.3 of 817
+  PROBE noise_floor  kept  45 of 126 -> +1.865 (error +1.105), sd 0.367, 95% (+1.155, +2.598)
+  PROBE significance kept 126 of 126 -> +1.968 (error +1.208), sd 0.364, 95% (+1.274, +2.694)
+  PROBE both         kept 126 of 126 -> +1.968 (error +1.208), sd 0.369, 95% (+1.255, +2.706)
+  naive +3.451  X +2.489  X+all items +1.336
+  2SLS over 42 role assignments: min -6.214, median +1.370, max +18.875
+  COCA as ATE over 7 blocks: min -51.846, median -1.483, max +2.275
+
+--- common_support: n = 766, treated ESS 139.6 of 273, control ESS 370.4 of 493
+  PROBE noise_floor  kept  38 of 126 -> +2.248 (error +1.488), sd 0.491, 95% (+1.280, +3.194)
+  PROBE significance kept 126 of 126 -> +2.305 (error +1.545), sd 0.506, 95% (+1.285, +3.261)
+  PROBE both         kept 126 of 126 -> +2.305 (error +1.545), sd 0.513, 95% (+1.257, +3.272)
+  naive +2.431  X +1.909  X+all items +1.229
+  2SLS over 42 role assignments: min -3.182, median +1.202, max +28.274
+  COCA as ATE over 7 blocks: min -52.166, median +0.536, max +1.859
+
+written /Users/yonghanjung/paios/research/papers/single_proxy_balancing/results/wsc/probe_v1.json

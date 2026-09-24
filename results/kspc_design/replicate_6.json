@@ -1,0 +1,129 @@
+{
+ "replicate": 6,
+ "n": 3000,
+ "tau": 1.0,
+ "seed": 99306000,
+ "probe": {
+  "n": 3000,
+  "k": 2,
+  "seed": 99306000,
+  "n_blocks": 2,
+  "z": 1.959963984540054,
+  "split_names": [
+   "S1",
+   "S2"
+  ],
+  "records": {
+   "S1": {
+    "estimate": 1.4379926817965392,
+    "pooled_gap": 0.029989133659165522,
+    "pooled_se": 0.002916658068456174,
+    "overlap_all_rotations": true
+   },
+   "S2": {
+    "estimate": 1.0405881273305275,
+    "pooled_gap": -0.002396665865202102,
+    "pooled_se": 0.0009400064606654144,
+    "overlap_all_rotations": true
+   }
+  },
+  "per_candidate_upper": {
+   "S1": 0.035705678428557784,
+   "S2": 0.0018423788081391793
+  },
+  "noise_floor_threshold": 0.00377946178876572,
+  "readings": {
+   "significance": {
+    "rule": "retain S when pooled gap - z SE <= 0",
+    "return_kind": "unique_largest",
+    "output": 1.0405881273305275,
+    "rho": 0.025819424302249212,
+    "retained": [
+     "S2"
+    ]
+   },
+   "noise_floor": {
+    "rule": "v3: retain S when max(gap,0) + z SE <= median_S z SE; with two candidates the median is their average, so this is degenerate and is reported for contrast only",
+    "return_kind": "unique_largest",
+    "output": 1.0405881273305275,
+    "rho": 0.025819424302249212,
+    "retained": [
+     "S2"
+    ]
+   },
+   "both": {
+    "rule": "no rule applied",
+    "return_kind": "tied_largest",
+    "output": null,
+    "rho": 0.04325796857342039,
+    "retained": [
+     "S1",
+     "S2"
+    ]
+   }
+  }
+ },
+ "score_crossproduct": [
+  [
+   4182.466271248886,
+   252.05910185682282
+  ],
+  [
+   252.05910185682282,
+   1546.0936819512483
+  ]
+ ],
+ "comparators": {
+  "naive": 1.5728931255571168,
+  "X": 1.572691385599416,
+  "raw": 1.0776068777217171,
+  "oracle": 0.9955700371592403,
+  "p2sls_W1_treats_W2_outcome": 0.9550058500724325,
+  "p2sls_W2_treats_W1_outcome": 1.0125151276033713,
+  "coca_W1_ate": 0.9693136367013672,
+  "coca_W2_ate": 0.878879825618375
+ },
+ "kspc": {
+  "skpv_W1": {
+   "ate": 0.982090127699999,
+   "f0": -0.3071429116782104,
+   "f1": 0.6749472160217886,
+   "config": "skpv"
+  },
+  "skpv_W2": {
+   "ate": 1.2784879257516923,
+   "f0": -0.4549452645423375,
+   "f1": 0.8235426612093548,
+   "config": "skpv_mnist"
+  },
+  "spmmr_W1": {
+   "ate": 0.9965151927585625,
+   "f0": -0.31432180493418793,
+   "f1": 0.6821933878243746,
+   "config": "spmmr"
+  },
+  "spmmr_W2": {
+   "ate": 1.5197331363606172,
+   "f0": -0.5910805278750062,
+   "f1": 0.928652608485611,
+   "config": "spmmr_mnist"
+  }
+ },
+ "timing_s": {
+  "probe": 1.7,
+  "baselines": 4.0,
+  "kspc": 34.5,
+  "total": 41.5
+ },
+ "source_sha256": {
+  "kspc_design.py": "8ede8f560d383ecc7bebbf22df1781d898efc315321e23a034182ff07a68e065",
+  "run_kspc_design.py": "ad25f47955d1f6cf80b9df4e881927e3a3b3a634550927697632faafbad7998f",
+  "kspc_wrapper.py": "5ecc80d0b1cc245eac0837b8334652df4bbcb7d7af081697df32a82e1fdd24a2",
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "park_ate.py": "cd1db48a5981fe68df525afe4bbaff45f6ea2bfefc6585d8ddf80790363e4782",
+  "run_two_proxy.py": "a948fbc4b48ad3db06ceb4fb0c342d38a3fa726fd7c45f26aa9090baf1535481"
+ }
+}

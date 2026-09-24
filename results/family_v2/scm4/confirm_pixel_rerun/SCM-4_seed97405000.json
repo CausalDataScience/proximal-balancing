@@ -1,0 +1,97 @@
+{
+ "artifact": "scm4_confirm_pixel_cnn_rerun",
+ "seed": 97405000,
+ "protocol_sha256": "0c41c9f21d6eb9639a4ed3ca930fb2f8a9a7ba2b4bb056fe431b58aa98c5819e",
+ "sealed_shard": {
+  "file": "SCM-4_seed97405000.json",
+  "sha256": "847ab8b746e5c302324124e3228997d1f7bf68a2dfc844fce475d320ce6dc4be",
+  "pixel_cnn_as_sealed": "pixel CNN passed its time cap in epoch 3"
+ },
+ "regenerated_data_check": {
+  "baseline_abs_gaps": {
+   "X": 0.0,
+   "raw": 0.0,
+   "oracle": 0.0,
+   "naive": 0.0
+  },
+  "tolerance": 1e-06,
+  "reading_identical": true
+ },
+ "execution": "alone, no other task sharing the GPU; configuration and seeds as sealed",
+ "pixel_cnn": {
+  "finite": true,
+  "ate": 0.7212226717432176,
+  "rotations": [
+   {
+    "finite": true,
+    "theta": 0.802988930896108,
+    "epoch": 4,
+    "val_history": [
+     0.4304712365070979,
+     0.3693935126066208,
+     0.3524537334839503,
+     0.3464258809884389,
+     0.35682066281636554
+    ],
+    "outside_clip_before": 0.08333333333333333
+   },
+   {
+    "finite": true,
+    "theta": 0.7733306128630583,
+    "epoch": 5,
+    "val_history": [
+     0.4732755621274312,
+     0.351084403693676,
+     0.34194980065027875,
+     0.34624960273504257,
+     0.3296944002310435
+    ],
+    "outside_clip_before": 0.09083333333333334
+   },
+   {
+    "finite": true,
+    "theta": 0.6091218561742289,
+    "epoch": 3,
+    "val_history": [
+     0.4069949885209401,
+     0.3423847978313764,
+     0.31619998315970105,
+     0.3233916386961937,
+     0.31856542577346164
+    ],
+    "outside_clip_before": 0.08483333333333333
+   },
+   {
+    "finite": true,
+    "theta": 0.6994492870394752,
+    "epoch": 3,
+    "val_history": [
+     0.4286152372757594,
+     0.36160987615585327,
+     0.32869503647089005,
+     0.33209285885095596,
+     0.33102023353179294
+    ],
+    "outside_clip_before": 0.0445
+   }
+  ],
+  "seconds": 481.9,
+  "config": {
+   "epochs": 5,
+   "batch_rows": 128,
+   "lr_tower": 0.0001,
+   "lr_rest": 0.001,
+   "val_fraction": 0.2,
+   "patience": 2,
+   "feature_dim": 16,
+   "hidden": [
+    128,
+    64
+   ],
+   "max_seconds": 2400,
+   "eval_rows": 500
+  }
+ },
+ "seconds": 517.6,
+ "recorded_utc": "2026-09-21T14:38:55Z"
+}

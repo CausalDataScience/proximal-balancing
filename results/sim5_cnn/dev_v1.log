@@ -1,0 +1,16 @@
+  split 1/128  14.5s  warm +0.940 (gap -0.0002)  final +0.941 (gap -0.0002, upd 0)
+  split 2/128  18.1s  warm +0.937 (gap +0.0005)  final +0.937 (gap +0.0005, upd 0)
+  split 16/128  27.8s  warm +0.959 (gap +0.0007)  final +0.920 (gap +0.0000, upd 75)
+  split 32/128  17.1s  warm +0.950 (gap +0.0002)  final +0.925 (gap +0.0000, upd 50)
+  split 48/128  16.4s  warm +0.959 (gap -0.0005)  final +0.949 (gap -0.0005, upd 0)
+  split 64/128  17.3s  warm +0.975 (gap +0.0000)  final +0.972 (gap +0.0000, upd 25)
+  split 80/128  18.8s  warm +0.960 (gap +0.0001)  final +0.934 (gap +0.0000, upd 50)
+  split 96/128  29.9s  warm +0.965 (gap +0.0003)  final +0.951 (gap -0.0005, upd 50)
+  split 112/128  21.0s  warm +0.961 (gap +0.0005)  final +0.920 (gap +0.0000, upd 50)
+  split 128/128  15.5s  warm +0.856 (gap +0.0025)  final +0.906 (gap +0.0005, upd 50)
+raw_cnn      estimate 0.9886149026416177  abs_error 0.011385097358382334  
+x_only       estimate -0.504175060042353  abs_error 1.504175060042353  
+probe_warm   estimate 0.9563243289829275  abs_error 0.04367567101707248  R 121 return unique_largest
+probe_final  estimate 0.9370432921743541  abs_error 0.06295670782564589  R 128 return unique_largest
+timing {'warm_start_s': 90.0, 'splits_s': 7360.4, 'raw_s': 424.8, 'total': 7875.9}
+ledger {'probe': {'cnn_backprop_images': 288000, 'cnn_forward_images': 4936000}, 'raw': {'cnn_backprop_images': 1708800, 'cnn_forward_images': 547200}}

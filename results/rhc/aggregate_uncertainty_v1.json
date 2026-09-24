@@ -1,0 +1,48 @@
+{
+ "artifact": "rhc_aggregate_uncertainty",
+ "generated_utc": "2026-09-22T22:37:16.564489Z",
+ "what": "the sampling spread of the median of the largest agreeing group, conditional on the retained set and the linking radius that the v3 rule produced on the observed data",
+ "draws": 20000,
+ "seed": 98600000,
+ "retained": [
+  "S2",
+  "S23",
+  "S234",
+  "S2345",
+  "S235",
+  "S24",
+  "S245",
+  "S25",
+  "S3",
+  "S34",
+  "S345",
+  "S35",
+  "S4",
+  "S45",
+  "S5"
+ ],
+ "n_retained": 15,
+ "rho": 0.6602753687037332,
+ "observed_output": -1.2948556220888021,
+ "resampled": {
+  "returned": 20000,
+  "of": 20000,
+  "return_kinds": {
+   "unique_largest": 20000
+  },
+  "mean": -1.2896881198580983,
+  "sd": 0.29923159691685103,
+  "q025": -1.8755485794026727,
+  "q975": -0.7012504982598521
+ },
+ "for_contrast_only": {
+  "median_member_aipw_se": 0.30171020506525326,
+  "note": "the number the figure used to print; it is one member's standard error, not the standard error of the aggregate"
+ },
+ "does_not_include": "the uncertainty of the screen; the retained set and the radius are held at their observed values",
+ "source_sha256": {
+  "rhc_aggregate_uncertainty.py": "423a900079b98a363709f0e3376fb695a52630dbd24a56fa62bfb2cd8cd893ed",
+  "noise_scaled.py": "84f924edf96aba8c1e9457f069df2e0d6606581059d44bd3134adb01327ede72",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a"
+ }
+}

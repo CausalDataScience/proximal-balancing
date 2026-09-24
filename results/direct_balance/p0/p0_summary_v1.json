@@ -1,0 +1,227 @@
+{
+ "artifact": "direct_balance_p0_summary",
+ "generated_utc": "2026-09-21T20:55:28.704081Z",
+ "n": 30000,
+ "reps": 3,
+ "tolerance": 0.0015,
+ "prd_sha256": "a4420e71ecc915c3b4927847a6feb29d6b9b411bc2740e7913a3f3063beeb310",
+ "source_sha256": {
+  "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "family_v2_images.py": "756935af1fd4da30085780f645b5c489837c3f0c4f68f53a967262422c4d0a77",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a",
+  "direct_balance_data.py": "62f4347d146eba6e8f7d2a0487b6e72e6637fee6cb740d1d3d488a55932688fb",
+  "direct_balance_p0.py": "adc326b441bc8abf010fd1debfc81515d6735fe0432624aaa2898f645cf0c1b2"
+ },
+ "benchmarks": {
+  "shapes3d": {
+   "levels": 15,
+   "estimates": [
+    0.9830794061393806,
+    0.9964981958876618,
+    0.9790490301276666
+   ],
+   "abs_errors": [
+    0.0169,
+    0.0035,
+    0.021
+   ],
+   "worst_abs_error": 0.021,
+   "return_kinds": [
+    "unique_largest",
+    "unique_largest",
+    "unique_largest"
+   ],
+   "component_sizes": [
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     1
+    ]
+   ],
+   "tpr": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fpr": [
+    0.043478260869565216,
+    0.043478260869565216,
+    0.043478260869565216
+   ],
+   "comparators": {
+    "naive": {
+     "values": [
+      -0.756,
+      -0.7755,
+      -0.7312
+     ],
+     "mae": 1.7542
+    },
+    "X": {
+     "values": [
+      -0.4561,
+      -0.4655,
+      -0.4159
+     ],
+     "mae": 1.4458
+    },
+    "raw": {
+     "values": [
+      0.7081,
+      0.7004,
+      0.6725
+     ],
+     "mae": 0.3063
+    },
+    "summary": {
+     "values": [
+      0.7081,
+      0.7004,
+      0.6725
+     ],
+     "mae": 0.3063
+    },
+    "oracle": {
+     "values": [
+      1.0014,
+      1.0067,
+      1.001
+     ],
+     "mae": 0.0031
+    }
+   },
+   "resolution_r2_min": 0.9843,
+   "seconds_total": 720,
+   "gate": {
+    "all_returned": true,
+    "worst_abs_error": true
+   },
+   "also_seen": {
+    "naive_sign_is_wrong": true,
+    "X_alone_is_far_off": true,
+    "oracle_is_close": true
+   },
+   "pass": true
+  },
+  "mnist": {
+   "levels": 10,
+   "estimates": [
+    1.0039622353673734,
+    0.9901026738833699,
+    0.987899341859471
+   ],
+   "abs_errors": [
+    0.004,
+    0.0099,
+    0.0121
+   ],
+   "worst_abs_error": 0.0121,
+   "return_kinds": [
+    "unique_largest",
+    "unique_largest",
+    "unique_largest"
+   ],
+   "component_sizes": [
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     6,
+     1,
+     1
+    ]
+   ],
+   "tpr": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fpr": [
+    0.043478260869565216,
+    0.043478260869565216,
+    0.043478260869565216
+   ],
+   "comparators": {
+    "naive": {
+     "values": [
+      -0.756,
+      -0.7755,
+      -0.7312
+     ],
+     "mae": 1.7542
+    },
+    "X": {
+     "values": [
+      -0.4561,
+      -0.4655,
+      -0.4159
+     ],
+     "mae": 1.4458
+    },
+    "raw": {
+     "values": [
+      0.6709,
+      0.6739,
+      0.6348
+     ],
+     "mae": 0.3401
+    },
+    "summary": {
+     "values": [
+      0.6709,
+      0.6739,
+      0.6348
+     ],
+     "mae": 0.3401
+    },
+    "oracle": {
+     "values": [
+      1.0014,
+      1.0067,
+      1.001
+     ],
+     "mae": 0.0031
+    }
+   },
+   "resolution_r2_min": 0.9634,
+   "seconds_total": 644,
+   "gate": {
+    "all_returned": true,
+    "worst_abs_error": true
+   },
+   "also_seen": {
+    "naive_sign_is_wrong": true,
+    "X_alone_is_far_off": true,
+    "oracle_is_close": true
+   },
+   "pass": true
+  }
+ },
+ "requirement": {
+  "worst_abs_error": 0.1
+ },
+ "notes": {
+  "gate": "the PRD section 8 entry bar only: every data set returns, and every absolute error is at most 0.10",
+  "min_upper_other_in_the_shards": "computed against the seven target splits, so it counts S4 -- a split that balances but does not identify -- as 'other'.  It is not the sealed threshold rule's 'other' set and no decision here reads it.",
+  "scorer_corrected_after_the_shards_were_written": "the three shapes3d shards already existed when the two extra gates above were demoted to reported diagnostics; run_task was not touched, so every shard is unchanged."
+ },
+ "pass": true,
+ "may_use_gpu_for": [
+  "shapes3d",
+  "mnist"
+ ]
+}

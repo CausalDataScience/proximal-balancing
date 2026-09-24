@@ -1,0 +1,586 @@
+{
+ "dataset": "twins",
+ "status": "complete",
+ "replicates": [
+  {
+   "replicate": 11,
+   "tau": -0.02520026702269693,
+   "n_retained": 12,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S124",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0027918405027599538,
+   "return_kind": "unique_largest",
+   "output": -0.028610564802393157,
+   "error": 0.0034102977796962274,
+   "comparators": {
+    "naive": -0.11622368443097815,
+    "X": -0.09574838211653691,
+    "raw": -0.04510911227016859,
+    "oracle": -0.025656648079795327,
+    "cevae": -0.12711398055647824,
+    "p2sls_given_roles": -0.049187140234995624,
+    "p2sls_swapped_roles": -0.27529692813740564
+   },
+   "tpr": 1.0,
+   "fpr": 0.21739130434782608
+  },
+  {
+   "replicate": 12,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.002695507443145232,
+   "return_kind": "unique_largest",
+   "output": -0.024438137603814414,
+   "error": 0.0007621294188825158,
+   "comparators": {
+    "naive": -0.1261261140817358,
+    "X": -0.10561123782711457,
+    "raw": -0.04209618949087866,
+    "oracle": -0.023674846409413686,
+    "cevae": -0.042366673379986654,
+    "p2sls_given_roles": -0.047232788333093544,
+    "p2sls_swapped_roles": -0.27599180593706785
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 13,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.002616113421626998,
+   "return_kind": "unique_largest",
+   "output": -0.031269565637353273,
+   "error": 0.006069298614656344,
+   "comparators": {
+    "naive": -0.1206572386487483,
+    "X": -0.09799642645702124,
+    "raw": -0.05384450036494276,
+    "oracle": -0.02832041392345583,
+    "cevae": -0.10663297244740956,
+    "p2sls_given_roles": -0.03179525087741546,
+    "p2sls_swapped_roles": -0.2858502823253429
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 14,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.002689791690593027,
+   "return_kind": "unique_largest",
+   "output": -0.03372178143179302,
+   "error": 0.008521514409096088,
+   "comparators": {
+    "naive": -0.1224154045441875,
+    "X": -0.10223606803715009,
+    "raw": -0.05953249161759961,
+    "oracle": -0.019796527930957094,
+    "cevae": -0.18646595266097413,
+    "p2sls_given_roles": -0.04083033405041692,
+    "p2sls_swapped_roles": -0.2585717097957727
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 15,
+   "tau": -0.02520026702269693,
+   "n_retained": 10,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0026858041899197956,
+   "return_kind": "unique_largest",
+   "output": -0.013970379672733242,
+   "error": 0.011229887349963687,
+   "comparators": {
+    "naive": -0.11325273410340396,
+    "X": -0.09272399632955602,
+    "raw": -0.033222859875824094,
+    "oracle": -0.009915266652565206,
+    "cevae": -0.1909332972801031,
+    "p2sls_given_roles": -0.02913765647418625,
+    "p2sls_swapped_roles": -0.26387752388813224
+   },
+   "tpr": 1.0,
+   "fpr": 0.13043478260869565
+  },
+  {
+   "replicate": 16,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0027199911083564078,
+   "return_kind": "unique_largest",
+   "output": -0.013216399568233941,
+   "error": 0.011983867454462989,
+   "comparators": {
+    "naive": -0.11266133462064215,
+    "X": -0.0913420015267071,
+    "raw": -0.03152077049472314,
+    "oracle": -0.011226403378180563,
+    "cevae": -0.1016845365836239,
+    "p2sls_given_roles": -0.03477178728966635,
+    "p2sls_swapped_roles": -0.26397369171162494
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 17,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0024837903154693564,
+   "return_kind": "unique_largest",
+   "output": -0.027910452788851788,
+   "error": 0.0027101857661548587,
+   "comparators": {
+    "naive": -0.11426414284467849,
+    "X": -0.09456247034376579,
+    "raw": -0.03463731801629155,
+    "oracle": -0.011211494163027191,
+    "cevae": -0.10831723311787815,
+    "p2sls_given_roles": -0.040370036243451354,
+    "p2sls_swapped_roles": -0.282571705174911
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 18,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0025815376573803794,
+   "return_kind": "unique_largest",
+   "output": -0.037833117618409365,
+   "error": 0.012632850595712435,
+   "comparators": {
+    "naive": -0.12056857081728711,
+    "X": -0.10549059514977303,
+    "raw": -0.05576663404651719,
+    "oracle": -0.029408680571440717,
+    "cevae": -0.08777528187152307,
+    "p2sls_given_roles": -0.040283197867998784,
+    "p2sls_swapped_roles": -0.25824398770544815
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 19,
+   "tau": -0.02520026702269693,
+   "n_retained": 11,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S14",
+    "S2",
+    "S23",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.0025950923036213405,
+   "return_kind": "unique_largest",
+   "output": -0.02844530596244172,
+   "error": 0.003245038939744791,
+   "comparators": {
+    "naive": -0.11989390941794366,
+    "X": -0.10319085778562508,
+    "raw": -0.04649387722573855,
+    "oracle": -0.020864858588431366,
+    "cevae": -0.10537240455851297,
+    "p2sls_given_roles": -0.0421710863536161,
+    "p2sls_swapped_roles": -0.26940253443126994
+   },
+   "tpr": 1.0,
+   "fpr": 0.17391304347826086
+  },
+  {
+   "replicate": 20,
+   "tau": -0.02520026702269693,
+   "n_retained": 13,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S13",
+    "S134",
+    "S14",
+    "S2",
+    "S23",
+    "S234",
+    "S24",
+    "S3",
+    "S34",
+    "S4"
+   ],
+   "floor": 0.002319331407222542,
+   "return_kind": "unique_largest",
+   "output": -0.041288421857158246,
+   "error": 0.016088154834461316,
+   "comparators": {
+    "naive": -0.12553463535952014,
+    "X": -0.11204273273603765,
+    "raw": -0.05705571260192761,
+    "oracle": -0.03670890828433507,
+    "cevae": -0.08945349692057065,
+    "p2sls_given_roles": -0.05218592553844732,
+    "p2sls_swapped_roles": -0.27100621996007673
+   },
+   "tpr": 1.0,
+   "fpr": 0.2608695652173913
+  }
+ ],
+ "return_denominator": 10,
+ "returned": 10,
+ "no_return_ids": [],
+ "conditional_mae": 0.007665322516283125,
+ "conditional_p90": 0.012978381019587322,
+ "comparators_on_all_replicates": {
+  "naive": {
+   "values": [
+    -0.11622368443097815,
+    -0.1261261140817358,
+    -0.1206572386487483,
+    -0.1224154045441875,
+    -0.11325273410340396,
+    -0.11266133462064215,
+    -0.11426414284467849,
+    -0.12056857081728711,
+    -0.11989390941794366,
+    -0.12553463535952014
+   ],
+   "mae": 0.0939595098642156
+  },
+  "X": {
+   "values": [
+    -0.09574838211653691,
+    -0.10561123782711457,
+    -0.09799642645702124,
+    -0.10223606803715009,
+    -0.09272399632955602,
+    -0.0913420015267071,
+    -0.09456247034376579,
+    -0.10549059514977303,
+    -0.10319085778562508,
+    -0.11204273273603765
+   ],
+   "mae": 0.07489420980823183
+  },
+  "raw": {
+   "values": [
+    -0.04510911227016859,
+    -0.04209618949087866,
+    -0.05384450036494276,
+    -0.05953249161759961,
+    -0.033222859875824094,
+    -0.03152077049472314,
+    -0.03463731801629155,
+    -0.05576663404651719,
+    -0.04649387722573855,
+    -0.05705571260192761
+   ],
+   "mae": 0.020727679577764245
+  },
+  "oracle": {
+   "values": [
+    -0.025656648079795327,
+    -0.023674846409413686,
+    -0.02832041392345583,
+    -0.019796527930957094,
+    -0.009915266652565206,
+    -0.011226403378180563,
+    -0.011211494163027191,
+    -0.029408680571440717,
+    -0.020864858588431366,
+    -0.03670890828433507
+   ],
+   "mae": 0.007380578778184569
+  },
+  "cevae": {
+   "values": [
+    -0.12711398055647824,
+    -0.042366673379986654,
+    -0.10663297244740956,
+    -0.18646595266097413,
+    -0.1909332972801031,
+    -0.1016845365836239,
+    -0.10831723311787815,
+    -0.08777528187152307,
+    -0.10537240455851297,
+    -0.08945349692057065
+   ],
+   "mae": 0.08941131591500913
+  },
+  "p2sls_given_roles": {
+   "values": [
+    -0.049187140234995624,
+    -0.047232788333093544,
+    -0.03179525087741546,
+    -0.04083033405041692,
+    -0.02913765647418625,
+    -0.03477178728966635,
+    -0.040370036243451354,
+    -0.040283197867998784,
+    -0.0421710863536161,
+    -0.05218592553844732
+   ],
+   "mae": 0.015596253303631841
+  },
+  "p2sls_swapped_roles": {
+   "values": [
+    -0.27529692813740564,
+    -0.27599180593706785,
+    -0.2858502823253429,
+    -0.2585717097957727,
+    -0.26387752388813224,
+    -0.26397369171162494,
+    -0.282571705174911,
+    -0.25824398770544815,
+    -0.26940253443126994,
+    -0.27100621996007673
+   ],
+   "mae": 0.24527837188400828
+  }
+ },
+ "paired_upper_on_both_returned": {
+  "oracle": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": 0.003445988250289468,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "X": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": -0.06283944212835058,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "raw": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": -0.006995979133685925,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "cevae": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": -0.056267101167927845,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  }
+ },
+ "tpr_fpr_available": true,
+ "tpr": 1.0,
+ "fpr": 0.1826086956521739,
+ "gates": {
+  "return_rate": {
+   "returned": 10,
+   "of": 10,
+   "minimum": 8,
+   "pass": true,
+   "what_it_checks": "a tie in the aggregation, not the power of the screen"
+  },
+  "conditional_mae": {
+   "mae": 0.007665322516283125,
+   "reference": 0.009557489874420181,
+   "limit": 0.014336234811630271,
+   "pass": true,
+   "what_it_checks": "whether the error conditional on returning reproduces the value already observed on the earlier replicates"
+  }
+ },
+ "pass": true,
+ "protocol_file": "v3_confirmation_protocol_v2.json",
+ "protocol_sha256": "fab129a312eb859ad2de404aed345bf19fd84eadf126c29563ed2c3ecdbb9d92",
+ "protocol_correction": {
+  "corrected_utc": "2026-09-22T21:53:56Z",
+  "supersedes": "v3_confirmation_protocol.json",
+  "supersedes_sha256": "393beaba37e19d2bbace89426292cc7d918f344c613ab4f047ab2c5fcdc68def",
+  "what": "the planted-RHC manifest recorded the Twins runner's source list instead of the list that run_rhc_planted stamps into its shards",
+  "why_it_is_neutral": "no source file changed: every file present in both lists carried an identical hash; the rule, both gates, the reference values, the replicate identifiers, the seeds and the benchmark input hashes are byte-identical to v1",
+  "expected_before": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_pooled.py",
+   "run_twins.py",
+   "twins_data.py"
+  ],
+  "expected_after": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_data.py",
+   "rhc_planted_data.py",
+   "rhc_pooled.py",
+   "run_rhc_planted.py",
+   "run_twins.py"
+  ],
+  "removed": [
+   "twins_data.py"
+  ],
+  "added": [
+   "rhc_data.py",
+   "rhc_planted_data.py",
+   "run_rhc_planted.py"
+  ],
+  "shared_files_with_identical_hashes": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_pooled.py",
+   "run_twins.py"
+  ],
+  "affects": "the integrity comparison for the planted-RHC shards only; IHDP was already scored under v1 with its own correct list and is unaffected, and Twins had not been run"
+ }
+}

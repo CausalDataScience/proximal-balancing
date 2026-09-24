@@ -1,0 +1,84 @@
+{
+ "artifact": "direct_balance_p1_timing",
+ "generated_utc": "2026-09-21T21:07:38Z",
+ "what_this_is": "a stopwatch, not a result: the real training loop on the real image bank, two outer iterations per split, extrapolated to the PRD's twenty.  Seed 96,900,500 is the unit-test namespace.",
+ "device": "Apple M4, MPS",
+ "settings": {
+  "represent_rows": 4800,
+  "select_rows": 1200,
+  "outer_iters": 20,
+  "critic_initial": 100,
+  "critic_per_iter": 25,
+  "grad_batch": 512,
+  "tower": "conv 3-16-32-32-32 stride 2, then 512 -> 32"
+ },
+ "per_split": {
+  "S1": {
+   "held_images": 1,
+   "kept_images": 5,
+   "before_fixes_s": 308.0,
+   "after_fixes_s": 129.8,
+   "critic_initial_s": 9.3,
+   "cnn_step_s": 3.45,
+   "critic_refit_s": 2.36,
+   "select_gap_s": 1.08
+  },
+  "S5": {
+   "held_images": 2,
+   "kept_images": 4,
+   "before_fixes_s": 309.2,
+   "after_fixes_s": 82.8,
+   "critic_initial_s": 5.6,
+   "cnn_step_s": 1.98,
+   "critic_refit_s": 1.84,
+   "select_gap_s": 0.23
+  },
+  "S123": {
+   "held_images": 3,
+   "kept_images": 3,
+   "before_fixes_s": 339.8,
+   "after_fixes_s": 92.1,
+   "critic_initial_s": 6.4,
+   "cnn_step_s": 1.66,
+   "critic_refit_s": 2.59,
+   "select_gap_s": 0.18
+  },
+  "S1234": {
+   "held_images": 4,
+   "kept_images": 2,
+   "before_fixes_s": 352.2,
+   "after_fixes_s": 110.7,
+   "critic_initial_s": 10.3,
+   "cnn_step_s": 1.69,
+   "critic_refit_s": 3.23,
+   "select_gap_s": 0.5
+  }
+ },
+ "thirty_splits_training_only_hours": {
+  "before_fixes": 2.77,
+  "after_fixes": 0.85
+ },
+ "two_fixes": {
+  "contiguous_pixels": "family_v2_images.to_input returns a permuted, non-contiguous tensor; convolutions on this device run 3.2 times slower on it (921 ms against 288 ms for 512 rows by 5 images). direct_balance_net.to_input makes the same numbers contiguous.  The sealed function is unchanged and the pixel values are identical, checked in both directions.",
+  "device_pixel_cache": "the six thousand training rows need about 31,500 distinct bank images, 387 MB as uint8. They are copied to the device once instead of being gathered from the host every batch."
+ },
+ "full_data_set_estimate_hours": {
+  "training_thirty_splits": 0.85,
+  "independent_balance_check": 0.15,
+  "final_estimation": 0.05,
+  "raw_cnn_comparator": 0.04,
+  "total": 1.09,
+  "status": "training is measured; the other three are estimated from the same per-image rate and are what P2 is for"
+ },
+ "budget_against_the_prd": {
+  "budget_hours": 20.0,
+  "shapes3d_dev_3": 3.3,
+  "shapes3d_confirm_20": 21.8,
+  "shapes3d_total": 25.1,
+  "both_benchmarks": 50.1,
+  "prd_assumed_minutes_per_data_set": 21,
+  "measured_minutes_per_data_set": 65,
+  "verdict": "Shapes3D alone does not fit in the twenty hours at these training settings"
+ },
+ "spent_so_far_hours": 0.6
+}

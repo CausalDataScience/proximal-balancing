@@ -1,0 +1,69 @@
+\section{Introduction}
+\label{sec:main-introduction}
+
+%storyline
+%1. Estimating causal effect is important. Causal effect estimation has relied on strong assumption on no-hidden-confounding.
+%2. Causal effect estimation is difficult when hidden confounding exists. For example....
+%3. In that case, causal effect is unidentifiable.
+%4. In modern data, even if hidden confounders are not measured, we may have a large informative set of variables on the hidden confounders. For example... (these two examples could be unified working example). These variables that give hint is called proxies.
+%5. Causal effect estimation with proxies under unmeasured confounding has been largely studied [Kuroki Pearl, Sanghack lee and Bareinboim, Proximal casual inference literature, COCA, Gretton) In addition to the existence of proxies, they rely on additional sturcutral assumptions. For example, Kuroki Pearl, Sanghack lee and Bareinboim, only for discrete. Proximal causal inference requires completeness structure and two proxies -- one treatment another outcome. COCA address this concern with trading off additional assumptions that blahblah and the proxies for $Y(0)$ NOT unmeasured confounders.
+%6. A specific setting that we are interested in is multiple proxies. CAVAE is one. However, their work is lack of formality. they claimed to recover unmeasured confoudner, which is impossible. Inspired by those work, we introduce the proximal balancing paper. Here, we have $W=(W_1,\ldots,W_J)$ is a high-dimensional pretreatment medical image partitioned into meaningful regions, hidden disease severity $U$ affects treatment $A$ and outcome $Y$, and $X$ contains recorded covariates. A severity-informative region is valid only when the formal held-out treatment-independence and outcome-relevant completeness conditions hold. A site or acquisition marker may look balanced after conditioning yet violate either condition.
+%7. CAVAE can work but lack of formality, standard proximal causal inference, COCA has not been discussed for high-dim variables, and no leanring-guarnantees exist. Think about their potential limit on handling high-dim. Another challenge in the high-dim proxy is that it's difficult to assign true proxy structure (what proxies would be treatment-intducing proxy or outcome-inducing proxies, etc.)
+%8. A new proximal causal inference framework that can handle high-dimensional variables, without getting bothered by assigning true proxy structure is required. We introduce the proximal balancing framework. Our method is ... (very verbal, high-level)
+%9. Bullet points.
+
+Estimating treatment effects from observational data, a central task in medicine and public policy, usually assumes that every confounder (every common cause of the treatment and the outcome) is measured. This assumption, known as \emph{no unmeasured confounding}, often fails. In a hypothetical study of an aggressive therapy $A$ and a recovery outcome $Y$, clinicians treat patients with severe disease more often, and severe disease lowers recovery, so the unrecorded severity $U$ confounds the comparison even after adjustment for recorded covariates $X$ such as age. The effect is then not identified, that is, not determined by the distribution of the observed data \citep{pearl2009causality}.
+
+Although $U$ is unrecorded, modern data often capture it indirectly. For instance, a pretreatment medical image reflects severity through the size, texture, and spread of affected tissue. Variables that carry such indirect information about a hidden confounder are called \emph{proxies}, ranging from discrete codes to multimodal data such as images with thousands of pixels. Proxy-based causal inference has drawn growing attention because it identifies causal effects under hidden confounding by adding structural assumptions that are often plausible in practice \citep{kuroki2014measurement,miao2018proxy,tchetgen2024ProximalCausalInference}.
+
+Existing proxy-based methods either designate proxy roles in advance, for example, that each proxy affects only one of the treatment and the outcome, and obtain the identification functional as the solution of an inverse problem, such as an integral equation for a bridge function \citep{miao2018proxy}, or model latent variables from the observations and treat them as the hidden confounder under strong assumptions \citep{louizos2017causal} (see Section~\ref{sec:related-work} for details). For high-dimensional proxies such as images, these approaches are difficult to apply. When multiple medical images, such as radiographs, CT scans, and MRI scans taken before treatment, serve as proxies of hidden severity, clinical knowledge seldom tells which images may influence the treatment decision, so roles cannot be designated with confidence. The inverse problem is ill-posed, so small errors in the observed regressions can produce large errors in its solution, and this solution is harder to estimate when it takes an image as input \citep{kallus2021causal}. A learned latent variable, in turn, need not match the hidden confounder \citep{rissanen2021critical}.
+
+\begin{figure*}[t]
+\centering
+\includegraphics{causal-structures-3panel-v2.pdf}
+\caption[Causal structures of proximal balancing and proximal causal inference.]{\textbf{(a)} The proxy $W$, split into $(W_j,W_{-j})$. \textbf{(b)} A higher-resolution view of (a), showing an allowed structure: the held-out block $W_j$ affects $Y$ but not $A$. \textbf{(c)} Proximal causal inference with designated proxies $Z^{\mathrm{tr}}$ and $Z^{\mathrm{out}}$.}
+\label{fig:causal-structures}
+\end{figure*}
+
+To address these concerns, we introduce \emph{proximal balancing}, which uses a multi-dimensional proxy without designating roles in advance, solving an inverse problem, or modeling the confounder. It builds on balancing in causal inference \citep{rosenbaum1983central}: when high-dimensional covariates $X$ suffice for adjustment, a low-dimensional function $\phi(X)$ satisfying $X\perp\!\!\!\perp A\mid\phi(X)$ suffices as well. Proximal balancing carries this idea to hidden confounding. As Fig.~\ref{fig:causal-structures}(a) shows, it splits the proxy into a held-out block $W_j$ and the remaining blocks $W_{-j}$ and learns $\phi(X,W_{-j})$ satisfying $(X,W_j)\perp\!\!\!\perp A\mid\phi(X,W_{-j})$. We first develop this idea for a known held-out block and then extend it to the case where only the whole proxy $W=(W_1,\ldots,W_J)$ is given and the valid block is unknown.
+
+We make three contributions.
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Proximal balancing framework.} We develop proximal balancing, which identifies the average treatment effect from a high-dimensional proxy (Section~\ref{sec:probe}).
+\item \textbf{Extensions.} We bound the bias under approximate balance, identify the effect by a plurality vote when the valid block is unknown, and give finite-sample guarantees for our algorithm, PROxy Blockwise Exclusion (PROBE) (Sections~\ref{sec:unknown-blocks}--\ref{sec:learning-search}).
+\item \textbf{Empirical evidence.} Simulations with scalar, vector, and image-rendered proxies show that proximal balancing recovers the known effect (Section~\ref{sec:main-experiments}).
+\end{enumerate}
+
+\subsection{Related Work}
+\label{sec:related-work}
+
+\textbf{Causal inference under unmeasured confounding.} When the causal graph is known, a graphical criterion such as the front-door criterion can identify an effect despite unmeasured confounding \citep{pearl2009causality,fulcher2020robust,jung2026debiased}, and a complete algorithm decides whether an effect is identifiable \citep{tian2002general,shpitser2006identification}. Weighting, doubly robust, and debiased machine learning estimators have been developed for identifiable effects \citep{jung2020estimating,jung2020werm,jung2021estimating-dml,jung2021estimating-mec,bhattacharya2022semiparametric,jung2023estimating-obs-exp,guo2023targeted,jung2024complete,jung2024uca}. These methods, however, assume that the causal graph, or at least its equivalence class, is known; without such a graph, the observed data only bound the effect \citep{jung2026information}.
+
+\begin{wraptable}{r}{0.45\textwidth}
+\vspace{-\baselineskip}
+\centering
+\small
+\setlength{\tabcolsep}{2.5pt}
+\caption[Requirements of proxy-based methods.]{Requirements of proxy-based methods; a check means not needed. Roles: designated proxy roles. Inverse: an inverse problem. Latent: a latent model of $U$.}
+\label{tab:related-work-delta}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Method & Roles & Inverse & Latent \\
+\midrule
+Proximal inference & $\times$ & $\times$ & $\checkmark$ \\
+Single-proxy control & $\times$ & $\times$ & $\checkmark$ \\
+CEVAE & $\checkmark$ & $\checkmark$ & $\times$ \\
+\citeauthor{saha2026causal} & $\checkmark$ & $\checkmark$ & $\times$ \\
+Proximal balancing & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\vspace{-\baselineskip}
+\end{wraptable}
+
+\textbf{Proxy-based identification.} For discrete variables, matrix adjustment \citep{kuroki2014measurement,lee2021matrix} identifies the effect by inverting the matrix of proxy probabilities given the confounder. Proximal causal inference, which grew out of negative-control methods \citep{lipsitch2010negative} and matrix adjustment, uses a treatment-side and an outcome-side proxy, which may affect only the treatment and only the outcome, respectively, as in Fig.~\ref{fig:causal-structures}(c) \citep{miao2018proxy,tchetgen2024ProximalCausalInference,cui2024semiparametric}. It computes the effect by solving an inverse problem, an integral equation among observed distributions, and completeness conditions make this solution identify the effect. Kernel and deep-learning estimators solve this inverse problem with statistical guarantees \citep{mastouri2021proximal,kallus2021causal}, including for image proxies and for proxies extracted from two separate pretreatment texts \citep{xu2021deep,chen2024proximal}. Single-proxy control \citep{tchetgen2014control,park2024single} uses one proxy of $Y(0)$, the outcome that a unit would have without treatment, and identifies the effect on the treated; a kernel version handles deterministic outcomes \citep{xu2025kernel}. All of these methods fix proxy roles before the analysis and solve an inverse problem (Table~\ref{tab:related-work-delta}). Fig.~\ref{fig:causal-structures} contrasts proximal balancing, panels (a) and (b), with the standard proximal structure, panel (c). Proximal balancing restricts only the valid held-out block $W_j$, which must not affect the treatment; the remaining blocks $W_{-j}$ may affect both, and the valid block need not be known in advance. It replaces the inverse problem with an observable balance condition followed by ordinary adjustment.
+
+\textbf{Latent-variable modeling approaches.} CEVAE \citep{louizos2017causal} fits a variational autoencoder \citep{kingma2014auto} to the proxies, treatment, and outcome, and adjusts for the inferred latent vector. Its justification rests on the premise that the encoding and decoding steps recover a latent variable that matches $U$, a premise that need not hold, as \citet{rissanen2021critical} demonstrate empirically. Proximal balancing models neither the proxy nor the confounder.
+
+\textbf{Unknown valid candidates.} Majority and plurality rules, implemented by median and mode estimators, identify an effect when most, or the largest group, of the candidate instruments are valid \citep{kang2016instrumental,bowden2016consistent,hartwig2017robust,guo2018confidence}. In proximal inference, \citet{rakshit2025adaptive} take a median over candidate proxies when more than half are valid, \citet{yu2025fortified} assume that at least a known number of treatment-side proxies are valid, and data-driven searches select valid negative controls in linear models \citep{kummerfeld2024data,xie2024automating}. \citet{saha2026causal} identify the effect without designating proxy roles when three proxies are mutually independent given a categorical confounder. Proximal balancing applies the plurality rule to held-out blocks that pass a balance audit, in a nonparametric model with a learned representation. Its conditions also allow the blocks to depend on each other beyond the confounder.
+
+\textbf{Balancing and representation learning.} Balancing scores and weights align measured covariates across treatment groups \citep{rosenbaum1983central,hainmueller2012entropy,imai2014covariate}, and representation learning balances after compressing high-dimensional covariates \citep{shalit2017estimating}. Both assume that the measured covariates suffice for adjustment, and a compressed representation can lose confounding information. Proximal balancing audits its representation with a held-out proxy block, and its estimation step uses separate samples for representation learning, nuisance fitting, and evaluation.

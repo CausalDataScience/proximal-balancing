@@ -1,0 +1,32 @@
+{
+ "checkpoint": 40,
+ "gap": 0.00763056767731905,
+ "se": 0.0014281470877176333,
+ "upper": 0.01182246425065137,
+ "risk_base": 0.236584539752764,
+ "risk_augmented": 0.22895397207544496,
+ "overlap": true,
+ "early_stopping": [
+  {
+   "base_step": 175,
+   "augmented_step": 300,
+   "risks": {
+    "base_on_its_fit_rows": 0.23251403868198395,
+    "augmented_on_its_fit_rows": 0.20715749263763428,
+    "base_on_its_validation_rows": 0.23335373401641846,
+    "augmented_on_its_validation_rows": 0.22506706416606903
+   }
+  },
+  {
+   "base_step": 250,
+   "augmented_step": 200,
+   "risks": {
+    "base_on_its_fit_rows": 0.235504150390625,
+    "augmented_on_its_fit_rows": 0.22147822380065918,
+    "base_on_its_validation_rows": 0.2328711897134781,
+    "augmented_on_its_validation_rows": 0.22028902173042297
+   }
+  }
+ ],
+ "finite": true
+}

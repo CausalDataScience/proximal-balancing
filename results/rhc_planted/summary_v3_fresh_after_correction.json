@@ -1,0 +1,618 @@
+{
+ "dataset": "rhc_planted",
+ "status": "complete",
+ "replicates": [
+  {
+   "replicate": 11,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S125",
+    "S13",
+    "S134",
+    "S135",
+    "S15",
+    "S2",
+    "S23",
+    "S3",
+    "S345",
+    "S35",
+    "S4",
+    "S5"
+   ],
+   "floor": 0.006000617653119608,
+   "return_kind": "unique_largest",
+   "output": -0.9536369194390847,
+   "error": 0.046363080560915315,
+   "comparators": {
+    "naive": -3.228882607249748,
+    "X": -1.0739096196339932,
+    "raw": -0.5694795574348857,
+    "oracle": -0.3909704863989889,
+    "cevae": -2.8692442643670724,
+    "p2sls_given_roles": -4.805615412704207,
+    "p2sls_swapped_roles": -3.0093752180057503
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 12,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S1235",
+    "S13",
+    "S135",
+    "S15",
+    "S2",
+    "S23",
+    "S25",
+    "S3",
+    "S345",
+    "S35",
+    "S4",
+    "S45",
+    "S5"
+   ],
+   "floor": 0.006693675149648758,
+   "return_kind": "unique_largest",
+   "output": -0.9273839798724407,
+   "error": 0.0726160201275593,
+   "comparators": {
+    "naive": -2.976758813242107,
+    "X": -1.0272629753081257,
+    "raw": -0.6098738488535054,
+    "oracle": -0.4207898655863338,
+    "cevae": -0.6265781186976874,
+    "p2sls_given_roles": -4.563625278752556,
+    "p2sls_swapped_roles": -2.632860886283901
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 13,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S125",
+    "S13",
+    "S14",
+    "S15",
+    "S2",
+    "S23",
+    "S235",
+    "S24",
+    "S25",
+    "S3",
+    "S35",
+    "S4",
+    "S5"
+   ],
+   "floor": 0.005829470169858323,
+   "return_kind": "unique_largest",
+   "output": -1.5171016846205045,
+   "error": 0.5171016846205045,
+   "comparators": {
+    "naive": -3.5892105261233915,
+    "X": -1.7845426305783005,
+    "raw": -1.4912457973567046,
+    "oracle": -1.1774168485296341,
+    "cevae": -1.4314870005902802,
+    "p2sls_given_roles": -4.810405243652808,
+    "p2sls_swapped_roles": -3.6631568557419025
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 14,
+   "tau": -1.0,
+   "n_retained": 12,
+   "retained": [
+    "S1",
+    "S12",
+    "S13",
+    "S15",
+    "S2",
+    "S23",
+    "S235",
+    "S25",
+    "S3",
+    "S35",
+    "S45",
+    "S5"
+   ],
+   "floor": 0.004046199655919486,
+   "return_kind": "unique_largest",
+   "output": -1.1808433218174332,
+   "error": 0.18084332181743323,
+   "comparators": {
+    "naive": -3.428121815509204,
+    "X": -1.2525109130882361,
+    "raw": -1.1658251059545781,
+    "oracle": -0.9496063283992255,
+    "cevae": 0.9626827529645803,
+    "p2sls_given_roles": -4.827480526378675,
+    "p2sls_swapped_roles": -3.1129874033963403
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 15,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S125",
+    "S13",
+    "S135",
+    "S14",
+    "S15",
+    "S2",
+    "S23",
+    "S235",
+    "S25",
+    "S3",
+    "S34",
+    "S4",
+    "S5"
+   ],
+   "floor": 0.006287627609410521,
+   "return_kind": "unique_largest",
+   "output": -1.581923606597962,
+   "error": 0.581923606597962,
+   "comparators": {
+    "naive": -3.5420542579442547,
+    "X": -1.630471859191925,
+    "raw": -1.380559632929404,
+    "oracle": -0.9369748036017626,
+    "cevae": -0.368447419198831,
+    "p2sls_given_roles": -6.399230920104963,
+    "p2sls_swapped_roles": -2.955794247813308
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 16,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S13",
+    "S1345",
+    "S135",
+    "S15",
+    "S2",
+    "S23",
+    "S24",
+    "S25",
+    "S3",
+    "S35",
+    "S4",
+    "S45",
+    "S5"
+   ],
+   "floor": 0.0062981716830869455,
+   "return_kind": "unique_largest",
+   "output": -1.3431345937730639,
+   "error": 0.3431345937730639,
+   "comparators": {
+    "naive": -3.452322320676874,
+    "X": -1.4432365433860894,
+    "raw": -1.1530344796202565,
+    "oracle": -0.8163152086444962,
+    "cevae": -1.4906105187484953,
+    "p2sls_given_roles": -5.004905481412482,
+    "p2sls_swapped_roles": -2.8839109932471008
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 17,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S123",
+    "S125",
+    "S13",
+    "S14",
+    "S15",
+    "S2",
+    "S23",
+    "S24",
+    "S25",
+    "S3",
+    "S35",
+    "S4",
+    "S5"
+   ],
+   "floor": 0.0069753269875001585,
+   "return_kind": "unique_largest",
+   "output": -1.301718111025517,
+   "error": 0.30171811102551693,
+   "comparators": {
+    "naive": -3.4979281515826344,
+    "X": -1.4529331177176896,
+    "raw": -1.0729233307292534,
+    "oracle": -0.9772863363879666,
+    "cevae": -1.2891244256241536,
+    "p2sls_given_roles": -5.530674879254458,
+    "p2sls_swapped_roles": -3.158533241436707
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 18,
+   "tau": -1.0,
+   "n_retained": 12,
+   "retained": [
+    "S1",
+    "S12",
+    "S125",
+    "S13",
+    "S135",
+    "S15",
+    "S2",
+    "S23",
+    "S25",
+    "S3",
+    "S35",
+    "S5"
+   ],
+   "floor": 0.005728988966056546,
+   "return_kind": "unique_largest",
+   "output": -1.30927023292984,
+   "error": 0.30927023292984,
+   "comparators": {
+    "naive": -3.291775126065403,
+    "X": -1.2829305759026963,
+    "raw": -0.7631573887878254,
+    "oracle": -0.7343725212339629,
+    "cevae": -0.699622239387665,
+    "p2sls_given_roles": -5.84859947463809,
+    "p2sls_swapped_roles": -2.890383496981715
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 19,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S13",
+    "S135",
+    "S15",
+    "S2",
+    "S23",
+    "S235",
+    "S25",
+    "S3",
+    "S34",
+    "S35",
+    "S4",
+    "S45",
+    "S5"
+   ],
+   "floor": 0.006952114279558478,
+   "return_kind": "unique_largest",
+   "output": -1.5599812259622823,
+   "error": 0.5599812259622823,
+   "comparators": {
+    "naive": -3.4029628083146086,
+    "X": -1.730680878582915,
+    "raw": -1.342993754556065,
+    "oracle": -1.2946475593910094,
+    "cevae": -1.8787618346769768,
+    "p2sls_given_roles": -5.47927445682633,
+    "p2sls_swapped_roles": -2.9450418835372245
+   },
+   "tpr": null,
+   "fpr": null
+  },
+  {
+   "replicate": 20,
+   "tau": -1.0,
+   "n_retained": 15,
+   "retained": [
+    "S1",
+    "S12",
+    "S125",
+    "S13",
+    "S134",
+    "S15",
+    "S2",
+    "S23",
+    "S24",
+    "S25",
+    "S3",
+    "S34",
+    "S35",
+    "S4",
+    "S5"
+   ],
+   "floor": 0.005999356696188121,
+   "return_kind": "unique_largest",
+   "output": -1.5942347699810213,
+   "error": 0.5942347699810213,
+   "comparators": {
+    "naive": -3.4803468641440674,
+    "X": -1.6838509329408669,
+    "raw": -1.3834166822908402,
+    "oracle": -1.35774889320093,
+    "cevae": -5.502615568564468,
+    "p2sls_given_roles": -5.429277090695929,
+    "p2sls_swapped_roles": -3.121821785324922
+   },
+   "tpr": null,
+   "fpr": null
+  }
+ ],
+ "return_denominator": 10,
+ "returned": 10,
+ "no_return_ids": [],
+ "conditional_mae": 0.3507186647396099,
+ "conditional_p90": 0.583154722936268,
+ "comparators_on_all_replicates": {
+  "naive": {
+   "values": [
+    -3.228882607249748,
+    -2.976758813242107,
+    -3.5892105261233915,
+    -3.428121815509204,
+    -3.5420542579442547,
+    -3.452322320676874,
+    -3.4979281515826344,
+    -3.291775126065403,
+    -3.4029628083146086,
+    -3.4803468641440674
+   ],
+   "mae": 2.3890363290852292
+  },
+  "X": {
+   "values": [
+    -1.0739096196339932,
+    -1.0272629753081257,
+    -1.7845426305783005,
+    -1.2525109130882361,
+    -1.630471859191925,
+    -1.4432365433860894,
+    -1.4529331177176896,
+    -1.2829305759026963,
+    -1.730680878582915,
+    -1.6838509329408669
+   ],
+   "mae": 0.4362330046330838
+  },
+  "raw": {
+   "values": [
+    -0.5694795574348857,
+    -0.6098738488535054,
+    -1.4912457973567046,
+    -1.1658251059545781,
+    -1.380559632929404,
+    -1.1530344796202565,
+    -1.0729233307292534,
+    -0.7631573887878254,
+    -1.342993754556065,
+    -1.3834166822908402
+   ],
+   "mae": 0.3047487988360885
+  },
+  "oracle": {
+   "values": [
+    -0.3909704863989889,
+    -0.4207898655863338,
+    -1.1774168485296341,
+    -0.9496063283992255,
+    -0.9369748036017626,
+    -0.8163152086444962,
+    -0.9772863363879666,
+    -0.7343725212339629,
+    -1.2946475593910094,
+    -1.35774889320093
+   ],
+   "mae": 0.26034977508688373
+  },
+  "cevae": {
+   "values": [
+    -2.8692442643670724,
+    -0.6265781186976874,
+    -1.4314870005902802,
+    0.9626827529645803,
+    -0.368447419198831,
+    -1.4906105187484953,
+    -1.2891244256241536,
+    -0.699622239387665,
+    -1.8787618346769768,
+    -5.502615568564468
+   ],
+   "mae": 1.1729878588251843
+  },
+  "p2sls_given_roles": {
+   "values": [
+    -4.805615412704207,
+    -4.563625278752556,
+    -4.810405243652808,
+    -4.827480526378675,
+    -6.399230920104963,
+    -5.004905481412482,
+    -5.530674879254458,
+    -5.84859947463809,
+    -5.47927445682633,
+    -5.429277090695929
+   ],
+   "mae": 4.2699088764420505
+  },
+  "p2sls_swapped_roles": {
+   "values": [
+    -3.0093752180057503,
+    -2.632860886283901,
+    -3.6631568557419025,
+    -3.1129874033963403,
+    -2.955794247813308,
+    -2.8839109932471008,
+    -3.158533241436707,
+    -2.890383496981715,
+    -2.9450418835372245,
+    -3.121821785324922
+   ],
+   "mae": 2.037386601176887
+  }
+ },
+ "paired_upper_on_both_returned": {
+  "oracle": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": 0.2952920173239167,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "X": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": -0.03104757142729611,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "raw": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": 0.17615924676980133,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  },
+  "cevae": {
+   "k": 10,
+   "ids": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "upper": -0.06804211745909539,
+   "note": "one-sided upper bound on the paired difference of absolute errors, computed on the replicates where both methods returned; not a statement about all 10 replicates"
+  }
+ },
+ "tpr_fpr_available": false,
+ "tpr": null,
+ "fpr": null,
+ "gates": {
+  "return_rate": {
+   "returned": 10,
+   "of": 10,
+   "minimum": 8,
+   "pass": true,
+   "what_it_checks": "a tie in the aggregation, not the power of the screen"
+  },
+  "conditional_mae": {
+   "mae": 0.3507186647396099,
+   "reference": 0.45349871582366097,
+   "limit": 0.6802480737354915,
+   "pass": true,
+   "what_it_checks": "whether the error conditional on returning reproduces the value already observed on the earlier replicates"
+  }
+ },
+ "pass": true,
+ "protocol_file": "v3_confirmation_protocol_v2.json",
+ "protocol_sha256": "fab129a312eb859ad2de404aed345bf19fd84eadf126c29563ed2c3ecdbb9d92",
+ "protocol_correction": {
+  "corrected_utc": "2026-09-22T21:53:56Z",
+  "supersedes": "v3_confirmation_protocol.json",
+  "supersedes_sha256": "393beaba37e19d2bbace89426292cc7d918f344c613ab4f047ab2c5fcdc68def",
+  "what": "the planted-RHC manifest recorded the Twins runner's source list instead of the list that run_rhc_planted stamps into its shards",
+  "why_it_is_neutral": "no source file changed: every file present in both lists carried an identical hash; the rule, both gates, the reference values, the replicate identifiers, the seeds and the benchmark input hashes are byte-identical to v1",
+  "expected_before": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_pooled.py",
+   "run_twins.py",
+   "twins_data.py"
+  ],
+  "expected_after": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_data.py",
+   "rhc_planted_data.py",
+   "rhc_pooled.py",
+   "run_rhc_planted.py",
+   "run_twins.py"
+  ],
+  "removed": [
+   "twins_data.py"
+  ],
+  "added": [
+   "rhc_data.py",
+   "rhc_planted_data.py",
+   "run_rhc_planted.py"
+  ],
+  "shared_files_with_identical_hashes": [
+   "family_v2_competitors.py",
+   "family_v2_dgp.py",
+   "family_v2_probe.py",
+   "probe_structured_scm.py",
+   "rhc_pooled.py",
+   "run_twins.py"
+  ],
+  "affects": "the integrity comparison for the planted-RHC shards only; IHDP was already scored under v1 with its own correct list and is unaffected, and Twins had not been run"
+ }
+}

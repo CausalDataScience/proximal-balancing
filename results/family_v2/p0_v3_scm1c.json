@@ -1,0 +1,825 @@
+{
+ "artifact": "family_v2_p0_variant",
+ "variant": "SCM-1c",
+ "prd": "memo/2026-09-18-family-v2-role-blind-dimension-prd-v1.md",
+ "generated_utc": "2026-09-18T23:42:46.764420Z",
+ "coefficients": {
+  "treat": {
+   "U": 1.5,
+   "I": 2.0,
+   "X1": 0.2,
+   "C": 0.3
+  },
+  "bad_i": 0.0,
+  "proxy_sd": 0.85
+ },
+ "layout": {
+  "x": [
+   "X1",
+   "C",
+   "I"
+  ],
+  "blocks": [
+   [
+    "M1"
+   ],
+   [
+    "M2"
+   ],
+   [
+    "M3"
+   ],
+   [
+    "M4"
+   ],
+   [
+    "M0"
+   ]
+  ]
+ },
+ "reference_values": {
+  "naive": -0.7450683775505109,
+  "X": -0.6946798919316948,
+  "raw (X, W)": 0.727809029078805,
+  "oracle (X, U)": 0.9999999999999999
+ },
+ "census": {
+  "level": "SCM-1c",
+  "k": 2,
+  "dim": 8,
+  "class": "Z = (X_1, C, B v), informative rank of B <= k",
+  "rows": [
+   {
+    "split": "S1",
+    "held_out": [
+     "W1"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 4,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0012944493983519578,
+    "tau_at_min_d2": 0.6728405298260646,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 2.18
+   },
+   {
+    "split": "S2",
+    "held_out": [
+     "W2"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 4,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0012944493983528035,
+    "tau_at_min_d2": 0.6728405298259521,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.15
+   },
+   {
+    "split": "S3",
+    "held_out": [
+     "W3"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 4,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0012944493983520402,
+    "tau_at_min_d2": 0.6728405298260567,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.23
+   },
+   {
+    "split": "S4",
+    "held_out": [
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 4,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0012944493983528902,
+    "tau_at_min_d2": 0.6728405298259461,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.23
+   },
+   {
+    "split": "S5",
+    "held_out": [
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 4,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0012944493983520452,
+    "tau_at_min_d2": 0.672840529826054,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.13
+   },
+   {
+    "split": "S12",
+    "held_out": [
+     "W1",
+     "W2"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.003206376655528631,
+    "tau_at_min_d2": 0.5900615622816732,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.46
+   },
+   {
+    "split": "S13",
+    "held_out": [
+     "W1",
+     "W3"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0032063766555285866,
+    "tau_at_min_d2": 0.590061562281675,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.39
+   },
+   {
+    "split": "S14",
+    "held_out": [
+     "W1",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0032063766555286252,
+    "tau_at_min_d2": 0.5900615622816745,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.59
+   },
+   {
+    "split": "S15",
+    "held_out": [
+     "W1",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.003206376655528668,
+    "tau_at_min_d2": 0.5900615622816742,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.79
+   },
+   {
+    "split": "S23",
+    "held_out": [
+     "W2",
+     "W3"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.003206376655528644,
+    "tau_at_min_d2": 0.5900615622816745,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.73
+   },
+   {
+    "split": "S24",
+    "held_out": [
+     "W2",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.003206376655528632,
+    "tau_at_min_d2": 0.5900615622816745,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.19
+   },
+   {
+    "split": "S25",
+    "held_out": [
+     "W2",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0032063766555286604,
+    "tau_at_min_d2": 0.5900615622816741,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.22
+   },
+   {
+    "split": "S34",
+    "held_out": [
+     "W3",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.00320637665552865,
+    "tau_at_min_d2": 0.5900615622816728,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.27
+   },
+   {
+    "split": "S35",
+    "held_out": [
+     "W3",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0032063766555286873,
+    "tau_at_min_d2": 0.5900615622816741,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.12
+   },
+   {
+    "split": "S45",
+    "held_out": [
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 3,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0032063766555286404,
+    "tau_at_min_d2": 0.5900615622816745,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 1.13
+   },
+   {
+    "split": "S123",
+    "held_out": [
+     "W1",
+     "W2",
+     "W3"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.00632194806089522,
+    "tau_at_min_d2": 0.45123749959929993,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.48
+   },
+   {
+    "split": "S124",
+    "held_out": [
+     "W1",
+     "W2",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895132,
+    "tau_at_min_d2": 0.4512374995992996,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.47
+   },
+   {
+    "split": "S125",
+    "held_out": [
+     "W1",
+     "W2",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895153,
+    "tau_at_min_d2": 0.45123749959929915,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.43
+   },
+   {
+    "split": "S134",
+    "held_out": [
+     "W1",
+     "W3",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895137,
+    "tau_at_min_d2": 0.45123749959930026,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.43
+   },
+   {
+    "split": "S135",
+    "held_out": [
+     "W1",
+     "W3",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895163,
+    "tau_at_min_d2": 0.45123749959930004,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.4
+   },
+   {
+    "split": "S145",
+    "held_out": [
+     "W1",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895187,
+    "tau_at_min_d2": 0.45123749959929993,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.43
+   },
+   {
+    "split": "S234",
+    "held_out": [
+     "W2",
+     "W3",
+     "W4"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.0063219480608951405,
+    "tau_at_min_d2": 0.4512374995992998,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.46
+   },
+   {
+    "split": "S235",
+    "held_out": [
+     "W2",
+     "W3",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895269,
+    "tau_at_min_d2": 0.45123749959930004,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.42
+   },
+   {
+    "split": "S245",
+    "held_out": [
+     "W2",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895207,
+    "tau_at_min_d2": 0.45123749959929993,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.42
+   },
+   {
+    "split": "S345",
+    "held_out": [
+     "W3",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1,
+     2
+    ],
+    "balanced_points_by_rank": {
+     "1": 0,
+     "2": 0
+    },
+    "retained_informative": 2,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.006321948060895192,
+    "tau_at_min_d2": 0.45123749959929993,
+    "rank_at_min_d2": 2,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.43
+   },
+   {
+    "split": "S1234",
+    "held_out": [
+     "W1",
+     "W2",
+     "W3",
+     "W4"
+    ],
+    "ranks_searched": [
+     1
+    ],
+    "balanced_points_by_rank": {
+     "1": 0
+    },
+    "retained_informative": 1,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.012336293488357571,
+    "tau_at_min_d2": 0.1704518887304205,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.0
+   },
+   {
+    "split": "S1235",
+    "held_out": [
+     "W1",
+     "W2",
+     "W3",
+     "W5"
+    ],
+    "ranks_searched": [
+     1
+    ],
+    "balanced_points_by_rank": {
+     "1": 0
+    },
+    "retained_informative": 1,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.01233629348835753,
+    "tau_at_min_d2": 0.1704518887304205,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.0
+   },
+   {
+    "split": "S1245",
+    "held_out": [
+     "W1",
+     "W2",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1
+    ],
+    "balanced_points_by_rank": {
+     "1": 0
+    },
+    "retained_informative": 1,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.012336293488357542,
+    "tau_at_min_d2": 0.1704518887304205,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.0
+   },
+   {
+    "split": "S1345",
+    "held_out": [
+     "W1",
+     "W3",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1
+    ],
+    "balanced_points_by_rank": {
+     "1": 0
+    },
+    "retained_informative": 1,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.012336293488357505,
+    "tau_at_min_d2": 0.1704518887304206,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.0
+   },
+   {
+    "split": "S2345",
+    "held_out": [
+     "W2",
+     "W3",
+     "W4",
+     "W5"
+    ],
+    "ranks_searched": [
+     1
+    ],
+    "balanced_points_by_rank": {
+     "1": 0
+    },
+    "retained_informative": 1,
+    "balanced_points": 0,
+    "starts_per_rank": 40,
+    "kind": "rejected",
+    "min_d2_found": 0.01233629348835754,
+    "tau_at_min_d2": 0.1704518887304205,
+    "rank_at_min_d2": 1,
+    "min_d2_starts_per_rank": 6,
+    "seconds": 0.0
+   }
+  ],
+  "kinds": {
+   "target": [],
+   "wrong": [],
+   "mixed": [],
+   "rejected": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S23",
+    "S24",
+    "S25",
+    "S34",
+    "S35",
+    "S45",
+    "S123",
+    "S124",
+    "S125",
+    "S134",
+    "S135",
+    "S145",
+    "S234",
+    "S235",
+    "S245",
+    "S345",
+    "S1234",
+    "S1235",
+    "S1245",
+    "S1345",
+    "S2345"
+   ]
+  },
+  "summary": {
+   "target_splits": 0,
+   "wrong_splits": 0,
+   "mixed_splits": 0,
+   "rejected_splits": 30,
+   "p_tau_upper": null,
+   "smallest_rejected_d2": 0.0012944493983519578
+  }
+ },
+ "seconds": 25.2
+}

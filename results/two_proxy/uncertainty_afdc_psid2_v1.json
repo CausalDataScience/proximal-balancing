@@ -1,0 +1,90 @@
+{
+ "artifact": "two_proxy_uncertainty",
+ "generated_utc": "2026-09-23T01:12:15.755287Z",
+ "draws": 20000,
+ "seed": 98901155,
+ "dataset": "afdc_psid2",
+ "what": "the sampling spread of the median of the largest agreeing group, conditional on the retained set and the linking radius produced on the observed data",
+ "does_not_include": "the uncertainty of the screen",
+ "datasets": {
+  "afdc_psid2": {
+   "whole_sample": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 1011.0933528812784,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 1943.2874789241564,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1014.6788458566256,
+     "sd": 896.9309157419709,
+     "q025": -754.8104768399401,
+     "q975": 2755.243340308811,
+     "per_candidate_se": {
+      "S1": 845.3002873925928,
+      "S2": 986.6209864330381
+     }
+    },
+    "noise_floor": {
+     "return_kind": "unique_largest",
+     "output": 1200.5243765209912,
+     "retained": [
+      "S1"
+     ],
+     "rho": 1631.1977539096301,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1195.5317649458248,
+     "sd": 837.7387199452737,
+     "q025": -446.62087814609686,
+     "q975": 2849.669356324795,
+     "per_candidate_se": {
+      "S1": 845.3002873925928
+     }
+    }
+   },
+   "common_support": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 1645.109701932343,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 2102.6150190595554,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1648.9929375468473,
+     "sd": 971.0276538772268,
+     "q025": -264.8584121987986,
+     "q975": 3532.3941385312633,
+     "per_candidate_se": {
+      "S1": 968.3318752086432,
+      "S2": 1020.3002159086267
+     }
+    },
+    "noise_floor": {
+     "return_kind": "no_return",
+     "output": null
+    }
+   }
+  }
+ },
+ "source_sha256": {
+  "two_proxy_uncertainty.py": "2aa2c76ba67071841ac0df111dfd7e2726916f22dc8361e04c3d3b3fbb2fdb3a",
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a"
+ }
+}

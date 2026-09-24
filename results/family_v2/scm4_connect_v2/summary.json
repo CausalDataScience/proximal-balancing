@@ -1,0 +1,202 @@
+{
+ "stage": "scm4_connect_v2",
+ "rule": "spec section 10",
+ "seeds": [
+  97807000,
+  97808000,
+  97809000
+ ],
+ "limits": {
+  "truth_error": 0.1,
+  "input_difference": 0.02,
+  "splits_with_different_verdict": 1
+ },
+ "noise_draws": 5,
+ "noise_sd": 0.019028925962132657,
+ "per_seed": [
+  {
+   "seed": 97807000,
+   "conditions": {
+    "pass": true,
+    "reasons": [],
+    "abs_diff_from_exact": {
+     "cnn": 0.0012416648635849015,
+     "noise_1": 0.004732107069760572,
+     "noise_2": 0.0008381541275785942,
+     "noise_3": 0.0007133295759267355,
+     "noise_4": 0.006645731266916921,
+     "noise_5": 0.006546241493446958
+    }
+   },
+   "reading": {
+    "W1": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W2": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W3": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W4": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W5": {
+     "n": 48000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    }
+   },
+   "estimates": {
+    "exact": 0.9852121024220633,
+    "cnn": 0.9864537672856482,
+    "noise_1": 0.9899442094918238,
+    "noise_2": 0.9843739482944847,
+    "noise_3": 0.9844987728461365,
+    "noise_4": 0.9918578336889802,
+    "noise_5": 0.9917583439155102
+   },
+   "seconds": 1645
+  },
+  {
+   "seed": 97808000,
+   "conditions": {
+    "pass": true,
+    "reasons": [],
+    "abs_diff_from_exact": {
+     "cnn": 0.005065311589518173,
+     "noise_1": 0.0060844450042719656,
+     "noise_2": 0.004927927498400098,
+     "noise_3": 0.006832673804980094,
+     "noise_4": 0.009514658626579187,
+     "noise_5": 0.006086841019706579
+    }
+   },
+   "reading": {
+    "W1": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W2": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W3": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W4": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W5": {
+     "n": 48000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    }
+   },
+   "estimates": {
+    "exact": 0.9369748378677981,
+    "cnn": 0.9319095262782799,
+    "noise_1": 0.9308903928635262,
+    "noise_2": 0.932046910369398,
+    "noise_3": 0.930142164062818,
+    "noise_4": 0.9274601792412189,
+    "noise_5": 0.9308879968480915
+   },
+   "seconds": 1683
+  },
+  {
+   "seed": 97809000,
+   "conditions": {
+    "pass": true,
+    "reasons": [],
+    "abs_diff_from_exact": {
+     "cnn": 0.012170756872252109,
+     "noise_1": 0.003422449122937543,
+     "noise_2": 0.019264475081680388,
+     "noise_3": 0.018042615999226852,
+     "noise_4": 0.0036025752792923083,
+     "noise_5": 0.007918423532151664
+    }
+   },
+   "reading": {
+    "W1": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W2": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W3": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W4": {
+     "n": 24000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    },
+    "W5": {
+     "n": 48000,
+     "nonfinite": 0,
+     "adjacent": 0,
+     "far": 0
+    }
+   },
+   "estimates": {
+    "exact": 1.0108361126970475,
+    "cnn": 0.9986653558247954,
+    "noise_1": 1.014258561819985,
+    "noise_2": 0.9915716376153672,
+    "noise_3": 0.9927934966978207,
+    "noise_4": 1.0144386879763398,
+    "noise_5": 1.0029176891648959
+   },
+   "seconds": 1626
+  }
+ ],
+ "rank_test": {
+  "pass": true,
+  "reader_ranks": [
+   3.0,
+   2.0,
+   4.0
+  ],
+  "rank_sum": 9.0,
+  "reject_at": 16,
+  "null_probability_of_rejection": "10/216"
+ },
+ "pass": true,
+ "generated_utc": "2026-09-21T04:11:46Z"
+}

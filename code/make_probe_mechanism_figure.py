@@ -1,8 +1,9 @@
 """PROBE as a mechanism, 1x4 at text width, drawn against the run that implements Algorithm 1 literally.
 
 Panels (a) and (b) are schematic.  The blocks are drawn as images to make the point that a block may be
-an image; the thumbnails are one illustrative unit from probe_image_w.latents(1, 7) and belong to no data
-set used here.
+an image.  The thumbnails are original Shapes3D images, drawn by the SCM-4 rule: one image per recorded
+level, uniform within that level's group of the causal bank, with every other generative factor free.  They
+use a figure-only seed and belong to no data set of any experiment reported here.
 
 Panels (c) and (d) carry real numbers from the positive-control audit, which is the only run whose
 representation class refers to no block role and whose screen, linking and plurality are the manuscript's:
@@ -24,7 +25,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Polygon, Rectangle
 
 import make_section5_figures as m
-import probe_image_w as im
+import family_v2_images as fim
 
 DISPLAY = m.RESULTS / "positive_control" / "screen_display_v1.json"
 J = 7
@@ -49,8 +50,21 @@ print(f"screen: {retained.sum()} of {len(census)} splits kept at t = {threshold}
 print(f"draw: {target.sum()} choices at {right_x:.5f}, {(~target).sum()} at {wrong_x:.5f}, "
       f"returned {tau_hat:.5f}, 2rho = {2 * rho:.4f}")
 
-lat = im.latents(1, 7)
-thumbs = [im.block(lat, j % im.N_BLOCKS)[0][24:72, 24:72] for j in range(J)]
+THUMB_SEED = 96_920_000                  # a stream no experiment uses; these images decide nothing
+
+
+def shapes3d_thumbs(count: int, seed: int) -> list[np.ndarray]:
+    """`count` original Shapes3D images at distinct orientation levels, drawn the way SCM-4 draws them."""
+    groups = fim.bank_by_level(np.load(fim.BANK_DIR / "split_rows.npz")["causal_bank"])
+    rng = np.random.default_rng(seed)
+    levels = rng.choice(fim.LEVELS, size=count, replace=False)
+    picks = fim.draw_images(levels, groups, rng)
+    images = fim.load_images()
+    print(f"thumbnails: orientation levels {levels.tolist()}, bank rows {picks.tolist()}")
+    return [np.asarray(images[row]) for row in picks]
+
+
+thumbs = shapes3d_thumbs(J, THUMB_SEED)
 
 TITLES = ["(a) Split proxy $W$ into\nblocks; hold a group out",
           "(b) Learn $Z$ from $X$ and\nthe kept blocks",
@@ -96,7 +110,7 @@ with plt.rc_context({"font.size": FONT, "savefig.bbox": "standard"}):
     for j in range(J):
         x0 = 0.055 + j * 0.133
         inset = a.inset_axes([x0, row, s, s * ratio])
-        inset.imshow(thumbs[j], cmap="gray_r", interpolation="nearest")
+        inset.imshow(thumbs[j], interpolation="nearest")
         frame(inset, m.BLUE if j == 0 else None, dashed=(j == 0))
         a.text(x0 + s / 2, row - 0.02, "$W_%d$" % (j + 1), ha="center", va="top",
                fontsize=SMALL, color=m.BLUE if j == 0 else m.INK2)
@@ -110,7 +124,7 @@ with plt.rc_context({"font.size": FONT, "savefig.bbox": "standard"}):
     sb = 0.115
     for k in range(J - 1):
         inset = b.inset_axes([0.085 + k * 0.135, 0.64, sb, sb * ratio])
-        inset.imshow(thumbs[k + 1], cmap="gray_r", interpolation="nearest"); frame(inset)
+        inset.imshow(thumbs[k + 1], interpolation="nearest"); frame(inset)
     b.text(0.5, 0.625, "$W_2,\\ldots,W_7$ and $X$", ha="center", va="top", fontsize=SMALL, color=m.INK2)
     b.add_patch(FancyArrowPatch((0.5, 0.560), (0.5, 0.525), arrowstyle="-|>", mutation_scale=6,
                                 color=m.INK2, lw=0.8))

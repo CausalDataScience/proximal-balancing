@@ -1,0 +1,35 @@
+{
+ "protocol_id": "direct-balance-push-v1",
+ "arm": "AE",
+ "frozen_at_utc": "2026-09-22T06:49:05.355687Z",
+ "status": "development and diagnosis, not a confirmation",
+ "source_sha256": {
+  "run_direct_balance_push.py": "1f3ba07c8e650ee2c3104f270b55628f134e98ec7d4aa3eab1e53a8fa7875195",
+  "direct_balance_ae_warmstart.py": "0cd1df196efdc73d3f21bfc587de3b77f1f5645f604269a034782e130a26e16e",
+  "direct_balance_v3.py": "d231b1416879145a2527e9e3c6036498422fc35c2e656daedadbb256d567d8ab",
+  "direct_balance_tiny16.py": "81172914d00db1e996d1619ad428de8fa0f33f6fb4c6e5e0cb28a915ecbdaedc",
+  "direct_balance_net.py": "8d923501d4ef9f2afc70c018f214c019ba7e095072b102a8a3ad93b6aacc4e66",
+  "direct_balance_eval.py": "a6dc2be30d3dd16b64a50376b9f808dcc4778d7a6cc008a148ae1cb65605aecc",
+  "direct_balance_data.py": "85e965487e962a1dada267827afdf588df4b16f6a7ba47614a95673b14a3ad34"
+ },
+ "data_seed": 96900800,
+ "split": "S1",
+ "push": {
+  "iters": 300,
+  "escape_steps": 600,
+  "stall_limit": 4,
+  "checkpoint_every": 25,
+  "monitor_every": 25,
+  "time_cap_s": 2400
+ },
+ "rows": {
+  "represent": 4800,
+  "select": 1200,
+  "check": 6000,
+  "nuisance": 6000,
+  "evaluate": 12000
+ },
+ "initial_weights_sha256": "67f2aae8f1433349d76de017c57a8bf73488919bd920377dd52b77c3cc58a9d8",
+ "device": "mps",
+ "rule": "a step is taken only against a positive pooled gap; when the gap is not positive the critics are refitted from scratch with a larger budget and the gap is read again; a negative gap is never minimised"
+}

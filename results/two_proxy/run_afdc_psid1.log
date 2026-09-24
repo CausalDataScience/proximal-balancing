@@ -1,0 +1,20 @@
+
+--- afdc_psid1: the sample as published  (n = 1175, treated 527)
+    propensity in [0.0000, 0.9548], effective sample size treated 96.7 of 527, control 372.7 of 648
+    S1: estimate -344.3301  gap -0.00466  se 0.00314  gap - z se -0.01082  overlap True
+    S2: estimate -999.2202  gap -0.00772  se 0.00312  gap - z se -0.01383  overlap True
+    significance  retained ['S1', 'S2'] -> -671.7752 (unique_largest)
+    noise_floor   retained ['S2'] -> -999.2202 (unique_largest)
+    both          retained ['S1', 'S2'] -> -671.7752 (unique_largest)
+    X -3109.708  raw -1205.208  naive -4225.838  p2sls_W1_treats_W2_outcome +1769.151  p2sls_W2_treats_W1_outcome +2214.539  coca_W1_ett +7750.422  coca_W1_ate +289802.177  coca_W2_ett +6690.383  coca_W2_ate +266390.553
+
+--- afdc_psid1: the units whose propensity lies in [0.05, 0.95]  (n = 873, treated 520)
+    propensity in [0.0275, 0.9601], effective sample size treated 225.0 of 520, control 230.6 of 353
+    S1: estimate +646.0779  gap +0.00070  se 0.00464  gap - z se -0.00838  overlap True
+    S2: estimate +955.4731  gap -0.00068  se 0.00400  gap - z se -0.00853  overlap True
+    significance  retained ['S1', 'S2'] -> +800.7755 (unique_largest)
+    noise_floor   retained ['S2'] -> +955.4731 (unique_largest)
+    both          retained ['S1', 'S2'] -> +800.7755 (unique_largest)
+    X -56.380  raw +1052.744  naive +207.442  p2sls_W1_treats_W2_outcome +1675.860  p2sls_W2_treats_W1_outcome +1989.497  coca_W1_ett +20330.486  coca_W1_ate +110240.892  coca_W2_ett +16596.712  coca_W2_ate +81786.106
+
+written /Users/yonghanjung/paios/research/papers/single_proxy_balancing/results/two_proxy/afdc_psid1_v1.json

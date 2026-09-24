@@ -1,0 +1,18 @@
+\section{Problem Setting and Notation}
+\label{sec:problem-setting}
+
+ We observe $n$ i.i.d. copies $O_1,\ldots,O_n$ of $O\triangleq(X,W,A,Y)$, where $A\in\{0,1\}$ is treatment, $Y$ is the observed outcome, and $X$ contains observed pretreatment covariates. For each $a\in\{0,1\}$, the \emph{potential outcome} $Y(a)$ is the outcome that would be observed if treatment were set to $a$. The target is the average treatment effect $\tau\triangleq\mathbb E\{Y(1)-Y(0)\}$.
+
+We impose the following global outcome conditions.
+
+\begin{assumption}[Consistency and integrability]
+\label{ass:consistency}
+For each $a\in\{0,1\}$, $Y=Y(A)$ and $\mathbb E|Y(a)|<\infty$.
+\end{assumption}
+
+The high-dimensional pretreatment proxy $W=(W_1,\ldots,W_J)$ is divided into prespecified blocks. An unobserved pretreatment variable $U$ may affect both treatment and outcome. The proxy $W$ carries information about $U$. Panels (a) and (b) of Fig.~\ref{fig:causal-structures} visualize this problem setting; they do not themselves guarantee identification. We analyze one block at a time: one block is held out, and the other blocks remain available.
+
+\begin{definition}[Held-out and remaining proxy blocks]
+\label{def:held-out-remaining-blocks}
+Let $[J]\triangleq\{1,\ldots,J\}$. For $j\in[J]$, call $W_j$ the held-out block and write $W_{-j}\triangleq(W_k:k\in[J]\setminus\{j\})$ for the collection of remaining blocks. Define $V_j\triangleq(X,W_{-j})$ as the retained variables and $T_j\triangleq(X,W_j)$ as the variables used later to formulate the held-out balance condition.
+\end{definition}

@@ -1,0 +1,106 @@
+{
+ "artifact": "two_proxy_uncertainty",
+ "generated_utc": "2026-09-23T01:36:00.405419Z",
+ "draws": 20000,
+ "seed": 98901031,
+ "dataset": "afdc_early_psid2",
+ "what": "the sampling spread of the median of the largest agreeing group, conditional on the retained set and the linking radius produced on the observed data",
+ "does_not_include": "the uncertainty of the screen",
+ "datasets": {
+  "afdc_early_psid2": {
+   "whole_sample": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 2050.010880936237,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 2392.732738505765,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 2056.4460061317986,
+     "sd": 1150.5151669568872,
+     "q025": -166.64444405206507,
+     "q975": 4298.150977913845,
+     "per_candidate_se": {
+      "S1": 1133.9189632943674,
+      "S2": 1187.9200676378255
+     }
+    },
+    "noise_floor": {
+     "return_kind": "unique_largest",
+     "output": 1820.1902113837705,
+     "retained": [
+      "S2"
+     ],
+     "rho": 2335.3808338208614,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 1812.579784541361,
+     "sd": 1178.8175256652141,
+     "q025": -490.6022488998789,
+     "q975": 4144.938561388476,
+     "per_candidate_se": {
+      "S2": 1187.9200676378255
+     }
+    }
+   },
+   "common_support": {
+    "significance": {
+     "return_kind": "unique_largest",
+     "output": 55.57698446917664,
+     "retained": [
+      "S1",
+      "S2"
+     ],
+     "rho": 2378.0451529643738,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": 61.70859992927546,
+     "sd": 1115.843773491511,
+     "q025": -2094.358727591388,
+     "q975": 2234.327493220256,
+     "per_candidate_se": {
+      "S1": 1174.445921203315,
+      "S2": 1112.4573995105577
+     }
+    },
+    "noise_floor": {
+     "return_kind": "unique_largest",
+     "output": -165.30025925730183,
+     "retained": [
+      "S2"
+     ],
+     "rho": 2163.312838306751,
+     "returned": 20000,
+     "of": 20000,
+     "return_kinds": {
+      "unique_largest": 20000
+     },
+     "mean": -172.42723344093315,
+     "sd": 1103.9330968679374,
+     "q025": -2329.2995393498563,
+     "q975": 2011.768362123352,
+     "per_candidate_se": {
+      "S2": 1112.4573995105577
+     }
+    }
+   }
+  }
+ },
+ "source_sha256": {
+  "two_proxy_uncertainty.py": "2aa2c76ba67071841ac0df111dfd7e2726916f22dc8361e04c3d3b3fbb2fdb3a",
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "probe_structured_scm.py": "9147c72cde8283b2e52a66d1a35c8341264d735453ca8ab3370c87540235002a"
+ }
+}

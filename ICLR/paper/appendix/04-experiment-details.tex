@@ -1,0 +1,179 @@
+\section{Experiment Details and Evidence Boundaries}
+\label{sec:appendix-experiments}
+
+This appendix records the technical details behind Section~\ref{sec:main-experiments}. The tables in this appendix report the original \textcolor{red}{\sout{sealed confirmation runs}}\textcolor{blue}{runs of each experiment}. \textcolor{red}{\sout{The figures in Section}~\ref{sec:main-experiments}}\textcolor{blue}{Fig.~\ref{fig:experiments} and its detailed versions, Figs.~\ref{fig:appendix-synthetic} and~\ref{fig:appendix-realdata},} also include data sets added later with seeds fixed in advance\textcolor{blue}{, for $100$ data sets per synthetic setting, $100$ Twins replicates, and $88$ IHDP replicates in total}, so their MAE values differ from the tables.
+
+\subsection{Shared structural family}
+
+All four confirmations share one structure. Let $U$ be the hidden confounder, $I$ a treatment-only cause, $C$ an observed confounder, and let $\eta$, $\epsilon_0,\ldots,\epsilon_4$ and $\varepsilon_Y$ be independent standard normal noises. The informative coordinates, which no learner sees by name, are
+\(X_1=U+2\eta,\qquad M_j=U+0.85\,\epsilon_j\ (j=0,\ldots,3),\qquad M_4=U-3.0\,I+0.85\,\epsilon_4.\)
+Treatment and outcome follow
+\(P(A=1\mid U,I,C,X_1)=0.1+0.8\,\Phi(1.5U+2.0I+0.2X_1+0.3C),\qquad Y(a)=a-2.5U+0.2X_1-0.5C+0.3\varepsilon_Y,\)
+so the average treatment effect is $\tau=1$. The observed covariate $X$ carries $X_1$ and $C$. Blocks $W_1,W_2,W_3$ carry $M_1,M_2,M_3$, block $W_4$ carries the contaminated $M_4$, and block $W_5$ carries $M_0$ together with $I$. Each observed vector is a fixed random rotation of its informative coordinates stacked on pure noise coordinates with standard deviation $0.5$, so no observed coordinate is a named quantity. Placing $C$ inside $X$, which always enters the representation, prevents a representation from dropping an outcome-relevant coordinate in order to balance.
+
+The three numeric settings differ only in how many noise coordinates hide the informative ones. SCM-1 gives $X$ two coordinates and the five blocks $(1,1,1,1,2)$ coordinates, for $8$ in total. SCM-2 gives $X$ eight and each block sixteen, for $88$. SCM-3 gives $X$ thirty-two and each block $256$, for $1{,}312$. Because the coefficients are shared, the population values and the census of balanceable \textcolor{red}{\sout{held-out choices}}\textcolor{blue}{splits} are the same objects across the three.
+
+In the population of this family, seven of the thirty candidate \textcolor{red}{\sout{held-out choices}}\textcolor{blue}{splits} admit exact balance and target $\tau$, namely those built from the clean blocks $W_1,W_2,W_3$; the \textcolor{red}{\sout{choice}}\textcolor{blue}{split} that holds out $W_4$ also admits balance and targets a different value; every choice containing $W_5$ admits no balance at all. This is the census the screen is measured against when we report true and false positive rates.
+
+\subsection{Image rendering}
+
+SCM-4 keeps the structure above and changes only what the learner receives in place of the six observed proxy coordinates. Each coordinate is recorded to $15$ equally spaced levels on $[-3\sigma,3\sigma]$, where $\sigma$ is its exact population standard deviation, and is then shown as one original $64\times64$ RGB Shapes3D image whose orientation factor equals that level. Every other generative factor of the image is drawn uniformly and independently, so the image carries the recorded level and nothing else about the unit. Blocks $W_1$ to $W_4$ contribute one image each and $W_5$ contributes two, giving six images per unit.
+
+A frozen reader maps one image back to one number. It is a convolutional network trained with orientation labels on an image bank disjoint from every image used in the causal data, and it is never refitted during the experiment. Across the $2{,}880{,}000$ reads of the confirmation it produced no level error, so SCM-4 measures the pipeline under an image proxy and not the discovery of a representation from raw pixels. The raw comparator in Section~\ref{sec:main-experiments} is a convolutional network fitted on all six images without holding out a block and without the balance screen.
+
+Two of the twenty SCM-4 data sets reached the wall-clock cap for that comparator while three tasks shared one GPU, and the sealed summary therefore recorded FAIL on the completeness gate and on the comparison that depends on it. The two comparator runs were repeated alone under the sealed configuration and the sealed seeds, and nothing else was rerun or changed. The sealed summary and the amended summary are both retained; the amended one passes all $13$ gates.
+
+\subsection{Search family, screen, and aggregation}
+
+The search ranges over the thirty nonempty proper subsets of the five blocks. For a \textcolor{red}{\sout{held-out choice}}\textcolor{blue}{split} $S$ the representation is $Z_S=(X,Bv_{-S})$, where $v_{-S}$ stacks the preprocessed kept blocks and $B$ has rank $k=2$. Preprocessing standardises $X$ and reduces any block with more than two coordinates to its principal directions above the Marchenko--Pastur edge, at most four, fitted on the representation fold alone. The family is therefore linear in the observed coordinates and role-blind: it receives no label identifying a block, but it is not an unrestricted neural encoder.
+
+Each data set is split into four folds of $6{,}000$ rows, rotated so that every fold serves once as representation, screen, nuisance, and evaluation sample. The critics are bounded probit models with link $0.1+0.8\Phi$ and ridge $10^{-4}$; the augmented critic nests the base one, and the lifted base is a candidate whenever the augmented fit cannot improve on it. The screen statistic is the held-out Brier risk difference on the screen fold, refitted there rather than reused from the search. A \textcolor{red}{\sout{choice}}\textcolor{blue}{split} is retained when $\max(\mathrm{gap},0)+z\,\mathrm{SE}$ falls below the threshold, with $z=\Phi^{-1}(1-0.05/30)\approx 2.935$ for the thirty simultaneous decisions. The thresholds are $1.5$, $1.8$, $1.6$ and $1.7$ times $10^{-3}$ for SCM-1 to SCM-4, each fixed on development data before the confirmation seeds were generated. Retained \textcolor{red}{\sout{choices}}\textcolor{blue}{splits} are grouped by a bootstrap common radius, and the reported estimate is the median of the largest agreeing group. \textcolor{blue}{Relative to Algorithm~\ref{alg:probe-search}, this implementation searches all $30$ splits ($m=T$), adds a separate screen fold to the three samples, retains a split only if it passes the screen in all four rotations, averages its estimate over the rotations, and sets the linking radius $\rho$ from the data by a bootstrap.}
+
+\subsection{Honest learning and evaluation}
+
+The four folds of a data set carry four separate jobs, and every rotation assigns each fold to each job once. The representation and its search critics use the representation fold. The screen refits fresh critics on the screen fold, so no statistic that decides retention was fitted on the rows that produced the representation. Propensity and outcome nuisance functions use the nuisance fold, and the AIPW score uses the evaluation fold. Preprocessing parameters are estimated only from the fold that is training at that step, and the four rotations are averaged.
+
+For a fixed representation, the base critic predicts $A$ from $Z$, and the augmented critic predicts $A$ from $(X,W_S,Z)$. The empirical screen uses the clipped difference between their paired Brier risks. The runs additionally record critic reliability and overlap diagnostics. These diagnostics are empirical guards. They are not upper confidence bounds on the population discrepancy.
+
+The reported paired comparison uses one value per independently generated data set. For method $M$ and baseline $B$, define
+\(d_k=|\widehat\tau_{M,k}-1|-|\widehat\tau_{B,k}-1|.\)
+The prespecified one-sided upper bound is
+\(\overline d+t_{0.95,K-1}\frac{\operatorname{sd}(d_1,\ldots,d_K)}{\sqrt K}.\)
+The data set, not a proxy split, row, or training restart, is the replication unit. A no-return data set is included in the return-rate denominator and is not filled with zero error.
+
+\subsection{Additional results for the synthetic analysis}
+\label{sec:appendix-synthetic-results}
+
+ This subsection details the original sealed confirmation runs\textcolor{blue}{, summarized in Table~\ref{tab:verified-results}}. Fig.~\ref{fig:synthetic-detail} shows every method on its own row, and Fig.~\ref{fig:appendix-kspc} shows the kernel single-proxy benchmark.
+
+\textcolor{blue}{Methods that need proxy roles receive the roles of the data-generating process in their correct-role runs. Proximal 2SLS uses $W_4$, which the treatment-only cause $I$ affects, as the treatment-side proxy and $W_2$ as the outcome-side proxy, and single-proxy control and KSPC use the clean block $W_1$. The wrong-role runs swap the two 2SLS proxies and give single-proxy control and KSPC the contaminated block $W_4$. KSPC is our implementation of the estimator of \citet{xu2025kernel} with observed covariates, using its SKPV estimator only.}
+
+\textcolor{blue}{The kernel single-proxy benchmark uses the generator of \citet{xu2025kernel} with a binary treatment, $P(A=1\mid U)=0.1+0.8\{1+\mathrm{erf}(U)\}/2$, and the deterministic outcome $Y=\sin(\pi U/2)+A-0.3$, so $\tau=1$. PROBE receives the two proxies of that generator as two blocks, $e^U$ plus Gaussian noise with standard deviation $0.1$ and an MNIST image of the digit $\lfloor 5U+5\rfloor$; KSPC receives one of them at a time. The benchmark has $20$ replicates of size $n=3{,}000$.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-estimates-v3.pdf}
+\caption[Detailed errors in the synthetic settings.]{Detailed version of the \textcolor{red}{\sout{top}}\textcolor{blue}{left} of Fig.~\ref{fig:experiments} for the original $20$ data sets per setting, with every method on its own row. KSPC ($\dagger$) was run after the protocol was frozen.}
+\label{fig:synthetic-detail}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.55\linewidth]{probe-kspc.pdf}
+\caption[Kernel single-proxy benchmark.]{Kernel single-proxy benchmark of \citet{xu2025kernel} with a binary treatment; the effect is exactly $1$. Estimates minus the effect over $20$ replicates, with the MAE on the right.}
+\label{fig:appendix-kspc}
+\end{figure}
+
+Fig.~\ref{fig:synthetic-detail} gives the detailed comparison. PROBE answers every one of the $80$ data sets, with mean absolute error between $0.014$ and $0.020$ and 90th percentile error between $0.033$ and $0.046$. Its prespecified one-sided paired bound on the excess over the oracle ranges from $0.015$ to $0.023$. The two ways of using the proxy without an audit both fail: adjustment for $X$ and the entire raw proxy lands between $0.55$ and $0.73$ because it absorbs the treatment-only coordinate, and in SCM-4 a convolutional network that reads every pixel and never tests balance lands at $0.72$. The paired bound against that pixel network is $-0.25$.
+
+The prespecified-block contrast isolates identification from search, as Thm.~\ref{thm:exact-proxy-identification} requires. Holding out the clean block $W_1$ and balancing it gives $0.998$, $0.987$, $0.980$ and $1.000$ in the four settings. Holding out the contaminated block $W_4$ gives $0.660$, $0.656$, $0.616$ and $0.667$, and the balance screen retains that choice in $79$ of the $80$ data sets, because $W_4$ really can be balanced. Holding out $W_5$ gives about $0.29$ and is rejected in all $80$ data sets, since no representation balances a block that carries the treatment-only cause. Balance is observable, and on its own it is not enough.
+
+Aggregation repairs the one failure that balance leaves. Thm.~\ref{thm:unknown-valid-block-identification} and Cor.~\ref{cor:target-majority-median} predict that the valid choices outvote $W_4$ when they form a majority, and they do: averaging over the retained choices is dragged to $0.963$, $0.956$, $0.945$ and $0.959$, the plain median of the retained choices already recovers most of that at $1.002$, $0.998$, $0.991$ and $0.997$, and the median of the largest agreeing component that PROBE returns reaches $1.005$, $1.003$, $0.993$ and $1.001$. The screen has true positive rate between $0.986$ and $1.000$ and false positive rate between $0.041$ and $0.046$, every returned component is pure, and every data set returns a unique largest component.
+
+The two bounds of Thm.~\ref{cor:representation-causal} and Thm.~\ref{thm:conditional-aipw-error} are visible separately. For a single \textcolor{red}{\sout{held-out choice}}\textcolor{blue}{split} in SCM-1 to SCM-3, the population effect of the learned representation sits a median of $0.042$ to $0.046$ from $\tau$, with 90th percentile $0.103$ to $0.110$, and the realised error of that one choice has median $0.051$ to $0.059$. Aggregating the retained choices cuts this to the $0.014$ to $0.020$ reported above, so the combination step, not a single well-behaved representation, carries the accuracy. The same split shows up in the intervals. A nominal $95\%$ interval around one choice, built from the estimate's own standard error, covers $\tau_{\widehat Z}$ at $0.950$, $0.957$ and $0.936$ in SCM-1 to SCM-3, which is the nominal rate, and covers $\tau$ at $0.836$, $0.857$, $0.879$ and $0.807$. The shortfall is the representation gap, which no interval built from sampling variation can contain; Fig.~\ref{fig:appendix-coverage} shows it per data set.
+
+Two boundaries limit what these results show. The image setting hands PROBE numbers produced by a reader that was trained with orientation labels on an auxiliary image bank, disjoint from the causal data; that reader made no level error in $2{,}880{,}000$ reads, so SCM-4 tests the pipeline under an image proxy rather than the discovery of a representation from raw pixels. The second boundary is the one the $W_4$ contrast exposes: the screen certifies balance and cannot certify the outcome-relevant condition that Assumption~\ref{ass:outcome-relevant-completeness} adds.
+
+\begin{table}[t]
+\caption{Sealed confirmations. Each row is $20$ independently generated data sets at $n=24{,}000$.}
+\label{tab:verified-results}
+\centering
+\footnotesize
+\begin{tabular}{llrrrl}
+\toprule
+Setting & \shortstack[l]{\\What the learner sees} & Mean error & p90 & Oracle gap & Status \\
+\midrule
+SCM-1 & $8$ coordinates & 0.020 & 0.033 & 0.022 & 12/12 gates \\
+SCM-2 & $88$ coordinates & 0.017 & 0.037 & 0.019 & 12/12 gates \\
+SCM-3 & $1{,}312$ coordinates & 0.014 & 0.035 & 0.015 & 12/12 gates \\
+SCM-4 & six $64\times64$ images & 0.018 & 0.046 & 0.023 & 13/13 gates, amended \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The SCM-4 row carries a correction that we report rather than hide. Two of its $20$ data sets reached the wall-clock cap while three tasks shared one GPU, so the pixel-network comparator recorded no value there and the sealed summary returned FAIL on the completeness gate and on the comparison that depends on it. Those two comparator runs were repeated alone under the sealed configuration and the sealed seeds, every other number was left untouched, and the amended summary passes all $13$ gates. \textcolor{red}{\sout{Appendix}~\ref{sec:appendix-experiments} \sout{records both summaries.}}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-synthetic-v4-ext.pdf}
+\caption[Detailed synthetic results.]{Detailed version of the left of Fig.~\ref{fig:experiments}, with the MAE of each method on the right; for methods that need proxy roles, the upper number is for the correct roles.}
+\label{fig:appendix-synthetic}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-realdata-v4-ext.pdf}
+\caption[Detailed semi-synthetic and RHC results.]{Detailed version of the right of Fig.~\ref{fig:experiments}, with the MAE of each method, and the RHC estimates, where no true effect is known; PROBE's estimate carries its resampled $95\%$ interval, and * marks estimates published by \citet{cui2024semiparametric}.}
+\label{fig:appendix-realdata}
+\end{figure}
+
+\subsection{Semi-synthetic benchmarks}
+\label{sec:appendix-benchmarks}
+
+\textcolor{blue}{Twins \citep{louizos2017causal}, IHDP \citep{hill2011bayesian}, and ACIC 2016 \citep{dorie2019automated} keep their covariates and both potential outcomes, so the effect is known exactly. In each, one covariate is hidden as $U$ (gestational age in Twins), and the five proxy blocks and the treatment are generated from it by one fixed recipe. Twins has $n=11{,}984$ and $42$ covariates, IHDP $n=747$ and $24$, and ACIC $n=4{,}802$ and $78$. The original runs use Twins replicates $11$ to $20$, IHDP replicates $12$ to $21$, and ACIC realizations $2$ to $10$. The comparators take the proxy roles of Appendix~\ref{sec:appendix-synthetic-results}; single-proxy control is run once, as an ATE estimator with the clean block $W_1$.}
+
+\textcolor{blue}{The sealed thresholds of SCM-1 to SCM-4 do not transfer to these data sets, because the noise level of the screen statistic changes with the numbers of rows and covariates. The screen therefore uses a noise-scaled threshold: it retains a split when $\max(\mathrm{gap},0)+z\,\mathrm{SE}$ is at most the median of $z\,\mathrm{SE}$ over the thirty splits of the same data set. This rule was adopted after the pre-registered RHC analysis with the sealed threshold returned no estimate. It was frozen before Twins replicates $11$ to $20$ and IHDP replicates $12$ to $21$ were generated, so these two studies are prospective tests; it was chosen after seeing ACIC realizations $2$ to $10$, so the ACIC results are exploratory.}
+
+\textcolor{blue}{The RHC study \citep{connors1996effectiveness} has $5{,}735$ patients, days survived within $30$ as the outcome, and ten physiological measurements grouped into five proxy blocks, as analyzed by \citet{cui2024semiparametric}; no true effect is known. The interval around PROBE's RHC estimate in Fig.~\ref{fig:appendix-realdata} gives the sampling spread of the median of the largest agreeing group over $20{,}000$ draws, holding the retained splits and the linking radius at their observed values, so it omits the uncertainty of the screen.}
+
+Table~\ref{tab:benchmarks} gives the MAE on the original replicates. On IHDP, ten replicates do not resolve the gap between PROBE and CEVAE: the error ratio is $1.67$, with a $90\%$ paired-bootstrap interval from $0.78$ to $2.78$. 
+
+\begin{table}[t]
+\caption{Mean absolute error on the original replicates in three semi-synthetic studies with known effects; ACIC is exploratory. Proximal 2SLS, single-proxy control, and KSPC require proxy roles; KSPC ($\dagger$) was run after the protocol was frozen. Bold marks the smallest error among the methods other than the oracle.}
+\label{tab:benchmarks}
+\centering
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+Method & Twins & IHDP & ACIC \\
+\midrule
+PROBE (ours) & \textbf{0.0077} & 0.3054 & 0.2025 \\
+CEVAE & 0.0894 & \textbf{0.1828} & 0.2575 \\
+Adjust for $X$ and all of $W$ & 0.0207 & 0.3927 & 0.2239 \\
+Adjust for $X$ & 0.0749 & 0.7221 & 0.1757 \\
+Proximal 2SLS, roles given & 0.0156 & 0.2328 & \textbf{0.1016} \\
+Proximal 2SLS, roles swapped & 0.2453 & 1.5856 & 0.8015 \\
+Single-proxy control, as an ATE & 0.7318 & 5.9838 & 34.6486 \\
+KSPC$^\dagger$, clean block & 0.0099 & 0.6214 & 0.5622 \\
+KSPC$^\dagger$, contaminated block & 0.0815 & 1.2499 & 0.9318 \\
+\midrule
+Oracle (adjusts for $(X,U)$) & 0.0074 & 0.4868 & 0.1336 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Protocol discipline}
+
+One generated data set is one replicate; splits, rows, rotations, and restarts are not. Paired methods share data, sample roles, and nuisance budgets. \textcolor{red}{\sout{The screen threshold is fixed before the confirmation data are generated and remains}}\textcolor{blue}{For SCM-1 to SCM-4 the screen threshold is fixed before the confirmation data are generated, and Appendix~\ref{sec:appendix-benchmarks} gives the rule and its history for the other data sets. The threshold remains} a screen rather than proof of causal validity. No-return outcomes stay in the return-rate denominator, failed sealed runs stay in the record, and \textcolor{red}{\sout{Appendix}~\ref{sec:appendix-experiments}}\textcolor{blue}{this appendix} documents exclusions, replacements, and the representation family the search ranges over.
+
+\subsection{Evidence boundaries}
+
+ The empirical gates are performance criteria, not proofs of completeness, stability, or the population plurality condition.
+
+\subsection{Additional figures}
+
+Fig.~\ref{fig:appendix-aggregation} shows the three aggregation rules on the sealed confirmations, Fig.~\ref{fig:appendix-learned} separates the representation and estimation parts of the error, and Fig.~\ref{fig:appendix-coverage} turns that same separation into interval coverage. 
+
+The interval in Fig.~\ref{fig:appendix-coverage} is the AIPW estimate of one \textcolor{red}{\sout{held-out choice}}\textcolor{blue}{split} plus or minus $1.96$ times its own standard error, and that standard error is computed from the score cross-product the sealed run already stored, so the figure refits nothing. It covers what the learned representation targets at the nominal rate and covers $\tau$ less often, by the amount of the representation gap. An interval built from sampling variation cannot contain that gap, which is why Thm.~\ref{cor:representation-causal} bounds it separately from Thm.~\ref{thm:conditional-aipw-error}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-aggregation.pdf}
+\caption[Aggregation rules.]{Three ways to combine the retained \textcolor{red}{\sout{held-out choices}}\textcolor{blue}{splits}. Averaging is pulled away from $\tau$ by the balanced but invalid choice; the median of the largest agreeing group is not.}
+\label{fig:appendix-aggregation}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-coverage.pdf}
+\caption[Interval coverage.]{Coverage of a nominal $95\%$ interval around one \textcolor{red}{\sout{held-out choice}}\textcolor{blue}{split}, one dot per data set. The interval covers the population effect of the learned representation at the nominal rate and covers $\tau$ less often, by the representation gap.}
+\label{fig:appendix-coverage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{probe-learned.pdf}
+\caption[Absolute errors of one split and of aggregation.]{Absolute errors on a log scale. For one \textcolor{red}{\sout{held-out choice}}\textcolor{blue}{split} the representation gap $|\tau_{\widehat Z}-\tau|$ is the population effect of the learned representation, which is exact for the linear representations of SCM-1 to SCM-3 and is not recorded for SCM-4. Aggregation reduces the error of a single choice by roughly a factor of three.}
+\label{fig:appendix-learned}
+\end{figure}
+

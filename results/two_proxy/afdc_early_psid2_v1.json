@@ -1,0 +1,238 @@
+{
+ "artifact": "two_proxy",
+ "dataset": "afdc_early_psid2",
+ "generated_utc": "2026-09-23T01:35:58.669829Z",
+ "k": 2,
+ "seed": 98801100,
+ "band": [
+  0.05,
+  0.95
+ ],
+ "band_declared_before_any_estimate": "two_proxy_data.BAND, with the reason written beside it",
+ "columns": {
+  "W1": "1974 earnings, before the programme",
+  "W2": "1975 earnings, before the programme",
+  "A": "assigned to National Supported Work",
+  "Y": "1979 earnings"
+ },
+ "reference": {
+  "estimand": "effect on the treated",
+  "estimate": 1267.657470703125,
+  "se": 464.720947265625,
+  "n_treated": 286,
+  "n_control": 279,
+  "source": "the randomised arm of the early random-assignment NSW AFDC women, complete cases on 1974, 1975 and 1979 earnings"
+ },
+ "readings": {
+  "whole_sample": {
+   "label": "the sample as published",
+   "n": 468,
+   "overlap": {
+    "min": 0.006033010608318357,
+    "max": 0.9455829390145446,
+    "share_in_0p05_0p95": 0.9935897435897436,
+    "treated": 286,
+    "control": 182,
+    "treated_ess": 246.69554453848897,
+    "control_ess": 137.65216457429912
+   },
+   "probe": {
+    "n": 468,
+    "k": 2,
+    "seed": 98801100,
+    "n_blocks": 2,
+    "z": 1.959963984540054,
+    "split_names": [
+     "S1",
+     "S2"
+    ],
+    "records": {
+     "S1": {
+      "estimate": 2279.831550488703,
+      "pooled_gap": -0.01094806413862313,
+      "pooled_se": 0.006663501580360988,
+      "overlap_all_rotations": true
+     },
+     "S2": {
+      "estimate": 1820.1902113837705,
+      "pooled_gap": -0.007817463954281045,
+      "pooled_se": 0.004875135657814559,
+      "overlap_all_rotations": true
+     }
+    },
+    "per_candidate_upper": {
+     "S1": 0.013060223108433269,
+     "S2": 0.00955509030906352
+    },
+    "noise_floor_threshold": 0.011307656708748394,
+    "readings": {
+     "significance": {
+      "rule": "retain S when pooled gap - z SE <= 0",
+      "return_kind": "unique_largest",
+      "output": 2050.010880936237,
+      "rho": 2392.732738505765,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     },
+     "noise_floor": {
+      "rule": "v3: retain S when max(gap,0) + z SE <= median_S z SE; with two candidates the median is their average, so this is degenerate and is reported for contrast only",
+      "return_kind": "unique_largest",
+      "output": 1820.1902113837705,
+      "rho": 2335.3808338208614,
+      "retained": [
+       "S2"
+      ]
+     },
+     "both": {
+      "rule": "no rule applied",
+      "return_kind": "unique_largest",
+      "output": 2050.010880936237,
+      "rho": 2392.732738505765,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     }
+    }
+   },
+   "score_crossproduct": [
+    [
+     281614973687.93506,
+     285435597693.26685
+    ],
+    [
+     285435597693.26685,
+     309076612772.258
+    ]
+   ],
+   "comparators": {
+    "X": 293.157568294818,
+    "raw": 1333.0683084245675,
+    "naive": 244.83596224789653,
+    "p2sls_W1_treats_W2_outcome": 1345.1829149922655,
+    "p2sls_W2_treats_W1_outcome": 1560.8774879034347,
+    "coca_W1_ett": 7822.7202896670715,
+    "coca_W1_ate": 58901.065199172306,
+    "coca_W2_ett": 6111.707263204873,
+    "coca_W2_ate": 39472.713573188805
+   }
+  },
+  "common_support": {
+   "label": "the units whose propensity lies in [0.05, 0.95]",
+   "n": 465,
+   "overlap": {
+    "min": 0.05544795131689478,
+    "max": 0.9454651350432345,
+    "share_in_0p05_0p95": 1.0,
+    "treated": 286,
+    "control": 179,
+    "treated_ess": 247.2168614705354,
+    "control_ess": 136.31800422393385
+   },
+   "probe": {
+    "n": 465,
+    "k": 2,
+    "seed": 98801101,
+    "n_blocks": 2,
+    "z": 1.959963984540054,
+    "split_names": [
+     "S1",
+     "S2"
+    ],
+    "records": {
+     "S1": {
+      "estimate": 276.4542281956551,
+      "pooled_gap": -0.009545802073823322,
+      "pooled_se": 0.007460486153953054,
+      "overlap_all_rotations": true
+     },
+     "S2": {
+      "estimate": -165.30025925730183,
+      "pooled_gap": -0.00538277209636637,
+      "pooled_se": 0.004187044631428889,
+      "overlap_all_rotations": true
+     }
+    },
+    "per_candidate_upper": {
+     "S1": 0.01462228416890773,
+     "S2": 0.008206456679262408
+    },
+    "noise_floor_threshold": 0.01141437042408507,
+    "readings": {
+     "significance": {
+      "rule": "retain S when pooled gap - z SE <= 0",
+      "return_kind": "unique_largest",
+      "output": 55.57698446917664,
+      "rho": 2378.0451529643738,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     },
+     "noise_floor": {
+      "rule": "v3: retain S when max(gap,0) + z SE <= median_S z SE; with two candidates the median is their average, so this is degenerate and is reported for contrast only",
+      "return_kind": "unique_largest",
+      "output": -165.30025925730183,
+      "rho": 2163.312838306751,
+      "retained": [
+       "S2"
+      ]
+     },
+     "both": {
+      "rule": "no rule applied",
+      "return_kind": "unique_largest",
+      "output": 55.57698446917664,
+      "rho": 2378.0451529643738,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     }
+    }
+   },
+   "score_crossproduct": [
+    [
+     298244163640.4303,
+     256420324930.49313
+    ],
+    [
+     256420324930.49313,
+     267591727926.55948
+    ]
+   ],
+   "comparators": {
+    "X": 41.41907671479808,
+    "raw": 838.8691145671023,
+    "naive": 460.0011717214402,
+    "p2sls_W1_treats_W2_outcome": 1189.3546225036755,
+    "p2sls_W2_treats_W1_outcome": 1529.972022029148,
+    "coca_W1_ett": 11429.726624975896,
+    "coca_W1_ate": 53143.98101045246,
+    "coca_W2_ett": 6785.029915542125,
+    "coca_W2_ate": 36279.4827836691
+   }
+  }
+ },
+ "covariate_labels": [
+  "age",
+  "educ",
+  "nodegree",
+  "married",
+  "black",
+  "hisp",
+  "nchildren75"
+ ],
+ "covariates_dropped_on_the_band": [],
+ "why_dropped": "the band makes these exactly a function of the intercept and the remaining covariates, so every design built from them is singular; they are dropped once for all estimators alike, never for one of them",
+ "estimand_note": "PROBE's score is the one for the average effect over whoever is in the sample.  On the band that is the average effect over the band, which is a different population from the whole sample and from the treated.",
+ "source_sha256": {
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "two_proxy_data.py": "eaa945c525f32504117f6af140f417709f92f29e5494187989e77e747867aa07",
+  "run_two_proxy.py": "a948fbc4b48ad3db06ceb4fb0c342d38a3fa726fd7c45f26aa9090baf1535481",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "park_ate.py": "cd1db48a5981fe68df525afe4bbaff45f6ea2bfefc6585d8ddf80790363e4782"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "task": {
+  "exp": "E2",
+  "name": "SCM-4",
+  "replicate": 2,
+  "seed": 97402000,
+  "tau": 1.0,
+  "sealed": "/Users/yonghanjung/paios/research/papers/single_proxy_balancing/results/family_v2/scm4/confirm/SCM-4_seed97402000.json"
+ },
+ "label": "KSPC with covariates, Appendix A, our implementation; SKPV only, decided after gate 2",
+ "tau": 1.0,
+ "n_full": 24000,
+ "n_used": 3000,
+ "subsample_seed": 99400002,
+ "integrity": {
+  "checked": true,
+  "W1": {
+   "recomputed": 1.0638459113223233,
+   "sealed": 1.0638459113223233
+  },
+  "W4": {
+   "recomputed": -4.233334655994461,
+   "sealed": -4.233334655994461
+  }
+ },
+ "kspc_skpv_with_x": {
+  "W1": {
+   "ate": 0.04819536561864479,
+   "f0": 0.2973031313345267,
+   "f1": 0.3454984969531715
+  },
+  "W4": {
+   "ate": -0.8433586795434276,
+   "f0": 0.7235744719845412,
+   "f1": -0.11978420755888643
+  }
+ },
+ "timing_s": 75.6,
+ "generated_utc": "2026-09-23T05:05:00.651336Z",
+ "source_sha256": {
+  "run_kspc_comparator.py": "665aa8dba6d5f4496785f68ddaaf0ab192d8f098fab633f6858cfe9a2e5d005e",
+  "kspc_wrapper.py": "d591cf459ff099601dbb18156d805b8f9ed8561e0c83b114b214210f32ca6e04",
+  "family_v2_dgp.py": "9f22c78bf77c314a6e9483df9c3615a2132098288362450e7ba46969cf836855",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "run_scm4.py": "3329b731b3b17f1bcfbdc9c2d5c5d3fb3904626d0902c07e5283394f943a9c60",
+  "family_v2_images.py": "756935af1fd4da30085780f645b5c489837c3f0c4f68f53a967262422c4d0a77",
+  "coca_ate_all.py": "83ed7fcb5f76bc0ad73419567084d4fee2d264c2e2584113b22b3695358dfce4",
+  "rhc_data.py": "bf49c492357e2976234f6c6b7472176c6f75676c1bf1bec7f1d2ea7edc26e0cd"
+ }
+}

@@ -1,0 +1,226 @@
+{
+ "artifact": "two_proxy",
+ "dataset": "zika",
+ "generated_utc": "2026-09-22T23:31:03.147206Z",
+ "k": 2,
+ "seed": 98700000,
+ "band": [
+  0.05,
+  0.95
+ ],
+ "band_declared_before_any_estimate": "two_proxy_data.BAND, with the reason written beside it",
+ "columns": {
+  "W1": "2013 birth rate, before the outbreak",
+  "W2": "2014 birth rate, before the outbreak",
+  "Y": "2016 birth rate",
+  "A": "heavy exposure to the 2015-16 outbreak"
+ },
+ "reference": {
+  "estimand": "effect on the treated",
+  "semiparametric_coca_both_proxies": {
+   "estimate": -2.18,
+   "se": 0.342
+  },
+  "crude": 3.38429585129043,
+  "source": "Park, Richardson and Tchetgen Tchetgen (2024), Biometrics 80(2) ujae027"
+ },
+ "readings": {
+  "whole_sample": {
+   "label": "the sample as published",
+   "n": 673,
+   "overlap": {
+    "min": 2.4610327837591475e-05,
+    "max": 0.9997403184452669,
+    "share_in_0p05_0p95": 0.4784546805349183,
+    "treated": 185,
+    "control": 488,
+    "treated_ess": 1.0210064979074698,
+    "control_ess": 7.914535772503465
+   },
+   "probe": {
+    "n": 673,
+    "k": 2,
+    "seed": 98700000,
+    "n_blocks": 2,
+    "z": 1.959963984540054,
+    "split_names": [
+     "S1",
+     "S2"
+    ],
+    "records": {
+     "S1": {
+      "estimate": 0.3940987996098998,
+      "pooled_gap": 0.007137374493971033,
+      "pooled_se": 0.004779854557896412,
+      "overlap_all_rotations": true
+     },
+     "S2": {
+      "estimate": 0.23262869259515503,
+      "pooled_gap": 0.001287962740814713,
+      "pooled_se": 0.0029404250794667856,
+      "overlap_all_rotations": true
+     }
+    },
+    "per_candidate_upper": {
+     "S1": 0.01650571727878762,
+     "S2": 0.0070510899958079395
+    },
+    "noise_floor_threshold": 0.007565735019904908,
+    "readings": {
+     "significance": {
+      "rule": "retain S when pooled gap - z SE <= 0",
+      "return_kind": "unique_largest",
+      "output": 0.31336374610252743,
+      "rho": 0.3375827152568409,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     },
+     "noise_floor": {
+      "rule": "v3: retain S when max(gap,0) + z SE <= median_S z SE; with two candidates the median is their average, so this is degenerate and is reported for contrast only",
+      "return_kind": "unique_largest",
+      "output": 0.23262869259515503,
+      "rho": 0.32656066395117883,
+      "retained": [
+       "S2"
+      ]
+     },
+     "both": {
+      "rule": "no rule applied",
+      "return_kind": "unique_largest",
+      "output": 0.31336374610252743,
+      "rho": 0.3375827152568409,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     }
+    }
+   },
+   "score_crossproduct": [
+    [
+     8596.586618629823,
+     7009.762079058819
+    ],
+    [
+     7009.762079058819,
+     12449.77948986704
+    ]
+   ],
+   "comparators": {
+    "X": 3.217184175422907,
+    "raw": 0.2150824426043717,
+    "naive": 3.384295851290428,
+    "p2sls_W1_treats_W2_outcome": -0.941805106042115,
+    "p2sls_W2_treats_W1_outcome": -1.1846174766416657,
+    "coca_W1_ett": -4.138438866128126,
+    "coca_W1_ate": -2.989681740560414,
+    "coca_W2_ett": -4.3948500778579564,
+    "coca_W2_ate": -2.0569842211960667
+   }
+  },
+  "common_support": {
+   "label": "the units whose propensity lies in [0.05, 0.95]",
+   "n": 322,
+   "overlap": {
+    "min": 0.02891561610953046,
+    "max": 0.9727011626198565,
+    "share_in_0p05_0p95": 0.8571428571428571,
+    "treated": 140,
+    "control": 182,
+    "treated_ess": 79.45947147769952,
+    "control_ess": 64.62569464054711
+   },
+   "probe": {
+    "n": 322,
+    "k": 2,
+    "seed": 98700001,
+    "n_blocks": 2,
+    "z": 1.959963984540054,
+    "split_names": [
+     "S1",
+     "S2"
+    ],
+    "records": {
+     "S1": {
+      "estimate": -0.13005008603598978,
+      "pooled_gap": 0.012262754643885746,
+      "pooled_se": 0.01238146345634186,
+      "overlap_all_rotations": true
+     },
+     "S2": {
+      "estimate": -0.4075501365721106,
+      "pooled_gap": 0.00631523950860914,
+      "pooled_se": 0.007280216560458553,
+      "overlap_all_rotations": true
+     }
+    },
+    "per_candidate_upper": {
+     "S1": 0.03652997709421461,
+     "S2": 0.02058420176675997
+    },
+    "noise_floor_threshold": 0.019268092354239846,
+    "readings": {
+     "significance": {
+      "rule": "retain S when pooled gap - z SE <= 0",
+      "return_kind": "unique_largest",
+      "output": -0.2688001113040502,
+      "rho": 0.8478325357856207,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     },
+     "noise_floor": {
+      "rule": "v3: retain S when max(gap,0) + z SE <= median_S z SE; with two candidates the median is their average, so this is degenerate and is reported for contrast only",
+      "return_kind": "no_return",
+      "output": null,
+      "rho": null,
+      "retained": []
+     },
+     "both": {
+      "rule": "no rule applied",
+      "return_kind": "unique_largest",
+      "output": -0.2688001113040502,
+      "rho": 0.8478325357856207,
+      "retained": [
+       "S1",
+       "S2"
+      ]
+     }
+    }
+   },
+   "score_crossproduct": [
+    [
+     12497.40093346436,
+     7838.7584280473975
+    ],
+    [
+     7838.7584280473975,
+     17998.13062967776
+    ]
+   ],
+   "comparators": {
+    "X": 1.40920221413045,
+    "raw": -0.43178085874826083,
+    "naive": 0.9664870173274718,
+    "p2sls_W1_treats_W2_outcome": -0.8997221084666461,
+    "p2sls_W2_treats_W1_outcome": -2.1276623665707195,
+    "coca_W1_ett": -6.859008426771659,
+    "coca_W1_ate": -4.906463795585946,
+    "coca_W2_ett": -3.7094480259471325,
+    "coca_W2_ate": -2.734494040888027
+   }
+  }
+ },
+ "estimand_note": "PROBE's score is the one for the average effect over whoever is in the sample.  On the band that is the average effect over the band, which is a different population from the whole sample and from the treated.",
+ "source_sha256": {
+  "probe_j2.py": "cad05fd3b8c8b400e31822b6dd96f2de5f44ae09b226ca50fc227a3bd1f9b895",
+  "two_proxy_data.py": "950d92005d8f6d0f0a2823897c051d5f6c3326e4bb2c80cfb7ece97a1b7b51b9",
+  "run_two_proxy.py": "a9fa087e71c75395c7c19654e742167f6afc2944d4003fb7a9ab588542a574ce",
+  "family_v2_probe.py": "90e8fbabc48a0b413bc432e7d8f47762c87d87bee8d2fc8f8c0c0bbebc83d656",
+  "family_v2_competitors.py": "161fc07083c70a663bc439989e0963e87b17445c1b945621f8faddaf1f677387",
+  "park_ate.py": "cd1db48a5981fe68df525afe4bbaff45f6ea2bfefc6585d8ddf80790363e4782"
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "artifact": "kspc_comparator_gates",
+ "generated_utc": "2026-09-23T04:55:59.095363Z",
+ "prd": "memo/2026-09-22-kspc-comparator-prd-v2.md",
+ "gate_1_reduction": {
+  "skpv": 2.220446049250313e-16,
+  "spmmr": 0.0,
+  "pass": true
+ },
+ "gate_2_validity": {
+  "skpv": {
+   "mse_without_x": 0.17757898408761502,
+   "mse_with_x": 0.0770029199848117
+  },
+  "spmmr": {
+   "mse_without_x": 0.18120075024217666,
+   "mse_with_x": 0.09260796245374164
+  },
+  "pass": false
+ },
+ "pass": false,
+ "source_sha256": {
+  "kspc_wrapper.py": "d591cf459ff099601dbb18156d805b8f9ed8561e0c83b114b214210f32ca6e04"
+ }
+}
