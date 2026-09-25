@@ -98,7 +98,7 @@ Then Assumption~\ref{ass:outcome-relevant-completeness} holds. Condition (ii) ho
 
 \end{proposition}
 
-Condition (i) lets the remaining blocks influence the outcome only through $(X,U)$ and through components retained in $Z_j$; Theorem~\ref{thm:exact-proxy-identification} below uses the more general Assumption~\ref{ass:outcome-relevant-completeness}. The first specialization covers latent-variable generative models in which the held-out block is a decoded image or embedding of $(X,U)$ plus independent noise, and the second covers count-valued proxies such as event, word, or sequencing-read counts. When the latent state takes finitely many values and both proxy blocks are pure measurements, the matrix restoration of \citet{kuroki2014measurement} identifies $\tau$ directly, as discussed in Section~\ref{sec:related-work}.
+Condition (i) lets the remaining blocks influence the outcome only through $(X,U)$ and through components retained in $Z_j$; Theorem~\ref{thm:exact-proxy-identification} below uses the more general Assumption~\ref{ass:outcome-relevant-completeness}. The first specialization covers latent-variable generative models in which the held-out block is a decoded image or embedding of $(X,U)$ plus independent noise, and the second covers count-valued proxies such as event, word, or sequencing-read counts. When the latent state takes finitely many values and both proxy blocks are pure measurements, the matrix restoration of \citet{kuroki2014measurement} identifies $\tau$ directly\textcolor{blue}{\ under its rank conditions}, as discussed in Section~\ref{sec:related-work}.
 
 \subsubsection{Exact Identification for a Fixed Block}
 \label{sec:exact-proxy-identification}
@@ -129,12 +129,16 @@ The theorem is a conditional mean identification result. It establishes that the
 
 Graphically and structurally, PROBE differs from the standard proximal causal inference framework \citep{miao2018proxy,tchetgen2024ProximalCausalInference}. The standard framework prespecifies a treatment-inducing proxy $Z^{\mathrm{tr}}$ and an outcome-inducing proxy $Z^{\mathrm{out}}$. By contrast, PROBE requires only the held-out block $W_j$ to satisfy $W_j\perp\!\!\!\perp A\mid(U,V_j)$. The remaining block is not subject to this restriction and may affect $A$, $Y$, both, or neither, as illustrated by panels (a)--(c).
 
-The underlying assumptions and identification strategies are also different. A representative canonical completeness condition is
+The underlying assumptions and identification strategies are also different. A representative canonical completeness condition is\textcolor{blue}{, for every $(a,x)$,}
 \begin{align}
-	\mathbb E\{g(U)\mid Z^{\mathrm{tr}},A,X\}=0
-	\quad\Longrightarrow\quad
+	\textcolor{red}{\mathbb E\{g(U)\mid Z^{\mathrm{tr}},A,X\}=0}
+	&\textcolor{red}{\quad\Longrightarrow\quad
 	g(U)=0
-	\quad\text{almost surely}
+	\quad\text{almost surely}}\notag\\
+	\textcolor{blue}{\mathbb E\{g(U)\mid Z^{\mathrm{tr}},A=a,X=x\}=0\text{ almost surely}}
+	&\textcolor{blue}{\quad\Longrightarrow\quad
+	g(U)=0
+	\quad\text{almost surely}}
 	\label{eq:canonical-proxy-completeness}
 \end{align}
 for functions $g$ in the specified class. Identification then proceeds by seeking an outcome bridge $h$ satisfying an observed conditional-moment equation such as
@@ -149,7 +153,7 @@ PROBE instead combines observable balance in Theorem~\ref{thm:exact-proxy-identi
 \begin{proposition}[Non-nesting of canonical proximal and PROBE sufficient conditions]
 	\label{prop:non-nesting-proximal-probe}
 	\normalfont
-	There exists a causal data-generating process for which the canonical proximal conditions hold for a designated proxy pair but the PROBE conditions fail for a designated proxy split. Conversely, there exists a causal data-generating process for which the PROBE conditions hold for a designated proxy split but the canonical proximal conditions fail for a designated proxy pair.
+	There exists a causal data-generating process for which the canonical proximal conditions hold for a designated proxy pair\textcolor{blue}{\ $(Z^{\mathrm{tr}},Z^{\mathrm{out}})$} but the PROBE conditions fail for \textcolor{red}{\sout{a designated proxy split}}\textcolor{blue}{the split with $W_{-j}=Z^{\mathrm{tr}}$ and $W_j=Z^{\mathrm{out}}$ under every representation $\phi_j$}. Conversely, there exists a causal data-generating process for which the PROBE conditions hold for a designated proxy split but the canonical proximal conditions fail for \textcolor{red}{\sout{a designated proxy pair}}\textcolor{blue}{the pair $(Z^{\mathrm{tr}},Z^{\mathrm{out}})=(W_{-j},W_j)$}.
 \end{proposition}
 
 \subsection{Identification When the Valid Held-Out Block Is Unknown}
@@ -325,7 +329,7 @@ We assume the following:
 \end{align}
 \end{assumption}
 
-If $\mathcal K_jQ=\mathcal K_jQ'$, the right-hand side is zero. Assumption~\ref{ass:uniform-stability} therefore implies Assumption~\ref{ass:outcome-relevant-completeness}.
+If $\mathcal K_jQ=\mathcal K_jQ'$, the right-hand side is zero. Assumption~\ref{ass:uniform-stability} therefore implies Assumption~\ref{ass:outcome-relevant-completeness}\textcolor{blue}{\ for $Z_j^\phi$}.
 \begin{theorem}[Approximate PROBE bias bound]
 \label{thm:approximate-proxy-bias-bound}
 \normalfont

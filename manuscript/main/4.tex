@@ -280,7 +280,7 @@ Suppose $\sigma_j<\infty$. Conditional on the two learning samples, with probabi
 \varepsilon_{\mathrm{AIPW},j}.
 \label{eq:conditional-aipw-error}
 \end{align}
-If, in addition, the assumptions of Theorem~\ref{cor:representation-causal} hold, then on the same event
+If, in addition, \textcolor{red}{\sout{the assumptions of Theorem~\mbox{\ref{cor:representation-causal}} hold}}\textcolor{blue}{Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for $Z_j^{\widehat\phi_j}$ and $\eta\le e_j(\widehat Z_j)\le1-\eta$ almost surely}, then on the same event
 \begin{align}
 |\widehat\tau_j^{\mathrm{AIPW}}-\tau|
 \le
@@ -301,7 +301,7 @@ Consider a sequence of encoder and critic classes, sample splits, nuisance estim
 \begin{enumerate}[label=(C\arabic*),leftmargin=*]
 \item \textit{Vanishing evaluation error.} $\delta_{\mathrm E,n}\to0$ and $\sigma_{j,n}^2/(n_{\mathrm E}\delta_{\mathrm E,n})\to0$. The evaluation sample grows faster than the confidence level shrinks.
 \item \textit{Vanishing nuisance product.} $q_{e,j,n}(q_{0,j,n}+q_{1,j,n})\xrightarrow{p}0$. The propensity and outcome-regression errors need not vanish individually; their product vanishes, for example, when each is $o_p(n^{-1/4})$.
-\item \textit{Vanishing learned imbalance.} $\Gamma_j(\widehat\phi_{j,n})D_{\mathrm{res},j}(\widehat\phi_{j,n})\xrightarrow{p}0$. By Proposition~\ref{thm:representation-oracle}, this holds when $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)$, the two Rademacher complexities, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j,n}$, $\varepsilon_{\mathrm{enc},j,n}$, and $\delta_{\mathrm D,n}$ all converge to zero and $\Gamma_j(\widehat\phi_{j,n})=O_p(1)$.
+\item \textit{Vanishing learned imbalance.} $\Gamma_j(\widehat\phi_{j,n})D_{\mathrm{res},j}(\widehat\phi_{j,n})\xrightarrow{p}0$. By Proposition~\ref{thm:representation-oracle}, this holds when $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)$, the two Rademacher complexities, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j,n}$, $\varepsilon_{\mathrm{enc},j,n}$, \textcolor{red}{\sout{and}} $\delta_{\mathrm D,n}$\textcolor{blue}{, and $\log(1/\delta_{\mathrm D,n})/n_{\mathrm D}$} all converge to zero and $\Gamma_j(\widehat\phi_{j,n})=O_p(1)$.
 \end{enumerate}
 Then $\widehat\tau_{j,n}^{\mathrm{AIPW}}\xrightarrow{p}\tau$.
 

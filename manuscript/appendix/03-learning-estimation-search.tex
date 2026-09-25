@@ -1,0 +1,325 @@
+\section{Representation Learning and AIPW Estimation}
+\label{app:learning-details}
+
+The identification results concern one fixed representation. We now select a representation from data and estimate the adjustment functional that it induces. The representation-learning and AIPW analysis below uses one prespecified held-out block $j$ throughout.
+
+\subsection{Representation Learning}
+\label{sec:representation-learning}
+
+Recall that one observed record is $O_i=(X_i,W_i,A_i,Y_i)$. Partition the observed sample into three mutually disjoint subsets,
+\(\mathcal I_{\mathrm D}, \qquad \mathcal I_{\mathrm N}, \qquad \mathcal I_{\mathrm E},\)
+with respective sizes $n_{\mathrm D}$, $n_{\mathrm N}$, and $n_{\mathrm E}$. The discrepancy-learning sample $\mathcal I_{\mathrm D}$ selects a representation. The nuisance-learning sample $\mathcal I_{\mathrm N}$ estimates the outcome regressions and propensity used by AIPW. The evaluation sample $\mathcal I_{\mathrm E}$ calculates the final estimate. Conditional on the preceding samples, the objects evaluated on the next sample are fixed.
+
+ Let $\mathcal F_{j,n_{\mathrm D}}\subseteq\Phi_j$ be a prespecified, possibly infinite class of deterministic encoders. For $\phi\in\mathcal F_{j,n_{\mathrm D}}$, write $Z_j^\phi=\phi(V_j)$ and retain $T_j=(X,W_j)$ from Section~\ref{sec:approximate-proxy-bound}.
+
+Assumption~\ref{ass:library-overlap} is imposed on $\mathcal F_{j,n_{\mathrm D}}$.
+For any prespecified nonempty proper subset $S\subset\{1,\ldots,J\}$, the results below also apply with $(V_j,W_j,Z_j^\phi)$ replaced by $(V_S,W_S,\phi(V_S))$ and with the same assumptions imposed on this grouped split.
+
+The Brier-risk definition below estimates residual discrepancy by comparing squared-loss prediction of $A$ from $Z_j^\phi$ alone with prediction from $(T_j,Z_j^\phi)$ \citep{brier1950verification}.
+
+\begin{definition}[Empirical Brier discrepancy; general form of Definition~\ref{def:empirical-held-out-proxy-discrepancy}]
+\label{appdetail:def:empirical-held-out-proxy-discrepancy}
+\normalfont
+ Let $\mathcal H_{0,n_{\mathrm D}}$ and $\mathcal H_{1,n_{\mathrm D}}$ be prespecified classes of measurable $[0,1]$-valued predictors with inputs $Z_j^\phi$ and $(T_j,Z_j^\phi)$, respectively, fixed independently of $\mathcal I_{\mathrm D}$. Assume $\mathcal H_{1,n_{\mathrm D}}$ contains each member of $\mathcal H_{0,n_{\mathrm D}}$ lifted to ignore $T_j$. 
+Define \(R_{0,\phi}(h)\triangleq\mathbb E[\{A-h(Z_j^\phi)\}^2]\) and \(\widehat R_{0,\phi}(h)\triangleq n_{\mathrm D}^{-1}\sum_{i\in\mathcal I_{\mathrm D}}\{A_i-h(Z_{j,i}^\phi)\}^2\). Likewise, define \(R_{1,\phi}(h)\triangleq\mathbb E[\{A-h(T_j,Z_j^\phi)\}^2]\) and \(\widehat R_{1,\phi}(h)\triangleq n_{\mathrm D}^{-1}\sum_{i\in\mathcal I_{\mathrm D}}\{A_i-h(T_{j,i},Z_{j,i}^\phi)\}^2\),
+where $Z_{j,i}^\phi=\phi(V_{j,i})$. For each $\phi$, let $\widehat h_{b,\phi}\in\mathcal H_{b,n_{\mathrm D}}$ be an approximate empirical minimizer satisfying, for some $\varepsilon_{b,\phi}\ge0$,
+\begin{align}
+	\widehat R_{b,\phi}(\widehat h_{b,\phi})
+	\le
+	\inf_{h\in\mathcal H_{b,n_{\mathrm D}}}\widehat R_{b,\phi}(h)
+	+
+	\varepsilon_{b,\phi},
+	\qquad b\in\{0,1\}.
+	\label{eq:approximate-critic-fits}
+\end{align}
+Define $\varepsilon_{\mathrm{crit},j}\triangleq\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}(\varepsilon_{0,\phi}+\varepsilon_{1,\phi})$ and
+\(\widetilde D_{j,n_{\mathrm D}}^2(\phi) \triangleq \max\left\{( \widehat R_{0,\phi}(\widehat h_{0,\phi}) - \widehat R_{1,\phi}(\widehat h_{1,\phi})), 0 \right\}\).
+\end{definition}
+
+Each encoder $\phi$ and critic $h$ give a squared-loss function of one observation: $\{A-h(\phi(V_j))\}^2$ or $\{A-h(T_j,\phi(V_j))\}^2$. Varying both $\phi$ and $h$ over their prespecified classes gives the loss classes $\mathcal L_{0,j,n_{\mathrm D}}$ and $\mathcal L_{1,j,n_{\mathrm D}}$, respectively. Let $\mathfrak R_{n_{\mathrm D}}(\mathcal L)$ denote the expected Rademacher complexity of a loss class $\mathcal L$. For $\delta_{\mathrm D}\in(0,1)$, define
+
+\(r_{j,n_{\mathrm D}}(\delta_{\mathrm D}) \triangleq 2\{\mathfrak R_{n_{\mathrm D}}(\mathcal L_{0,j,n_{\mathrm D}})+\mathfrak R_{n_{\mathrm D}}(\mathcal L_{1,j,n_{\mathrm D}})\} + 2\sqrt{\frac{\log(4/\delta_{\mathrm D})}{2n_{\mathrm D}}}.\)
+
+This radius controls sampling fluctuation uniformly over the encoder--critic choices. The complexity terms account for the flexibility of the two loss classes, and the last term sets the failure-probability level $\delta_{\mathrm D}$.
+
+Throughout, the loss classes are taken pointwise measurable and separable, so that the suprema below are measurable, and the selected encoders and critics are measurable functions of the training observations and the algorithmic seed; every statement otherwise holds with outer probability.
+
+\begin{proposition}[Uniform residual-discrepancy deviation]
+\label{appdetail:prop:uniform-discrepancy-deviation}
+\normalfont
+For each $\phi\in\mathcal F_{j,n_{\mathrm D}}$, define
+\begin{align}
+\begin{aligned}
+	a_{0,n_{\mathrm D}}(\phi)
+	&\triangleq
+	\inf_{h\in\mathcal H_{0,n_{\mathrm D}}}R_{0,\phi}(h)
+	-
+	\mathbb E[\{A-e_{j,\phi}(Z_j^\phi)\}^2],\\
+	a_{1,n_{\mathrm D}}(\phi)
+	&\triangleq
+	\inf_{h\in\mathcal H_{1,n_{\mathrm D}}}R_{1,\phi}(h)
+	-
+	\mathbb E[\{A-q_{j,\phi}(T_j,Z_j^\phi)\}^2],\\
+	a_{j,n_{\mathrm D}}
+	&\triangleq
+	\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}}
+	\{a_{0,n_{\mathrm D}}(\phi)+a_{1,n_{\mathrm D}}(\phi)\}.
+\end{aligned}
+\label{eq:critic-approximation-error}
+\end{align}
+
+With probability at least $1-\delta_{\mathrm D}$,
+\begin{align}
+\sup_{\phi\in\mathcal F_{j,n_{\mathrm D}}} |\widetilde D_{j,n_{\mathrm D}}^2(\phi)-D_{\mathrm{res},j}^2(\phi)| &\le r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}.
+\label{eq:uniform-discrepancy-deviation}
+\end{align}
+\end{proposition}
+At any fixed confidence level $1-\delta_{\mathrm D}$, this error bound is $O(n_{\mathrm D}^{-1/2})$ if both Rademacher complexities, $a_{j,n_{\mathrm D}}$, and $\varepsilon_{\mathrm{crit},j}$ are each $O(n_{\mathrm D}^{-1/2})$.
+
+\begin{definition}[Approximate empirical minimizer]
+\label{def:approximate-empirical-minimizer}
+\normalfont
+ For a prescribed tolerance $\varepsilon_{\mathrm{enc},j}\ge0$, an approximate empirical minimizer is an encoder $\widehat\phi_j\in\mathcal F_{j,n_{\mathrm D}}$ selected measurably from the training observations and algorithmic seed such that
+\begin{align}
+\widetilde D_{j,n_{\mathrm D}}^2(\widehat\phi_j)
+\le
+\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}\widetilde D_{j,n_{\mathrm D}}^2(\phi)
++
+\varepsilon_{\mathrm{enc},j}.
+\label{eq:approximate-erm}
+\end{align}
+An exact empirical minimizer has $\varepsilon_{\mathrm{enc},j}=0$.
+
+\end{definition}
+
+\begin{proposition}[Residual-discrepancy oracle inequality]
+\label{appdetail:thm:representation-oracle}
+\normalfont
+ Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Eq.~\eqref{eq:approximate-critic-fits} of Definition~\ref{appdetail:def:empirical-held-out-proxy-discrepancy} hold, and $\widehat\phi_j$ satisfies Eq.~\eqref{eq:approximate-erm}. Then, with probability at least $1-\delta_{\mathrm D}$,
+\begin{align}
+D_{\mathrm{res},j}^2(\widehat\phi_j) &\le \inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi) +2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\} +\varepsilon_{\mathrm{enc},j}.
+\label{eq:representation-oracle-discrepancy}
+\end{align}
+\end{proposition}
+
+Condition on the training observations $\{O_i:i\in\mathcal I_{\mathrm D}\}$ and any algorithmic seed used in training, which fixes $\widehat\phi_j$. Here and below, population expectations involving this learned encoder use a fresh observation $O=(X,W,A,Y)$ independent of the training observations and seed, with this conditioning understood.
+The learned representation and its population adjustment functional are
+
+\begin{align}
+Z_j^{\widehat\phi_j}
+&\triangleq\widehat\phi_j(V_j),\qquad\widehat Z_j\triangleq Z_j^{\widehat\phi_j},\nonumber\\
+\tau_{\widehat Z_j}
+&\triangleq
+\mathbb E\!\left[
+\mathbb E(Y\mid A=1,\widehat Z_j)
+-
+\mathbb E(Y\mid A=0,\widehat Z_j)
+\right].
+\label{eq:learned-adjustment-functional}
+\end{align}
+
+Thus $\tau_{\widehat Z_j}=\tau_{Z_j^\phi}\big|_{\phi=\widehat\phi_j}$, where $\tau_{Z_j^\phi}$ is the population adjustment functional defined in Thm.~\ref{thm:approximate-proxy-bias-bound}.
+The adjustment functional is used whenever its two conditional means are absolutely integrable under the distribution of $\widehat Z_j$.
+
+\begin{theorem}[Learned-representation error with an explicit radius]
+\label{appdetail:cor:representation-causal}
+\normalfont
+
+Let $\delta_{\mathrm D}\in(0,1)$. Suppose the prespecified encoder and $[0,1]$-valued critic classes, approximate critic fits in Eq.~\eqref{eq:approximate-critic-fits} of Definition~\ref{appdetail:def:empirical-held-out-proxy-discrepancy} hold, and $\widehat\phi_j$ satisfies Eq.~\eqref{eq:approximate-erm}. Suppose Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for every $Z_j^\phi$ with $\phi\in\mathcal F_{j,n_{\mathrm D}}$, and there is a constant $\eta\in(0,1/2]$ such that $\eta\le e_{j,\phi}(Z_j^\phi)\le1-\eta$ almost surely for every such $\phi$. Then, with probability at least $1-\delta_{\mathrm D}$,
+\(|\tau_{\widehat Z_j}-\tau| \le \frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)} \left[ \inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi) +2\{r_{j,n_{\mathrm D}}(\delta_{\mathrm D})+a_{j,n_{\mathrm D}}+\varepsilon_{\mathrm{crit},j}\} +\varepsilon_{\mathrm{enc},j} \right]^{1/2}.\)
+\end{theorem}
+At fixed confidence and fixed overlap constant $\eta$, the right-hand side is $O_p(n_{\mathrm D}^{-1/4})$ if $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)=0$, each of $r_{j,n_{\mathrm D}}(\delta_{\mathrm D})$, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j}$, and $\varepsilon_{\mathrm{enc},j}$ is $O(n_{\mathrm D}^{-1/2})$, and $\Gamma_j(\widehat\phi_j)=O_p(1)$. This is a conditional upper-bound rate; it is not a universal or minimax rate.
+
+\subsection{AIPW Estimation}
+\label{sec:aipw-estimation}
+This section estimates the adjustment functional $\tau_{\widehat Z_j}$ of the learned representation with an augmented inverse probability weighted (AIPW) estimator \citep{robins1994estimation,tsiatis2006semiparametric} computed on the evaluation sample.
+ Define the conditional outcome means and representation propensity
+\begin{align}
+\begin{aligned}
+	m_{a,j}(z) &\triangleq \mathbb E(Y\mid A=a,\widehat Z_j=z),\\
+	e_j(z) &\triangleq P(A=1\mid\widehat Z_j=z).
+\end{aligned}
+\label{eq:aipw-nuisances}
+\end{align}
+For the observed adjustment functional $\tau_{\widehat Z_j}$, the following is the AIPW score:
+\(\mathtt{IF}_j(O) \triangleq m_{1,j}(\widehat Z_j)-m_{0,j}(\widehat Z_j) + \frac{A\{Y-m_{1,j}(\widehat Z_j)\}}{e_j(\widehat Z_j)} - \frac{(1-A)\{Y-m_{0,j}(\widehat Z_j)\}}{1-e_j(\widehat Z_j)} - \tau_{\widehat Z_j}.\)
+When this score is square-integrable, it is the \textit{efficient influence function} in the nonparametric model for $(\widehat Z_j,A,Y)$. Bounded outcomes together with uniform representation overlap provide one sufficient condition for square integrability. Use the nuisance-learning sample, with $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$, to estimate the nuisance functions. Denote the estimates by $\widehat m_{0,j}$, $\widehat m_{1,j}$, and $\widehat e_j$.
+
+\begin{definition}[Honest AIPW estimator]
+\label{appdetail:def:honest-aipw}
+\normalfont
+For $i\in\mathcal I_{\mathrm E}$, define $\widehat Z_{j,i}=\widehat\phi_j(V_{j,i})$ and
+	\(\mathtt{UIF}_j(O_i) \triangleq{} \widehat m_{1,j}(\widehat Z_{j,i}) - \widehat m_{0,j}(\widehat Z_{j,i}) + \frac{A_i}{\widehat e_j(\widehat Z_{j,i})} \{Y_i-\widehat m_{1,j}(\widehat Z_{j,i})\} - \frac{1-A_i}{1-\widehat e_j(\widehat Z_{j,i})} \{Y_i-\widehat m_{0,j}(\widehat Z_{j,i})\}.\)
+The score $\mathtt{UIF}_j$ is the uncentered plug-in version of $\mathtt{IF}_j$: it replaces the nuisance functions by their estimates and omits the centering term $\tau_{\widehat Z_j}$.
+The honest AIPW estimator is
+\(\widehat\tau_j^{\mathrm{AIPW}} \triangleq \frac{1}{n_{\mathrm E}} \sum_{i\in\mathcal I_{\mathrm E}}\mathtt{UIF}_j(O_i).\)
+\end{definition}
+
+The plug-in score has the doubly robust remainder structure of augmented inverse probability weighting \citep{chernozhukov2017double,kennedy2022semiparametric}: its conditional bias is a product of the propensity error and the outcome-regression errors, as the next proposition states exactly. For $a\in\{0,1\}$, write
+\(r_{a,j}(z) \triangleq \frac{\widehat m_{a,j}(z)-m_{a,j}(z)} {a\widehat e_j(z)+(1-a)\{1-\widehat e_j(z)\}}.\)
+\begin{proposition}[Exact signed nuisance remainder]
+\label{appdetail:prop:aipw-remainder}
+\normalfont
+Conditional on $\mathcal I_{\mathrm D}$ and $\mathcal I_{\mathrm N}$,
+\begin{align}
+\mathbb E\{\mathtt{UIF}_j(O)\}-\tau_{\widehat Z_j} &= \mathbb E\Big[ \{\widehat e_j(\widehat Z_j)-e_j(\widehat Z_j)\} \{r_{1,j}(\widehat Z_j)+r_{0,j}(\widehat Z_j)\} \Big].
+\label{eq:aipw-remainder}
+\end{align}
+\end{proposition}
+
+The remainder is zero if the propensity estimator is correct. It is also zero if both conditional outcome estimators are correct.
+
+Clip the propensity estimate so that $\eta\le\widehat e_j(z)\le1-\eta$. Conditional on the two learning samples, that is, on their observations and the seeds used to fit the encoder and the nuisance functions, define for a function $g$ of $\widehat Z_j$ the norm $\|g\|_{2,\widehat Z_j}\triangleq[\mathbb E\{g(\widehat Z_j)^2\mid\mathcal I_{\mathrm D},\mathcal I_{\mathrm N}\}]^{1/2}$ and the realized nuisance errors
+\(q_{e,j}\triangleq\|\widehat e_j-e_j\|_{2,\widehat Z_j}, \qquad q_{a,j}\triangleq\|\widehat m_{a,j}-m_{a,j}\|_{2,\widehat Z_j}, \qquad a\in\{0,1\}.\)
+Let $\sigma_j^2\triangleq\mathrm{Var}\{\mathtt{UIF}_j(O)\mid\mathcal I_{\mathrm D},\mathcal I_{\mathrm N}\}$ denote the conditional variance of the plug-in score; it is finite whenever $\mathbb E(Y^2)<\infty$ and the outcome estimates are square-integrable. For $\delta_{\mathrm E}\in(0,1)$, define
+\begin{align}
+\varepsilon_{\mathrm{AIPW},j}
+\triangleq
+\frac{\sigma_j}{\sqrt{n_{\mathrm E}\delta_{\mathrm E}}}
++
+\frac{q_{e,j}(q_{0,j}+q_{1,j})}{\eta}.
+\label{eq:aipw-error-radius}
+\end{align}
+In the notation of Thm.~\ref{thm:conditional-aipw-error}, $\|\cdot\|_{2,\widehat Z_j}=\|\cdot\|_{2,j}$ and $q_{e,j}(q_{0,j}+q_{1,j})/\eta=\mathtt{err}_j$, so $\varepsilon_{\mathrm{AIPW},j}=\sigma_j/\sqrt{n_{\mathrm E}\delta_{\mathrm E}}+\mathtt{err}_j$. The last term of the second bound of Thm.~\ref{appdetail:thm:conditional-aipw-error} below is $\mathtt{bias}_j$.
+The next theorem is the final guarantee of this section: the causal error of the honest AIPW estimator is at most the estimation radius $\varepsilon_{\mathrm{AIPW},j}$ plus the stability-weighted residual discrepancy of the learned representation.
+
+\begin{theorem}[Honest AIPW error; general form of Thm.~\ref{thm:conditional-aipw-error}]
+\label{appdetail:thm:conditional-aipw-error}
+\normalfont
+
+Suppose $\sigma_j<\infty$. Conditional on the two learning samples, with probability at least $1-\delta_{\mathrm E}$ over $\mathcal I_{\mathrm E}$,
+\begin{align}
+|\widehat\tau_j^{\mathrm{AIPW}}-\tau_{\widehat Z_j}|
+\le
+\varepsilon_{\mathrm{AIPW},j}.
+\label{eq:conditional-aipw-error}
+\end{align}
+If, in addition, Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and \ref{ass:uniform-stability} hold for $Z_j^{\widehat\phi_j}$ and $\eta\le e_j(\widehat Z_j)\le1-\eta$ almost surely, then on the same event
+\(|\widehat\tau_j^{\mathrm{AIPW}}-\tau| \le \varepsilon_{\mathrm{AIPW},j} + \frac{\Gamma_j(\widehat\phi_j)}{\eta(1-\eta)} D_{\mathrm{res},j}(\widehat\phi_j).\)
+
+\end{theorem}
+
+\begin{corollary}[Consistency]
+\label{cor:learned-aipw-consistency}
+\normalfont
+
+Consider a sequence of encoder and critic classes, sample splits, nuisance estimators, optimization tolerances, and selected encoders $\widehat\phi_{j,n}$ indexed by the total sample size $n$, with a common overlap constant $\eta\in(0,1/2]$, such that Thm.~\ref{thm:conditional-aipw-error} applies at every $n$. Suppose the following three conditions hold.
+\begin{enumerate}[label=(C\arabic*),leftmargin=*]
+\item \textit{Vanishing evaluation error.} $\delta_{\mathrm E,n}\to0$ and $\sigma_{j,n}^2/(n_{\mathrm E}\delta_{\mathrm E,n})\to0$. The evaluation sample grows faster than the confidence level shrinks.
+\item \textit{Vanishing nuisance product.} $q_{e,j,n}(q_{0,j,n}+q_{1,j,n})\xrightarrow{p}0$. The propensity and outcome-regression errors need not vanish individually; their product vanishes, for example, when each is $o_p(n^{-1/4})$.
+\item \textit{Vanishing learned imbalance.} $\Gamma_j(\widehat\phi_{j,n})D_{\mathrm{res},j}(\widehat\phi_{j,n})\xrightarrow{p}0$. By Prop.~\ref{appdetail:thm:representation-oracle}, this holds when $\inf_{\phi\in\mathcal F_{j,n_{\mathrm D}}}D_{\mathrm{res},j}^2(\phi)$, the two Rademacher complexities, $a_{j,n_{\mathrm D}}$, $\varepsilon_{\mathrm{crit},j,n}$, $\varepsilon_{\mathrm{enc},j,n}$, $\delta_{\mathrm D,n}$, and $\log(1/\delta_{\mathrm D,n})/n_{\mathrm D}$ all converge to zero and $\Gamma_j(\widehat\phi_{j,n})=O_p(1)$.
+\end{enumerate}
+Then $\widehat\tau_{j,n}^{\mathrm{AIPW}}\xrightarrow{p}\tau$.
+
+\end{corollary}
+
+Eq.~\eqref{eq:end-to-end-sensitivity} separates the final error into an AIPW estimation term and a hidden-confounding sensitivity term. The selected stability constant $\Gamma_j(\widehat\phi_j)$, critic approximation error $a_{j,n_{\mathrm D}}$, optimization tolerances, and nuisance errors are not generally observed. The result becomes an operational numerical certificate after these quantities are bounded by theory, computation, external information, or a declared sensitivity analysis.
+
+\subsection{Searching Across Proxy Splits}
+\label{sec:random-orientation-search}
+Exhaustive evaluation of all proxy splits in $\mathfrak S$, defined in Eq.~\eqref{eq:all-held-out-orientations}, may be computationally expensive. The number of splits, $|\mathfrak S|=2^J-2$, grows exponentially in the number of blocks $J$, and each split requires its own representation and nuisance fits.
+
+ Algorithm~\ref{appdetail:alg:probe-search} therefore samples $m$ proxy splits instead of evaluating all of them, and then works in four stages. The sampling stage draws the splits $S$ (line~\ref{ln:sample}). The screening stage keeps the splits that pass the empirical balance screen (lines~\ref{ln:screen-start}--\ref{ln:screen-end}). The estimation stage computes one honest AIPW estimate per retained split (lines~\ref{ln:estimate-start}--\ref{ln:estimate-end}). The aggregation stage links estimates within distance $2\rho$ and returns the median of the largest component (lines~\ref{ln:link}--\ref{ln:return}). The theorem below gives conditions under which those empirical components recover a fixed oracle partition of the population candidates.
+
+ Three questions decide whether the output is accurate: whether enough screened splits are sampled, whether the designated target cell remains the unique plurality, and whether the estimated graph recovers the fixed oracle cells.
+
+\begin{algorithm}[t]
+\caption{PROBE split search, detailed form}
+\label{appdetail:alg:probe-search}
+	\KwIn{a block partition $W=(W_1,\ldots,W_J)$; observations split into $\mathcal I_{\mathrm D}$, $\mathcal I_{\mathrm N}$, $\mathcal I_{\mathrm E}$; a budget $m$; a threshold $t\ge0$; an overlap constant $\eta$; a linking radius $\rho>0$.}
+	\KwOut{an estimate $\widehat\tau$ of $\tau$, or failure.}
+	Draw $m$ proxy splits uniformly without replacement from $\mathfrak S$\label{ln:sample}\;
+	\ForEach{sampled split $S$\label{ln:screen-start}}{
+		learn $\widehat\phi_S$ on $\mathcal I_{\mathrm D}$ by minimizing $\widetilde D_{S,n_{\mathrm D}}^2$\;
+		 fit an unclipped propensity $\widehat e_S^{\mathrm{raw}}$ on $\mathcal I_{\mathrm N}$; retain $S$ if $\widetilde D_{S,n_{\mathrm D}}^2(\widehat\phi_S)\le t$ and $\widehat e_S^{\mathrm{raw}}$ passes a prespecified empirical overlap check at level $\eta$.\;
+	}
+	Let $\mathcal R_m$ be the set of retained splits\label{ln:screen-end}\;
+	\ForEach{$S\in\mathcal R_m$\label{ln:estimate-start}}{
+		 fit outcome regressions on $\mathcal I_{\mathrm N}$, set $\widehat e_S=\operatorname{clip}(\widehat e_S^{\mathrm{raw}},\eta,1-\eta)$, and compute the honest AIPW estimate $\widehat\theta_S$ from Eq.~\eqref{eq:honest-aipw-score} on $\mathcal I_{\mathrm E}$.\label{ln:estimate-end}\;
+	}
+	Link $S$ and $S'$ whenever $|\widehat\theta_S-\widehat\theta_{S'}|\le2\rho$, and form the connected components\label{ln:link}\;
+	\Return the median of $\{\widehat\theta_S\}$ over the unique largest component; declare failure if several components share the largest size\label{ln:return}\;
+\end{algorithm}
+\FloatBarrier
+
+ For the analysis only, preassign a learning seed $\omega_S$ to every $S\in\mathfrak S$ before the split draw, let $\mathcal G\triangleq\sigma(\mathcal I_{\mathrm D},\mathcal I_{\mathrm N},\{\omega_S:S\in\mathfrak S\})$, and condition on $\mathcal G$ throughout this subsection. Counterfactually applying the fixed learning-and-screening rule to every $S\in\mathfrak S$ defines $\widehat{\mathcal B}$, although Algorithm~\ref{alg:probe-search} evaluates only sampled splits. Thus, for every $S\in\mathfrak S$, the learned encoder $\widehat\phi_S$, the nuisance estimates, the screen outcome, and the set $\widehat{\mathcal B}$ are fixed. For $S\in\widehat{\mathcal B}$, let $\widehat Z_S\triangleq\widehat\phi_S(V_S)$ and let $\theta_S\triangleq\tau_{\widehat Z_S}$ be its population adjustment value.
+
+Let $\Pi=\{C_0,\ldots,C_L\}$ be a partition of $\widehat{\mathcal B}$ that is fixed given $\mathcal G$ and hence chosen before the random split draw and $\mathcal I_{\mathrm E}$. Because the population values $\theta_S$ are generally unknown, $\Pi$ is an oracle device for analysis rather than an object computed by Algorithm~\ref{alg:probe-search}.
+
+Let $T\triangleq|\mathfrak S|=2^J-2$ and $N\triangleq|\widehat{\mathcal B}|\ge1$. Fix $m\in\{1,\ldots,T\}$. Line~\ref{ln:sample} of Algorithm~\ref{appdetail:alg:probe-search} draws $m$ proxy splits uniformly without replacement from $\mathfrak S$, independently of $\mathcal G$. Let $\mathcal R_m$ be the sampled splits in $\widehat{\mathcal B}$, let $R\triangleq|\mathcal R_m|$, and let $R_\ell\triangleq|\mathcal R_m\cap C_\ell|$. Then
+\begin{align}
+	R\sim\operatorname{Hypergeometric}(T,N,m),
+\label{eq:retained-orientation-count}
+\end{align}
+since exactly $N$ of the $T$ candidates belong to $\widehat{\mathcal B}$ and the $m$ draws are made without replacement.
+
+ For the oracle cells, define
+\begin{align}\label{eq:population-orientation-count}
+	n_\ell\triangleq|C_\ell|,\qquad \ell=0,\ldots,L.
+\end{align}
+Adopt the convention that a maximum over an empty collection equals zero and define
+\begin{align}\label{eq:population-plurality-gap}
+	\Delta_\Pi\triangleq\frac{n_0}{N}-\max_{1\le\ell\le L}\frac{n_\ell}{N}.
+\end{align}
+Thus $\Delta_\Pi>0$ means that the target cell $C_0$ is larger than every competing oracle cell. If $L=0$, the maximum in Eq.~\eqref{eq:population-plurality-gap} and the retained-cell maximum in Lemma~\ref{lem:random-subsampling-plurality} are both defined as zero.
+
+Two quantities of the distribution in Eq.~\eqref{eq:retained-orientation-count} enter the guarantee:
+\begin{align}
+\begin{aligned}
+P(R=0)&=\binom{T-N}{m}\Big/\binom{T}{m},\\
+\mathbb E\{e^{-R\Delta_\Pi^2/2}\}&=\sum_{r=0}^{\min(m,N)}\binom Nr\binom{T-N}{m-r}e^{-r\Delta_\Pi^2/2}\Big/\binom Tm.
+\end{aligned}
+\label{eq:sampling-failure-terms}
+\end{align}
+Eq.~\eqref{eq:sampling-failure-terms} gives the empty-draw probability and the plurality-reversal term; both decrease as the budget $m$ grows.
+
+\begin{lemma}[Cluster plurality under random subsampling]
+\label{lem:random-subsampling-plurality}
+\normalfont
+Conditional on $\mathcal G$, $R\sim\operatorname{Hypergeometric}(T,N,m)$. If $\Delta_\Pi>0$, then with probability at least $1-P(R=0)-L\,\mathbb E\{e^{-R\Delta_\Pi^2/2}\}$, $R\ge1$ and $R_0>\max_{1\le\ell\le L}R_\ell$, with an empty maximum equal to zero.
+\end{lemma}
+
+Fix $\delta\in(0,1)$. We call $\Pi$ $(b,\varepsilon,\rho,\delta)$-recoverable if $b,\varepsilon\ge0$, $b+\varepsilon\le\rho$, $|\theta_S-\tau|\le b$ for every $S\in C_0$, within-cell distances are at most $2(\rho-\varepsilon)$, between-cell distances exceed $2(\rho+\varepsilon)$, and, conditional on $\mathcal G$, $|\widehat\theta_S-\theta_S|\le\varepsilon$ for every $S\in\widehat{\mathcal B}$ with probability at least $1-\delta$ over $\mathcal I_{\mathrm E}$.
+
+The following theorem bounds the error of the output of Algorithm~\ref{alg:probe-search}. Its probability is over the evaluation sample and the random draw of splits, conditional on the learning samples.
+
+\begin{theorem}[Finite-sample PROBE cluster recovery; general form of Thm.~\ref{thm:probe-search-error}]
+\label{appdetail:thm:probe-search-error}
+\normalfont
+Conditional on $\mathcal G$, suppose $\Delta_\Pi>0$ and $\Pi$ is $(b,\varepsilon,\rho,\delta)$-recoverable. Then, over the independent split draw and $\mathcal I_{\mathrm E}$, the output $\widehat\tau$ of Algorithm~\ref{alg:probe-search} run with linking radius $\rho$ satisfies
+\(P\bigl(|\widehat\tau-\tau|\le b+\varepsilon\bigr) \ \ge\ 1-\delta-P(R=0)-L\,\mathbb E\bigl\{e^{-R\Delta_\Pi^2/2}\bigr\},\)
+where $R\sim\operatorname{Hypergeometric}(T,N,m)$ as in Eq.~\eqref{eq:retained-orientation-count}, the two sampling terms are given in Eq.~\eqref{eq:sampling-failure-terms}, and a declared failure counts as $|\widehat\tau-\tau|>b+\varepsilon$.
+
+\end{theorem}
+
+The subsampling lemma controls whether $C_0$ remains the unique largest retained cell. The within-cell and between-cell conditions then make the graph components in line~\ref{ln:link} of Algorithm~\ref{appdetail:alg:probe-search} equal the retained restrictions of the oracle cells. The target-band and evaluation-error conditions place every estimate in the selected target component within $b+\varepsilon$ of $\tau$. Eq.~\eqref{eq:conditional-aipw-error} at $\delta_{\mathrm E}=\delta/N$ and a union bound over $\widehat{\mathcal B}$ supply $\varepsilon=\max_{S\in\widehat{\mathcal B}}\varepsilon_{\mathrm{AIPW},S}$, and Eq.~\eqref{eq:uniform-approximate-proxy-bias-bound} supplies $b=\max_{S\in C_0}\Gamma_S(\widehat\phi_S)D_{\mathrm{res},S}(\widehat\phi_S)/\{\eta(1-\eta)\}$ when every $S\in C_0$ satisfies Assumptions~\ref{ass:consistency}, \ref{ass:joint-latent-exchangeability}, and~\ref{ass:uniform-stability}; this gives Thm.~\ref{thm:probe-search-error} of the main text, with $\Pi=\{C_0,\ldots,C_L\}$ and $\Delta=\Delta_\Pi$. The partition and its gap remain oracle quantities and are not certified by the empirical graph. When $b=0$ and $C_0=\{S:\theta_S=\tau\}$, the target-band premise uses the exact population equality notion of Section~\ref{sec:unknown-blocks}; the finite-sample theorem additionally involves empirical screening, random subsampling, and estimation error.
+
+The evaluation failure $\delta$ is paid with the uniform radius $\varepsilon$, while the two sampling terms are paid with the budget $m$. The fraction $p\triangleq N/T$, the oracle margin $\Delta_\Pi$, and the number $L$ of competing cells are fixed after conditioning. The next corollary converts a sampling-failure tolerance $\alpha$ into a budget.
+
+\begin{corollary}[Budget for a target failure level]
+\label{cor:budget-rule}
+\normalfont
+
+Condition on $\mathcal I_{\mathrm D}$, $\mathcal I_{\mathrm N}$, and the learning seeds. Let $T\triangleq|\mathfrak S|$, let $\widehat{\mathcal B}$ be a fixed screened set of size $N\ge1$, and define $\theta_S\triangleq\tau_{\widehat\phi_S(V_S)}$. Before the split draw and $\mathcal I_{\mathrm E}$, fix a partition $\Pi=\{C_0,\ldots,C_L\}$ of $\widehat{\mathcal B}$ that is fixed given $\mathcal G$. Set $n_\ell\triangleq|C_\ell|$, $\Delta_\Pi\triangleq n_0/N-\max_{1\le\ell\le L}n_\ell/N>0$, and $p\triangleq N/T$, with an empty maximum equal to zero. Draw $m\in\{1,\ldots,T\}$ splits uniformly without replacement, let $R$ be the number drawn from $\widehat{\mathcal B}$, and fix $\alpha\in(0,1)$. Then
+\begin{align}\label{eq:sampling-failure-closed-form}
+	P(R=0)+L\,\mathbb E\bigl\{e^{-R\Delta_\Pi^2/2}\bigr\}
+	\ \le\
+	(L+1)\exp\bigl\{-m\,p\,(1-e^{-\Delta_\Pi^2/2})\bigr\}.
+\end{align}
+Suppose additionally that $b,\varepsilon\ge0$, $b+\varepsilon\le\rho$, $|\theta_S-\tau|\le b$ on $C_0$, within-cell distances are at most $2(\rho-\varepsilon)$, between-cell distances exceed $2(\rho+\varepsilon)$, and $|\widehat\theta_S-\theta_S|\le\varepsilon$ simultaneously with probability at least $1-\delta$ over $\mathcal I_{\mathrm E}$. With every largest-component tie counted as failure, Algorithm~\ref{alg:probe-search} then satisfies $P(|\widehat\tau-\tau|\le b+\varepsilon)\ge1-\delta-\alpha$ whenever
+\(m\ \ge\ \frac{\log\{(L+1)/\alpha\}}{p\,(1-e^{-\Delta_\Pi^2/2})},\)
+and the simpler budget $m\ge3\log\{(L+1)/\alpha\}/(p\Delta_\Pi^2)$ is sufficient. If $L=0$, the budget $m\ge\log(1/\alpha)/p$ suffices.
+
+\end{corollary}
+
+The budget scales as $\log\{(L+1)/\alpha\}/(p\Delta_\Pi^2)$. The ratio $R/m$ is unbiased for $p$, but $\Delta_\Pi$ is defined by the oracle partition and is not identified by the realized graph without additional assumptions.
+
+\begin{corollary}[Median under majority]
+\label{cor:median-under-majority}
+\normalfont
+
+Condition on the learning samples and seeds. Let $\widehat{\mathcal B}$ be fixed, define $\theta_S\triangleq\tau_{\widehat\phi_S(V_S)}$, and before the split draw and $\mathcal I_{\mathrm E}$ fix a partition of $\widehat{\mathcal B}$ that is fixed given $\mathcal G$ and contains a target cell $C_0$. Let $\mathcal R_m\subseteq\widehat{\mathcal B}$ be the retained splits with $R\triangleq|\mathcal R_m|$. Fix $b,\varepsilon\ge0$. Suppose $|\theta_S-\tau|\le b$ for every $S\in C_0$, and let $E$ be an event on which $|\widehat\theta_S-\theta_S|\le\varepsilon$ for every $S\in\mathcal R_m$. If $|\mathcal R_m\cap C_0|>R/2$, then on $E$ the median of $\{\widehat\theta_S:S\in\mathcal R_m\}$ lies within $b+\varepsilon$ of $\tau$. The linking step and cell-separation conditions are not needed.
+
+\end{corollary}
+
+When the target cell forms a strict retained majority, Cor.~\ref{cor:median-under-majority} dispenses with the linking step. With $b=0$ and $C_0=\{S:\theta_S=\tau\}$, its target-band premise reduces to the exact population target class used in Cor.~\ref{cor:target-majority-median}.

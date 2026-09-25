@@ -12,8 +12,9 @@
 \setlength{\parskip}{0.75em}
 
 \input{settings/package-author-added}
+\graphicspath{{figures/}}
 
-\title{Proximal Balancing}
+\title{Proximal Balancing for Causal Effect Estimation under Unmeasured Confounding}
 \subtitle{\textbf{Working Draft}}
 \author{Yonghan Jung}
 \date{}
@@ -33,13 +34,12 @@
 \begingroup
 \allowdisplaybreaks
 \sloppy
-\input{main/1}
-\input{main/2}
-\input{main/3}
-\input{main/4}
-\input{main/5}
-\input{main/6}
-\input{main/7}
+\input{sections/01-introduction}
+\input{sections/02-probe}
+\input{sections/03-why-it-works}
+\input{sections/04-learning-and-search}
+\input{sections/05-experiments}
+\input{sections/06-conclusion}
 \endgroup
 
 \newpage
@@ -50,8 +50,11 @@
 \begingroup
 \allowdisplaybreaks
 \sloppy
-\input{appendix/simulations}
-\input{appendix/proof}
+\input{appendix/01-notation-and-assumptions}
+\input{appendix/02-identification}
+\input{appendix/03-learning-estimation-search}
+\input{appendix/04-experiment-details}
+\input{appendix/05-proofs}
 \endgroup
 
 \end{document}

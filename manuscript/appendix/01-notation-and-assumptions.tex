@@ -1,0 +1,19 @@
+\section{Problem Setting}
+\label{sec:setup}
+
+We observe independent copies
+\(O_i=(X_i,W_i,A_i,Y_i), \qquad i=1,\ldots,n,\)
+where $X\in\mathcal X$ is a possibly high-dimensional vector of observed pretreatment covariates, $\mathcal X$ is its value space, $A\in\{0,1\}$ is treatment, and $Y$ is the observed outcome.
+
+For each $a\in\{0,1\}$, the \emph{potential outcome} $Y(a)$ is the outcome that would be observed if treatment were set to $a$. Our target is the population average treatment effect
+\(\tau\triangleq\mathbb E\{Y(1)-Y(0)\}.\)
+
+Let $U$ denote an unobserved pretreatment variable that may affect both treatment $A$ and outcome $Y$. When $U$ affects both $A$ and $Y$, the observed-data distribution alone does not identify $\tau$ without additional structure. We therefore observe a proxy measurement $W$ that contains information about $U$. The proxy is divided into prespecified blocks,
+\(W=(W_1,\ldots,W_J).\)
+Each block may be scalar or vector-valued. A block can represent one repeated measurement, sensor channel, laboratory panel, or prespecified region of a larger measurement.
+
+For each block index $j\in\{1,\ldots,J\}$, we call $W_j$ the \emph{held-out proxy block} and let $\mathcal W_j$ denote its value space. We call the combination of all other blocks the \emph{remaining blocks} (Definition~\ref{def:held-out-remaining-blocks}) and write
+\(W_{-j} \triangleq (W_1,\ldots,W_{j-1},W_{j+1},\ldots,W_J)\)
+for the resulting vector of remaining proxy blocks. Let $\mathcal V_j$ denote the value space of the pair $(X,W_{-j})$. Finally, define
+\(V_j\triangleq(X,W_{-j})\in\mathcal V_j.\)
+The variable $V_j$ is the combined vector of the observed covariates $X$ and the remaining proxy blocks $W_{-j}$. We also write $T_j\triangleq(X,W_j)$ for the observed covariates together with the held-out block.
