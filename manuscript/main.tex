@@ -14,8 +14,9 @@
 \input{settings/package-author-added}
 \graphicspath{{figures/}}
 
+\newcommand{\draftdate}{\the\year-\ifnum\month<10 0\fi\the\month-\ifnum\day<10 0\fi\the\day}
+\titlehead{\hfill Draft: \draftdate}
 \title{Proximal Balancing for Causal Effect Estimation under Unmeasured Confounding}
-\subtitle{\textbf{Working Draft}}
 \author{Yonghan Jung}
 \date{}
 
