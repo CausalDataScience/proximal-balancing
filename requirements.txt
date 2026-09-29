@@ -1,6 +1,15 @@
-matplotlib==3.11.0
+# Versions used for the results in the paper (Python 3.14.7, macOS, Apple M4).
+# The added replicates in the extension run (appendix, "Added data sets") used Python 3.11.9 on NCSA DeltaAI
+# with scipy 1.17.1 and torch 2.14.0+cu130; see README.md.
 numpy==2.4.6
+scipy==1.18.0
 pandas==3.0.3
 scikit-learn==1.9.0
 torch==2.13.0
-scipy==1.18.0
+matplotlib==3.11.0
+# only to build the Shapes3D image cache for SCM-4
+h5py==3.16.0
+# tests
+pytest==9.0.2
+# imported by the KSPC authors' code (fetched by scripts/download_data.py)
+filelock==3.32.3

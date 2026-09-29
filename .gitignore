@@ -1,13 +1,37 @@
+# Fetched by scripts/download_data.py (third-party data and code, not redistributed)
+materials/real_world_data/
+materials/benchmarks/mnist/
+materials/benchmarks/shapes3d/3dshapes.h5
+materials/benchmarks/shapes3d/3dshapes_images_uint8.npy
+materials/benchmarks/shapes3d/*.partial*
+materials/external_code/KernelSingleProxy/src/
+materials/external_code/KernelSingleProxy/configs/
+materials/external_code/KernelSingleProxy/main.py
+materials/external_code/KernelSingleProxy/README.md
+materials/external_code/KernelSingleProxy/requirements.txt
+materials/external_code/KernelSingleProxy.replaced-*/
+materials/**/.fetch-*/
+*.part
+
+# Written by scripts/reproduce_figures.sh and the figure scripts
+ICLR/
+figures/section5/
+figures/tikz/
+
+# LaTeX build files of the paper (paper/main.pdf is part of the repository)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+
+# Python, test runners, editors and the operating system
 __pycache__/
-*.py[cod]
+*.pyc
+.pytest_cache/
+.venv/
 .DS_Store
-manuscript/*.aux
-manuscript/*.bbl
-manuscript/*.blg
-manuscript/*.fdb_latexmk
-manuscript/*.fls
-manuscript/*.log
-manuscript/*.out
-manuscript/*.toc
-results/checkpoints/
-results/**/rows/

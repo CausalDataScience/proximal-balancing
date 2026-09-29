@@ -1,7 +1,0 @@
-=== encoder device check ===
-device chosen: mps
-trained on mps:0 in 34s | stopped at epoch 15 | channel corr median 0.9542 per block [0.953, 0.954, 0.954, 0.931, 0.962]
-apply_encoder shape (1500, 5) | finite: True
-reference: the CPU qualification run on the same seed gave channel corr 0.947 (n=12000 rows); a 3,000-row fixture will differ somewhat but must be in the same range
-
-[exited with code 0]

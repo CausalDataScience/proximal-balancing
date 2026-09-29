@@ -1,9 +1,0 @@
-=== parallel selection check ===
-  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 454, in result
-    return self.__get_result()
-           ~~~~~~~~~~~~~~~~~^^
-  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 396, in __get_result
-    raise self._exception
-concurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.
-
-[exited with code 0]
