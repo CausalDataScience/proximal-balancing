@@ -1,0 +1,22 @@
+[09:01:28]     MAE128 epoch 1/20: train 0.8591 val 0.4576
+[09:05:39]     MAE128 epoch 5/20: train 0.1848 val 0.1848
+[09:11:30]     MAE128 epoch 10/20: train 0.1548 val 0.1503
+[09:17:41]     MAE128 epoch 15/20: train 0.1432 val 0.1393
+[09:25:15]     MAE128 epoch 20/20: train 0.1406 val 0.1371
+[09:25:15] MAE128 trained in 1497s
+[09:28:21] floor diagnostic: CV R2 of U(logit) from 128-px all-block MAE features = 0.825
+[09:28:49] v5res V0 r0: naive 2.098 oracle 0.967 all 1.159 lungs 1.218 | PROBE 1.159 H[] | ref 1.159 | gaps [0.0039, 0.0042, -0.0021, 0.0018, -0.0013] | 28s
+[09:29:12] v5res V0 r1: naive 2.045 oracle 0.924 all 1.100 lungs 1.126 | PROBE 1.100 H[] | ref 1.100 | gaps [-0.0005, 0.0023, 0.0009, 0.0038, 0.0019] | 23s
+[09:29:37] v5res V0 r2: naive 2.152 oracle 1.025 all 1.272 lungs 1.312 | PROBE 1.272 H[] | ref 1.272 | gaps [0.0036, 0.0052, -0.0016, 0.003, 0.0013] | 24s
+[09:29:59] v5res V0 r3: naive 2.063 oracle 0.974 all 1.208 lungs 1.229 | PROBE 1.208 H[] | ref 1.208 | gaps [0.0006, 0.0037, 0.0011, -0.0001, -0.0031] | 22s
+[09:30:21] v5res V0 r4: naive 2.088 oracle 0.987 all 1.177 lungs 1.216 | PROBE 1.177 H[] | ref 1.177 | gaps [0.0025, 0.003, -0.0008, 0.0002, -0.0012] | 22s
+[09:31:15] v5res V3 r0: naive 2.140 oracle 1.012 all 1.577 lungs 1.218 | PROBE 1.218 H[5] | ref 1.218 | gaps [0.0076, 0.0159, 0.0016, 0.0118, 0.0996] | 54s
+[09:32:11] v5res V3 r1: naive 2.100 oracle 1.012 all 1.524 lungs 1.211 | PROBE 1.211 H[5] | ref 1.211 | gaps [0.0106, 0.0129, -0.0007, 0.0085, 0.1188] | 56s
+[09:32:59] v5res V3 r2: naive 2.110 oracle 1.031 all 1.558 lungs 1.258 | PROBE 1.267 H[2, 5] | ref 1.258 | gaps [0.0057, 0.0165, 0.0024, 0.0116, 0.1098] | 48s
+[09:33:50] v5res V3 r3: naive 2.100 oracle 1.010 all 1.555 lungs 1.274 | PROBE 1.320 H[2, 5] | ref 1.274 | gaps [0.0087, 0.0202, 0.0028, 0.015, 0.1039] | 50s
+[09:34:36] v5res V3 r4: naive 2.111 oracle 1.028 all 1.590 lungs 1.275 | PROBE 1.275 H[5] | ref 1.275 | gaps [0.0031, 0.0136, 0.0007, 0.0089, 0.1108] | 47s
+[09:35:19] v5res V2 r0: naive 2.166 oracle 1.035 all 1.299 lungs 1.329 | PROBE 1.358 H[2, 4] | ref 1.320 | gaps [-0.0011, 0.1254, 0.0002, 0.003, -0.0021] | 43s
+[09:36:09] v5res V2 r1: naive 2.056 oracle 0.981 all 1.161 lungs 1.205 | PROBE 1.246 H[2, 5] | ref 1.224 | gaps [-0.0019, 0.1185, -0.0042, -0.0019, -0.0001] | 50s
+[09:36:59] v5res V2 r2: naive 2.029 oracle 0.969 all 1.274 lungs 1.292 | PROBE 1.214 H[2] | ref 1.214 | gaps [0.0004, 0.1222, 0.0001, -0.0001, -0.001] | 49s
+[09:37:45] v5res V2 r3: naive 2.157 oracle 0.980 all 1.388 lungs 1.395 | PROBE 1.305 H[2] | ref 1.305 | gaps [-0.0004, 0.1061, -0.0011, 0.0009, 0.0003] | 46s
+[09:38:31] v5res V2 r4: naive 2.073 oracle 0.994 all 1.215 lungs 1.238 | PROBE 1.296 H[2] | ref 1.296 | gaps [0.0004, 0.1328, -0.0, 0.0001, 0.0017] | 46s

@@ -1,0 +1,54 @@
+== lin D0 (n=10)
+  naive                    2.065 (MC SE 0.015)
+  oracle                   0.982 (MC SE 0.010)
+  CNN_all                  1.098 (MC SE 0.017)
+  all_blocks_no_balance    1.326 (MC SE 0.018)
+  PROBE                    1.114 (MC SE 0.015)
+  ref_CNN_all_minus_W5     0.995 (MC SE 0.029)
+  PROBE - CNN_all          +0.017 (MC SE 0.011) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 1, 'W3': 0, 'W4': 1, 'W5': 0} none 8 | gaps {'W1': -0.0007, 'W2': 0.0001, 'W3': -0.0007, 'W4': -0.0009, 'W5': -0.0013}
+  RMSE {'CNN_all': 0.11, 'PROBE': 0.123, 'all_blocks': 0.33, 'oracle': 0.036}
+== lin D1 (n=10)
+  naive                    2.096 (MC SE 0.007)
+  oracle                   1.005 (MC SE 0.008)
+  CNN_all                  1.232 (MC SE 0.025)
+  all_blocks_no_balance    1.380 (MC SE 0.018)
+  PROBE                    1.022 (MC SE 0.021)
+  ref_CNN_all_minus_W5     1.022 (MC SE 0.021)
+  PROBE - CNN_all          -0.211 (MC SE 0.025) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 0, 'W3': 0, 'W4': 0, 'W5': 10} none 0 | gaps {'W1': -0.0009, 'W2': -0.0017, 'W3': -0.0015, 'W4': -0.0005, 'W5': 0.1101}
+  RMSE {'CNN_all': 0.244, 'PROBE': 0.067, 'all_blocks': 0.384, 'oracle': 0.024}
+== lin D2 (n=10)
+  naive                    2.096 (MC SE 0.010)
+  oracle                   1.009 (MC SE 0.011)
+  CNN_all                  1.184 (MC SE 0.012)
+  all_blocks_no_balance    1.895 (MC SE 0.014)
+  PROBE                    1.036 (MC SE 0.016)
+  ref_CNN_all_minus_W5     1.036 (MC SE 0.016)
+  PROBE - CNN_all          -0.148 (MC SE 0.016) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 0, 'W3': 0, 'W4': 0, 'W5': 10} none 0 | gaps {'W1': 0.0016, 'W2': 0.0018, 'W3': -0.0001, 'W4': 0.001, 'W5': 0.1362}
+  RMSE {'CNN_all': 0.188, 'PROBE': 0.06, 'all_blocks': 0.896, 'oracle': 0.034}
+== logit D0 (n=10)
+  naive                    2.097 (MC SE 0.009)
+  oracle                   0.993 (MC SE 0.010)
+  CNN_all                  1.154 (MC SE 0.018)
+  all_blocks_no_balance    1.186 (MC SE 0.010)
+  PROBE                    1.173 (MC SE 0.024)
+  ref_CNN_all_minus_W5     1.193 (MC SE 0.015)
+  PROBE - CNN_all          +0.019 (MC SE 0.016) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 2, 'W3': 0, 'W4': 2, 'W5': 1} none 6 | gaps {'W1': -0.001, 'W2': 0.0017, 'W3': 0.0, 'W4': 0.0031, 'W5': 0.0012}
+  RMSE {'CNN_all': 0.163, 'PROBE': 0.187, 'all_blocks': 0.189, 'oracle': 0.03}
+== logit D1 (n=10)
+  naive                    2.106 (MC SE 0.010)
+  oracle                   1.001 (MC SE 0.017)
+  CNN_all                  1.285 (MC SE 0.022)
+  all_blocks_no_balance    1.229 (MC SE 0.013)
+  PROBE                    1.185 (MC SE 0.015)
+  ref_CNN_all_minus_W5     1.172 (MC SE 0.012)
+  PROBE - CNN_all          -0.100 (MC SE 0.024) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 0, 'W3': 0, 'W4': 2, 'W5': 10} none 0 | gaps {'W1': -0.0011, 'W2': -0.0008, 'W3': -0.0011, 'W4': -0.0001, 'W5': 0.1204}
+  RMSE {'CNN_all': 0.292, 'PROBE': 0.19, 'all_blocks': 0.233, 'oracle': 0.051}
+== logit D2 (n=10)
+  naive                    2.111 (MC SE 0.012)
+  oracle                   1.003 (MC SE 0.009)
+  CNN_all                  1.313 (MC SE 0.017)
+  all_blocks_no_balance    1.654 (MC SE 0.015)
+  PROBE                    1.207 (MC SE 0.019)
+  ref_CNN_all_minus_W5     1.185 (MC SE 0.014)
+  PROBE - CNN_all          -0.106 (MC SE 0.024) | clipped CNN_all 0.00 | flags {'W1': 0, 'W2': 0, 'W3': 0, 'W4': 2, 'W5': 10} none 0 | gaps {'W1': 0.0009, 'W2': 0.0076, 'W3': 0.0017, 'W4': 0.0086, 'W5': 0.1086}
+  RMSE {'CNN_all': 0.317, 'PROBE': 0.214, 'all_blocks': 0.655, 'oracle': 0.028}

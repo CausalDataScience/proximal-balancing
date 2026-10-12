@@ -1,0 +1,8 @@
+[15:01:40] stage1 loaded from cache stage1_n48000_sigma0.3_seed20261009_r30_m10.pt; reader features identical
+[15:01:40] CNN_all comparator (whole-image MAE features, 128)
+[15:02:57] CNN_all sealed AIPW = 1.0937
+[15:08:21] maereg: block widths [128, 128, 128, 128, 128]; running sealed PROBE
+[15:12:28] maereg: singletons {'S1': 1.1937281807758273, 'S2': 1.1912615241801408, 'S3': 1.2038535430242963, 'S4': 1.184063581682534, 'S5': 1.2136076102993278}
+[15:12:28] maereg: pairs {'S12': 1.238001966014091, 'S13': 1.2544653348447055, 'S14': 1.2247352983185404, 'S15': 1.2665191976387469, 'S23': 1.2516895881250958, 'S24': 1.2214760130634534, 'S25': 1.26011913896486, 'S34': 1.23776725613778, 'S35': 1.278554267647568, 'S45': 1.2432442390627396}
+[15:12:28] maereg: v3 None retained []; sealed None retained []; comparators {'naive': 2.0261982642674514, 'aipw_X': 2.026277862914143, 'aipw_X_blocks': 1.1034708312799508, 'aipw_X_U': 0.9946605996459876, 'seconds': 10.2}; 571s
+[15:12:28] saved /private/tmp/claude-502/-Users-yonghanjung-paios/1935c64b-8526-4d67-8733-aa20e64b80b6/scratchpad/sealed_blocks/sealed_maereg.json

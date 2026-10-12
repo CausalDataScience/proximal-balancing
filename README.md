@@ -57,6 +57,27 @@ downloading.
 | MNIST | Keras datasets bucket | CC BY-SA 3.0. |
 | Shapes3D | DeepMind 3D Shapes (optional, 268 MB) | Apache-2.0. |
 | KSPC code | liyuan9988/KernelSingleProxy, commit a5283d62 (fetched with `git`) | No licence; fetched from the authors, not redistributed. |
+| PneumoniaMNIST (single-image benchmark) | MedMNIST+ v3.0, Zenodo record 10519652, files `pneumoniamnist_{64,128,224}.npz`; URLs and MD5 sums in `data/medmnist/README.md` (not fetched by `download_data.py`) | CC BY 4.0. Cite Yang et al. (2023) and Kermany et al. (2018). |
+
+### Single-image proxy benchmark (Section 5, "Single-Image Proxy", and appendix D.8)
+
+`code/single_image/` holds the pipeline for one image per unit: the lung phantom (`phantom.py`, `regions.py`, `stage1.py`,
+`decisive_v2.py`, `objective_v1.py`, their runners and tests) and, in `code/single_image/realimg/`, the semi-synthetic
+chest X-ray benchmark. After placing `pneumoniamnist_64.npz` in `data/medmnist/`, run from `code/`:
+
+```
+python3 -B -m single_image.realimg.realimg_benchmark --prepare        # masked autoencoder, block figure
+python3 -B -m single_image.realimg.realimg_u_recoverable              # hidden U (cross-fitted classifier logit)
+python3 -B -m single_image.realimg.realimg_v4 --udef logit --reps 10 --tag logit_r10   # block-additive MAE encoder
+python3 -B -m single_image.realimg.realimg_v5_sup --scenarios 0,1,2,3 --reps 10         # supervised block encoder (Table 2)
+python3 -B -m single_image.realimg.realimg_v6_layouts --layout grid3   # automatic layouts (grid3, grid4, auto)
+python3 -B -m single_image.realimg.make_single_image_figure --outdir ../paper/figures   # Figure 4
+```
+
+The results behind Tables 2, 5 and 6 and Figure 4 are in `results/single_image/pneumoniamnist_v1/` (one JSON line per
+replicate), the sealed-PROBE runs on the phantom in `results/single_image/sealed_blocks_v1/`, and the protocols and
+pre-registrations in `memo/2026-10-*-single-image-*.md`, `memo/2026-10-09-z0-balance-finetune-v1.md` and
+`memo/2026-10-10-pneumoniamnist-benchmark-v1.md` (in Korean; the appendix gives the design in English).
 
 ## Reproducing the paper
 

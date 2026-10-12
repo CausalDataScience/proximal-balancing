@@ -1,0 +1,422 @@
+{
+ "C0": {
+  "naive": {
+   "mean": 2.1832471222083356,
+   "mc_se": 0.008156747885399884,
+   "rmse_vs_tau": 1.1835001246467627,
+   "n": 10
+  },
+  "oracle": {
+   "mean": 1.0056160462424781,
+   "mc_se": 0.009496645693588908,
+   "rmse_vs_tau": 0.02903819020296719,
+   "n": 10
+  },
+  "CNN_all": {
+   "mean": 1.380064078990198,
+   "mc_se": 0.011325425049516969,
+   "rmse_vs_tau": 0.3815797313952059,
+   "n": 10
+  },
+  "pixels: all blocks, no balance": {
+   "mean": 1.4687154932792388,
+   "mc_se": 0.011397185893422103,
+   "rmse_vs_tau": 0.4699609305640236,
+   "n": 10
+  },
+  "pixels: PROBE S1": {
+   "mean": 1.5520188138611004,
+   "mc_se": 0.008723988983511424,
+   "rmse_vs_tau": 0.5526388899730781,
+   "n": 10
+  },
+  "pixels: PROBE S2": {
+   "mean": 1.5525363818381175,
+   "mc_se": 0.010351537374399767,
+   "rmse_vs_tau": 0.5534083864461039,
+   "n": 10
+  },
+  "pixels: PROBE S3": {
+   "mean": 1.5596959175986171,
+   "mc_se": 0.010425184003734891,
+   "rmse_vs_tau": 0.5605690682959271,
+   "n": 10
+  },
+  "pixels: PROBE S4": {
+   "mean": 1.6174093877772653,
+   "mc_se": 0.00862103304601142,
+   "rmse_vs_tau": 0.6179508491882841,
+   "n": 10
+  },
+  "pixels: PROBE S5": {
+   "mean": 1.59955614305867,
+   "mc_se": 0.007838613828573645,
+   "rmse_vs_tau": 0.6000171359887735,
+   "n": 10
+  },
+  "pixels: PROBE mean of S1-S4": {
+   "mean": 1.570415125268775,
+   "mc_se": 0.009051594239043928,
+   "rmse_vs_tau": 0.5710611152580842,
+   "n": 10
+  },
+  "pixels: PROBE relaxed rule": {
+   "mean": 1.5632528760383058,
+   "mc_se": 0.00963472868213625,
+   "rmse_vs_tau": 0.5639940197700932,
+   "n": 10
+  },
+  "pixels: S5 gap / mean S1-S4 gap": {
+   "mean": NaN,
+   "mc_se": NaN,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "pixels: relaxed rule returned (count)": {
+   "mean": 10.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  },
+  "maereg: all blocks, no balance": {
+   "mean": 1.510274565669714,
+   "mc_se": 0.009270302267634912,
+   "rmse_vs_tau": 0.5110318766051835,
+   "n": 10
+  },
+  "maereg: PROBE S1": {
+   "mean": 1.6122680552001636,
+   "mc_se": 0.008257661244874382,
+   "rmse_vs_tau": 0.6127690202202676,
+   "n": 10
+  },
+  "maereg: PROBE S2": {
+   "mean": 1.6254511337503796,
+   "mc_se": 0.01056480625578933,
+   "rmse_vs_tau": 0.6262536681654142,
+   "n": 10
+  },
+  "maereg: PROBE S3": {
+   "mean": 1.642638226183434,
+   "mc_se": 0.00880001169052289,
+   "rmse_vs_tau": 0.643180263692824,
+   "n": 10
+  },
+  "maereg: PROBE S4": {
+   "mean": 1.6309661282667698,
+   "mc_se": 0.006946239779319314,
+   "rmse_vs_tau": 0.6313101513864668,
+   "n": 10
+  },
+  "maereg: PROBE S5": {
+   "mean": 1.6748565656638896,
+   "mc_se": 0.009833441136027311,
+   "rmse_vs_tau": 0.6755010387118889,
+   "n": 10
+  },
+  "maereg: PROBE mean of S1-S4": {
+   "mean": 1.6278308858501866,
+   "mc_se": 0.007982471892038583,
+   "rmse_vs_tau": 0.6282874341772203,
+   "n": 10
+  },
+  "maereg: PROBE relaxed rule": {
+   "mean": 1.6280918134537055,
+   "mc_se": 0.01578014705185098,
+   "rmse_vs_tau": 0.629082181700018,
+   "n": 6
+  },
+  "maereg: S5 gap / mean S1-S4 gap": {
+   "mean": 2.4091678281012676,
+   "mc_se": 1.0709667418802449,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "maereg: relaxed rule returned (count)": {
+   "mean": 6.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  }
+ },
+ "C1": {
+  "naive": {
+   "mean": 2.175947622721041,
+   "mc_se": 0.011227264784740254,
+   "rmse_vs_tau": 1.1764298851415613,
+   "n": 10
+  },
+  "oracle": {
+   "mean": 1.0103433871278749,
+   "mc_se": 0.007898854624611028,
+   "rmse_vs_tau": 0.025855614413580186,
+   "n": 10
+  },
+  "CNN_all": {
+   "mean": 1.3859248935995607,
+   "mc_se": 0.019922217768997295,
+   "rmse_vs_tau": 0.39052538502298473,
+   "n": 10
+  },
+  "pixels: all blocks, no balance": {
+   "mean": 1.4159274957118329,
+   "mc_se": 0.008821456492237579,
+   "rmse_vs_tau": 0.4167685743202295,
+   "n": 10
+  },
+  "pixels: PROBE S1": {
+   "mean": 1.449565030581181,
+   "mc_se": 0.010679266577019297,
+   "rmse_vs_tau": 0.4507051556539657,
+   "n": 10
+  },
+  "pixels: PROBE S2": {
+   "mean": 1.4435085741611324,
+   "mc_se": 0.011772698207476694,
+   "rmse_vs_tau": 0.44491260171206615,
+   "n": 10
+  },
+  "pixels: PROBE S3": {
+   "mean": 1.4564289169696065,
+   "mc_se": 0.010411932859179926,
+   "rmse_vs_tau": 0.4574964823458476,
+   "n": 10
+  },
+  "pixels: PROBE S4": {
+   "mean": 1.5172988160444862,
+   "mc_se": 0.008958457134654091,
+   "rmse_vs_tau": 0.5179964774678764,
+   "n": 10
+  },
+  "pixels: PROBE S5": {
+   "mean": 1.507941963107247,
+   "mc_se": 0.013908971822118843,
+   "rmse_vs_tau": 0.5096529930840986,
+   "n": 10
+  },
+  "pixels: PROBE mean of S1-S4": {
+   "mean": 1.4667003344391016,
+   "mc_se": 0.009958860025053822,
+   "rmse_vs_tau": 0.4676556555870534,
+   "n": 10
+  },
+  "pixels: PROBE relaxed rule": {
+   "mean": 1.452867778942524,
+   "mc_se": 0.011101414156621456,
+   "rmse_vs_tau": 0.4540907373761615,
+   "n": 10
+  },
+  "pixels: S5 gap / mean S1-S4 gap": {
+   "mean": Infinity,
+   "mc_se": NaN,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "pixels: relaxed rule returned (count)": {
+   "mean": 10.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  },
+  "maereg: all blocks, no balance": {
+   "mean": 1.491929704016488,
+   "mc_se": 0.010295832558623519,
+   "rmse_vs_tau": 0.492898439038334,
+   "n": 10
+  },
+  "maereg: PROBE S1": {
+   "mean": 1.5458919388975976,
+   "mc_se": 0.01009622480291507,
+   "rmse_vs_tau": 0.5467315728498012,
+   "n": 10
+  },
+  "maereg: PROBE S2": {
+   "mean": 1.585096505840889,
+   "mc_se": 0.009445076383917207,
+   "rmse_vs_tau": 0.5857822175162879,
+   "n": 10
+  },
+  "maereg: PROBE S3": {
+   "mean": 1.596377042484666,
+   "mc_se": 0.012370961253117369,
+   "rmse_vs_tau": 0.5975307046032801,
+   "n": 10
+  },
+  "maereg: PROBE S4": {
+   "mean": 1.585374039817631,
+   "mc_se": 0.011088050081314,
+   "rmse_vs_tau": 0.5863184034156397,
+   "n": 10
+  },
+  "maereg: PROBE S5": {
+   "mean": 1.6452058291681175,
+   "mc_se": 0.014546534606016188,
+   "rmse_vs_tau": 0.6466799649083885,
+   "n": 10
+  },
+  "maereg: PROBE mean of S1-S4": {
+   "mean": 1.578184881760196,
+   "mc_se": 0.008731715268448825,
+   "rmse_vs_tau": 0.5787779739760447,
+   "n": 10
+  },
+  "maereg: PROBE relaxed rule": {
+   "mean": 1.5742801664304575,
+   "mc_se": 0.019418068081246638,
+   "rmse_vs_tau": 0.5759192794093924,
+   "n": 6
+  },
+  "maereg: S5 gap / mean S1-S4 gap": {
+   "mean": 15.471577886688943,
+   "mc_se": 4.995112258311116,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "maereg: relaxed rule returned (count)": {
+   "mean": 6.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  }
+ },
+ "C2": {
+  "naive": {
+   "mean": 2.1854919661214636,
+   "mc_se": 0.008649562968013759,
+   "rmse_vs_tau": 1.1857759215780919,
+   "n": 10
+  },
+  "oracle": {
+   "mean": 0.987995808790372,
+   "mc_se": 0.00804804680006706,
+   "rmse_vs_tau": 0.026963681541323992,
+   "n": 10
+  },
+  "CNN_all": {
+   "mean": 1.4606896496681958,
+   "mc_se": 0.02289060133841546,
+   "rmse_vs_tau": 0.4657797440616257,
+   "n": 10
+  },
+  "pixels: all blocks, no balance": {
+   "mean": 1.6853447601807983,
+   "mc_se": 0.013016377687575399,
+   "rmse_vs_tau": 0.6864563169643254,
+   "n": 10
+  },
+  "pixels: PROBE S1": {
+   "mean": 1.5453990685487373,
+   "mc_se": 0.011883836592055795,
+   "rmse_vs_tau": 0.5465630559442802,
+   "n": 10
+  },
+  "pixels: PROBE S2": {
+   "mean": 1.582217919611383,
+   "mc_se": 0.009231564004604228,
+   "rmse_vs_tau": 0.5828762320444598,
+   "n": 10
+  },
+  "pixels: PROBE S3": {
+   "mean": 1.555739945764016,
+   "mc_se": 0.009722878224036224,
+   "rmse_vs_tau": 0.5565048935691636,
+   "n": 10
+  },
+  "pixels: PROBE S4": {
+   "mean": 1.6455026274253406,
+   "mc_se": 0.01541774102105749,
+   "rmse_vs_tau": 0.6471576335459158,
+   "n": 10
+  },
+  "pixels: PROBE S5": {
+   "mean": 1.702003117879252,
+   "mc_se": 0.01540549034799019,
+   "rmse_vs_tau": 0.7035228068143558,
+   "n": 10
+  },
+  "pixels: PROBE mean of S1-S4": {
+   "mean": 1.5822148903373692,
+   "mc_se": 0.010598868652163952,
+   "rmse_vs_tau": 0.5830825007500287,
+   "n": 10
+  },
+  "pixels: PROBE relaxed rule": {
+   "mean": 1.5654853019818138,
+   "mc_se": 0.010704354837345631,
+   "rmse_vs_tau": 0.5662952343586636,
+   "n": 9
+  },
+  "pixels: S5 gap / mean S1-S4 gap": {
+   "mean": Infinity,
+   "mc_se": NaN,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "pixels: relaxed rule returned (count)": {
+   "mean": 9.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  },
+  "maereg: all blocks, no balance": {
+   "mean": 1.4983846169830124,
+   "mc_se": 0.011444285788529763,
+   "rmse_vs_tau": 0.499565782995783,
+   "n": 10
+  },
+  "maereg: PROBE S1": {
+   "mean": 1.5916418004299644,
+   "mc_se": 0.012088147685402093,
+   "rmse_vs_tau": 0.5927521656191453,
+   "n": 10
+  },
+  "maereg: PROBE S2": {
+   "mean": 1.635008172208781,
+   "mc_se": 0.014223702448652202,
+   "rmse_vs_tau": 0.63644025813431,
+   "n": 10
+  },
+  "maereg: PROBE S3": {
+   "mean": 1.6258412994927247,
+   "mc_se": 0.01097311230991557,
+   "rmse_vs_tau": 0.6267064822503728,
+   "n": 10
+  },
+  "maereg: PROBE S4": {
+   "mean": 1.616880150614167,
+   "mc_se": 0.010007286094035667,
+   "rmse_vs_tau": 0.6176102591412063,
+   "n": 10
+  },
+  "maereg: PROBE S5": {
+   "mean": 1.6438611511953412,
+   "mc_se": 0.008906152352025671,
+   "rmse_vs_tau": 0.6444152837775089,
+   "n": 10
+  },
+  "maereg: PROBE mean of S1-S4": {
+   "mean": 1.6173428556864091,
+   "mc_se": 0.008335694497123241,
+   "rmse_vs_tau": 0.617849136676418,
+   "n": 10
+  },
+  "maereg: PROBE relaxed rule": {
+   "mean": 1.6086420315603696,
+   "mc_se": 0.016918642912273716,
+   "rmse_vs_tau": 0.6102858395275815,
+   "n": 8
+  },
+  "maereg: S5 gap / mean S1-S4 gap": {
+   "mean": 2.4271155393041894,
+   "mc_se": 0.6549193689565933,
+   "rmse_vs_tau": null,
+   "n": 10
+  },
+  "maereg: relaxed rule returned (count)": {
+   "mean": 8.0,
+   "mc_se": null,
+   "rmse_vs_tau": null,
+   "n": 1
+  }
+ }
+}

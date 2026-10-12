@@ -1,0 +1,12 @@
+[15:01:40] stage1 loaded from cache stage1_n48000_sigma0.3_seed20261009_r30_m10.pt; reader features identical
+[15:01:40] CNN_all comparator (whole-image MAE features, 128)
+[15:02:57] CNN_all sealed AIPW = 1.0937
+[15:02:57] reader: block widths [8, 8, 8, 8, 8]; running sealed PROBE
+[15:07:16] reader: singletons {'S1': 1.0950423663817688, 'S2': 1.0996840968116652, 'S3': 1.1004611106351105, 'S4': 1.0964804094927385, 'S5': 1.0977925520086684}
+[15:07:16] reader: pairs {'S12': 1.120483965965225, 'S13': 1.126321527209515, 'S14': 1.118599364754262, 'S15': 1.1189653948932494, 'S23': 1.1288920723354279, 'S24': 1.1231190699305238, 'S25': 1.123655095345145, 'S34': 1.126280704503722, 'S35': 1.127269989901102, 'S45': 1.1203968819996586}
+[15:07:16] reader: v3 None retained []; sealed None retained []; comparators {'naive': 2.0261982642674514, 'aipw_X': 2.026277862914143, 'aipw_X_blocks': 1.073228304972746, 'aipw_X_U': 0.9946605996459876, 'seconds': 1.0}; 260s
+[15:07:18] pixels: block widths [224, 294, 268, 363, 325]; running sealed PROBE
+[15:11:48] pixels: singletons {'S1': 1.147040447823712, 'S2': 1.1498970036467924, 'S3': 1.154846262725791, 'S4': 1.1503464779324157, 'S5': 1.1730442195198922}
+[15:11:48] pixels: pairs {'S12': 1.1819966011933618, 'S13': 1.1883597169732472, 'S14': 1.1825421200753228, 'S15': 1.209856507469382, 'S23': 1.1898495079796816, 'S24': 1.1849819746776715, 'S25': 1.2109016138327398, 'S34': 1.1920849924002626, 'S35': 1.2163333148746431, 'S45': 1.2089967308478746}
+[15:11:48] pixels: v3 None retained []; sealed None retained []; comparators {'naive': 2.0261982642674514, 'aipw_X': 2.026277862914143, 'aipw_X_blocks': 1.0599692550454243, 'aipw_X_U': 0.9946605996459876, 'seconds': 25.3}; 271s
+[15:11:48] saved /private/tmp/claude-502/-Users-yonghanjung-paios/1935c64b-8526-4d67-8733-aa20e64b80b6/scratchpad/sealed_blocks/sealed_reader_pixels.json

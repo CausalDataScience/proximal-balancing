@@ -1,0 +1,20 @@
+[19:56:27] C1 r0: CNN_all 1.452 | audit drop [] -> 1.452 (abs drop [1, 2, 3, 4, 5] -> 1.410) | singleton gaps [0.0014, 0.0, -0.0007, 0.0015, 0.0041]
+[19:56:27] C1 r0: select None (kept 0: []) | min-gap S2-drop4 1.495 | S1 1.380 S1-drop5 1.262 gaps S1 0.0014 S1-drop5 -0.0012 S5 0.0041 | 144s
+[19:58:59] C1 r1: CNN_all 1.312 | audit drop [1] -> 1.289 (abs drop [1, 2, 3, 4, 5] -> 1.301) | singleton gaps [0.0019, -0.0011, -0.0002, -0.0003, 0.0019]
+[19:58:59] C1 r1: select None (kept 0: []) | min-gap S3-drop4 1.452 | S1 1.289 S1-drop5 1.267 gaps S1 0.0019 S1-drop5 0.0014 S5 0.0019 | 152s
+[20:01:22] C1 r2: CNN_all 1.509 | audit drop [] -> 1.509 (abs drop [1, 2, 3, 4, 5] -> 1.430) | singleton gaps [0.0, -0.0003, -0.0002, 0.0021, 0.0042]
+[20:01:22] C1 r2: select None (kept 0: []) | min-gap S1-drop4 1.491 | S1 1.401 S1-drop5 1.399 gaps S1 0.0000 S1-drop5 -0.0007 S5 0.0042 | 143s
+[20:03:46] C1 r3: CNN_all 1.417 | audit drop [] -> 1.417 (abs drop [1, 2, 3, 4, 5] -> 1.387) | singleton gaps [-0.0017, 0.0018, 0.0001, 0.0031, -0.0028]
+[20:03:46] C1 r3: select None (kept 0: []) | min-gap S3-drop4 1.448 | S1 1.511 S1-drop5 1.457 gaps S1 -0.0017 S1-drop5 0.0003 S5 -0.0028 | 144s
+[20:06:13] C1 r4: CNN_all 1.390 | audit drop [5] -> 1.293 (abs drop [1, 2, 3, 4, 5] -> 1.409) | singleton gaps [0.0001, -0.0011, -0.0001, 0.0003, 0.005]
+[20:06:13] C1 r4: select None (kept 0: []) | min-gap S3-drop2 1.368 | S1 1.409 S1-drop5 1.333 gaps S1 0.0001 S1-drop5 -0.0007 S5 0.0050 | 147s
+[20:08:34] C1 r5: CNN_all 1.377 | audit drop [] -> 1.377 (abs drop [1, 2, 3, 4, 5] -> 1.388) | singleton gaps [-0.0022, 0.0014, 0.0016, 0.0012, 0.001]
+[20:08:34] C1 r5: select None (kept 0: []) | min-gap S1-drop5 1.258 | S1 1.370 S1-drop5 1.258 gaps S1 -0.0022 S1-drop5 -0.0031 S5 0.0010 | 140s
+[20:10:52] C1 r6: CNN_all 1.397 | audit drop [] -> 1.397 (abs drop [1, 2, 3, 4, 5] -> 1.344) | singleton gaps [0.0014, -0.0012, 0.0017, 0.0031, 0.0046]
+[20:10:52] C1 r6: select None (kept 0: []) | min-gap S2-drop4 1.455 | S1 1.405 S1-drop5 1.377 gaps S1 0.0014 S1-drop5 0.0006 S5 0.0046 | 139s
+[20:13:28] C1 r7: CNN_all 1.312 | audit drop [5] -> 1.308 (abs drop [1, 2, 3, 4, 5] -> 1.403) | singleton gaps [-0.0019, -0.0, -0.0027, 0.0007, 0.0088]
+[20:13:28] C1 r7: select None (kept 0: []) | min-gap S3-drop1 1.394 | S1 1.355 S1-drop5 1.339 gaps S1 -0.0019 S1-drop5 -0.0013 S5 0.0088 | 156s
+[20:15:57] C1 r8: CNN_all 1.324 | audit drop [] -> 1.324 (abs drop [1, 2, 3, 4, 5] -> 1.273) | singleton gaps [0.0007, 0.0016, -0.002, -0.0002, 0.0015]
+[20:15:57] C1 r8: select None (kept 0: []) | min-gap S2-drop4 1.354 | S1 1.291 S1-drop5 1.239 gaps S1 0.0007 S1-drop5 0.0066 S5 0.0015 | 149s
+[20:18:27] C1 r9: CNN_all 1.369 | audit drop [4] -> 1.397 (abs drop [1, 2, 3, 4, 5] -> 1.268) | singleton gaps [-0.0007, -0.0012, 0.0006, 0.0047, 0.0014]
+[20:18:27] C1 r9: select None (kept 0: []) | min-gap S1-drop3 1.365 | S1 1.349 S1-drop5 1.296 gaps S1 -0.0007 S1-drop5 -0.0010 S5 0.0014 | 150s
