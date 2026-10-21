@@ -236,3 +236,35 @@ Then
 
 This is a population sensitivity region, not a finite-sample confidence interval. When $D_{\mathrm{res},j}(\phi)=0$, it collapses to the point-identified value in Thm.~\ref{thm:exact-proxy-identification}. The residual discrepancy is a functional of the observed distribution.
 The constant $\Gamma_j(\phi)$ is structural and must be justified by scientific knowledge, additional theory, or sensitivity analysis.
+
+\subsection{Blockwise Exclusion within a Single Image}
+\label{sec:single-image-decomposition}
+
+When the whole proxy is one image, the blocks are regions of the image, and a region may carry content that the treatment produced: a device placed because the unit was treated, or a change in the tissue that followed treatment. The following proposition separates the error of adjusting for a representation that includes such a region into a part that the representation's coverage of $U$ determines and a part that the treatment-dependent content adds. It explains when excluding a block helps and when it cannot.
+
+Let $Z$ be any representation with $0<P(A=1\mid Z)<1$ almost surely and write $\tau_Z\triangleq\mathbb E[\mathbb E(Y\mid A=1,Z)-\mathbb E(Y\mid A=0,Z)]$ for the adjustment functional, as in Prop.~\ref{prop:population-sensitivity-region}. We call a block \emph{clean} when it carries no treatment-produced content, that is, when it is independent of $A$ given $U$. Throughout this subsection there are no covariates, so every representation is a function of $W$.
+
+\begin{proposition}[Error of adjusting for a representation of a single image]
+\label{prop:single-image-decomposition}
+\normalfont
+Suppose $Y=\tau A+\beta U+\varepsilon$ with $\mathbb E|U|<\infty$ and $\mathbb E[\varepsilon\mid A,U,W]=0$.
+\begin{enumerate}
+\item[(a)] For every representation $Z$ of $W$ with $0<P(A=1\mid Z)<1$ almost surely,
+\(\tau_Z-\tau=\beta\,\mathbb E\bigl[\mathbb E(U\mid A=1,Z)-\mathbb E(U\mid A=0,Z)\bigr].\)
+\item[(b)] (Gaussian working model.) Let $Z_0$ be a representation of the clean blocks, $\widehat U\triangleq\mathbb E(U\mid Z_0)$, and $R\triangleq U-\widehat U\sim N(0,s^2)$ independent of $Z_0$; when $U$ is standardised, $s^2=1-\rho^2$ with $\rho^2$ the squared correlation between $U$ and $\widehat U$. Suppose $0<P(A=1\mid Z_0)<1$ and $A\perp\!\!\!\perp R\mid Z_0$. Let a further block carry $C=U-\kappa A+\nu$ for a constant $\kappa\in\mathbb R$, with $\nu\sim N(0,\sigma_\nu^2)$ independent of $(A,U,Z_0)$ and $s^2+\sigma_\nu^2>0$. Then $\tau_{Z_0}=\tau$ and
+\(\tau_{(Z_0,C)}-\tau=\beta\,\kappa\,\frac{s^2}{s^2+\sigma_\nu^2}.\)
+\item[(c)] If instead the further block carries $C=c(A,\nu)$ with $\nu\perp\!\!\!\perp U\mid(A,Z_0)$, in particular with $\nu$ independent of $(A,U,Z_0)$, and $0<P(A=1\mid Z_0,C)<1$, then $\tau_{(Z_0,C)}=\tau_{Z_0}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) By the outcome model, $\mathbb E(Y\mid A=a,Z)=\tau a+\beta\,\mathbb E(U\mid A=a,Z)$, because $\mathbb E(\varepsilon\mid A,Z)=\mathbb E[\mathbb E(\varepsilon\mid A,U,W)\mid A,Z]=0$. Subtracting the two arms and taking the expectation over $Z$ gives the identity.
+
+(b) Write $C-\widehat U+\kappa A=R+\nu$. Given $(Z_0,A)$, the pair $(R,\nu)$ is Gaussian with independent coordinates, $R\sim N(0,s^2)$ and $\nu\sim N(0,\sigma_\nu^2)$, because $R$ is independent of $Z_0$, $A\perp\!\!\!\perp R\mid Z_0$, and $\nu$ is independent of $(A,U,Z_0)$ and hence of $(A,R,Z_0)$. Conditioning one Gaussian coordinate on the sum gives $\mathbb E(R\mid R+\nu=t,Z_0,A)=t\,s^2/(s^2+\sigma_\nu^2)$. Hence
+\(\mathbb E(R\mid A,Z_0,C)=\frac{s^2}{s^2+\sigma_\nu^2}\,(C-\widehat U+\kappa A),\)
+and, holding $(Z_0,C)$ fixed, the difference between $A=1$ and $A=0$ equals $\kappa s^2/(s^2+\sigma_\nu^2)$. Since $U=\widehat U+R$ and $\widehat U$ is a function of $Z_0$, part (a) gives $\tau_{(Z_0,C)}-\tau=\beta\kappa s^2/(s^2+\sigma_\nu^2)$. For $Z_0$ alone, $A\perp\!\!\!\perp R\mid Z_0$ and $\mathbb E(R\mid Z_0)=0$ give $\mathbb E(R\mid A,Z_0)=0$, so part (a) gives $\tau_{Z_0}=\tau$. Overlap holds for $(Z_0,C)$ because, given $(Z_0,A=a)$, $C\sim N(\widehat U-\kappa a,\,s^2+\sigma_\nu^2)$ has a positive density on $\mathbb R$ for both $a$ when $s^2+\sigma_\nu^2>0$, so Bayes' rule gives $0<P(A=1\mid Z_0,C)<1$ wherever $0<P(A=1\mid Z_0)<1$.
+
+(c) Since $C=c(A,\nu)$ and $\nu\perp\!\!\!\perp U\mid(A,Z_0)$, we have $C\perp\!\!\!\perp U\mid(A,Z_0)$. Hence $\mathbb E(U\mid A,Z_0,C)=\mathbb E(U\mid A,Z_0)$, and part (a) gives the same value for $\tau_{(Z_0,C)}$ and $\tau_{Z_0}$.
+\end{proof}
+
+Three consequences guide the chest X-ray analysis of Section~\ref{sec:single-image}. First, when $\rho^2=1$ the representation determines $U$, $R\equiv0$, and no content of the image can bias the adjustment; excluding blocks then has nothing to remove. Second, when $\rho^2<1$, a block whose content depends on $A$ and $U$ jointly (part (b)) biases the adjustment by an amount that grows with the strength $\kappa$ of the treatment's imprint and shrinks as the representation covers more of $U$, whereas a block whose content depends on $A$ alone (part (c)) does not. Third, the term of part (b) is the only one that excluding a block can remove. With residual confounding, that is, when $A$ depends on $R$ given $Z_0$, part (a) gives $\tau_{Z_0}-\tau=\beta\,\mathbb E[\mathbb E(R\mid A=1,Z_0)-\mathbb E(R\mid A=0,Z_0)]$, which is in general nonzero; it depends only on $Z_0$, through the part of $U$ that the clean blocks leave in $R$ and the dependence of $A$ on that part, so excluding a further block cannot change it and only a change of the representation of the clean blocks can. The screen of Section~\ref{sec:estimation} finds the block of part (b) or (c) because holding it out leaves residual treatment information: $P(A=1\mid C,Z_0)\neq P(A=1\mid Z_0)$ with positive probability whenever $C$ and $A$ are dependent given $Z_0$, which holds in part (b) when $\kappa\neq0$ and in part (c) when $c(1,\nu)$ and $c(0,\nu)$ differ in distribution, so its held-out discrepancy is positive, whereas holding out a clean block changes the treatment probability only through that block's increment of information about $U$.

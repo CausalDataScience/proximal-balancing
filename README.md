@@ -71,8 +71,15 @@ python3 -B -m single_image.realimg.realimg_u_recoverable              # hidden U
 python3 -B -m single_image.realimg.realimg_v4 --udef logit --reps 10 --tag logit_r10   # block-additive MAE encoder
 python3 -B -m single_image.realimg.realimg_v5_sup --scenarios 0,1,2,3 --reps 10         # supervised block encoder (Table 2)
 python3 -B -m single_image.realimg.realimg_v6_layouts --layout grid3   # automatic layouts (grid3, grid4, auto)
-python3 -B -m single_image.realimg.make_single_image_figure --outdir ../paper/figures   # Figure 4
+python3 -B -m single_image.realimg.make_single_image_figure_v3 --outdir ../paper/figures   # chest X-ray figure, Section 5
 ```
+
+The paper's current chest X-ray results come from the later runs in the same folder: `realimg_v10_confirm.py`
+(new seeds, 50 replicates, the hand-drawn and the 4x4 grid layouts; `v10_anat_r50*_w*.jsonl`, `v10_grid4_r50_w*.jsonl`),
+`realimg_v7_sup128.py` (the 128-pixel resolution check; `v7sup128_r10.jsonl`), `realimg_v8_boundary.py`
+(`v8ext_r10.jsonl`) and `realimg_v9_algo1.py` (Algorithm 1 on the benchmark; `v9algo1_r5.jsonl`). Each script's
+docstring gives its arguments; the DeltaAI job scripts are `code/deltaai/v10_confirm.sbatch`, `v10b_extra.sbatch` and
+`v7_sup128.sbatch`. The figure script above draws `probe-single-image-v3.pdf` from the v10 files.
 
 The results behind Tables 2, 5 and 6 and Figure 4 are in `results/single_image/pneumoniamnist_v1/` (one JSON line per
 replicate), the sealed-PROBE runs on the phantom in `results/single_image/sealed_blocks_v1/`, and the protocols and
@@ -89,12 +96,15 @@ pre-registrations in `memo/2026-10-*-single-image-*.md`, `memo/2026-10-09-z0-bal
 |---|---|
 | Three causal structures, Section 1 (`causal-structures-3panel-v2.pdf`) | `figures/2026-09-23-proximal-balancing-structures-v2.tex` (pdflatex) |
 | PROBE mechanism, Section 4 (`probe-mechanism-v2.pdf`) | `code/make_probe_mechanism_figure_v2.py`; needs the Shapes3D image cache (see below) |
-| Experiments, Section 5 (`probe-experiments-v5.pdf`) | `code/make_section5_v5_figure.py`; run after the v4 script, whose PDFs it checks |
+| Causal diagrams of the experiments, Section 5 (`probe-scenario-dags.pdf`) | `figures/2026-10-18-scenario-causal-diagrams.tex` (pdflatex; thumbnails from `code/make_shapes3d_thumbnails.py`) |
+| Experiments, Section 5 (`probe-experiments-v7.pdf`) | `code/make_section5_v7_figures.py`: the v6 figure (`code/make_section5_v6_figure.py`, which adds the chest X-ray panels to v5) with PROBE's blocks found from W |
+| Shapes3D setting, Section 5 (`probe-shapes3d-diagram.pdf`) | `code/make_shapes3d_diagram.py`; needs `3dshapes.h5` (`scripts/download_data.py --only shapes3d`) and writes to `manuscript/figures/` |
+| Chest X-ray proxy, Section 5 (`probe-single-image-v3.pdf`) | `code/single_image/realimg/make_single_image_figure_v3.py`; needs the PneumoniaMNIST images (see above) |
 | Proximal causal structures, appendix B (`causal-graphs.pdf`) | `figures/2026-08-27-proximal-balancing-causal-graphs.tex` |
 | Majority-valid orientations, appendix B (`majority-orientations.pdf`) | `figures/2026-08-31-majority-valid-orientations.tex` |
 | Synthetic estimates, appendix D (`probe-estimates-v3.pdf`) | `code/make_section5_v3_figures.py` |
 | KSPC benchmark, appendix D (`probe-kspc.pdf`) | `code/make_kspc_figure.py` |
-| All replicates, synthetic and real data, appendix D (`probe-synthetic-v4-ext.pdf`, `probe-realdata-v4-ext.pdf`) | `code/make_section5_v4_extension.py` |
+| All replicates, synthetic and real data, appendix D (`probe-synthetic-v5-found.pdf`, `probe-realdata-v5-found.pdf`) | `code/make_section5_v7_figures.py` (the `code/make_section5_v4_extension.py` figures with PROBE's blocks found from W) |
 | Aggregation, coverage and learned summary, appendix D (`probe-aggregation.pdf`, `probe-coverage.pdf`, `probe-learned.pdf`) | `code/make_section5_v2_figures.py` |
 
 The Python scripts write `figures/section5/<name>.{pdf,png}`; the v3, v4, v5 and mechanism scripts also copy their
@@ -103,6 +113,19 @@ creates. We checked the release this way: the v3, v4 and v5 figures come out byt
 v2, KSPC and TikZ figures differ only in the creation date embedded in the PDF (identical pixels at 100 dpi). The
 mechanism figure needs the Shapes3D image cache (5.9 GB): run `python scripts/download_data.py --only shapes3d`, then
 build the cache with `family_v2_images.build_cache()` from `code/`.
+
+### Blocks found from the proxy (Section 5 and appendix D.6)
+
+In the synthetic and real-world experiments PROBE finds the proxy blocks from W alone: `code/discover_blocks.py`
+(spectral clustering of loading directions, k-subspaces refinement, merge of coupled groups) and
+`code/probe_any_blocks.py` (PROBE for any number of blocks, without editing the sealed modules). The runs are
+`code/run_discovered_blocks.py` (SCM-1 to SCM-3), `code/run_benchmarks_discovered.py` (Twins, IHDP, ACIC),
+`code/run_rhc_discovered.py` (RHC) and `code/run_confirmation_v1.py` (the confirmation on new data), with the DeltaAI
+job scripts and task lists in `code/deltaai/` and the results in `results/discovered_blocks_v1/` and
+`results/rhc/discovered_blocks_v*.json`. `code/discovered_probe_errors.py` reads them in the order of the figures, and
+`code/compare_discovered_blocks.py`, `compare_confirmation_v1.py`, `compare_lrt_dev_v1.py` and `compare_v3_scm_v1.py`
+print the comparisons of appendix D.6. `code/run_random_subsets*.py` and `results/random_subsets_v1/` hold the
+random-subset variant that was tried first and not adopted.
 
 ### Tables
 

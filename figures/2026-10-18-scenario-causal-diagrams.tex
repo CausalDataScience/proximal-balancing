@@ -1,0 +1,149 @@
+% Causal diagrams of the experiment scenarios of Section 5 (draft, 2026-10-18 at the author's request), drawn in the
+% style of the introduction's Figure 1 (2026-09-23-proximal-balancing-structures-v2.tex): same node styles, colours,
+% fonts.  Rows: U on top, W_4, X and the clean blocks in the middle, W_5, A and Y at the bottom; W_5 sits beside A
+% because it acts on A.  W_4 has no outgoing edge: it is shifted by W_5 and points to a wrong effect, not a cause of A or Y.
+% Only variables that the main text defines are drawn.  The treatment-only cause I of appendix D.1 is a coordinate of W_5,
+% so its edges appear as W_5 -> A and W_5 -> W_4 (M_4 = U - 3I + noise); the mediator M of the X-ray scenario is the
+% mark itself, so it appears as A -> W_5 -> Y.
+% (a) SCM-1 to SCM-3 (appendix D.1): U -> X_1 and every block; X = (X_1, C) -> A, Y.  The settings differ only in noise coordinates.
+% (b) Shapes3D (SCM-4, appendix D.2): the same graph, with each proxy value shown as one Shapes3D image (the six images of
+%     Figure 4, figures/shapes3d-thumbnails/, from code/make_shapes3d_thumbnails.py); the other image factors are
+%     independent noise and, like every exogenous noise, are not drawn.
+% (c) IHDP (appendix, Semi-synthetic benchmarks; Twins and ACIC alike): U is a hidden real covariate, associated with the
+%     other covariates X; Y(0), Y(1) are the benchmark's own outcomes of all covariates; A and the blocks follow SCM-1.
+% (d), (e) Chest X-ray (Section 5): U is the image-determined severity shown by the lung quadrants and the central strip;
+%     (d) the mark in W_5 follows U - kappa A + noise; (e) the mark in W_5 is caused by A and carries half of the effect to Y.
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usetikzlibrary{arrows.meta,shapes.geometric}
+\definecolor{coltreat}{HTML}{0066CC}
+\definecolor{colout}{HTML}{D62828}
+\definecolor{collatent}{HTML}{A6A6A6}
+\definecolor{filllatent}{HTML}{F2F2F2}
+\newcommand{\thumb}[1]{\includegraphics[width=3.6mm]{shapes3d-thumbnails/#1.png}}
+\begin{document}
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >={Latex[width=1.2mm,length=1.5mm]},
+  font=\sffamily\sansmath\scriptsize,
+  varnode/.style={draw,circle,inner sep=0mm,minimum size=6mm,font=\sffamily\sansmath\scriptsize},
+  observed/.style={varnode,draw=black,text=black,fill=white},
+  latent/.style={varnode,draw=collatent,draw opacity=0.72,text=collatent,fill=filllatent,fill opacity=0.55,text opacity=1},
+  treatment/.style={varnode,draw=coltreat,text=coltreat,fill=white},
+  outcome/.style={varnode,draw=colout,text=colout,fill=white},
+  bnode/.style={observed,shape=rectangle,rounded corners=3mm,minimum height=6mm,inner xsep=2pt},
+  inode/.style={draw=black,line width=0.4pt,inner sep=0.4pt,rectangle},
+  observed edge/.style={->,draw=black,line width=0.4pt},
+  latent edge/.style={->,draw=collatent,opacity=0.72,line width=0.4pt},
+  assoc edge/.style={draw=collatent,opacity=0.9,line width=0.6pt,dash pattern=on 0.9pt off 0.9pt},   % association, no direction
+  panel label/.style={align=center,anchor=north}
+]
+% rows: U at 2.00, W_4, X and the clean blocks at 0.85, W_5, A and Y at -0.30; panel labels below.
+% U -> A and U -> Y bend around X, so that no edge passes within one node radius of another node.
+
+% (a) SCM-1 to SCM-3
+\begin{scope}[xshift=0cm]
+  \node[latent] (Ua) at (0.15,2.00) {$U$};
+  \node[observed] (W4a) at (-1.60,0.85) {$W_4$};
+  \node[observed] (Xa) at (0.15,0.85) {$X$};
+  \node[bnode] (W13a) at (2.15,0.85) {$W_1,W_2,W_3$};
+  \node[observed] (W5a) at (-2.05,-0.30) {$W_5$};
+  \node[treatment] (Aa) at (-0.60,-0.30) {$A$};
+  \node[outcome] (Ya) at (0.90,-0.30) {$Y$};
+  \draw[latent edge] (Ua) -- (W4a);
+  \draw[latent edge] (Ua) -- (W5a);
+  \draw[latent edge] (Ua) -- (Xa);
+  \draw[latent edge] (Ua) -- (W13a);
+  \draw[latent edge] (Ua) to[bend right=24] (Aa);
+  \draw[latent edge] (Ua) to[bend left=24] (Ya);
+  \draw[observed edge] (W5a) -- (W4a);
+  \draw[observed edge] (W5a) -- (Aa);
+  \draw[observed edge] (Xa) -- (Aa);
+  \draw[observed edge] (Xa) -- (Ya);
+  \draw[observed edge] (Aa) -- (Ya);
+  \node[panel label] at (0.10,-0.85) {(a) SCM-1 to SCM-3: $W_5$ acts on $A$\\ and shifts $W_4$; noise pads $(X,W)$\\ to dimension $8$, $88$, $1{,}312$};
+\end{scope}
+
+% (b) Shapes3D: the graph of SCM-1, with every proxy value shown as one image
+\begin{scope}[xshift=5.95cm]
+  \node[latent] (Ub) at (0.15,2.00) {$U$};
+  \node[inode,label={[inner sep=1.5pt]left:$W_4$}] (W4b) at (-1.60,0.85) {\thumb{w4}};
+  \node[observed] (Xb) at (0.15,0.85) {$X$};
+  \node[inode,label={[inner sep=1.5pt]below:$W_1,W_2,W_3$}] (W13b) at (2.15,0.85) {\thumb{w1}\,\thumb{w2}\,\thumb{w3}};
+  \node[inode,label={[inner sep=1.5pt]left:$W_5$}] (W5b) at (-2.05,-0.30) {\thumb{w5}\,\thumb{w6}};
+  \node[treatment] (Ab) at (-0.60,-0.30) {$A$};
+  \node[outcome] (Yb) at (0.90,-0.30) {$Y$};
+  \draw[latent edge] (Ub) -- (W4b);
+  \draw[latent edge] (Ub) -- (W5b);
+  \draw[latent edge] (Ub) -- (Xb);
+  \draw[latent edge] (Ub) -- (W13b);
+  \draw[latent edge] (Ub) to[bend right=24] (Ab);
+  \draw[latent edge] (Ub) to[bend left=24] (Yb);
+  \draw[observed edge] (W5b) -- (W4b);
+  \draw[observed edge] (W5b) -- (Ab);
+  \draw[observed edge] (Xb) -- (Ab);
+  \draw[observed edge] (Xb) -- (Yb);
+  \draw[observed edge] (Ab) -- (Yb);
+  \node[panel label] at (0.10,-0.85) {(b) Shapes3D: the graph of SCM-1, each\\ proxy value shown as one image};
+\end{scope}
+
+% (c) IHDP: U is a hidden real covariate, associated with the other covariates
+\begin{scope}[xshift=11.40cm]
+  \node[latent] (Uc) at (0.15,2.00) {$U$};
+  \node[observed] (W4c) at (-1.60,0.85) {$W_4$};
+  \node[observed] (Xc) at (0.15,0.85) {$X$};
+  \node[bnode] (W13c) at (2.15,0.85) {$W_1,W_2,W_3$};
+  \node[observed] (W5c) at (-2.05,-0.30) {$W_5$};
+  \node[treatment] (Ac) at (-0.60,-0.30) {$A$};
+  \node[outcome] (Yc) at (0.90,-0.30) {$Y$};
+  \draw[latent edge] (Uc) -- (W4c);
+  \draw[latent edge] (Uc) -- (W5c);
+  \draw[assoc edge] (Uc) -- (Xc);
+  \draw[latent edge] (Uc) -- (W13c);
+  \draw[latent edge] (Uc) to[bend right=24] (Ac);
+  \draw[latent edge] (Uc) to[bend left=24] (Yc);
+  \draw[observed edge] (W5c) -- (W4c);
+  \draw[observed edge] (W5c) -- (Ac);
+  \draw[observed edge] (Xc) -- (Ac);
+  \draw[observed edge] (Xc) -- (Yc);
+  \draw[observed edge] (Ac) -- (Yc);
+  \node[panel label] at (0.10,-0.85) {(c) IHDP: $U$ a hidden real covariate,\\ associated (dashed) with the other $24$\\ in $X$; $Y(0),Y(1)$ from the benchmark};
+\end{scope}
+
+% (d) Chest X-ray, treatment response in the central strip
+\begin{scope}[xshift=2.85cm,yshift=-4.15cm]
+  \node[latent] (Ud) at (0.15,2.00) {$U$};
+  \node[observed] (W5d) at (-1.60,0.85) {$W_5$};
+  \node[bnode] (W14d) at (2.05,0.85) {$W_1,\ldots,W_4$};
+  \node[treatment] (Ad) at (-0.60,-0.30) {$A$};
+  \node[outcome] (Yd) at (0.90,-0.30) {$Y$};
+  \draw[latent edge] (Ud) -- (W5d);
+  \draw[latent edge] (Ud) -- (W14d);
+  \draw[latent edge] (Ud) to[bend right=24] (Ad);
+  \draw[latent edge] (Ud) to[bend left=24] (Yd);
+  \draw[observed edge] (Ad) -- (W5d);
+  \draw[observed edge] (Ad) -- (Yd);
+  \node[panel label] at (0.15,-0.85) {(d) Chest X-ray, response: the mark\\ in $W_5$ follows $U-\kappa A$ plus noise};
+\end{scope}
+
+% (e) Chest X-ray, mediator in the central strip: A -> W_5 -> Y, the last edge routed below A
+\begin{scope}[xshift=8.75cm,yshift=-4.15cm]
+  \node[latent] (Ue) at (0.15,2.00) {$U$};
+  \node[observed] (W5e) at (-1.60,0.85) {$W_5$};
+  \node[bnode] (W14e) at (2.05,0.85) {$W_1,\ldots,W_4$};
+  \node[treatment] (Ae) at (-0.60,-0.30) {$A$};
+  \node[outcome] (Ye) at (0.90,-0.30) {$Y$};
+  \draw[latent edge] (Ue) -- (W5e);
+  \draw[latent edge] (Ue) -- (W14e);
+  \draw[latent edge] (Ue) to[bend right=24] (Ae);
+  \draw[latent edge] (Ue) to[bend left=24] (Ye);
+  \draw[observed edge] (Ae) -- (W5e);
+  \draw[observed edge] (W5e) .. controls (-2.35,-0.35) and (-0.85,-1.05) .. (Ye);
+  \draw[observed edge] (Ae) -- (Ye);
+  \node[panel label] at (0.15,-1.05) {(e) Chest X-ray, mediator: the mark in $W_5$ is\\ caused by $A$ and carries half of the effect to $Y$};
+\end{scope}
+\end{tikzpicture}
+\end{document}

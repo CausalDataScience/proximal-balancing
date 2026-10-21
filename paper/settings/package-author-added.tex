@@ -1,5 +1,11 @@
 % Venue-neutral author packages adapted from the ITBound v2 skeleton.
 \usepackage[dvipsnames]{xcolor}
+% Revision marks (single-image update, 2026-10-13): new or changed text in dark red.  \revmarksfalse prints it plain.
+\definecolor{revcolor}{HTML}{B3261E}
+\newif\ifrevmarks \revmarkstrue
+\DeclareRobustCommand{\rev}[1]{\ifrevmarks{\color{revcolor}#1}\else#1\fi}
+\newcommand{\revstart}{\ifrevmarks\color{revcolor}\fi}
+
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \definecolor{coltreat}{HTML}{0066CC}

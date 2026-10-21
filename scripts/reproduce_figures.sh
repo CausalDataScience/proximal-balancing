@@ -50,10 +50,11 @@ run make_section5_v2_figures.py     # appendix D: aggregation, coverage, learned
 run make_section5_v3_figures.py     # appendix D: synthetic estimates
 run make_kspc_figure.py             # appendix D: KSPC benchmark
 run make_section5_v4_extension.py   # appendix D: all replicates, synthetic and real data
-run make_section5_v5_figure.py      # Section 5; checks its numbers against the v4-ext PDFs, so it runs after them
+run make_section5_v5_figure.py      # Section 5 as of v1; checks its numbers against the v4-ext PDFs, so it runs after them
+run make_section5_v7_figures.py     # Section 5 (Figure 4) and appendix D detail figures: PROBE with the blocks found from W
 
 TIKZ="2026-09-23-proximal-balancing-structures-v2 2026-08-27-proximal-balancing-causal-graphs
-      2026-08-31-majority-valid-orientations"
+      2026-08-31-majority-valid-orientations 2026-10-18-scenario-causal-diagrams"
 echo
 echo "=== TikZ figures -> figures/tikz/"
 if command -v pdflatex > /dev/null 2>&1; then
@@ -74,6 +75,18 @@ else
   echo "$TIKZ_STATUS"
 fi
 
+H5=materials/benchmarks/shapes3d/3dshapes.h5
+if [ -f "$ROOT/$H5" ]; then
+  mkdir -p "$ROOT/manuscript/figures"     # the folder make_shapes3d_diagram.py writes to
+  run make_shapes3d_diagram.py           # Section 5, Shapes3D setting
+  S3D_STATUS=built
+else
+  S3D_STATUS="skipped: needs $H5; fetch it with $PYTHON scripts/download_data.py --only shapes3d (268 MB)"
+  echo
+  echo "=== code/make_shapes3d_diagram.py"
+  echo "$S3D_STATUS"
+fi
+
 CACHE=materials/benchmarks/shapes3d/3dshapes_images_uint8.npy
 if [ -f "$ROOT/$CACHE" ]; then
   run make_probe_mechanism_figure_v2.py   # Section 4
@@ -88,7 +101,7 @@ fi
 
 echo
 echo "=== where each figure went (compared with the paper's copy in paper/figures/)"
-TIKZ_STATUS="$TIKZ_STATUS" MECH_STATUS="$MECH_STATUS" "$PYTHON" - "$ROOT" << 'EOF'
+TIKZ_STATUS="$TIKZ_STATUS" MECH_STATUS="$MECH_STATUS" S3D_STATUS="$S3D_STATUS" "$PYTHON" - "$ROOT" << 'EOF'
 import os
 import re
 import sys
@@ -100,18 +113,20 @@ S5, TK, ICLR = "figures/section5", "figures/tikz", "ICLR/paper/figures"
 FIGURES = [
     ("causal-structures-3panel-v2.pdf", "Section 1", f"{TK}/2026-09-23-proximal-balancing-structures-v2.pdf", None, "tikz"),
     ("probe-mechanism-v2.pdf", "Section 4", f"{S5}/probe-mechanism-v2.pdf", "probe-mechanism-v2.pdf", "mech"),
-    ("probe-experiments-v5.pdf", "Section 5", f"{S5}/section5-v5-experiments.pdf", "probe-experiments-v5.pdf", ""),
+    ("probe-scenario-dags.pdf", "Section 5", f"{TK}/2026-10-18-scenario-causal-diagrams.pdf", None, "tikz"),
+    ("probe-experiments-v7.pdf", "Section 5", f"{S5}/section5-v7-experiments.pdf", None, ""),
+    ("probe-shapes3d-diagram.pdf", "Section 5", "manuscript/figures/probe-shapes3d-diagram.pdf", None, "s3d"),
     ("causal-graphs.pdf", "appendix B", f"{TK}/2026-08-27-proximal-balancing-causal-graphs.pdf", None, "tikz"),
     ("majority-orientations.pdf", "appendix B", f"{TK}/2026-08-31-majority-valid-orientations.pdf", None, "tikz"),
     ("probe-estimates-v3.pdf", "appendix D", f"{S5}/section5-v3-estimates.pdf", "probe-estimates-v3.pdf", ""),
     ("probe-kspc.pdf", "appendix D", f"{S5}/kspc-benchmark.pdf", None, ""),
-    ("probe-synthetic-v4-ext.pdf", "appendix D", f"{S5}/section5-v4-synthetic-ext.pdf", "probe-synthetic-v4-ext.pdf", ""),
-    ("probe-realdata-v4-ext.pdf", "appendix D", f"{S5}/section5-v4-realdata-ext.pdf", "probe-realdata-v4-ext.pdf", ""),
+    ("probe-synthetic-v5-found.pdf", "appendix D", f"{S5}/section5-v5-synthetic-found.pdf", None, ""),
+    ("probe-realdata-v5-found.pdf", "appendix D", f"{S5}/section5-v5-realdata-found.pdf", None, ""),
     ("probe-aggregation.pdf", "appendix D", f"{S5}/section5-v2-aggregation.pdf", None, ""),
     ("probe-coverage.pdf", "appendix D", f"{S5}/section5-v2-coverage.pdf", None, ""),
     ("probe-learned.pdf", "appendix D", f"{S5}/section5-v2-learned.pdf", None, ""),
 ]
-STATUS = {"tikz": os.environ["TIKZ_STATUS"], "mech": os.environ["MECH_STATUS"], "": "built"}
+STATUS = {"tikz": os.environ["TIKZ_STATUS"], "mech": os.environ["MECH_STATUS"], "s3d": os.environ["S3D_STATUS"], "": "built"}
 
 
 def masked(data: bytes) -> bytes:
